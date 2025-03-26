@@ -27,7 +27,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32h7xx_ll_adc.h"
 #include "stm32h7xx_ll_dma.h"
+#include "stm32h7xx_ll_i2c.h"
 #include "stm32h7xx_ll_rcc.h"
 #include "stm32h7xx_ll_crs.h"
 #include "stm32h7xx_ll_bus.h"
@@ -74,6 +76,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define TIM15_CH1_MOS_GT_Pin LL_GPIO_PIN_5
 #define TIM15_CH1_MOS_GT_GPIO_Port GPIOE
+#define Buzzer_Pin LL_GPIO_PIN_1
+#define Buzzer_GPIO_Port GPIOE
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */

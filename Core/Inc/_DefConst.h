@@ -1,24 +1,31 @@
 
 #define BUZZ_P GPIOE, LL_GPIO_PIN_1
-#define E12 GPIOE, LL_GPIO_PIN_12
+#define E1_1 LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1);
+#define E1_0 LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1);
+//#define E12=1; LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_12);
+#define B12 GPIOB, LL_GPIO_PIN_12
+#define B12_0 LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_12);
+
+#define E1(x) ((x) ? LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1) : LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1))
+
 
 // VARIABLES
 ///////////////////////////////////////////////////////////////////////////
-#define NUM_CHANNELS 9
+#define NUM_CHANNELS 12
 volatile uint32_t adc_buffer[NUM_CHANNELS];
 //uint32_t adc_ch10=0;
 //uint32_t adc_ch11=0;
 //uint32_t adc_ch16=0;
 //uint32_t adc_ch17=0;
-uint32_t adc_ch18=0;
-uint32_t adc_ch15=0;
-uint32_t adc_ch7=0;
-uint32_t adc_ch8=0;
-uint32_t adc_ch9=0;
-uint32_t adc_ch19=0;
-uint32_t adc_ch5=0;
-uint32_t adc_ch4=0;
-uint32_t adc_ch3=0;
+//uint32_t adc_ch18=0;
+//uint32_t adc_ch15=0;
+//uint32_t adc_ch7=0;
+//uint32_t adc_ch8=0;
+//uint32_t adc_ch9=0;
+//uint32_t adc_ch19=0;
+//uint32_t adc_ch5=0;
+//uint32_t adc_ch4=0;
+//uint32_t adc_ch3=0;
 
 #define MAX_PID_OUTPUT 10000.0f
 #define MIN_PID_OUTPUT 0.0f
@@ -46,13 +53,26 @@ uint32_t there_is_past_unseen_fault=0;
 uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
 #define ZCRENDELY 475
-double VOUT_smp_sc = 0.0f;
+double VRECT_smp_sc = 0.0f;
 double VLOAD_per_avg_sc = 0.0f;
 double VDCKP = 0.0f;
 double VDCKN = 0.0f;
 double VOUT_max_float = 55.2f;
 double VOUT_max_boost = 62.4f;
-float VOUT_smp = 0.0f;
+
+float AUX1_smp = 0.0f;
+float A_16_smp = 0.0f;
+float VINR_smp = 0.0f;
+float VINS_smp = 0.0f;
+float VINT_smp = 0.0f;
+float DCKP_smp = 0.0f;
+float DCKN_smp = 0.0f;
+float VBAT_smp = 0.0f;
+float VLOAD_smp = 0.0f;
+float IRECT_smp = 0.0f;
+float IBAT_smp = 0.0f;
+float VRECT_smp = 0.0f;
+
 float V_Charg_Hg_10_perc = 0.0f;
 float V_Charg_Hg_10_perc_ret = 0.0f;
 uint32_t V_Charg_Hg_10_perc_Acc_cnt = 0;
@@ -65,21 +85,15 @@ uint32_t V_Charg_Lo_10_perc_Acc_cnt = 0;
 uint32_t V_Charg_Lo_10_perc_Acc_per = 200;
 uint32_t V_Charg_Lo_10_perc_ret_Acc_cnt = 0;
 uint32_t V_Charg_Lo_10_perc_ret_Acc_per = 20;
-float IRECT_smp = 0.0f;
 float IRECT_smp_sc = 0.0f;
 float IRECT_per_sc = 0.0f;
 float ILOAD_per_sc = 0.0f;
 //float IRECT_f = 0.0f;
-float VBAT_smp = 0.0f;
 float VBAT_smp_sc = 0.0f;
-float IBAT_smp = 0.0f;
 float IBAT_smp_sc = 0.0f;
 float IBAT_per_sc = 0.0f;
 //float IBAT_f = 0.0f;
-float VBAT_per_avg_sc = 0.0f;
 float VBAT_f = 0.0f;
-float vtarg_float = 52.8f;
-float vtarg_set = 1.0f;
 float cs_vtarg_vi = 0;
 float itarg_rect = 100;
 float itarg_batt = 100;
@@ -101,7 +115,6 @@ double integralp = 0.0f;
 double integral_max_v = 40000.0f;
 double integral_min_i_rect = -500000.0f;
 double integral_min_i_batt = -500000.0f;
-uint8_t integral_v_allowed = 1;
 double Ki_x_int_lim = 2000000.0f;
 double error_v = 0.0f;
 double error_i_rect = 0.0f;
@@ -149,7 +162,7 @@ float IBAT_zero = 32768;
 //uint32_t IBAT_zero_ok_cnt = 0;
 
 float VBAT_sum = 0;
-float VBAT_per_avg = 0;
+float VBAT_per_avg_sc = 0;
 float VBAT_lim = 15;
 uint32_t VBAT_smp_count = 0;
 uint32_t VBAT_samp_end = 0;
@@ -168,16 +181,16 @@ float VDCKN_per_avg = 0;
 double VAC_R_per_avg = 0;
 double VAC_S_per_avg = 0;
 double VAC_T_per_avg = 0;
-float VOUT_per_avg_sc = 0;
-float VOUT_per_avg = 0;
+float VRECT_per_avg_sc = 0;
+float VRECT_per_avg = 0;
 float VDCKP_per_avg_roll = 0;
 float VDCKN_per_avg_roll = 0;
 float VAC_R_roll_per_avg = 0;
 float VAC_S_roll_per_avg = 0;
 float VAC_T_roll_per_avg = 0;
-float VOUT_per_avg_roll_sc = 0;
-float VOUT_per_avg_roll = 0;
-float VOUT_per_avg_roll_half = 0;
+float VRECT_per_avg_roll_sc = 0;
+float VRECT_per_avg_roll = 0;
+float VRECT_per_avg_roll_half = 0;
 float VDCKP_avg2_s = 0;
 float VDCKN_avg2_s = 0;
 uint32_t VDCKP_smp_count = 0;
@@ -185,17 +198,17 @@ uint32_t VDCKN_smp_count = 0;
 uint32_t VAC_R_smp_count = 0;
 uint32_t VAC_S_smp_count = 0;
 uint32_t VAC_T_smp_count = 0;
-uint32_t VOUT_smp_count = 0;
+uint32_t VRECT_smp_count = 0;
 uint32_t VDCKP_samp_end = 0;
 uint32_t VDCKN_samp_end = 0;
 uint32_t VAC_R_samp_end = 0;
 uint32_t VAC_S_samp_end = 0;
 uint32_t VAC_T_samp_end = 0;
-uint32_t VOUT_samp_end = 0;
+uint32_t VRECT_samp_end = 0;
 float VDCKP_sum = 0;
 float VDCKN_sum = 0;
-float VOUT_sum_sc = 0;
-uint32_t VOUT_sum = 0;
+float VRECT_sum_sc = 0;
+uint32_t VRECT_sum = 0;
 float VINR = 0;
 float VAC_R_off = 0;
 float VINS = 0;
@@ -477,7 +490,7 @@ float Batt_inspect_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 #define VAC_0_LIM VAC_Nom * 0.5f
 #define VAC_0_RET_LIM VAC_0_LIM+2
 
-float VAC_Nom=36.0f;
+float VAC_Nom=398.0f;
 float VAC_Hg_Lim=0;
 float VAC_Lo_Lim=0;
 
@@ -818,7 +831,7 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_BKER  		0xD8  // Block Erase
 #define CMD_CHER  		0xC7  // Chip Erase
 uint32_t var1=0;
-uint32_t var2=0;
+//uint32_t var2=0;
 //uint32_t var3=0;
 //uint32_t var4=0;
 //uint8_t var5=0;
@@ -837,7 +850,7 @@ uint32_t flt_disp_index = 0;
 uint32_t flt_array_index_found = 0;
 uint32_t FAULT_CODES_REPORT_disp_mode = 0;
 
-
+char lcdd[32];
 
 
 

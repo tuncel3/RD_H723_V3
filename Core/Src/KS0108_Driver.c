@@ -42,38 +42,38 @@ __STATIC_INLINE void delayA_1us(uint32_t us)
  // Argument      : Command			                                             /
  // Return			   : None                                                      /
  //---------------------------------------------------------------------------/
-   void   GLCD_WriteCommand(uint8_t Command){
-   SET_MODE_COMMAND_WRITE;
-//   GLCD_DATA_PORT->ODR = (GLCD_DATA_PORT->ODR & 0xFF00) | (uint16_t)(Command);
-   uint8_t d1=0;
-   uint8_t da=Command;
-d1 = da & 0b1;
-WRITE_REG(GPIOB->ODR, (GPIOB->ODR & ~(1 << 3)) | (d1 << 3));
-da = da >> 1;
-d1 = da & 0b1;
-WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 7)) | (d1 << 7));
-da = da >> 1;
-d1 = da & 0b1;
-WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 6)) | (d1 << 6));
-da = da >> 1;
-d1 = da & 0b1;
-WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 5)) | (d1 << 5));
-da = da >> 1;
-d1 = da & 0b1;
-WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 4)) | (d1 << 4));
-da = da >> 1;
-d1 = da & 0b1;
-WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 3)) | (d1 << 3));
-da = da >> 1;
-d1 = da & 0b1;
-WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 2)) | (d1 << 2));
-da = da >> 1;
-d1 = da & 0b1;
-WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 1)) | (d1 << 1));
-   EN1;
-   delayA_1us(10);
-   EN0;
- }
+  void GLCD_WriteCommand(uint8_t Command) {
+      SET_MODE_COMMAND_WRITE;
+      uint8_t d1 = 0;
+      uint8_t da = Command;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 0)) | (d1 << 0));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 12)) | (d1 << 12));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 11)) | (d1 << 11));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 10)) | (d1 << 10));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 15)) | (d1 << 15));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 12)) | (d1 << 12));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 11)) | (d1 << 11));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 10)) | (d1 << 10));
+      EN1_g;
+      delayA_1us(10);
+      EN0_g;
+  }
+
 
    //---------------------------------------------------------------------------/
    // Function Name : GLCD_WriteData																						 /
@@ -81,38 +81,39 @@ WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 1)) | (d1 << 1));
    // Argument      : Data			                                                 /
    // Return			   : None                                                      /
    //---------------------------------------------------------------------------/
-   void GLCD_WriteData(uint8_t Data){
-     SET_MODE_DATA_WRITE;
-//     GLCD_DATA_PORT->ODR = (GLCD_DATA_PORT->ODR & 0xFF00) | (uint16_t)(Data);
-     uint8_t d1=0;
-     uint8_t da=Data;
-  d1 = da & 0b1;
-  WRITE_REG(GPIOB->ODR, (GPIOB->ODR & ~(1 << 3)) | (d1 << 3));
-  da = da >> 1;
-  d1 = da & 0b1;
-  WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 7)) | (d1 << 7));
-  da = da >> 1;
-  d1 = da & 0b1;
-  WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 6)) | (d1 << 6));
-  da = da >> 1;
-  d1 = da & 0b1;
-  WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 5)) | (d1 << 5));
-  da = da >> 1;
-  d1 = da & 0b1;
-  WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 4)) | (d1 << 4));
-  da = da >> 1;
-  d1 = da & 0b1;
-  WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 3)) | (d1 << 3));
-  da = da >> 1;
-  d1 = da & 0b1;
-  WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 2)) | (d1 << 2));
-  da = da >> 1;
-  d1 = da & 0b1;
-  WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 1)) | (d1 << 1));
-     EN1;
-     delayA_1us(10);
-     EN0;
-   }
+
+  void GLCD_WriteData(uint8_t Data) {
+      SET_MODE_DATA_WRITE;
+      uint8_t d1 = 0;
+      uint8_t da = Data;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 0)) | (d1 << 0));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 12)) | (d1 << 12));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 11)) | (d1 << 11));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 10)) | (d1 << 10));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 15)) | (d1 << 15));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 12)) | (d1 << 12));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 11)) | (d1 << 11));
+      da = da >> 1;
+      d1 = da & 0b1;
+      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 10)) | (d1 << 10));
+      EN1_g;
+      delayA_1us(10);
+      EN0_g;
+  }
+
 
    //---------------------------------------------------------------------------/
    // Function Name : KS0108_RefreshGRAM         			      				           /
@@ -176,18 +177,18 @@ WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 1)) | (d1 << 1));
    // Return			   : None                                                      /
    //---------------------------------------------------------------------------/
    void GLCD_Init(void){
-     RST0;
-     RW0;
-     EN0;
-     CS10;
-     CS20;
-     RS0;
+     RST0_g;
+     RW0_g;
+     EN0_g;
+     CS10_g;
+     CS20_g;
+     RS0_g;
      State=0;
      Column=0;
      Row=0;
      TriggerCounter=0;
      Busy=0;
-     RST1;
+     RST1_g;
      SELECT_FIRST_CHIP;
      GLCD_WriteCommand(X_BASE_ADDRESS);		// First Chip First Row
      GLCD_WriteCommand(Y_BASE_ADDRESS);		// First Chip First Column

@@ -37,61 +37,51 @@
 /********* LCD **********/
 
 // FP LCD
-#define TC_1_1_P GPIOD, LL_GPIO_PIN_3
-#define TC_1_2_P GPIOD, LL_GPIO_PIN_2
-#define TC_1_3_P GPIOD, LL_GPIO_PIN_1
-#define TC_1_4_P GPIOD, LL_GPIO_PIN_0
-#define TC_1_5_P GPIOC, LL_GPIO_PIN_12
-#define TC_1_6_P GPIOC, LL_GPIO_PIN_11
+#define TC_1_1_P GPIOA, LL_GPIO_PIN_12
+#define TC_1_2_P GPIOA, LL_GPIO_PIN_11
+#define TC_1_3_P GPIOA, LL_GPIO_PIN_10
+#define TC_1_4_P GPIOA, LL_GPIO_PIN_9
+#define TC_1_5_P GPIOA, LL_GPIO_PIN_8
+#define TC_1_6_P GPIOC, LL_GPIO_PIN_9
 
-#define TC_2_1_P GPIOB, LL_GPIO_PIN_6
-#define TC_2_2_P GPIOB, LL_GPIO_PIN_5
-#define TC_2_3_P GPIOB, LL_GPIO_PIN_4
-#define TC_2_4_P GPIOB, LL_GPIO_PIN_3
-#define TC_2_5_P GPIOD, LL_GPIO_PIN_7
-#define TC_2_6_P GPIOD, LL_GPIO_PIN_6
-#define TC_2_7_P GPIOD, LL_GPIO_PIN_5
-#define TC_2_8_P GPIOD, LL_GPIO_PIN_4
-
-#define GLCD_DATA_PORT  GPIOB
-
-#define CS1 TC_1_4_P
-#define CS2 TC_1_5_P
-#define RS  TC_2_1_P
-#define RW  TC_2_2_P
-#define EN  TC_2_3_P
-#define RST TC_1_6_P
-
-#define DB0 TC_2_4_P
-#define DB1 TC_2_5_P
-#define DB2 TC_2_6_P
-#define DB3 TC_2_7_P
-#define DB4 TC_2_8_P
-#define DB5 TC_1_1_P
-#define DB6 TC_1_2_P
-#define DB7 TC_1_3_P
-
-#define CS11              set_(CS1)
-#define CS10              res_(CS1)
-#define CS21              set_(CS2)
-#define CS20              res_(CS2)
-#define RS1               set_(RS)
-#define RS0               res_(RS)
-#define RW1               set_(RW)
-#define RW0               res_(RW)
-#define EN1               set_(EN)
-#define EN0               res_(EN)
-#define RST1              set_(RST)
-#define RST0              res_(RST)
+#define TC_2_1_P GPIOD, LL_GPIO_PIN_3
+#define TC_2_2_P GPIOD, LL_GPIO_PIN_2
+#define TC_2_3_P GPIOD, LL_GPIO_PIN_1
+#define TC_2_4_P GPIOD, LL_GPIO_PIN_0
+#define TC_2_5_P GPIOC, LL_GPIO_PIN_12
+#define TC_2_6_P GPIOC, LL_GPIO_PIN_11
+#define TC_2_7_P GPIOC, LL_GPIO_PIN_10
+#define TC_2_8_P GPIOA, LL_GPIO_PIN_15
 
 
-#define SELECT_FIRST_CHIP       CS11, CS20
-#define SELECT_SECOND_CHIP      CS21, CS10
+#define CS1_g TC_1_4_P
+#define CS2_g TC_1_5_P
+#define RS_g  TC_2_1_P
+#define RW_g  TC_2_2_P
+#define EN_g  TC_2_3_P
+#define RST_g TC_1_6_P
 
-#define SET_MODE_DATA_WRITE      RS1, RW0
-#define SET_MODE_DATA_READ       RS1, RW1
-#define SET_MODE_COMMAND_WRITE   RS0, RW0
-#define SET_MODE_COMMAND_READ    RS0, RW1
+#define CS11_g              set_(CS1_g)
+#define CS10_g              res_(CS1_g)
+#define CS21_g              set_(CS2_g)
+#define CS20_g              res_(CS2_g)
+#define RS1_g               set_(RS_g)
+#define RS0_g               res_(RS_g)
+#define RW1_g               set_(RW_g)
+#define RW0_g               res_(RW_g)
+#define EN1_g               set_(EN_g)
+#define EN0_g               res_(EN_g)
+#define RST1_g              set_(RST_g)
+#define RST0_g              res_(RST_g)
+
+
+#define SELECT_FIRST_CHIP       CS11_g, CS20_g
+#define SELECT_SECOND_CHIP      CS21_g, CS10_g
+
+#define SET_MODE_DATA_WRITE      RS1_g, RW0_g
+#define SET_MODE_DATA_READ       RS1_g, RW1_g
+#define SET_MODE_COMMAND_WRITE   RS0_g, RW0_g
+#define SET_MODE_COMMAND_READ    RS0_g, RW1_g
 
 #define START_LINE                0xC0
 #define X_BASE_ADDRESS            0xB8
