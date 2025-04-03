@@ -63,6 +63,10 @@ void bleft_fnc(void) {
 				if (EpD[SET_BATT_REV_DET][1].V1==1) {
 					EpD[SET_BATT_REV_DET][1].V1=0;
 				} else { EpD[SET_BATT_REV_DET][1].V1=1;}
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
+				if (EpD[SET_BATT_DISC_DET][1].V1==1) {
+					EpD[SET_BATT_DISC_DET][1].V1=0;
+				} else { EpD[SET_BATT_DISC_DET][1].V1=1;}
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1-1.0;
 				if (EpD[DEV_NOM_VOUT][1].V1 <= 0)
@@ -91,6 +95,31 @@ void bleft_fnc(void) {
     	}
     }
     else if (currentPage == MANAGEMENT_pg) {
+
+    }
+    else if (currentPage == CALIBRATION_pg) {
+    	if (cal_sel_edit_mode == cal_none) {
+			if (cal_sel_col==0) {
+				cal_sel_col=1;
+			}
+			else if (cal_sel_col==1) {
+				cal_sel_col=0;
+			}
+    	} else if (cal_sel_edit_mode != cal_none) {
+    		cal_sel_digit=(cal_sel_digit+1)%2;
+    	}
+
+		if (cal_sel_edit_mode == cal_none) {
+			if (cal_sel_col==0) {	// üstte cal sel col belirleniyor. burada da ona uygun olarak dikdörgenin yeri belirleniyor.
+				cal_sel_item_left=cal_sel_item_right;	// soldaki neyse sağa geçince de o olmasını sağlıyor.
+			}
+			else if (cal_sel_col==1 && cal_sel_item_left < 3) {
+				cal_sel_item_right=cal_sel_item_left;
+			}
+			else if (cal_sel_col==1 && cal_sel_item_left >= 3) {
+				cal_sel_item_right=2;
+			}
+		}
 
     }
     else if (currentPage == FAULT_CODES_REPORT_pg) {
@@ -176,6 +205,10 @@ void bright_fnc(void) {
 				if (EpD[SET_BATT_REV_DET][1].V1==1) {
 					EpD[SET_BATT_REV_DET][1].V1=0;
 				} else { EpD[SET_BATT_REV_DET][1].V1=1;}
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
+				if (EpD[SET_BATT_DISC_DET][1].V1==1) {
+					EpD[SET_BATT_DISC_DET][1].V1=0;
+				} else { EpD[SET_BATT_DISC_DET][1].V1=1;}
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1+1.0;
 				if (EpD[DEV_NOM_VOUT][1].V1 >= VDC_NOM_MAX)
@@ -204,6 +237,31 @@ void bright_fnc(void) {
     	}
     }
     else if (currentPage == MANAGEMENT_pg) {
+
+    }
+    else if (currentPage == CALIBRATION_pg) {
+    	if (cal_sel_edit_mode == cal_none) {
+			if (cal_sel_col==0) {
+				cal_sel_col=1;
+			}
+			else if (cal_sel_col==1) {
+				cal_sel_col=0;
+			}
+    	} else if (cal_sel_edit_mode != cal_none) {
+    		cal_sel_digit=(cal_sel_digit-1+2)%2;
+    	}
+
+		if (cal_sel_edit_mode == cal_none) {
+			if (cal_sel_col==0) {	// üstte cal sel col belirleniyor. burada da ona uygun olarak dikdörgenin yeri belirleniyor.
+				cal_sel_item_left=cal_sel_item_right;	// soldaki neyse sağa geçince de o olmasını sağlıyor.
+			}
+			else if (cal_sel_col==1 && cal_sel_item_left < 3) {
+				cal_sel_item_right=cal_sel_item_left;
+			}
+			else if (cal_sel_col==1 && cal_sel_item_left >= 3) {
+				cal_sel_item_right=2;
+			}
+		}
 
     }
     else if (currentPage == FAULT_CODES_REPORT_pg) {
@@ -250,6 +308,10 @@ void bup_fnc(void) {
 				if (EpD[SET_BATT_REV_DET][1].V1==1) {
 					EpD[SET_BATT_REV_DET][1].V1=0;
 				} else { EpD[SET_BATT_REV_DET][1].V1=1;}
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
+				if (EpD[SET_BATT_DISC_DET][1].V1==1) {
+					EpD[SET_BATT_DISC_DET][1].V1=0;
+				} else { EpD[SET_BATT_DISC_DET][1].V1=1;}
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1+0.1;
 				if (EpD[DEV_NOM_VOUT][1].V1 >= VDC_NOM_MAX)
@@ -326,6 +388,150 @@ if (!chg_setting_edit_mode) {
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
+    else if (currentPage == CALIBRATION_pg) {
+    	if (cal_sel_edit_mode == cal_none) {
+			if (cal_sel_col==0) {
+				cal_sel_item_left=((cal_sel_item_left-1+5)%5);
+			}
+			else if (cal_sel_col==1) {
+				cal_sel_item_right=((cal_sel_item_right-1+3)%3);
+			}
+    	}
+    	if (cal_sel_col==0) {
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==0 && cal_sel_digit==0) {
+				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1*1.0002;
+				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==0 && cal_sel_digit==1) {
+				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1*1.005;
+				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==0 && cal_sel_digit==0) {
+				EpD[SET_VRECT_OFFS_CAL][0].V1=EpD[SET_VRECT_OFFS_CAL][0].V1+1;
+				EpD[SET_VRECT_OFFS_CAL][1].V1=EpD[SET_VRECT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==0 && cal_sel_digit==1) {
+				EpD[SET_VRECT_OFFS_CAL][0].V1=EpD[SET_VRECT_OFFS_CAL][0].V1+10;
+				EpD[SET_VRECT_OFFS_CAL][1].V1=EpD[SET_VRECT_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==1 && cal_sel_digit==0) {
+				EpD[SET_VLOAD_CAL][0].V1=EpD[SET_VLOAD_CAL][0].V1*1.0002;
+				EpD[SET_VLOAD_CAL][1].V1=EpD[SET_VLOAD_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==1 && cal_sel_digit==1) {
+				EpD[SET_VLOAD_CAL][0].V1=EpD[SET_VLOAD_CAL][0].V1*1.005;
+				EpD[SET_VLOAD_CAL][1].V1=EpD[SET_VLOAD_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==1 && cal_sel_digit==0) {
+				EpD[SET_VLOAD_OFFS_CAL][0].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1+1;
+				EpD[SET_VLOAD_OFFS_CAL][1].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==1 && cal_sel_digit==1) {
+				EpD[SET_VLOAD_OFFS_CAL][0].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1+10;
+				EpD[SET_VLOAD_OFFS_CAL][1].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==2 && cal_sel_digit==0) {
+				EpD[SET_VBAT_CAL][0].V1=EpD[SET_VBAT_CAL][0].V1*1.0002;
+				EpD[SET_VBAT_CAL][1].V1=EpD[SET_VBAT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==2 && cal_sel_digit==1) {
+				EpD[SET_VBAT_CAL][0].V1=EpD[SET_VBAT_CAL][0].V1*1.005;
+				EpD[SET_VBAT_CAL][1].V1=EpD[SET_VBAT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==2 && cal_sel_digit==0) {
+				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1+1;
+				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==2 && cal_sel_digit==1) {
+				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1+10;
+				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==0) {
+				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1*1.0002;
+				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==1) {
+				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1*1.005;
+				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==0) {
+				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1+1;
+				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==1) {
+				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1+10;
+				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==4 && cal_sel_digit==0) {
+				EpD[SET_IBAT_CAL][0].V1=EpD[SET_IBAT_CAL][0].V1*1.0002;
+				EpD[SET_IBAT_CAL][1].V1=EpD[SET_IBAT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==4 && cal_sel_digit==1) {
+				EpD[SET_IBAT_CAL][0].V1=EpD[SET_IBAT_CAL][0].V1*1.005;
+				EpD[SET_IBAT_CAL][1].V1=EpD[SET_IBAT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==4 && cal_sel_digit==0) {
+				EpD[SET_IBAT_OFFS_CAL][0].V1=EpD[SET_IBAT_OFFS_CAL][0].V1+1;
+				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==4 && cal_sel_digit==1) {
+				EpD[SET_IBAT_OFFS_CAL][0].V1=EpD[SET_IBAT_OFFS_CAL][0].V1+10;
+				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
+			}
+    	}
+    	else if (cal_sel_col==1) {
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==0 && cal_sel_digit==0) {
+				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1*1.0002;
+				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==0 && cal_sel_digit==1) {
+				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1*1.005;
+				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==0 && cal_sel_digit==0) {
+				EpD[SET_ACR_OFFS_CAL][0].V1=EpD[SET_ACR_OFFS_CAL][0].V1+1;
+				EpD[SET_ACR_OFFS_CAL][1].V1=EpD[SET_ACR_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==0 && cal_sel_digit==1) {
+				EpD[SET_ACR_OFFS_CAL][0].V1=EpD[SET_ACR_OFFS_CAL][0].V1+10;
+				EpD[SET_ACR_OFFS_CAL][1].V1=EpD[SET_ACR_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==1 && cal_sel_digit==0) {
+				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1*1.0002;
+				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==1 && cal_sel_digit==1) {
+				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1*1.005;
+				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==1 && cal_sel_digit==0) {
+				EpD[SET_ACS_OFFS_CAL][0].V1=EpD[SET_ACS_OFFS_CAL][0].V1+1;
+				EpD[SET_ACS_OFFS_CAL][1].V1=EpD[SET_ACS_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==1 && cal_sel_digit==1) {
+				EpD[SET_ACS_OFFS_CAL][0].V1=EpD[SET_ACS_OFFS_CAL][0].V1+10;
+				EpD[SET_ACS_OFFS_CAL][1].V1=EpD[SET_ACS_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==2 && cal_sel_digit==0) {
+				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1*1.0002;
+				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==2 && cal_sel_digit==1) {
+				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1*1.005;
+				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==2 && cal_sel_digit==0) {
+				EpD[SET_ACT_OFFS_CAL][0].V1=EpD[SET_ACT_OFFS_CAL][0].V1+1;
+				EpD[SET_ACT_OFFS_CAL][1].V1=EpD[SET_ACT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==2 && cal_sel_digit==1) {
+				EpD[SET_ACT_OFFS_CAL][0].V1=EpD[SET_ACT_OFFS_CAL][0].V1+10;
+				EpD[SET_ACT_OFFS_CAL][1].V1=EpD[SET_ACT_OFFS_CAL][0].V1;
+			}
+		}
+
+
+    }
     else if (currentPage == FAULT_CODES_REPORT_pg) {
     	flt_disp_index=(flt_disp_index-1+NUM_FAULT_RECORD) % NUM_FAULT_RECORD;
     }
@@ -393,6 +599,10 @@ void bdown_fnc(void) {
     			if (EpD[SET_BATT_REV_DET][1].V1==1) {
     				EpD[SET_BATT_REV_DET][1].V1=0;
     			} else { EpD[SET_BATT_REV_DET][1].V1=1;}
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
+				if (EpD[SET_BATT_DISC_DET][1].V1==1) {
+					EpD[SET_BATT_DISC_DET][1].V1=0;
+				} else { EpD[SET_BATT_DISC_DET][1].V1=1;}
     		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
     			EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1-0.1;
     			if (EpD[DEV_NOM_VOUT][1].V1 <= VDC_NOM_MIN) {
@@ -468,6 +678,151 @@ if (!chg_setting_edit_mode) {
     }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT+1) % NUM_MANAGEMENT_ITEMS;
+    }
+    else if (currentPage == CALIBRATION_pg) {
+    	if (cal_sel_edit_mode == cal_none) {
+			if (cal_sel_col==0) {
+				cal_sel_item_left=(cal_sel_item_left+1)%5;
+			}
+			else if (cal_sel_col==1) {
+				cal_sel_item_right=(cal_sel_item_right+1)%3;
+			}
+    	}
+
+    	if (cal_sel_col==0) {
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==0 && cal_sel_digit==0) {
+				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1/1.0002;
+				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==0 && cal_sel_digit==1) {
+				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1/1.005;
+				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==0 && cal_sel_digit==0) {
+				EpD[SET_VRECT_OFFS_CAL][0].V1=EpD[SET_VRECT_OFFS_CAL][0].V1-1;
+				EpD[SET_VRECT_OFFS_CAL][1].V1=EpD[SET_VRECT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==0 && cal_sel_digit==1) {
+				EpD[SET_VRECT_OFFS_CAL][0].V1=EpD[SET_VRECT_OFFS_CAL][0].V1-10;
+				EpD[SET_VRECT_OFFS_CAL][1].V1=EpD[SET_VRECT_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==1 && cal_sel_digit==0) {
+				EpD[SET_VLOAD_CAL][0].V1=EpD[SET_VLOAD_CAL][0].V1/1.0002;
+				EpD[SET_VLOAD_CAL][1].V1=EpD[SET_VLOAD_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==1 && cal_sel_digit==1) {
+				EpD[SET_VLOAD_CAL][0].V1=EpD[SET_VLOAD_CAL][0].V1/1.005;
+				EpD[SET_VLOAD_CAL][1].V1=EpD[SET_VLOAD_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==1 && cal_sel_digit==0) {
+				EpD[SET_VLOAD_OFFS_CAL][0].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1-1;
+				EpD[SET_VLOAD_OFFS_CAL][1].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==1 && cal_sel_digit==1) {
+				EpD[SET_VLOAD_OFFS_CAL][0].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1-10;
+				EpD[SET_VLOAD_OFFS_CAL][1].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==2 && cal_sel_digit==0) {
+				EpD[SET_VBAT_CAL][0].V1=EpD[SET_VBAT_CAL][0].V1/1.0002;
+				EpD[SET_VBAT_CAL][1].V1=EpD[SET_VBAT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==2 && cal_sel_digit==1) {
+				EpD[SET_VBAT_CAL][0].V1=EpD[SET_VBAT_CAL][0].V1/1.005;
+				EpD[SET_VBAT_CAL][1].V1=EpD[SET_VBAT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==2 && cal_sel_digit==0) {
+				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1-1;
+				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==2 && cal_sel_digit==1) {
+				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1-10;
+				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==0) {
+				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1/1.0002;
+				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==1) {
+				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1/1.005;
+				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==0) {
+				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1-1;
+				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==1) {
+				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1-10;
+				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==4 && cal_sel_digit==0) {
+				EpD[SET_IBAT_CAL][0].V1=EpD[SET_IBAT_CAL][0].V1/1.0002;
+				EpD[SET_IBAT_CAL][1].V1=EpD[SET_IBAT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==4 && cal_sel_digit==1) {
+				EpD[SET_IBAT_CAL][0].V1=EpD[SET_IBAT_CAL][0].V1/1.005;
+				EpD[SET_IBAT_CAL][1].V1=EpD[SET_IBAT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==4 && cal_sel_digit==0) {
+				EpD[SET_IBAT_OFFS_CAL][0].V1=EpD[SET_IBAT_OFFS_CAL][0].V1-1;
+				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==4 && cal_sel_digit==1) {
+				EpD[SET_IBAT_OFFS_CAL][0].V1=EpD[SET_IBAT_OFFS_CAL][0].V1-10;
+				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
+			}
+    	}
+    	else if (cal_sel_col==1) {
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==0 && cal_sel_digit==0) {
+				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1/1.0002;
+				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==0 && cal_sel_digit==1) {
+				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1/1.005;
+				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==0 && cal_sel_digit==0) {
+				EpD[SET_ACR_OFFS_CAL][0].V1=EpD[SET_ACR_OFFS_CAL][0].V1-1;
+				EpD[SET_ACR_OFFS_CAL][1].V1=EpD[SET_ACR_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==0 && cal_sel_digit==1) {
+				EpD[SET_ACR_OFFS_CAL][0].V1=EpD[SET_ACR_OFFS_CAL][0].V1-10;
+				EpD[SET_ACR_OFFS_CAL][1].V1=EpD[SET_ACR_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==1 && cal_sel_digit==0) {
+				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1/1.0002;
+				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==1 && cal_sel_digit==1) {
+				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1/1.005;
+				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==1 && cal_sel_digit==0) {
+				EpD[SET_ACS_OFFS_CAL][0].V1=EpD[SET_ACS_OFFS_CAL][0].V1-1;
+				EpD[SET_ACS_OFFS_CAL][1].V1=EpD[SET_ACS_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==1 && cal_sel_digit==1) {
+				EpD[SET_ACS_OFFS_CAL][0].V1=EpD[SET_ACS_OFFS_CAL][0].V1-10;
+				EpD[SET_ACS_OFFS_CAL][1].V1=EpD[SET_ACS_OFFS_CAL][0].V1;
+			}
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==2 && cal_sel_digit==0) {
+				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1/1.0002;
+				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==2 && cal_sel_digit==1) {
+				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1/1.005;
+				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==2 && cal_sel_digit==0) {
+				EpD[SET_ACT_OFFS_CAL][0].V1=EpD[SET_ACT_OFFS_CAL][0].V1-1;
+				EpD[SET_ACT_OFFS_CAL][1].V1=EpD[SET_ACT_OFFS_CAL][0].V1;
+			}
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_right==2 && cal_sel_digit==1) {
+				EpD[SET_ACT_OFFS_CAL][0].V1=EpD[SET_ACT_OFFS_CAL][0].V1-10;
+				EpD[SET_ACT_OFFS_CAL][1].V1=EpD[SET_ACT_OFFS_CAL][0].V1;
+			}
+		}
+
+
     }
     else if (currentPage == FAULT_CODES_REPORT_pg) {
     	flt_disp_index=(flt_disp_index+1+NUM_FAULT_RECORD) % NUM_FAULT_RECORD;
@@ -576,6 +931,10 @@ void besc_fnc(void) {
     }
     else if (currentPage == MANAGEMENT_pg) {
         currentPage = MAIN_MENU_pg;
+    }
+    else if (currentPage == CALIBRATION_pg) {
+        currentPage = MANAGEMENT_pg;
+		bat_inspection_allowed=1;
     }
     else if (currentPage == FAULT_CODES_REPORT_pg) {
         currentPage = MAIN_MENU_pg;

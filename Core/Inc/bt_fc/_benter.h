@@ -119,6 +119,9 @@ if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==255) {
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_REV_DET) {
 	EpD[SET_BATT_REV_DET][1].V1=EpD[SET_BATT_REV_DET][0].V1;
 }
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
+	EpD[SET_BATT_DISC_DET][1].V1=EpD[SET_BATT_DISC_DET][0].V1;
+}
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][0].V1;
 }
@@ -145,6 +148,10 @@ if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==999) {
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_REV_DET) {
 	EpD[SET_BATT_REV_DET][0].V1=EpD[SET_BATT_REV_DET][1].V1;
 	Rec_Dat_to_EEp_f(SET_BATT_REV_DET);
+}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
+	EpD[SET_BATT_DISC_DET][0].V1=EpD[SET_BATT_DISC_DET][1].V1;
+	Rec_Dat_to_EEp_f(SET_BATT_DISC_DET);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][0].V1=EpD[DEV_NOM_VOUT][1].V1;
@@ -179,6 +186,74 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==BATT_SHORT) {
 		}
 		if (selected_MANAGEMENT == 1) {
 			currentPage = DEVICE_RESET_pg;
+		}
+		if (selected_MANAGEMENT == 2) {
+			currentPage = CALIBRATION_pg;
+			bat_inspection_allowed=0;
+		}
+    }
+    else if (currentPage == CALIBRATION_pg) {
+    	cal_sel_edit_mode=(cal_sel_edit_mode+1)%3;
+
+		if (cal_sel_edit_mode == cal_offset) { // yani enter a basılmış ve gain den offset edit moduna geçilmiş. yani gain değerinin kaydedilmesi lazım.
+			if (cal_sel_col==0) {
+				if (cal_sel_item_left==0) {
+					Rec_Dat_to_EEp_f(SET_VRECT_CAL);
+				}
+				else if (cal_sel_item_left==1) {
+					Rec_Dat_to_EEp_f(SET_VLOAD_CAL);
+				}
+				else if (cal_sel_item_left==2) {
+					Rec_Dat_to_EEp_f(SET_VBAT_CAL);
+				}
+				else if (cal_sel_item_left==3) {
+					Rec_Dat_to_EEp_f(SET_IRECT_CAL);
+				}
+				else if (cal_sel_item_left==4) {
+					Rec_Dat_to_EEp_f(SET_IBAT_CAL);
+				}
+			}
+			if (cal_sel_col==1) {
+				if (cal_sel_item_right==0) {
+					Rec_Dat_to_EEp_f(SET_ACR_CAL);
+				}
+				else if (cal_sel_item_right==1) {
+					Rec_Dat_to_EEp_f(SET_ACS_CAL);
+				}
+				else if (cal_sel_item_right==2) {
+					Rec_Dat_to_EEp_f(SET_ACT_CAL);
+				}
+			}
+		}
+		if (cal_sel_edit_mode == cal_none) { // yani enter a basılmış ve offset den no edit moduna geçilmiş. yani offset değerinin kaydedilmesi lazım.
+			if (cal_sel_col==0) {
+				if (cal_sel_item_left==0) {
+					Rec_Dat_to_EEp_f(SET_VRECT_OFFS_CAL);
+				}
+				else if (cal_sel_item_left==1) {
+					Rec_Dat_to_EEp_f(SET_VLOAD_OFFS_CAL);
+				}
+				else if (cal_sel_item_left==2) {
+					Rec_Dat_to_EEp_f(SET_VBAT_OFFS_CAL);
+				}
+				else if (cal_sel_item_left==3) {
+					Rec_Dat_to_EEp_f(SET_IRECT_OFFS_CAL);
+				}
+				else if (cal_sel_item_left==4) {
+					Rec_Dat_to_EEp_f(SET_IBAT_OFFS_CAL);
+				}
+			}
+			if (cal_sel_col==1) {
+				if (cal_sel_item_right==0) {
+					Rec_Dat_to_EEp_f(SET_ACR_OFFS_CAL);
+				}
+				else if (cal_sel_item_right==1) {
+					Rec_Dat_to_EEp_f(SET_ACS_OFFS_CAL);
+				}
+				else if (cal_sel_item_right==2) {
+					Rec_Dat_to_EEp_f(SET_ACT_OFFS_CAL);
+				}
+			}
 		}
     }
     else if (currentPage == FAULT_CODES_RESET_pg) {

@@ -9,10 +9,10 @@
 #include <_KS0108_Driver.h>
 #include <string.h>
 
-__STATIC_INLINE void delayA_1us(uint32_t us)
+inline extern void delayA_1us_g(uint32_t us)
 {
     // Adjusted iteration count for 1 ms at 550 MHz
-    uint32_t iterations_per_us = 541;
+    uint32_t iterations_per_us = 200;
 
     // Calculate total iterations needed for the given ms
     uint32_t total_iterations = iterations_per_us * us;
@@ -26,8 +26,6 @@ __STATIC_INLINE void delayA_1us(uint32_t us)
     );
 }
 
-//	volatile void delay_10us(uint32_t num1);
-//inline extern void delayA_1us(uint32_t us);
   uint8_t   DisplayBuffer[KS0108_BUFFER_LENGTH];
   uint16_t	Column;
   uint8_t   Row;
@@ -44,35 +42,28 @@ __STATIC_INLINE void delayA_1us(uint32_t us)
  //---------------------------------------------------------------------------/
   void GLCD_WriteCommand(uint8_t Command) {
       SET_MODE_COMMAND_WRITE;
-      uint8_t d1 = 0;
-      uint8_t da = Command;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 0)) | (d1 << 0));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 12)) | (d1 << 12));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 11)) | (d1 << 11));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 10)) | (d1 << 10));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 15)) | (d1 << 15));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 12)) | (d1 << 12));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 11)) | (d1 << 11));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 10)) | (d1 << 10));
+
+      // Define static constant arrays to avoid re-initialization
+      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
+      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
+                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
+
+      // Write each bit efficiently
+      for (int i = 0; i < 8; i++) {
+          if (Command & (1 << i)) {
+              ports[i]->BSRR = pins[i];  // Set bit
+          } else {
+              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
+          }
+      }
+
       EN1_g;
-      delayA_1us(10);
+      delayA_1us_g(10); // Add delay if needed
       EN0_g;
   }
+
+
+
 
 
    //---------------------------------------------------------------------------/
@@ -84,35 +75,26 @@ __STATIC_INLINE void delayA_1us(uint32_t us)
 
   void GLCD_WriteData(uint8_t Data) {
       SET_MODE_DATA_WRITE;
-      uint8_t d1 = 0;
-      uint8_t da = Data;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOD->ODR, (GPIOD->ODR & ~(1 << 0)) | (d1 << 0));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 12)) | (d1 << 12));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 11)) | (d1 << 11));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOC->ODR, (GPIOC->ODR & ~(1 << 10)) | (d1 << 10));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 15)) | (d1 << 15));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 12)) | (d1 << 12));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 11)) | (d1 << 11));
-      da = da >> 1;
-      d1 = da & 0b1;
-      WRITE_REG(GPIOA->ODR, (GPIOA->ODR & ~(1 << 10)) | (d1 << 10));
+
+      // Corrected: Removed "const" before GPIO_TypeDef *
+      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
+      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
+                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
+
+      // Write each bit efficiently
+      for (int i = 0; i < 8; i++) {
+          if (Data & (1 << i)) {
+              ports[i]->BSRR = pins[i];  // Set bit
+          } else {
+              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
+          }
+      }
+
       EN1_g;
-      delayA_1us(10);
+      delayA_1us_g(10);
       EN0_g;
   }
+
 
 
    //---------------------------------------------------------------------------/
@@ -612,6 +594,54 @@ void GLCD_Pixel(uint8_t	x, uint8_t y, uint8_t Colour)
 //---------------------------------------------------------------------------/
 void  GLCD_Rect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t Fill, uint8_t Colour)
 {
+  if(Fill)
+  {
+  	uint8_t  i, xmin, xmax, ymin, ymax;
+
+  	// Köşelerin minimum ve maksimum koordinatlarını belirle
+    if(x0 < x1)
+    {
+      xmin = x0;
+      xmax = x1;
+    }
+    else
+    {
+      xmin = x1;
+      xmax = x0;
+    }
+
+    if(y0 < y1)
+    {
+      ymin = y0;
+      ymax = y1;
+    }
+    else
+    {
+      ymin = y1;
+      ymax = y0;
+    }
+    // Dolu bir dikdörtgen çiz
+    for(; xmin <= xmax; ++xmin)
+    {
+      for(i = ymin; i <= ymax; ++i)
+      {
+      	GLCD_Pixel(xmin, i, Colour);// Her bir pikseli belirtilen renkte ayarla
+      }
+    }
+  }
+  // Sadece dikdörtgenin çerçevesini çiz
+  else
+  {
+    GLCD_Line(x0, y0, x1, y0);// Üst kenarı çiz
+    GLCD_Line(x0, y1, x1, y1);// Alt kenarı çiz
+    GLCD_Line(x0, y0, x0, y1);// Sol kenarı çiz
+    GLCD_Line(x1, y0, x1, y1);// Sağ kenarı çiz
+  }
+}
+
+void  GLCD_Rect_E(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1)
+{
+	uint8_t Fill=0; uint8_t Colour=0;
   if(Fill)
   {
   	uint8_t  i, xmin, xmax, ymin, ymax;

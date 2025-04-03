@@ -8,9 +8,8 @@ prfm("\033[2J");
 set_(CS_M95P32);
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
-
-write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
-//SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
+//write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
+SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 print_Eep_data_f();
 
 actions_after_charge_mode_change(5); // set charge mode values
@@ -93,6 +92,7 @@ bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast resta
 // 1741385888 196036 saniyede bu unix time a geldi. yaklaşık 0.1 saniye geri kaldı. kalibrasyon -5 ti -4 yapıldı
 // 1741536423 150535 saniyede bu unix time a geldi. yaklaşık 0.5 saniye ileri gitti. kalibrasyon -4 ti -6 yapıldı
 // 9pf yapılırsa iyi sonuç alınacaktır
+// akü hattı kopuk için eklemeler gerekiyor. mcb yardımcı kontağını kullan. akım sınırlaması durumunda akü hattı kopuk belirleme sistemi voltajı düşüremiyor ve akü hattı var diyor. bunu akü bağlı değilken ve mcb yardımcı kontak okuma yapmadığım zamanda gördüm.
 // akü arızası. akü voltajı
 // ayarlanan akım ve gerilim değerleri arıza kodu olarak kaydedilecek.
 // button release disables buttons for some ms
@@ -120,7 +120,8 @@ bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast resta
 // çıkış voltajı yokken. yani ne doğrultucu ne de batarya dc vermiyorsa çıkışa, dc kaçak yüzdesi yüksek olabiliyor.
 // böyle bir durumda yanlış dck oluşmaması için çıkış voltajı nominal voltajın %20 altında ve çıkış, doğrultucu ve
 // batarya akımı yoksa dck yüzdesini önemseme
-
+// rectifier kapalı iken, akü şalter devre dışı iken kaçak voltaj arızası oluşması engellenmeli.
+// NOTE_FOR_CODE_PART notu olan satırlaın olduğu bölümlerde inceleme ve geliştirme gerekiyor olaiblir.
 
 
 //release_chg yazan satırları bulup değişiklikleri eski haline getirmek gerekiyor.

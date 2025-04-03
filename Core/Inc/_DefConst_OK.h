@@ -89,7 +89,9 @@ uint8_t SU_THY=0;
 uint8_t TA_THY=0;
 uint8_t TU_THY=0;
 
-//#define SMPS_MON GPIOH, LL_GPIO_PIN_0
+#define SW_LINE_P GPIOE, LL_GPIO_PIN_4
+#define SW_BATT_P GPIOE, LL_GPIO_PIN_6
+#define SW_LOAD_P GPIOC, LL_GPIO_PIN_13
 
 #define DROPP_LOAD GPIOD, LL_GPIO_PIN_12
 #define DROPP_BATT GPIOD, LL_GPIO_PIN_11
@@ -119,24 +121,10 @@ uint32_t besc_down_cnt=0;
 // LED SHIFT REGISTER
 ///////////////////////////////////////////////////////////////////////////
 uint32_t thy_stop_fault_hold_bits=0b0;
-uint16_t LED_16_Data=0b0;
-uint16_t LED_7_Data=0b0;
-uint32_t Relay_Board_16_Data=0b0;
-uint16_t can_send_LED_16_data_fl=1;
-uint8_t can_send_LED_7_data_fl = 1;
-uint8_t can_send_Relay_Board_16_Data_fl = 1;
-uint32_t block_R16_f=0;
-uint16_t block_L16_f=0;
-uint8_t block_L7_f = 0;
-uint32_t bit_index_R16=0;
-uint16_t bit_index_L16=0;
-uint8_t bit_index_L7 = 0;
-uint32_t wh_loop_R16_cnt=10;
-uint32_t wh_loop_L16_cnt=10;
-uint32_t wh_loop_L7_cnt = 10;
-uint32_t dly_R16_cnt=0;
-uint32_t dly_L16_cnt=0;
-uint32_t dly_L7_cnt=0;
+uint32_t LED_16_Data=0b0;
+uint32_t LED_7_Data=0b0;
+uint32_t Relay_Board_16_Data=0b0001000001000000000010000;
+
 // LED SHIFT REGISTER
 ///////////////////////////////////////////////////////////////////////////
 

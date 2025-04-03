@@ -115,6 +115,7 @@ extern void GLCD_PrintImage(const uint8_t *ImageAddress);
 extern void GLCD_Pixel(uint8_t	x, uint8_t y, uint8_t Colour);
 extern void GLCD_Line(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
 extern void  GLCD_Rect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t Fill, uint8_t Colour);
+extern void GLCD_Rect_E(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
 extern void GLCD_RectNEW(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t Colour);
 extern void glcd_text57(uint8_t x, uint8_t y,  char* textptr, uint8_t size, int8_t color);
 
