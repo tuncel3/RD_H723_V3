@@ -8,9 +8,8 @@ prfm("\033[2J");
 set_(CS_M95P32);
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
-
-write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
-//SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
+//write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
+SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 print_Eep_data_f();
 
 actions_after_charge_mode_change(5); // set charge mode values
@@ -35,8 +34,7 @@ if (Read_RTC_Osc_Status() == 0) {
 	sprintf(DUB,"RTC already started"); prfm(DUB);
 }
 
-set_(DROPP_LOAD);
-set_(DROPP_BATT);
+adjust_dropper_accordingly();
 
 delay_1ms(100);
 
@@ -84,6 +82,24 @@ disb_uart_msg_group(pr_btln);
 bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast restart inspection
 
 
+
+
+///////////////////////////////////////////////////////////
+// Temp sensor init
+USART10_SendByte(0x55);
+delayA_1us(10);
+USART10_SendByte(0xB4);
+delay_1ms(100);
+
+dev_count = tmp144_init_and_assign();
+if (dev_count == 0) {
+	sprintf(DUB,"Temp sensor init failed"); prfm(DUB);
+} else {
+	sprintf(DUB,"Temp sensor init success %d Sensors", dev_count); prfm(DUB);
+}
+// Temp sensor init
+///////////////////////////////////////////////////////////
+
 //LED_7_Data |= FLOAT_CHARGE_LED;
 
 // saat ayarlarlandı
@@ -93,6 +109,7 @@ bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast resta
 // 1741385888 196036 saniyede bu unix time a geldi. yaklaşık 0.1 saniye geri kaldı. kalibrasyon -5 ti -4 yapıldı
 // 1741536423 150535 saniyede bu unix time a geldi. yaklaşık 0.5 saniye ileri gitti. kalibrasyon -4 ti -6 yapıldı
 // 9pf yapılırsa iyi sonuç alınacaktır
+// akü hattı kopuk için eklemeler gerekiyor. mcb yardımcı kontağını kullan. akım sınırlaması durumunda akü hattı kopuk belirleme sistemi voltajı düşüremiyor ve akü hattı var diyor. bunu akü bağlı değilken ve mcb yardımcı kontak okuma yapmadığım zamanda gördüm.
 // akü arızası. akü voltajı
 // ayarlanan akım ve gerilim değerleri arıza kodu olarak kaydedilecek.
 // button release disables buttons for some ms
@@ -120,7 +137,8 @@ bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast resta
 // çıkış voltajı yokken. yani ne doğrultucu ne de batarya dc vermiyorsa çıkışa, dc kaçak yüzdesi yüksek olabiliyor.
 // böyle bir durumda yanlış dck oluşmaması için çıkış voltajı nominal voltajın %20 altında ve çıkış, doğrultucu ve
 // batarya akımı yoksa dck yüzdesini önemseme
-
+// rectifier kapalı iken, akü şalter devre dışı iken kaçak voltaj arızası oluşması engellenmeli.
+// NOTE_FOR_CODE_PART notu olan satırlaın olduğu bölümlerde inceleme ve geliştirme gerekiyor olaiblir.
 
 
 //release_chg yazan satırları bulup değişiklikleri eski haline getirmek gerekiyor.

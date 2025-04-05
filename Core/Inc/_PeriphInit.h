@@ -1,5 +1,5 @@
 
-// UART1
+// UART5
 //LL_APB1_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_UART5);
 LL_USART_SetBaudRate(UART5, 137500000, 0, 16, 1500000);
 LL_USART_SetDataWidth(UART5, LL_USART_DATAWIDTH_8B);
@@ -85,3 +85,5 @@ while (!LL_ADC_IsActiveFlag_ADRDY(ADC1)) {asm("NOP");}
 LL_ADC_REG_StartConversion(ADC1);
 // ADC INIT
 ///////////////////////////////////////////////////////////
+
+LL_USART_EnableIT_RXNE(USART10);

@@ -10,6 +10,7 @@ void change_fault_state_f(FaultCode fault_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 void inline extern toggle_batt_inspection_direction(uint8_t num);
+void inline extern adjust_dropper_accordingly(void);
 static inline uint8_t is_fault_active(FaultCode fault_code);
 
 #include "_EEP_M95P32.h"
@@ -524,174 +525,221 @@ void processShiftRegister_LED_7(uint32_t data) {
 	static uint32_t bit_index=0;
 	static uint32_t goto_next_action=0;
 	static uint32_t dely_time_cnt=0;
-	static uint32_t dely_time_per=0;
-        if (goto_next_action == 0) { // Set data pin according to current bit
-            if (bit_index < 7) { // Corrected to 8 bits for a uint8_t
-                if (data & (1 << bit_index)) {
-                    set_(SHFT1_DAT_P);
-                } else {
-                    res_(SHFT1_DAT_P);
-                }
-                goto_next_action = 1;
-            } else {
-                res_(SHFT1_DAT_P);
-                goto_next_action = 5;
-            }
-        } else if (goto_next_action == 1) { // Delay before setting clock pin
-            dely_time_cnt++;
-            if (dely_time_cnt > dely_time_per) {
-                dely_time_cnt = 0;
-                set_(SHFT1_SCK_P);
-                goto_next_action = 2;
-            }
-        } else if (goto_next_action == 2) { // Delay before resetting data pin
-            dely_time_cnt++;
-            if (dely_time_cnt > dely_time_per) {
-                dely_time_cnt = 0;
-                res_(SHFT1_DAT_P);
-                goto_next_action = 3;
-            }
-        } else if (goto_next_action == 3) { // Delay before resetting clock pin
-            dely_time_cnt++;
-            if (dely_time_cnt > dely_time_per) {
-                dely_time_cnt = 0;
-                res_(SHFT1_SCK_P);
-                bit_index++; // Increment bit index
-                goto_next_action = 0;
-            }
-        } else if (goto_next_action == 5) { // Delay before setting latch pin
-            dely_time_cnt++;
-            if (dely_time_cnt > dely_time_per) {
-                dely_time_cnt = 0;
-                set_(SHFT1_LAT_P);
-                goto_next_action = 6;
-            }
-        } else if (goto_next_action == 6) { // Delay before resetting latch pin
-            dely_time_cnt++;
-            if (dely_time_cnt > dely_time_per) {
-                dely_time_cnt = 0;
-                res_(SHFT1_LAT_P);
-                bit_index = 0; // Reset bit index to repeat the loop
-                goto_next_action = 0;
-            }
-        }
+	static uint32_t dely_time_per=10;
+	static uint32_t dely_restart_per=10000;
+	if (goto_next_action == 0) {
+		if (bit_index < 7) {
+			if (data & (1 << bit_index)) {
+				set_(SHFT1_DAT_P);
+			} else {
+				res_(SHFT1_DAT_P);
+			}
+			goto_next_action = 1;
+		} else {
+			res_(SHFT1_DAT_P);
+			goto_next_action = 5;
+		}
+	} else if (goto_next_action == 1) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			set_(SHFT1_SCK_P);
+			goto_next_action = 2;
+		}
+	} else if (goto_next_action == 2) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFT1_DAT_P);
+			goto_next_action = 3;
+		}
+	} else if (goto_next_action == 3) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFT1_SCK_P);
+			bit_index++; // Increment bit index
+			goto_next_action = 0;
+		}
+	} else if (goto_next_action == 5) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			set_(SHFT1_LAT_P);
+			goto_next_action = 6;
+		}
+	} else if (goto_next_action == 6) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFT1_LAT_P);
+			bit_index = 0;
+			goto_next_action = 0;
+		}
+	} else if (goto_next_action == 7) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_restart_per) {
+			dely_time_cnt = 0;
+			goto_next_action = 0;
+		}
+	}
 }
 
-void processShiftRegister_LED_16(uint16_t data) {
-        if (block_L16_f == 0) { // Set data pin according to current bit
-            if (bit_index_L16 < 16) {
-                if (data & (1 << bit_index_L16)) {
-                    set_(SHFT2_DAT_P);
-                } else {
-                    res_(SHFT2_DAT_P);
-                }
-                block_L16_f = 1;
-            } else if (bit_index_L16 == 16) {
-                set_(SHFT2_LAT_P);
-                block_L16_f = 5;
-            } else if (bit_index_L16 == 17) {
-                res_(SHFT2_LAT_P);
-                block_L16_f = 0;
-                can_send_LED_16_data_fl = 0; // Stop the transfer
-                bit_index_L16 = 0; // Reset bit index to repeat the loop
-            }
-        } else if (block_L16_f == 1) { // Delay before setting clock pin
-            dly_L16_cnt++;
-            if (dly_L16_cnt > wh_loop_L16_cnt) {
-                dly_L16_cnt = 0;
-                set_(SHFT2_SCK_P);
-                block_L16_f = 2;
-            }
-        } else if (block_L16_f == 2) { // Delay before resetting data pin
-            dly_L16_cnt++;
-            if (dly_L16_cnt > wh_loop_L16_cnt) {
-                dly_L16_cnt = 0;
-                res_(SHFT2_DAT_P);
-                block_L16_f = 3;
-            }
-        } else if (block_L16_f == 3) { // Delay before resetting clock pin
-            dly_L16_cnt++;
-            if (dly_L16_cnt > wh_loop_L16_cnt) {
-                dly_L16_cnt = 0;
-                res_(SHFT2_SCK_P);
-                block_L16_f = 4;
-            }
-        } else if (block_L16_f == 4) { // Additional delay before next bit
-            dly_L16_cnt++;
-            if (dly_L16_cnt > wh_loop_L16_cnt) {
-                dly_L16_cnt = 0;
-                bit_index_L16++;
-                block_L16_f = 0;
-            }
-        } else if (block_L16_f == 5) { // Delay before resetting latch pin
-            dly_L16_cnt++;
-            if (dly_L16_cnt > wh_loop_L16_cnt) {
-                dly_L16_cnt = 0;
-                res_(SHFT2_LAT_P);
-                bit_index_L16++;
-                block_L16_f = 0;
-            }
-        }
+void processShiftRegister_LED_16(uint32_t data) {
+	static uint32_t bit_index=0;
+	static uint32_t goto_next_action=0;
+	static uint32_t dely_time_cnt=0;
+	static uint32_t dely_time_per=10;
+	static uint32_t dely_restart_per=10000;
+	if (goto_next_action == 0) {
+		if (bit_index < 16) {
+			if (data & (1 << bit_index)) {
+				set_(SHFT2_DAT_P);
+			} else {
+				res_(SHFT2_DAT_P);
+			}
+			goto_next_action = 22;
+		} else {
+			res_(SHFT2_DAT_P);
+			goto_next_action = 5;
+		}
+	} else if (goto_next_action == 22) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+//			set_(SHFT2_SCK_P);
+			goto_next_action = 1;
+		}
+	} else if (goto_next_action == 1) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			set_(SHFT2_SCK_P);
+			goto_next_action = 2;
+		}
+	} else if (goto_next_action == 2) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFT2_DAT_P);
+			goto_next_action = 3;
+		}
+	} else if (goto_next_action == 3) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFT2_SCK_P);
+			bit_index++; // Increment bit index
+			goto_next_action = 0;
+		}
+	} else if (goto_next_action == 5) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			set_(SHFT2_LAT_P);
+			goto_next_action = 6;
+		}
+	} else if (goto_next_action == 6) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFT2_LAT_P);
+			bit_index = 0;
+			goto_next_action = 0;
+		}
+	} else if (goto_next_action == 7) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_restart_per) {
+			dely_time_cnt = 0;
+			goto_next_action = 0;
+		}
+	}
 }
 
 void processShiftRegister_Relay_Board_16(uint32_t data) {
-        if (block_R16_f == 0) { // Set data pin according to current bit
-            if (bit_index_R16 < 24) {
-                if (data & (1 << bit_index_R16)) {
-                    set_(SHFTR_DAT_P);
-                } else {
-                    res_(SHFTR_DAT_P);
-                }
-                block_R16_f = 1;
-            } else if (bit_index_R16 == 24) {
-                set_(SHFTR_LAT_P);
-                block_R16_f = 5;
-            } else if (bit_index_R16 == 25) {
-                res_(SHFTR_LAT_P);
-                block_R16_f = 0;
-                can_send_Relay_Board_16_Data_fl = 0; // Stop the transfer
-                bit_index_R16 = 0; // Reset bit index to repeat the loop
-            }
-        } else if (block_R16_f == 1) { // Delay before setting clock pin
-            dly_R16_cnt++;
-            if (dly_R16_cnt > wh_loop_R16_cnt) {
-                dly_R16_cnt = 0;
-                set_(SHFTR_SCK_P);
-                block_R16_f = 2;
-            }
-        } else if (block_R16_f == 2) { // Delay before resetting data pin
-            dly_R16_cnt++;
-            if (dly_R16_cnt > wh_loop_R16_cnt) {
-                dly_R16_cnt = 0;
-                res_(SHFTR_DAT_P);
-                block_R16_f = 3;
-            }
-        } else if (block_R16_f == 3) { // Delay before resetting clock pin
-            dly_R16_cnt++;
-            if (dly_R16_cnt > wh_loop_R16_cnt) {
-                dly_R16_cnt = 0;
-                res_(SHFTR_SCK_P);
-                block_R16_f = 4;
-            }
-        } else if (block_R16_f == 4) { // Additional delay before next bit
-            dly_R16_cnt++;
-            if (dly_R16_cnt > wh_loop_R16_cnt) {
-                dly_R16_cnt = 0;
-                bit_index_R16++;
-                block_R16_f = 0;
-            }
-        } else if (block_R16_f == 5) { // Delay before resetting latch pin
-            dly_R16_cnt++;
-            if (dly_R16_cnt > wh_loop_R16_cnt) {
-                dly_R16_cnt = 0;
-                res_(SHFTR_LAT_P);
-                bit_index_R16++;
-                block_R16_f = 0;
-            }
-        }
+	static uint32_t bit_index=0;
+	static uint32_t goto_next_action=0;
+	static uint32_t dely_time_cnt=0;
+	static uint32_t dely_time_per=20;
+	static uint32_t dely_restart_per=10000;
+	if (goto_next_action == 0) {
+		if (bit_index < 24) {
+			if (data & (1 << bit_index)) {
+				set_(SHFTR_DAT_P);
+			} else {
+				res_(SHFTR_DAT_P);
+			}
+			goto_next_action = 1;
+		} else {
+			res_(SHFTR_DAT_P);
+			goto_next_action = 5;
+		}
+	} else if (goto_next_action == 1) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			set_(SHFTR_SCK_P);
+			goto_next_action = 2;
+		}
+	} else if (goto_next_action == 2) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFTR_SCK_P);
+			bit_index++; // Increment bit index
+			goto_next_action = 3;
+		}
+	} else if (goto_next_action == 3) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFTR_DAT_P);
+			goto_next_action = 0;
+		}
+	} else if (goto_next_action == 5) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			set_(SHFTR_LAT_P);
+			goto_next_action = 6;
+		}
+	} else if (goto_next_action == 6) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_time_per) {
+			dely_time_cnt = 0;
+			res_(SHFTR_LAT_P);
+			bit_index = 0;
+			goto_next_action = 7;
+		}
+	} else if (goto_next_action == 7) {
+		dely_time_cnt++;
+		if (dely_time_cnt > dely_restart_per) {
+			dely_time_cnt = 0;
+			goto_next_action = 0;
+		}
+	}
 }
 
-
+//void SPI_Send24Bits(uint32_t data) {
+//    for (int bit = 32; bit >= 0; bit--) {
+//        if (data & (1 << bit)) {
+//            set_(SHFTR_DAT_P);
+//        } else {
+//            res_(SHFTR_DAT_P);
+//        }
+//        delayA_1us(10);
+//
+//        set_(SHFTR_SCK_P);
+//        delayA_1us(10);
+//        res_(SHFTR_SCK_P);
+//        delayA_1us(10);
+//    }
+//
+//    delayA_1us(100);
+//    set_(SHFTR_LAT_P);
+//    delayA_1us(10);
+//    res_(SHFTR_LAT_P);
+//}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -721,7 +769,7 @@ void inline extern batt_line_broken_fn(void) {
 		reset_batt_inspection_procedure_state_vars();
 
 			batt_line_broken=1;
-			change_fault_state_f(BATTERY_FAULT_FC, 1);
+			change_fault_state_f(BATT_LINE_BROKEN_FC, 1);
 
 }
 void inline extern batt_line_OK_fn(void) {
@@ -730,7 +778,7 @@ void inline extern batt_line_OK_fn(void) {
 		reset_batt_inspection_procedure_state_vars();
 
 			batt_line_broken=0;
-			change_fault_state_f(BATTERY_FAULT_FC, 0);
+			change_fault_state_f(BATT_LINE_BROKEN_FC, 0);
 }
 void inline extern toggle_batt_inspection_direction(uint8_t num) {
 
@@ -747,10 +795,6 @@ void inline extern toggle_batt_inspection_direction(uint8_t num) {
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
 
 void inline extern aku_hatti_kopuk_fc_inl(void) {
-
-////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // VOUT STABILITY
 if (ms_50_cnt-gercek_voltaj_smp_ms_timer_h >= gercek_voltaj_smp_ms_timer_per && check_gercek_voltaj_stable_ms==1) {
@@ -878,7 +922,7 @@ if (start_bat_inspection_req==1) {
 }
 
 // BATT CURRENT MONITOR
-if ((IBAT_per_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_sc < -BATT_CURRENT_DETECT_THRESHOLD)) {
+if ((IBAT_per_avg_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc < -BATT_CURRENT_DETECT_THRESHOLD)) {
 	batt_current_detected_Acc_cnt++;
 	if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
 		batt_current_detected=1;
@@ -888,7 +932,7 @@ if ((IBAT_per_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_sc < -BATT_CURRENT_
 			sprintf(DUB,"Batt line OK. batt curr det whil batt_line_brokn=1. Dir was %d", batt_inspection_direction); umsg(pr_btln, DUB);
 		}
 	}
-} else if (IBAT_per_sc <= BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_sc >= -BATT_CURRENT_DETECT_THRESHOLD) {
+} else if (IBAT_per_avg_sc <= BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc >= -BATT_CURRENT_DETECT_THRESHOLD) {
 	batt_current_zero_Acc_cnt++;
 	if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
 		batt_current_detected=0;
@@ -915,7 +959,7 @@ Vdc_drop_out_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // D.A. gerilim regülasyonu çı
 
 // D.A. çıkış akım ayarı
 Irect_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Toplam çıkış
-Irect_min=EpD[DEV_NOM_IOUT][0].V1*0.1; // Toplam çıkış
+Irect_min=EpD[DEV_NOM_IOUT][0].V1*0.01; // Toplam çıkış
 Ibat_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Akümülatör çıkış // release_chg -> EpD[DEV_NOM_IOUT][0].V1*1.0;
 Ibat_min=EpD[DEV_NOM_IOUT][0].V1*0.1; // Akümülatör çıkış // release_chg -> EpD[DEV_NOM_IOUT][0].V1*0.1;
 
@@ -941,7 +985,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		switch_to_auto_mode_completed=0; // auto moddan başka bir moda geçildi.
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		sprintf(DUB,"FLOAT charge mode %d", num); prfm(DUB);
+		if (num!=12 && num!=13)	{	// batt inspection numbers
+			sprintf(DUB,"FLOAT charge mode %d", num); prfm(DUB);
+		}
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
@@ -951,7 +997,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		switch_to_auto_mode_completed=0; // auto moddan başka bir moda geçildi.
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		sprintf(DUB,"BOOST charge mode %d", num); prfm(DUB);
+		if (num!=12 && num!=13)	{	// batt inspection numbers
+			sprintf(DUB,"BOOST charge mode %d", num); prfm(DUB);
+		}
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
@@ -970,14 +1018,14 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 
 void change_fault_state_f(FaultCode fault_code, uint8_t set) {
 
-    uint32_t fault_bit = (1U << fault_code);
+	uint32_t fault_bit = (1U << fault_code);
 	sprintf(DUB,"fault_code %d %s set %d", fault_code, faultList[fault_code].name, set); prfm(DUB);
     if (set) {
         if (faultList[fault_code].code < 16) {
         	LED_16_Data |= fault_bit; }  // activate LED if required
-        if (faultList[fault_code].action & (1 << SET_GEN_F_LED)) {
+        if (faultList[fault_code].action & (1 << SET_GEN_F_LED_enum)) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC); } // activate general fault LED if associated
-        if (faultList[fault_code].action & (1 << THYSTOP)) {  // stop thy drv if fault requires
+        if (faultList[fault_code].action & (1 << THYSTOP_enum)) {  // stop thy drv if fault requires
         	thy_drv_en=0;
 			sf_sta_req=0;
 			sf_sta_req_ok=0;
@@ -986,32 +1034,111 @@ void change_fault_state_f(FaultCode fault_code, uint8_t set) {
         	LED_16_Data &= ~(1U << START_FC); }
         if (fault_code == START_FC) {
         	LED_16_Data &= ~(1U << STOP_FC); }
-            (faultList[fault_code].action |= (1 << ACTIVE)); // set active flag in fault action bits
 
-		if (!!(faultList[fault_code].action & (1 << SAVE)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
+		faultList[fault_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
+
+		if (!!(faultList[fault_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(fault_code); }
     } else {
         if (faultList[fault_code].code < 16) {
         	LED_16_Data &= ~fault_bit; }  // deactivate LED if resetting a fault with LED requirement
-        if (faultList[fault_code].action & (1 << SET_GEN_F_LED)) { // deactivate general fault LED if associated
+        if (faultList[fault_code].action & (1 << SET_GEN_F_LED_enum)) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC); }
-        if (faultList[fault_code].action & (1 << THYSTOP)) { // thy stop gerektiren bir arıza reset ediliyor
+        if (faultList[fault_code].action & (1 << THYSTOP_enum)) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
-        (faultList[fault_code].action &= ~(1 << ACTIVE));
+        (faultList[fault_code].action &= ~(1 << ACTIVE_enum));
     }
 }
 
 static inline uint8_t is_fault_active(FaultCode fault_code) {
-
-    if (faultList[fault_code].action & (1 << THYSTOP)) {
-    	return (thy_stop_fault_hold_bits & (1U << fault_code)) != 0;
-    }
-    	return (faultList[fault_code].action & (1U << ACTIVE)) != 0;
+    	return (faultList[fault_code].action & (1U << ACTIVE_enum)) != 0;
 }
 
 void swap_scr_lines(SCR_Line *line1, SCR_Line *line2) {
     SCR_Line temp = *line1;
     *line1 = *line2;
     *line2 = temp;
+}
+
+
+void USART10_SendByte(uint8_t data)
+{
+    while (!LL_USART_IsActiveFlag_TXE(USART10)) {
+        // Optionally place a timeout here in production code
+    }
+    LL_USART_TransmitData8(USART10, data);
+    while (!LL_USART_IsActiveFlag_TC(USART10)) {
+    }
+}
+
+int read_data(uint8_t dev_count, uint16_t *raw_vals)
+{
+
+	U10_rxCount = 0;
+    for (int i = 0; i < U10_RX_BUFFER_SIZE; i++) {
+    	U10_rxBuf[i] = 0;
+    }
+
+    USART10_SendByte(0x55);
+    delayA_1us(10);
+    USART10_SendByte(0xF1);
+
+    for (int i = 0; i < dev_count; i++) {
+        // ham değer = LSB + (MSB << 8)
+        uint8_t lsb = U10_rxBuf[2 + i*2];
+        uint8_t msb = U10_rxBuf[3 + i*2];
+        raw_vals[i] = (msb << 8) | lsb;
+    }
+
+    return 0;
+}
+
+static float tmp144_convert_temperature(uint16_t raw16) {
+  int16_t val12 = (raw16 >> 4) & 0x0FFF;
+  if (val12 & 0x0800) {
+    val12 |= 0xF000;
+  }
+  return (float)val12 * 0.0625f;
+}
+
+int tmp144_init_and_assign(void)
+{
+	U10_rxCount = 0;
+    for (int i = 0; i < U10_RX_BUFFER_SIZE; i++) {
+    	U10_rxBuf[i] = 0;
+    }
+
+    USART10_SendByte(0x55);
+    delayA_1us(10);
+    USART10_SendByte(0x8C);
+    delayA_1us(10);
+    USART10_SendByte(0x90);
+    delay_1ms(1000);
+
+//    while (rxCount < 3) {
+//    }
+
+    uint8_t dev_count_raw = U10_rxBuf[2];
+    uint8_t dev_count = dev_count_raw & 0x0F;
+
+    if (dev_count < 1 || dev_count > 16) {
+        return 0;
+    }
+    return dev_count;
+}
+
+
+void inline extern adjust_dropper_accordingly(void) {
+	if (EpD[SET_DROPPER_K1][0].V1==0) {
+		set_(DROPP_BATT);
+	} else if (EpD[SET_DROPPER_K1][0].V1==1) {
+		res_(DROPP_BATT);
+	}
+	if (EpD[SET_DROPPER_K2][0].V1==0) {
+		set_(DROPP_LOAD);
+	} else if (EpD[SET_DROPPER_K2][0].V1==1) {
+		res_(DROPP_LOAD);
+	}
+
 }
