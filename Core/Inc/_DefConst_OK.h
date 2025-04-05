@@ -95,9 +95,6 @@ uint8_t TU_THY=0;
 
 #define DROPP_LOAD GPIOD, LL_GPIO_PIN_12
 #define DROPP_BATT GPIOD, LL_GPIO_PIN_11
-uint32_t actvate_drop_cnt=0;
-uint32_t actvate_drop_per=100;
-char dropper_status[]=" > > ";
 // PIN NAMES
 ///////////////////////////////////////////////////////////////////////////
 

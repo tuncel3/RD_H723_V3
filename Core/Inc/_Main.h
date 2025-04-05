@@ -34,7 +34,8 @@ if (Read_RTC_Osc_Status() == 0) {
 	sprintf(DUB,"RTC already started"); prfm(DUB);
 }
 
-adjust_dropper_accordingly();
+set_(DROPP_LOAD);
+set_(DROPP_BATT);
 
 delay_1ms(100);
 
@@ -81,24 +82,6 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 disb_uart_msg_group(pr_btln);
 bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast restart inspection
 
-
-
-
-///////////////////////////////////////////////////////////
-// Temp sensor init
-USART10_SendByte(0x55);
-delayA_1us(10);
-USART10_SendByte(0xB4);
-delay_1ms(100);
-
-dev_count = tmp144_init_and_assign();
-if (dev_count == 0) {
-	sprintf(DUB,"Temp sensor init failed"); prfm(DUB);
-} else {
-	sprintf(DUB,"Temp sensor init success %d Sensors", dev_count); prfm(DUB);
-}
-// Temp sensor init
-///////////////////////////////////////////////////////////
 
 //LED_7_Data |= FLOAT_CHARGE_LED;
 

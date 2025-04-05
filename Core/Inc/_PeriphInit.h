@@ -85,5 +85,3 @@ while (!LL_ADC_IsActiveFlag_ADRDY(ADC1)) {asm("NOP");}
 LL_ADC_REG_StartConversion(ADC1);
 // ADC INIT
 ///////////////////////////////////////////////////////////
-
-LL_USART_EnableIT_RXNE(USART10);
