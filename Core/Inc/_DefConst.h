@@ -3,7 +3,7 @@
 #define E1_1 LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1);
 #define E1_0 LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1);
 //#define E12=1; LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_12);
-#define E15 GPIOE, LL_GPIO_PIN_15
+#define B12 GPIOB, LL_GPIO_PIN_12
 #define B12_0 LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_12);
 
 #define E1(x) ((x) ? LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1) : LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1))
@@ -13,6 +13,19 @@
 ///////////////////////////////////////////////////////////////////////////
 #define NUM_CHANNELS 12
 volatile uint32_t adc_buffer[NUM_CHANNELS];
+//uint32_t adc_ch10=0;
+//uint32_t adc_ch11=0;
+//uint32_t adc_ch16=0;
+//uint32_t adc_ch17=0;
+//uint32_t adc_ch18=0;
+//uint32_t adc_ch15=0;
+//uint32_t adc_ch7=0;
+//uint32_t adc_ch8=0;
+//uint32_t adc_ch9=0;
+//uint32_t adc_ch19=0;
+//uint32_t adc_ch5=0;
+//uint32_t adc_ch4=0;
+//uint32_t adc_ch3=0;
 
 #define MAX_PID_OUTPUT 10000.0f
 #define MIN_PID_OUTPUT 0.0f
@@ -41,7 +54,6 @@ uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
 #define ZCRENDELY 475
 double VRECT_smp_sc = 0.0f;
-double VLOAD_smp_sc = 0.0f;
 double VLOAD_per_avg_sc = 0.0f;
 double VDCKP = 0.0f;
 double VDCKN = 0.0f;
@@ -50,9 +62,9 @@ double VOUT_max_boost = 62.4f;
 
 float AUX1_smp = 0.0f;
 float A_16_smp = 0.0f;
-float VACR_smp = 0.0f;
-float VACS_smp = 0.0f;
-float VACT_smp = 0.0f;
+float VINR_smp = 0.0f;
+float VINS_smp = 0.0f;
+float VINT_smp = 0.0f;
 float DCKP_smp = 0.0f;
 float DCKN_smp = 0.0f;
 float VBAT_smp = 0.0f;
@@ -60,13 +72,6 @@ float VLOAD_smp = 0.0f;
 float IRECT_smp = 0.0f;
 float IBAT_smp = 0.0f;
 float VRECT_smp = 0.0f;
-
-
-float VLOAD_smp_gain = 0.00291575833333f;
-float VRECT_smp_gain = 0.00291575833333f;
-float VLOAD_smp_offst = 0.0f;
-float VRECT_smp_offst = 0.0f;
-
 
 float V_Charg_Hg_10_perc = 0.0f;
 float V_Charg_Hg_10_perc_ret = 0.0f;
@@ -81,12 +86,12 @@ uint32_t V_Charg_Lo_10_perc_Acc_per = 200;
 uint32_t V_Charg_Lo_10_perc_ret_Acc_cnt = 0;
 uint32_t V_Charg_Lo_10_perc_ret_Acc_per = 20;
 float IRECT_smp_sc = 0.0f;
-float IRECT_per_avg_sc = 0.0f;
+float IRECT_per_sc = 0.0f;
 float ILOAD_per_sc = 0.0f;
 //float IRECT_f = 0.0f;
 float VBAT_smp_sc = 0.0f;
 float IBAT_smp_sc = 0.0f;
-float IBAT_per_avg_sc = 0.0f;
+float IBAT_per_sc = 0.0f;
 //float IBAT_f = 0.0f;
 float VBAT_f = 0.0f;
 float cs_vtarg_vi = 0;
@@ -132,8 +137,8 @@ uint8_t batt_line_broken = 0;
 // CONTROL SYSTEM
 ///////////////////////////////////////////////////////////////////////////
 
-float IRECT_sum_sc = 0;
-float IRECT_avg_sc = 0;
+float IRECT_sum = 0;
+float IRECT_avg = 0;
 float IRECT_lim = 15;
 uint32_t IRECT_smp_count = 0;
 uint32_t IRECT_samp_end = 0;
@@ -144,7 +149,7 @@ float IRECT_zero = 32784;
 //uint32_t IRECT_zero_req_ok = 1;
 //uint32_t IRECT_zero_ok_cnt = 0;
 
-float IBAT_sum_sc = 0;
+float IBAT_sum = 0;
 float IBAT_avg = 0;
 float IBAT_lim = 15;
 uint32_t IBAT_smp_count = 0;
@@ -156,7 +161,7 @@ float IBAT_zero = 32768;
 //uint32_t IBAT_zero_req_ok = 1;
 //uint32_t IBAT_zero_ok_cnt = 0;
 
-float VBAT_sum_sc = 0;
+float VBAT_sum = 0;
 float VBAT_per_avg_sc = 0;
 float VBAT_lim = 15;
 uint32_t VBAT_smp_count = 0;
@@ -173,31 +178,17 @@ float VAC_S_zero = 32700;
 float VAC_T_zero = 32770;
 float VDCKP_per_avg = 0;
 float VDCKN_per_avg = 0;
+double VAC_R_per_avg = 0;
+double VAC_S_per_avg = 0;
+double VAC_T_per_avg = 0;
 float VRECT_per_avg_sc = 0;
 float VRECT_per_avg = 0;
 float VDCKP_per_avg_roll = 0;
 float VDCKN_per_avg_roll = 0;
-float VACR_smp_count = 0;
-float VACS_smp_count = 0;
-float VACT_smp_count = 0;
-float VACR_sum_of_sqr_sc = 0;
-float VACS_sum_of_sqr_sc = 0;
-float VACT_sum_of_sqr_sc = 0;
-float VACR_smp_sc = 0;
-float VACS_smp_sc = 0;
-float VACT_smp_sc = 0;
-float VAC_R_rms_sc = 0;
-float VAC_S_rms_sc = 0;
-float VAC_T_rms_sc = 0;
-float VAC_R_rms_roll_per_avg = 0;
-float VAC_S_rms_roll_per_avg = 0;
-float VAC_T_rms_roll_per_avg = 0;
-float IAC_R_rms_roll_per_avg = 0;
-float IAC_S_rms_roll_per_avg = 0;
-float IAC_T_rms_roll_per_avg = 0;
+float VAC_R_roll_per_avg = 0;
+float VAC_S_roll_per_avg = 0;
+float VAC_T_roll_per_avg = 0;
 float VRECT_per_avg_roll_sc = 0;
-float VBAT_per_avg_roll_sc = 0;
-float VLOAD_per_avg_roll_sc = 0;
 float VRECT_per_avg_roll = 0;
 float VRECT_per_avg_roll_half = 0;
 float VDCKP_avg2_s = 0;
@@ -208,19 +199,37 @@ uint32_t VAC_R_smp_count = 0;
 uint32_t VAC_S_smp_count = 0;
 uint32_t VAC_T_smp_count = 0;
 uint32_t VRECT_smp_count = 0;
-uint32_t VLOAD_smp_count = 0;
 uint32_t VDCKP_samp_end = 0;
 uint32_t VDCKN_samp_end = 0;
 uint32_t VAC_R_samp_end = 0;
 uint32_t VAC_S_samp_end = 0;
 uint32_t VAC_T_samp_end = 0;
 uint32_t VRECT_samp_end = 0;
-uint32_t VLOAD_samp_end = 0;
 float VDCKP_sum = 0;
 float VDCKN_sum = 0;
-float VLOAD_sum_sc = 0;
 float VRECT_sum_sc = 0;
 uint32_t VRECT_sum = 0;
+float VINR = 0;
+float VAC_R_off = 0;
+float VINS = 0;
+float VINT = 0;
+float VAC_R_sum = 0;
+float VAC_S_sum = 0;
+float VAC_T_sum = 0;
+float VAC_R_sq_sum = 0;
+float VAC_S_sq_sum = 0;
+float VAC_T_sq_sum = 0;
+double VAC_R_per_meansqr = 0;
+double VAC_S_per_meansqr = 0;
+double VAC_T_per_meansqr = 0;
+double VAC_R_per_avgsqr = 0;
+double VAC_S_per_avgsqr = 0;
+double VAC_T_per_avgsqr = 0;
+double VAC_R = 0;
+double VAC_S = 0;
+double VAC_T = 0;
+float VDCKPN_div = 0;
+//float VDCKPN_div2 = 0;
 uint32_t VDCKP_per_avg_roll_perc = 0;
 uint32_t VDCKN_per_avg_roll_perc = 0;
 float VDCKP_per_avg_roll_scaled = 0;
@@ -231,10 +240,6 @@ float VDCK_perc = 0;
 float VDCKP_perc = 0;
 float VDCKN_perc = 0;
 int VDCK_side = 0;
-uint32_t VDCK_accept_cnt = 0;
-uint32_t VDCK_return_cnt = 0;
-uint32_t VDCK_accept_per = 40;
-uint32_t VDCK_return_per = 40;
 
 // LCD MENU SYSTEM
 uint8_t adjustmentMode = 0;
@@ -261,7 +266,6 @@ typedef enum {
 	FAULT_CODES_REPORT_pg,
 	FAULT_CODES_RESET_pg,
 	DEVICE_RESET_pg,
-	CALIBRATION_pg,
 	DATE_TIME_pg,
 	BATT_REVERSE_DETECT_pg,
 	CONT_SYS_pg,
@@ -327,25 +331,10 @@ typedef enum {
 	IRECT_LIM_RT_,
 	I_LIM_TO_FLOAT,
 	I_LIM_TO_BOOST,
-	SET_VRECT_CAL,
-	SET_VLOAD_CAL,
+	SET_IRECT_CAL,          // Cal val
 	SET_VBAT_CAL,
-	SET_IRECT_CAL,
-	SET_IBAT_CAL,
-	SET_ACR_CAL,
-	SET_ACS_CAL,
-	SET_ACT_CAL,
-	SET_VRECT_OFFS_CAL,
-	SET_VLOAD_OFFS_CAL,
-	SET_VBAT_OFFS_CAL,
-	SET_IRECT_OFFS_CAL,
-	SET_IBAT_OFFS_CAL,
-	SET_ACR_OFFS_CAL,
-	SET_ACS_OFFS_CAL,
-	SET_ACT_OFFS_CAL,
 	SET_UNSEEN_FLT,
 	SET_BATT_REV_DET,
-	SET_BATT_DISC_DET,
 	DEV_NOM_VOUT, 		// Cihaz Nom VDC
 	DEV_NOM_IOUT, 		// Cihaz Nom IDC rect out
 	BATT_NOM_IOUT,
@@ -363,35 +352,20 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_BOOST_TIME, 4.0}, {SET_BOOST_TIME, 4.0} },
     { {VBAT_FLOAT, 52.8}, {VBAT_FLOAT, 52.8} },
     { {VBAT_BOOST, 55.2}, {VBAT_BOOST, 55.2} },
-    { {SET_IBAT_FLOAT, 4.0}, {SET_IBAT_FLOAT, 4.0} },
+    { {SET_IBAT_FLOAT, 5.0}, {SET_IBAT_FLOAT, 5.0} },
     { {SET_IBAT_BOOST, 10.0}, {SET_IBAT_BOOST, 10.0} },
-    { {IRECT_LIM_RT_, 30.0}, {IRECT_LIM_RT_, 30.0} },
+    { {IRECT_LIM_RT_, 2.0}, {IRECT_LIM_RT_, 2.0} },
     { {I_LIM_TO_FLOAT, 3.0}, {I_LIM_TO_FLOAT, 3.0} },
     { {I_LIM_TO_BOOST, 4.0}, {I_LIM_TO_BOOST, 4.0} },
-    { {SET_VRECT_CAL, 0.00326439226}, {SET_VRECT_CAL, 0.00326439226} },
-    { {SET_VLOAD_CAL, 0.003243}, {SET_VLOAD_CAL, 0.003243} },
-    { {SET_VBAT_CAL, 0.006696}, {SET_VBAT_CAL, 0.006696} },
-    { {SET_IRECT_CAL, 0.00092}, {SET_IRECT_CAL, 0.00092} },
-    { {SET_IBAT_CAL, 0.001004}, {SET_IBAT_CAL, 0.001004} },
-    { {SET_ACR_CAL, 0.021641}, {SET_ACR_CAL, 0.021641} },
-    { {SET_ACS_CAL, 0.021758}, {SET_ACS_CAL, 0.021758} },
-    { {SET_ACT_CAL, 0.021976}, {SET_ACT_CAL, 0.021976} },
-    { {SET_VRECT_OFFS_CAL, 0.0}, {SET_VRECT_OFFS_CAL, 0.0} },
-    { {SET_VLOAD_OFFS_CAL, 0.0}, {SET_VLOAD_OFFS_CAL, 0.0} },
-    { {SET_VBAT_OFFS_CAL, -139.0}, {SET_VBAT_OFFS_CAL, -139.0} },
-    { {SET_IRECT_OFFS_CAL, 0.0}, {SET_IRECT_OFFS_CAL, 0.0} },
-    { {SET_IBAT_OFFS_CAL, 0.0}, {SET_IBAT_OFFS_CAL, 0.0} },
-    { {SET_ACR_OFFS_CAL, -116.0}, {SET_ACR_OFFS_CAL, -116.0} },
-    { {SET_ACS_OFFS_CAL, -129.0}, {SET_ACS_OFFS_CAL, -129.0} },
-    { {SET_ACT_OFFS_CAL, -139.0}, {SET_ACT_OFFS_CAL, -139.0} },
+    { {SET_IRECT_CAL, 0.0011680884}, {SET_IRECT_CAL, 0.0011680884} },
+    { {SET_VBAT_CAL, 0.0055583874}, {SET_VBAT_CAL, 0.0055583874} },
     { {SET_UNSEEN_FLT, 0.0}, {SET_UNSEEN_FLT, 0.0} },
     { {SET_BATT_REV_DET, 1.0}, {SET_BATT_REV_DET, 1.0} },
-    { {SET_BATT_DISC_DET, 0.0}, {SET_BATT_DISC_DET, 0.0} },
     { {DEV_NOM_VOUT, 48.0}, {DEV_NOM_VOUT, 48.0} }, // Cihaz Nom VDC
     { {DEV_NOM_IOUT, 40.0}, {DEV_NOM_IOUT, 40.0} },
     { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} },
-    { {DC_KAC_POS, 20.0}, {DC_KAC_POS, 20.0} }, // DC kaçak pozitif
-    { {DC_KAC_NEG, 20.0}, {DC_KAC_NEG, 20.0} }, // DC kaçak negatif
+    { {DC_KAC_POS, 5.0}, {DC_KAC_POS, 5.0} }, // DC kaçak pozitif
+    { {DC_KAC_NEG, 5.0}, {DC_KAC_NEG, 5.0} }, // DC kaçak negatif
     { {RECT_SHORT, 20.0}, {RECT_SHORT, 20.0} }, // RECT short Amp
     { {BATT_SHORT, 20.0}, {BATT_SHORT, 20.0} } // BATT short Amp
 };
@@ -407,25 +381,10 @@ const char* Eep_data_Names[] = { // for printing in uart
     "IRECT_LIM_RT_",
     "I_LIM_TO_FLOAT",
     "I_LIM_TO_BOOST",
-    "SET_VRECT_CAL",
-    "SET_VLOAD_CAL",
-    "SET_VBAT_CAL",
     "SET_IRECT_CAL",
-    "SET_IBAT_CAL",
-    "SET_ACR_CAL",
-    "SET_ACS_CAL",
-    "SET_ACT_CAL",
-    "SET_VRECT_OFFS_CAL",
-    "SET_VLOAD_OFFS_CAL",
-    "SET_VBAT_OFFS_CAL",
-    "SET_IRECT_OFFS_CAL",
-    "SET_IBAT_OFFS_CAL",
-    "SET_ACR_OFFS_CAL",
-    "SET_ACS_OFFS_CAL",
-    "SET_ACT_OFFS_CAL",
+    "SET_VBAT_CAL",
     "SET_UNSEEN_FLT",
     "SET_BATT_REV_DET",
-    "SET_BATT_DISC_DET",
     "DEV_NOM_VOUT", // Cihaz Nom VDC
     "DEV_NOM_IOUT",
     "BATT_NOM_IOUT",
@@ -472,7 +431,6 @@ uint32_t IRECT_smp_sc_num=0;
 SETT_type DEVICE_SETT_Items[] = {
 {"Tarh Saat Ayr", 255, 1},
 {"Akü Ters Alg", SET_BATT_REV_DET, 2},
-{"Akü Hat Kopuk", SET_BATT_DISC_DET, 2},
 {"Cihaz Nom VDC", DEV_NOM_VOUT, 3},
 {"I Doğrlt Max", IRECT_LIM_RT_, 3},
 {"DC Kaçak +%", DC_KAC_POS, 3},
@@ -488,25 +446,10 @@ uint8_t dev_setting_edit_mode = 0;
 
 const char* MANAGEMENT_Items[] = {
 "Arıza Kaytları Sil",
-"Cihaz Yeniden Başlat",
-"Kalibrasyon"
+"Cihaz Yeniden Başlat"
 };
 #define NUM_MANAGEMENT_ITEMS (sizeof(MANAGEMENT_Items) / sizeof(MANAGEMENT_Items[0]))
 uint8_t selected_MANAGEMENT = 0;
-
-typedef enum {
-	cal_none,
-	cal_gain,
-	cal_offset
-} cal_edit_mode;
-
-uint32_t cal_sel_col=0;
-uint32_t cal_sel_item_left=0;
-uint32_t cal_sel_item_right=0;
-uint32_t cal_sel_digit=0;
-uint32_t cal_sel_edit_mode=0;
-
-
 
 float array_settings_data[NUM_SET_ENUM][2]={{0.0f, 0.0f}};
 uint32_t settings_rec_addr=3145728;
@@ -548,8 +491,8 @@ float Batt_inspect_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 #define VAC_0_RET_LIM VAC_0_LIM+2
 
 float VAC_Nom=398.0f;
-volatile float VAC_Hg_Lim=0.0f;
-float VAC_Lo_Lim=0.0f;
+float VAC_Hg_Lim=0;
+float VAC_Lo_Lim=0;
 
 
 // FAULT CODES
@@ -573,6 +516,7 @@ uint32_t repeating_string_sent = 0;
 uint32_t while_cnt_string_sent = 0;
 uint32_t device_start_up_delay_completed = 0;
 uint32_t batt_current_detected = 0;
+uint32_t bat_inspection_allowed = 1;
 uint32_t vout_sample_ready = 0;
 uint32_t batt_inspection_not_needed_disp = 0;
 uint32_t batt_current_detected_disp = 0;
@@ -605,7 +549,6 @@ uint32_t ms_50_cnt = 0;
 uint32_t baslangic_gercek_fark_cok = 0;
 uint32_t hedef_gercek_fark_az = 0;
 uint32_t start_bat_inspection_req = 0;
-uint32_t bat_inspection_allowed = 1;
 uint32_t bat_inspection_canceled = 1;
 uint32_t insp_loop_delay_h = 0;
 uint32_t insp_loop_delay_per = 20;
@@ -633,6 +576,7 @@ uint32_t decrease_vout_0_2_disp = 40;
 uint32_t bat_inspection_unknow_state_cnt = 0;
 #define BATT_CURRENT_DETECT_THRESHOLD 0.2f
 uint32_t device_start_up_delay_completed_cnt = 0;
+uint32_t batt_reverse_fc = 0;
 uint32_t batt_not_connected_fc = 0;
 uint32_t VDCK_pos_fc = 0;
 uint32_t VDCK_neg_fc = 0;
@@ -887,10 +831,10 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_BKER  		0xD8  // Block Erase
 #define CMD_CHER  		0xC7  // Chip Erase
 uint32_t var1=0;
-uint32_t var2=0;
-uint32_t var3=0;
+//uint32_t var2=0;
+//uint32_t var3=0;
 //uint32_t var4=0;
-//uint32_t var5=0;
+//uint8_t var5=0;
 //uint8_t var6=0;
 //uint8_t var7=0;
 

@@ -1,119 +1,25 @@
 
-inline extern void CALIBRATION_pg_disp(void) {
-    GLCD_PrintString(0, 0, "Kalibrasyon");
-	char L[32]; static uint8_t lnhg=11;
-    sprintf(L, "VR%7.2f", VRECT_per_avg_roll_sc); 		GLCD_PrintString(0, 1*lnhg, L);
-    sprintf(L, "VL%7.2f", VLOAD_per_avg_roll_sc); 		GLCD_PrintString(0, 2*lnhg, L);
-    sprintf(L, "VB%7.2f", VBAT_per_avg_roll_sc); 		GLCD_PrintString(0, 3*lnhg, L);
-    sprintf(L, "IR%7.2f", IRECT_per_avg_sc); 		GLCD_PrintString(0, 4*lnhg, L);
-    sprintf(L, "IB%7.2f", IBAT_per_avg_sc); 		GLCD_PrintString(0, 5*lnhg, L);
-    sprintf(L, "CR%7.2f", VAC_R_rms_roll_per_avg); 		GLCD_PrintString(64, 1*lnhg, L);
-    sprintf(L, "CS%7.2f", VAC_S_rms_roll_per_avg); 		GLCD_PrintString(64, 2*lnhg, L);
-    sprintf(L, "CT%7.2f", VAC_T_rms_roll_per_avg); 		GLCD_PrintString(64, 3*lnhg, L);
-
-    uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
-
-
-    if (cal_sel_edit_mode==cal_none) {
-		if (cal_sel_col==0) {
-			x0=13; y0=9+(cal_sel_item_left*11); w=41;
-			GLCD_Rect_E(x0,y0,x0+w,y0+h);
-		} else if (cal_sel_col==1) {
-			x0=77; y0=9+(cal_sel_item_right*11); w=41;
-			GLCD_Rect_E(x0,y0,x0+w,y0+h);
-		}
-    }
-
-	if (cal_sel_col == 0) {
-		if (cal_sel_item_left==0) {
-		    if (cal_sel_edit_mode != cal_none) {y0=19;}
-		    sprintf(L, "%9.8f", EpD[SET_VRECT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_VRECT_OFFS_CAL][0].V1); 	GLCD_PrintString(64, 5*lnhg, L);
-		}
-		if (cal_sel_item_left==1) {
-		    if (cal_sel_edit_mode != cal_none) {y0=30;}
-			sprintf(L, "%9.8f", EpD[SET_VLOAD_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_VLOAD_OFFS_CAL][0].V1); 	GLCD_PrintString(64, 5*lnhg, L);
-		}
-		if (cal_sel_item_left==2) {
-		    if (cal_sel_edit_mode != cal_none) {y0=41;}
-			sprintf(L, "%9.8f", EpD[SET_VBAT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_VBAT_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
-		}
-		if (cal_sel_item_left==3) {
-		    if (cal_sel_edit_mode != cal_none) {y0=52;}
-			sprintf(L, "%9.8f", EpD[SET_IRECT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_IRECT_OFFS_CAL][0].V1); 	GLCD_PrintString(64, 5*lnhg, L);
-		}
-		if (cal_sel_item_left==4) {
-		    if (cal_sel_edit_mode != cal_none) {y0=63;}
-			sprintf(L, "%9.8f", EpD[SET_IBAT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_IBAT_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
-		}
-		if (cal_sel_digit==0) {
-		    if (cal_sel_edit_mode != cal_none) {x0=48; w=4;}
-
-		}
-		if (cal_sel_digit==1) {
-		    if (cal_sel_edit_mode != cal_none) {x0=42; w=4;}
-		}
-	}
-	else if (cal_sel_col == 1) {
-		if (cal_sel_item_right==0) {
-		    if (cal_sel_edit_mode != cal_none) {y0=19;}
-			sprintf(L, "%9.8f", EpD[SET_ACR_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_ACR_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
-		}
-		if (cal_sel_item_right==1) {
-		    if (cal_sel_edit_mode != cal_none) {y0=30;}
-			sprintf(L, "%9.8f", EpD[SET_ACS_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_ACS_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
-		}
-		if (cal_sel_item_right==2) {
-		    if (cal_sel_edit_mode != cal_none) {y0=41;}
-			sprintf(L, "%9.8f", EpD[SET_ACT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_ACT_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
-		}
-		if (cal_sel_digit==0) {
-		    if (cal_sel_edit_mode != cal_none) {x0=48+64; w=4;}
-		}
-		if (cal_sel_digit==1) {
-		    if (cal_sel_edit_mode != cal_none) {x0=42+64; w=4;}
-		}
-	}
-	GLCD_Line(x0, y0, x0+w, y0);
-
-
-
-    if (cal_sel_edit_mode==cal_gain) {
-    	GLCD_PrintString(96, 0, "GAIN");
-    } else if (cal_sel_edit_mode==cal_offset) {
-    	GLCD_PrintString(91, 0, "OFFST");
-	}
-
-}
-
 inline extern void HOME_PAGE_pg_disp(void) {
 	if (HOME_PAGE_pg_sel==1) {
 		char L[32]; char R[32]; char M[32];
 //		sprintf(M, "NORMAL"); 					GLCD_PrintString(0, 0, M);
 		sprintf(L, "VL%6.1f V", VLOAD_per_avg_sc); 			GLCD_PrintString(0, 9+1+1, L);
-		sprintf(L, "IT%6.1f A", IRECT_per_avg_sc); 			GLCD_PrintString(0, 18+1+1, L);
+		sprintf(L, "IT%6.1f A", IRECT_per_sc); 			GLCD_PrintString(0, 18+1+1, L);
 		sprintf(L, "VB%6.1f V", VBAT_per_avg_sc); 				GLCD_PrintString(0, 27+3+1, L);
-		sprintf(L, "IB%6.1f A", IBAT_per_avg_sc); 			GLCD_PrintString(0, 36+3+1, L);
+		sprintf(L, "IB%6.1f A", IBAT_per_sc); 			GLCD_PrintString(0, 36+3+1, L);
 		if (VDCK_side==1) {
-		sprintf(L, "K+%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
+		sprintf(L, "KP%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
 		}
 		if (VDCK_side==-1) {
-		sprintf(L, "K-%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
+		sprintf(L, "KN%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
 		}
 
-		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg);	GLCD_PrintString(76, 9, R);
-		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg);	GLCD_PrintString(76, 18, R);
-		sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg);	GLCD_PrintString(76, 27, R);
-		sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg);						GLCD_PrintString(76, 27+3+8, R);
-		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg);						GLCD_PrintString(76, 36+3+8, R);
-		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg);						GLCD_PrintString(76, 45+3+8, R);
+		sprintf(R, "VR%6.1f", VAC_R_roll_per_avg);	GLCD_PrintString(76, 9, R);
+		sprintf(R, "VS%6.1f", VAC_S_roll_per_avg);	GLCD_PrintString(76, 18, R);
+		sprintf(R, "VT%6.1f", VAC_T_roll_per_avg);	GLCD_PrintString(76, 27, R);
+		sprintf(R, "IR 400.2");						GLCD_PrintString(76, 27+3+8, R);
+		sprintf(R, "IS 400.5");						GLCD_PrintString(76, 36+3+8, R);
+		sprintf(R, "IT 400.5");						GLCD_PrintString(76, 45+3+8, R);
 
 		uint32_t x0 = 65; uint32_t y0 = 9;
 		uint32_t x1 = 65; uint32_t y1 = 63;
@@ -174,11 +80,11 @@ inline extern void HOME_PAGE_pg_disp(void) {
 	else if (HOME_PAGE_pg_sel==2) {
 		char b[8][32];
 		sprintf(b[0], "V %5.1f >-D->%5.1f", VRECT_smp_sc, VLOAD_per_avg_sc);
-		sprintf(b[1], "A %5.1f   |  %5.1f", IRECT_per_avg_sc, ILOAD_per_sc);
+		sprintf(b[1], "A %5.1f   |  %5.1f", IRECT_per_sc, ILOAD_per_sc);
 		sprintf(b[2], "          | ");
 		sprintf(b[3], "       BAT");
 		sprintf(b[4], "     %5.1f V", VBAT_per_avg_sc);
-		sprintf(b[5], "     %5.1f A", IBAT_per_avg_sc);
+		sprintf(b[5], "     %5.1f A", IBAT_per_sc);
 		sprintf(b[6], " ");
 		sprintf(b[7], "KÇK %5.1f", VDCK_sc);
 		for (int i = 0; i < 8; ++i) {
@@ -273,17 +179,12 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 
 	for (uint8_t i = 0; i < 6; i++) {
 		sprintf(L, " %s ", DEVICE_SETT_Items[dev_set_disp_index_].setting_id);
-		GLCD_PrintString(0, (i + 1) * 9, L);
 		if (DEVICE_SETT_Items[dev_set_disp_index_].type == 99) {
 			sprintf(M, " ");
 			GLCD_PrintString(96, (i + 1) * 9, M);
 		}
 		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_BATT_REV_DET) {
-			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_REV_DET][dev_setting_edit_mode].V1]);
-			GLCD_PrintString(86, (i + 1) * 9, M);
-		}
-		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_BATT_DISC_DET) {
-			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_DISC_DET][dev_setting_edit_mode].V1]);
+			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_REV_DET][dev_set_disp_index_].V1]);
 			GLCD_PrintString(86, (i + 1) * 9, M);
 		}
 		else if (DEVICE_SETT_Items[dev_set_disp_index_].type == 3) {
@@ -291,6 +192,7 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 			GLCD_PrintString(98, (i + 1) * 9, M);
 		}
 		dev_set_disp_index_=(dev_set_disp_index_+1+NUM_DEVICE_SETT_ITEMS) % NUM_DEVICE_SETT_ITEMS;
+		GLCD_PrintString(0, (i + 1) * 9, L);
 	}
 	GLCD_PrintString(0, (dev_set_arrow_loc+1) * 9, ">");
 	GLCD_PrintString(90, (dev_set_arrow_loc+1) * 9, ">");
@@ -395,7 +297,6 @@ inline extern void DEVICE_RESET_pg_disp(void) {
 //		}
 	}
 }
-
 
 inline extern void DATE_TIME_pg_disp(void) {
     GLCD_PrintString(0, 0, "Tarih Saat Ayarı");

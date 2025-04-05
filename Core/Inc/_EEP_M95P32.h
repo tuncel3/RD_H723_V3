@@ -394,17 +394,18 @@ void SPI4_EEP_ReadDataSettingsRegion(uint32_t address, uint32_t nm_fault) {
 	uint32_t read32bit2;
     res_(CS_M95P32);  // Activate chip select
     delayA_1us(10);
+
     SPI4_SendByte(CMD_READ);
 
 		SPI4_SendByte((address >> 16) & 0xFF);  // A23-A16
 		SPI4_SendByte((address >> 8) & 0xFF);   // A15-A8
 		SPI4_SendByte(address & 0xFF);          // A7-A0
 
-		for (uint32_t i = 0; i < NUM_SET_ENUM; i++) {
+		for (uint32_t i = 0; i < nm_fault; i++) {
 			read32bit1 = SPI4_ReceiveByte() << 24 | SPI4_ReceiveByte() << 16 | SPI4_ReceiveByte() << 8 | SPI4_ReceiveByte();
 			read32bit2 = SPI4_ReceiveByte() << 24 | SPI4_ReceiveByte() << 16 | SPI4_ReceiveByte() << 8 | SPI4_ReceiveByte();
 
-			if (read32bit1 != 0xffffffff && read32bit1 < 1000) {
+			if (read32bit1 != 0xffffffff) {
 				EpD[i][0].setting_id = read32bit1;
 				EpD[i][1].setting_id = read32bit1;
 				uint32_t float_raw=read32bit2;
@@ -412,9 +413,8 @@ void SPI4_EEP_ReadDataSettingsRegion(uint32_t address, uint32_t nm_fault) {
 				memcpy(&float_value, &float_raw, sizeof(float));
 				EpD[i][0].V1 = float_value;
 				EpD[i][1].V1 = float_value;
-			} else {
-				sprintf(DUB, "\n\n\n\n\nread eeprom data id higher than 1000 %lu %lu %f", read32bit2, EpD[i][0].setting_id, EpD[i][0].V1); prfm(DUB);
 			}
+//				sprintf(DUB, "s1 %lu %f", EpD[i].setting_id, EpD[i].V1); prfm(DUB);
 		}
     set_(CS_M95P32);  // Deactivate chip select
 }
@@ -543,9 +543,9 @@ for (int i = 0; i < NUM_FAULT_RECORD-1; i++) {
 void print_Eep_data_f(void) {
 //	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
     for (int i = 0; i < NUM_SET_ENUM; i++) {
-		sprintf(DUB, "s1 %d %s \t%f", i, Eep_data_Names[EpD[i][0].setting_id], EpD[i][0].V1); prfm(DUB);
-		delay_1ms(1);
+		sprintf(DUB, "s1 %s \t%f", Eep_data_Names[EpD[i][0].setting_id], EpD[i][0].V1); prfm(DUB);
     }
+    delay_1ms(1);
 }
 // 512 byte				0-1FF
 // next 512 byte		200-3FF
