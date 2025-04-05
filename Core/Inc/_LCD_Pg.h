@@ -1,4 +1,21 @@
 
+inline extern void DROPPER_pg_disp(void) {
+    GLCD_PrintString(0, 0, "Kalibrasyon");
+	char L[32]; static uint8_t lnhg=9;
+	sprintf(L, " Kademe 1 %s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_DROPPER_K1][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 1*lnhg, L);
+	sprintf(L, " Kademe 2 %s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_DROPPER_K2][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 2*lnhg, L);
+    sprintf(L, ">");
+	if (selected_DROPPER==0) {
+        GLCD_PrintString(0, 1*lnhg, L);
+    } else if (selected_DROPPER==1) {
+        GLCD_PrintString(0, 2*lnhg, L);
+    }
+	if (dropper_edit_mode) {
+		GLCD_Rect_E(69,(selected_DROPPER+1)*9-2,101,(selected_DROPPER+2)*9-1); // batt rect
+	}
+
+}
+
 inline extern void CALIBRATION_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon");
 	char L[32]; static uint8_t lnhg=11;
@@ -168,31 +185,43 @@ inline extern void HOME_PAGE_pg_disp(void) {
 			}
 		}
 		if (EpD[SET_UNSEEN_FLT][0].V1==1) {
-			sprintf(M, "ARZK"); 		GLCD_PrintString(100, 0, M);
+			sprintf(M, "A"); 		GLCD_PrintString(118, 0, M);
 		}
 	}
 	else if (HOME_PAGE_pg_sel==2) {
 		char b[8][32];
-		sprintf(b[0], "V %5.1f >-D->%5.1f", VRECT_smp_sc, VLOAD_per_avg_sc);
-		sprintf(b[1], "A %5.1f   |  %5.1f", IRECT_per_avg_sc, ILOAD_per_sc);
-		sprintf(b[2], "          | ");
-		sprintf(b[3], "       BAT");
-		sprintf(b[4], "     %5.1f V", VBAT_per_avg_sc);
-		sprintf(b[5], "     %5.1f A", IBAT_per_avg_sc);
-		sprintf(b[6], " ");
-		sprintf(b[7], "KÇK %5.1f", VDCK_sc);
-		for (int i = 0; i < 8; ++i) {
+		sprintf(b[0], "%5.1f >-D->%5.1f V", VRECT_smp_sc, VLOAD_per_avg_sc);
+		sprintf(b[1], "%5.1f   |  %5.1f A", IRECT_per_avg_sc, ILOAD_per_sc);
+		sprintf(b[2], "        | ");
+		sprintf(b[3], "    BAT");
+		sprintf(b[4], "  %5.1f V", VBAT_per_avg_sc);
+		sprintf(b[5], "  %5.1f A", IBAT_per_avg_sc);
+		char L[32];
+		if (VDCK_side==1) {
+		sprintf(L, "K+%5.1f%%", VDCK_perc); 		GLCD_PrintString(4, 45+3+4+1, L);
+		}
+		if (VDCK_side==-1) {
+		sprintf(L, "K-%5.1f%%", VDCK_perc); 		GLCD_PrintString(4, 45+3+4+1, L);
+		}
+
+		sprintf(L, "Sıcaklık C"); 						GLCD_PrintString(66, 24, L);
+		sprintf(L, "Soğt%6.1f", tmp_dat_1); 		GLCD_PrintString(66, 34, L);
+		sprintf(L, "Traf%6.1f", tmp_dat_2); 		GLCD_PrintString(66, 44, L);
+		sprintf(L, "Akü %6.1f", tmp_dat_3); 		GLCD_PrintString(66, 54, L);
+
+
+		for (int i = 0; i < 6; ++i) {
 			GLCD_DisplayString(0, i, b[i]);
 		}
 			uint32_t x0 = 0; uint32_t y0 = 0;
-			uint32_t x1 = 0; uint32_t y1 = 0;
+			uint32_t w = 0; uint32_t h = 0;
 
-			x0 = 32;		y0 = 22;
-			x1 = x0+50;		y1 = y0+26;
-			GLCD_Line(x0, y0, x1, y0); // bat ust
-			GLCD_Line(x0, y1, x1, y1); // bat alt
-			GLCD_Line(x0, y0, x0, y1); // bat sol
-			GLCD_Line(x1, y0, x1, y1); // bat sağ
+			x0 = 3;		y0 = 22;
+			w = 53;		h = 26;
+			GLCD_Rect_E(x0,y0,x0+w,y0+h); // batt rect
+			x0 = 62;		y0 = 22;
+			w = 65;		h = 41;
+			GLCD_Rect_E(x0,y0,x0+w,y0+h); // sıcaklık rect
 	}
 }
 
@@ -296,10 +325,7 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 	GLCD_PrintString(90, (dev_set_arrow_loc+1) * 9, ">");
 
 if (dev_setting_edit_mode) {
-	GLCD_Line(88, (dev_set_arrow_loc+1)*9-1, 88, (dev_set_arrow_loc+2)*9-2);
-	GLCD_Line(125, (dev_set_arrow_loc+1)*9-1, 125, (dev_set_arrow_loc+2)*9-2);
-	GLCD_Line(88, (dev_set_arrow_loc+1)*9-2, 125, (dev_set_arrow_loc+1)*9-2);
-	GLCD_Line(88, (dev_set_arrow_loc+2)*9-1, 125, (dev_set_arrow_loc+2)*9-1);
+	GLCD_Rect_E(95,(dev_set_arrow_loc+1)*9-2,127,(dev_set_arrow_loc+2)*9-1); // batt rect
 }
 }
 

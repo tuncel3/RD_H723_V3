@@ -10,6 +10,7 @@ void change_fault_state_f(FaultCode fault_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 void inline extern toggle_batt_inspection_direction(uint8_t num);
+void inline extern adjust_dropper_accordingly(void);
 static inline uint8_t is_fault_active(FaultCode fault_code);
 
 #include "_EEP_M95P32.h"
@@ -768,7 +769,7 @@ void inline extern batt_line_broken_fn(void) {
 		reset_batt_inspection_procedure_state_vars();
 
 			batt_line_broken=1;
-			change_fault_state_f(BATTERY_FAULT_FC, 1);
+			change_fault_state_f(BATT_LINE_BROKEN_FC, 1);
 
 }
 void inline extern batt_line_OK_fn(void) {
@@ -777,7 +778,7 @@ void inline extern batt_line_OK_fn(void) {
 		reset_batt_inspection_procedure_state_vars();
 
 			batt_line_broken=0;
-			change_fault_state_f(BATTERY_FAULT_FC, 0);
+			change_fault_state_f(BATT_LINE_BROKEN_FC, 0);
 }
 void inline extern toggle_batt_inspection_direction(uint8_t num) {
 
@@ -1022,9 +1023,9 @@ void change_fault_state_f(FaultCode fault_code, uint8_t set) {
     if (set) {
         if (faultList[fault_code].code < 16) {
         	LED_16_Data |= fault_bit; }  // activate LED if required
-        if (faultList[fault_code].action & (1 << SET_GEN_F_LED)) {
+        if (faultList[fault_code].action & (1 << SET_GEN_F_LED_enum)) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC); } // activate general fault LED if associated
-        if (faultList[fault_code].action & (1 << THYSTOP)) {  // stop thy drv if fault requires
+        if (faultList[fault_code].action & (1 << THYSTOP_enum)) {  // stop thy drv if fault requires
         	thy_drv_en=0;
 			sf_sta_req=0;
 			sf_sta_req_ok=0;
@@ -1033,32 +1034,111 @@ void change_fault_state_f(FaultCode fault_code, uint8_t set) {
         	LED_16_Data &= ~(1U << START_FC); }
         if (fault_code == START_FC) {
         	LED_16_Data &= ~(1U << STOP_FC); }
-            (faultList[fault_code].action |= (1 << ACTIVE)); // set active flag in fault action bits
 
-		if (!!(faultList[fault_code].action & (1 << SAVE)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
+		faultList[fault_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
+
+		if (!!(faultList[fault_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(fault_code); }
     } else {
         if (faultList[fault_code].code < 16) {
         	LED_16_Data &= ~fault_bit; }  // deactivate LED if resetting a fault with LED requirement
-        if (faultList[fault_code].action & (1 << SET_GEN_F_LED)) { // deactivate general fault LED if associated
+        if (faultList[fault_code].action & (1 << SET_GEN_F_LED_enum)) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC); }
-        if (faultList[fault_code].action & (1 << THYSTOP)) { // thy stop gerektiren bir arıza reset ediliyor
+        if (faultList[fault_code].action & (1 << THYSTOP_enum)) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
-        (faultList[fault_code].action &= ~(1 << ACTIVE));
+        (faultList[fault_code].action &= ~(1 << ACTIVE_enum));
     }
 }
 
 static inline uint8_t is_fault_active(FaultCode fault_code) {
-
-    if (faultList[fault_code].action & (1 << THYSTOP)) {
-    	return (thy_stop_fault_hold_bits & (1U << fault_code)) != 0; // neden sadece alttaki satır yok da bu satır da eklenmiş. NOTE_FOR_CODE_PART
-    }
-    	return (faultList[fault_code].action & (1U << ACTIVE)) != 0;
+    	return (faultList[fault_code].action & (1U << ACTIVE_enum)) != 0;
 }
 
 void swap_scr_lines(SCR_Line *line1, SCR_Line *line2) {
     SCR_Line temp = *line1;
     *line1 = *line2;
     *line2 = temp;
+}
+
+
+void USART10_SendByte(uint8_t data)
+{
+    while (!LL_USART_IsActiveFlag_TXE(USART10)) {
+        // Optionally place a timeout here in production code
+    }
+    LL_USART_TransmitData8(USART10, data);
+    while (!LL_USART_IsActiveFlag_TC(USART10)) {
+    }
+}
+
+int read_data(uint8_t dev_count, uint16_t *raw_vals)
+{
+
+	U10_rxCount = 0;
+    for (int i = 0; i < U10_RX_BUFFER_SIZE; i++) {
+    	U10_rxBuf[i] = 0;
+    }
+
+    USART10_SendByte(0x55);
+    delayA_1us(10);
+    USART10_SendByte(0xF1);
+
+    for (int i = 0; i < dev_count; i++) {
+        // ham değer = LSB + (MSB << 8)
+        uint8_t lsb = U10_rxBuf[2 + i*2];
+        uint8_t msb = U10_rxBuf[3 + i*2];
+        raw_vals[i] = (msb << 8) | lsb;
+    }
+
+    return 0;
+}
+
+static float tmp144_convert_temperature(uint16_t raw16) {
+  int16_t val12 = (raw16 >> 4) & 0x0FFF;
+  if (val12 & 0x0800) {
+    val12 |= 0xF000;
+  }
+  return (float)val12 * 0.0625f;
+}
+
+int tmp144_init_and_assign(void)
+{
+	U10_rxCount = 0;
+    for (int i = 0; i < U10_RX_BUFFER_SIZE; i++) {
+    	U10_rxBuf[i] = 0;
+    }
+
+    USART10_SendByte(0x55);
+    delayA_1us(10);
+    USART10_SendByte(0x8C);
+    delayA_1us(10);
+    USART10_SendByte(0x90);
+    delay_1ms(1000);
+
+//    while (rxCount < 3) {
+//    }
+
+    uint8_t dev_count_raw = U10_rxBuf[2];
+    uint8_t dev_count = dev_count_raw & 0x0F;
+
+    if (dev_count < 1 || dev_count > 16) {
+        return 0;
+    }
+    return dev_count;
+}
+
+
+void inline extern adjust_dropper_accordingly(void) {
+	if (EpD[SET_DROPPER_K1][0].V1==0) {
+		set_(DROPP_BATT);
+	} else if (EpD[SET_DROPPER_K1][0].V1==1) {
+		res_(DROPP_BATT);
+	}
+	if (EpD[SET_DROPPER_K2][0].V1==0) {
+		set_(DROPP_LOAD);
+	} else if (EpD[SET_DROPPER_K2][0].V1==1) {
+		res_(DROPP_LOAD);
+	}
+
 }

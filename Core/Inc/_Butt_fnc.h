@@ -94,6 +94,9 @@ void bleft_fnc(void) {
 			}
     	}
     }
+    else if (currentPage == DROPPER_pg) {
+    	selected_DROPPER=(selected_DROPPER-1+2) % 2;
+    }
     else if (currentPage == MANAGEMENT_pg) {
 
     }
@@ -235,6 +238,9 @@ void bright_fnc(void) {
 					EpD[BATT_SHORT][1].V1=999;
 			}
     	}
+    }
+    else if (currentPage == DROPPER_pg) {
+    	selected_DROPPER=(selected_DROPPER+1) % 2;
     }
     else if (currentPage == MANAGEMENT_pg) {
 
@@ -384,6 +390,21 @@ if (!chg_setting_edit_mode) {
 		}
 	}
 }
+    }
+    else if (currentPage == DROPPER_pg) {
+    	if (dropper_edit_mode == 0) {
+    		selected_DROPPER=(selected_DROPPER+1) % 2;
+		} else if (dropper_edit_mode == 1) {
+			if (selected_DROPPER == 0) {
+				if (EpD[SET_DROPPER_K1][1].V1==1) {
+					EpD[SET_DROPPER_K1][1].V1=0;
+				} else { EpD[SET_DROPPER_K1][1].V1=1;}
+			} else if (selected_DROPPER == 1) {
+				if (EpD[SET_DROPPER_K2][1].V1==1) {
+					EpD[SET_DROPPER_K2][1].V1=0;
+				} else { EpD[SET_DROPPER_K2][1].V1=1;}
+			}
+		}
     }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
@@ -676,6 +697,22 @@ if (!chg_setting_edit_mode) {
 	}
 }
     }
+    else if (currentPage == DROPPER_pg) {
+		if (dropper_edit_mode == 0) {
+			selected_DROPPER=(selected_DROPPER-1+2) % 2;
+		} else if (dropper_edit_mode == 1) {
+			if (selected_DROPPER == 0) {
+				if (EpD[SET_DROPPER_K1][1].V1==1) {
+					EpD[SET_DROPPER_K1][1].V1=0;
+				} else { EpD[SET_DROPPER_K1][1].V1=1;}
+			} else if (selected_DROPPER == 1) {
+				if (EpD[SET_DROPPER_K2][1].V1==1) {
+					EpD[SET_DROPPER_K2][1].V1=0;
+				} else { EpD[SET_DROPPER_K2][1].V1=1;}
+			}
+		}
+	}
+
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT+1) % NUM_MANAGEMENT_ITEMS;
     }
@@ -928,6 +965,9 @@ void besc_fnc(void) {
     	} else {
     		currentPage = MAIN_MENU_pg;
     	}
+    }
+    else if (currentPage == DROPPER_pg) {
+        currentPage = MAIN_MENU_pg;
     }
     else if (currentPage == MANAGEMENT_pg) {
         currentPage = MAIN_MENU_pg;

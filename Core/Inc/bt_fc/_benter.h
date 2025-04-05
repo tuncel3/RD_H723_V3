@@ -14,6 +14,8 @@ void benter_fnc(void) {
 			Rec_Dat_to_EEp_f(SET_UNSEEN_FLT);
 			there_is_past_unseen_fault=0;
 		} else if (selected_MAIN_MENU == 3) {
+			currentPage = DROPPER_pg;
+		} else if (selected_MAIN_MENU == 4) {
 			currentPage = MANAGEMENT_pg;
         }
     }
@@ -180,6 +182,33 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==BATT_SHORT) {
 }
 		}
     }
+    else if (currentPage == DROPPER_pg) {
+    	dropper_edit_mode ^= 1;
+
+		if (dropper_edit_mode) {
+			if (selected_DROPPER == 0) {
+				EpD[SET_DROPPER_K1][1].V1=EpD[SET_DROPPER_K1][0].V1;
+			}
+			else if (selected_DROPPER == 1) {
+				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
+			}
+		} else if (!dropper_edit_mode) {
+			if (selected_DROPPER == 0) {
+				EpD[SET_DROPPER_K1][0].V1 = EpD[SET_DROPPER_K1][1].V1;
+				adjust_dropper_accordingly();
+				Rec_Dat_to_EEp_f(SET_DROPPER_K1);
+			} else if (selected_DROPPER == 1) {
+				EpD[SET_DROPPER_K2][0].V1 = EpD[SET_DROPPER_K2][1].V1;
+				adjust_dropper_accordingly();
+				Rec_Dat_to_EEp_f(SET_DROPPER_K2);
+			}
+		}
+	}
+
+
+
+
+
     else if (currentPage == MANAGEMENT_pg) {
 		if (selected_MANAGEMENT == 0) {
 			currentPage = FAULT_CODES_RESET_pg;

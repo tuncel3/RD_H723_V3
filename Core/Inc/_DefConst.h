@@ -3,7 +3,9 @@
 #define E1_1 LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1);
 #define E1_0 LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1);
 //#define E12=1; LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_12);
-#define E15 GPIOE, LL_GPIO_PIN_15
+#define E15_P GPIOE, LL_GPIO_PIN_15
+#define E2_P GPIOE, LL_GPIO_PIN_2
+#define E3_P GPIOE, LL_GPIO_PIN_3
 #define B12_0 LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_12);
 
 #define E1(x) ((x) ? LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1) : LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1))
@@ -259,6 +261,7 @@ typedef enum {
 	DEVICE_SETT_pg,
 	MANAGEMENT_pg,
 	FAULT_CODES_REPORT_pg,
+	DROPPER_pg,
 	FAULT_CODES_RESET_pg,
 	DEVICE_RESET_pg,
 	CALIBRATION_pg,
@@ -269,7 +272,7 @@ typedef enum {
 } MenuPage;
 
 MenuPage currentPage = HOME_PAGE_pg;
-uint8_t HOME_PAGE_pg_sel = 1;
+uint8_t HOME_PAGE_pg_sel = 2;
 
 uint8_t fault_codes_reset_req = 0;
 uint8_t device_reset_req = 0;
@@ -283,6 +286,7 @@ const char* MAIN_MENU_Items[] = {
     "Şarj Ayarları",
     "Cihaz Ayarları",
     "Arıza Kod Raporu",
+    "Dropper",
     "Yönetim"
 };
 #define NUM_MAIN_MENU_ITEMS (sizeof(MAIN_MENU_Items) / sizeof(MAIN_MENU_Items[0]))
@@ -294,6 +298,8 @@ uint32_t boost_of_auto_mode_active=0;
 uint32_t float_of_auto_mode_active=0;
 uint32_t charge_mode_timed_time_cnt=0;
 uint32_t charge_mode_timed_time_sec=0;
+uint8_t dropper_edit_mode = 0;
+uint8_t selected_DROPPER = 0;
 
 typedef enum {
 	FLOAT,
@@ -346,6 +352,8 @@ typedef enum {
 	SET_UNSEEN_FLT,
 	SET_BATT_REV_DET,
 	SET_BATT_DISC_DET,
+	SET_DROPPER_K1,
+	SET_DROPPER_K2,
 	DEV_NOM_VOUT, 		// Cihaz Nom VDC
 	DEV_NOM_IOUT, 		// Cihaz Nom IDC rect out
 	BATT_NOM_IOUT,
@@ -387,6 +395,8 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_UNSEEN_FLT, 0.0}, {SET_UNSEEN_FLT, 0.0} },
     { {SET_BATT_REV_DET, 1.0}, {SET_BATT_REV_DET, 1.0} },
     { {SET_BATT_DISC_DET, 0.0}, {SET_BATT_DISC_DET, 0.0} },
+    { {SET_DROPPER_K1, 0.0}, {SET_DROPPER_K1, 0.0} },
+    { {SET_DROPPER_K2, 0.0}, {SET_DROPPER_K2, 0.0} },
     { {DEV_NOM_VOUT, 48.0}, {DEV_NOM_VOUT, 48.0} }, // Cihaz Nom VDC
     { {DEV_NOM_IOUT, 40.0}, {DEV_NOM_IOUT, 40.0} },
     { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} },
@@ -426,6 +436,8 @@ const char* Eep_data_Names[] = { // for printing in uart
     "SET_UNSEEN_FLT",
     "SET_BATT_REV_DET",
     "SET_BATT_DISC_DET",
+    "SET_DROPPER_K1",
+    "SET_DROPPER_K2",
     "DEV_NOM_VOUT", // Cihaz Nom VDC
     "DEV_NOM_IOUT",
     "BATT_NOM_IOUT",
@@ -738,24 +750,6 @@ uint32_t rectifier_current_limit_accepted = 0;
 uint32_t DC_leak_above_pos_lim = 0;
 uint32_t DC_leak_below_neg_lim = 0;
 
-// Each fault gets a single bit in a 32-bit integer.
-//#define GENERAL_FAULT_LED     	 	(1U << 0)   // bit 0
-//#define BATTERY_FAULT_LED		    (1U << 1)   // bit 1
-//#define OVERTEMP_ALARM_LED  	    (1U << 2)   // bit 2
-//#define OVERTEMP_OPEN_LED		    (1U << 3)   // bit 3
-//#define BATTERY_CURRENT_LIMIT_LED   (1U << 4)   // bit 4
-//#define RECTIFIER_CURRENT_LIMIT_LED (1U << 5)   // bit 5
-//#define DC_LEAK_NEGATIVE_LED	    (1U << 6)   // bit 6
-//#define DC_LEAK_POSITIVE_LED    	(1U << 7)   // bit 7
-//#define DC_LW_LED				    (1U << 8)   // bit 8
-//#define DC_HG_LED				    (1U << 9)   // bit 9
-//#define VAC_LW_FAULT_LED	    (1U << 10)  // bit 10
-//#define VAC_HG_FAULT_LED  	(1U << 11)  // bit 11
-//#define STOP_LED				    (1U << 12)  // bit 12
-//#define START_LED				    (1U << 13)  // bit 13
-//#define VAC_OFF_LED			    (1U << 14)  // bit 14
-//#define VAC_ON_LED			    (1U << 15)  // bit 15
-
 #define LOAD_MCB_OFF_LED     	 	(1U << 0)   // bit 0
 #define DROPPER_2_BYPASS_LED	    (1U << 1)   // bit 1
 #define DROPPER_1_BYPASS_LED  	    (1U << 2)   // bit 2
@@ -764,6 +758,9 @@ uint32_t DC_leak_below_neg_lim = 0;
 #define FLOAT_CHARGE_LED			(1U << 5)   // bit 5
 #define INPUT_MCB_OFF_LED	    	(1U << 6)   // bit 6
 
+uint8_t SW_LINE_P_STATUS=0;
+uint8_t SW_BATT_P_STATUS=0;
+uint8_t SW_LOAD_P_STATUS=0;
 
 typedef enum {
 	GENERAL_FAULT_FC,
@@ -785,6 +782,8 @@ typedef enum {
 	RECT_SHORT_FC,
 	BATT_SHORT_FC,
 	BATT_REVERSE_FC,
+	BATT_LINE_BROKEN_FC,
+	BATT_FUSE_OFF_FC,
 	VAC_R_RMS_HG_FAULT_FC,
 	VAC_S_RMS_HG_FAULT_FC,
 	VAC_T_RMS_HG_FAULT_FC,
@@ -794,28 +793,27 @@ typedef enum {
 	VAC_R_RMS_0_FAULT_FC,
 	VAC_S_RMS_0_FAULT_FC,
 	VAC_T_RMS_0_FAULT_FC,
-	EEPROM_FAULT_FC,	// Kayit Sistemi Arz
+	EEPROM_FAULT_FC,
     NUM_FAULTS
 } FaultCode;
 
-
 typedef enum {
-	SET_GEN_F_LED,
-	SAVE,
-	THYSTOP,
-	ACTIVE
+	SET_GEN_F_LED_enum,
+	SAVE_enum,
+	THYSTOP_enum,
+	ACTIVE_enum
 } Fault_Code_Action_Bits;
 
 typedef struct {
     FaultCode code;
-    Fault_Code_Action_Bits action;
+    uint8_t action;
     const char *name;
 } FaultInfo;
 //  status   action   action  action
 //  ACTIVE   THYSTOP  SAVE    SET_GEN_F_LED
 FaultInfo faultList[] = {
     { GENERAL_FAULT_FC,           0b0010,	"Genel Arıza" },
-	{ BATTERY_FAULT_FC,           0b0010,	"Akü Arızası" },
+	{ BATTERY_FAULT_FC,           0b0000,	"Akü Arızası" },
 	{ OVERTEMP_ALARM_FC,          0b0110,	"Aşrı Sıckl Uyar" },
 	{ OVERTEMP_OPEN_FC,           0b0110,	"Aşrı Sıckl Açık" },
 	{ BATTERY_CURRENT_LIMIT_FC,   0b0000,	"Akü Akım Sınırı" },
@@ -833,6 +831,8 @@ FaultInfo faultList[] = {
 	{ RECT_SHORT_FC,              0b0110,	"DC Kısa Devre" },
 	{ BATT_SHORT_FC,              0b0110,	"Akü Kısa Devre" },
 	{ BATT_REVERSE_FC,            0b0010,	"Akü Ters" },
+	{ BATT_LINE_BROKEN_FC,        0b0010,	"Akü Hattı Kopuk" },
+	{ BATT_FUSE_OFF_FC,           0b0010,	"Akü Sigorta Atık" },
 	{ VAC_R_RMS_HG_FAULT_FC,      0b0000,	"VINR RMS Yüksek" },
 	{ VAC_S_RMS_HG_FAULT_FC,      0b0000,	"VINS RMS Yüksek" },
 	{ VAC_T_RMS_HG_FAULT_FC,      0b0000,	"VINT RMS Yüksek" },
@@ -846,12 +846,6 @@ FaultInfo faultList[] = {
 };
 
 #define NUM_FAULT_CODE_NAMES sizeof(faultList) / sizeof(faultList[0])
-
-
-//typedef enum {
-//	RESET,
-//    SET
-//} Fault_Code_Set;
 
 uint8_t eep_hold_256bit[8] = {
 0x1, 0x2, 0x3, 0x4,
@@ -886,9 +880,9 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_SCER  		0x20  // Sector Erase
 #define CMD_BKER  		0xD8  // Block Erase
 #define CMD_CHER  		0xC7  // Chip Erase
-uint32_t var1=0;
-uint32_t var2=0;
-uint32_t var3=0;
+//uint32_t var1=0;
+//uint32_t var2=0;
+//uint32_t var3=0;
 //uint32_t var4=0;
 //uint32_t var5=0;
 //uint8_t var6=0;
@@ -909,4 +903,12 @@ uint32_t FAULT_CODES_REPORT_disp_mode = 0;
 char lcdd[32];
 
 
+#define U10_RX_BUFFER_SIZE 32
+volatile uint8_t U10_rxBuf[U10_RX_BUFFER_SIZE];
+volatile uint16_t U10_rxCount = 0;
+int dev_count = 1;
+uint16_t rawVals[20];
+float tmp_dat_1=0;
+float tmp_dat_2=0;
+float tmp_dat_3=0;
 

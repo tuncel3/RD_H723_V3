@@ -382,8 +382,6 @@ void TIM16_IRQHandler(void) {
 }
 
 
-
-
 void TIM7_IRQHandler(void)
 {
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM7)){
@@ -479,3 +477,23 @@ void TIM6_DAC_IRQHandler(void) {
 		LL_TIM_ClearFlag_UPDATE(TIM6);
 	}
 }
+
+
+void USART10_IRQHandler(void)
+{
+    if (LL_USART_IsActiveFlag_RXNE(USART10)) {
+        uint8_t data = LL_USART_ReceiveData8(USART10);
+
+        // Buffer taşmaması için kontrol
+        if (U10_rxCount < U10_RX_BUFFER_SIZE) {
+        	U10_rxBuf[U10_rxCount++] = data;
+        }
+
+        // İsterseniz her yeni baytta bir LED toggle vs.
+        // LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_5);
+    }
+
+}
+
+
+
