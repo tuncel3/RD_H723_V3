@@ -71,35 +71,50 @@ if (device_start_up_delay_completed==1) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
 
-		if (VLOAD_per_avg_sc > Vdc_drop_out_max && isOutSet_(DROPP_BATT)==1 && isOutSet_(DROPP_BATT)==1) {
+		if (VLOAD_per_avg_sc+dropper_test_var_1 > Vdc_drop_out_max && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) {
 				actvate_drop_cnt=0;
-				res_(DROPP_BATT);
+				EpD[SET_DROPPER_K1][0].V1=1; EpD[SET_DROPPER_K1][1].V1=1; // kullanıcı harici değişim olduğu için bu değişiklik yapılmalı.
+				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1); // dropper ı kayıtlı değere göre değiştir.
+				change_fault_state_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1); // burası ledleri değiştiriyor.
 			}
-		} else if (VLOAD_per_avg_sc > Vdc_drop_out_max && isOutSet_(DROPP_BATT)==1 && isOutSet_(DROPP_LOAD)==1) {
+		} else if (VLOAD_per_avg_sc+dropper_test_var_1 > Vdc_drop_out_max && is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) {
 				actvate_drop_cnt=0;
-				res_(DROPP_LOAD);
+				EpD[SET_DROPPER_K2][0].V1=1; EpD[SET_DROPPER_K2][1].V1=1;
+				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
+				change_fault_state_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 			}
-		} else if (VLOAD_per_avg_sc < Vdc_drop_out_min && isOutSet_(DROPP_LOAD)==0 && isOutSet_(DROPP_BATT)==0) {
+		} else if (VLOAD_per_avg_sc+dropper_test_var_1 < Vdc_drop_out_min && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
 			actvate_drop_cnt++;
-			if (actvate_drop_cnt >= actvate_drop_per) {
+			if (actvate_drop_cnt >= actvate_drop_per) { // ikisi de devredeyse önce 2. dropperi kapat.
 				actvate_drop_cnt=0;
-				set_(DROPP_BATT);
+				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
+				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
+				change_fault_state_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 			}
-		} else if (VLOAD_per_avg_sc < Vdc_drop_out_min && isOutSet_(DROPP_BATT)==0 && isOutSet_(DROPP_LOAD)==0) {
+		} else if (VLOAD_per_avg_sc+dropper_test_var_1 < Vdc_drop_out_min && is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
 			actvate_drop_cnt++;
-			if (actvate_drop_cnt >= actvate_drop_per) {
+			if (actvate_drop_cnt >= actvate_drop_per) { // 2. kapalıysa 1. dropperi kapat.
 				actvate_drop_cnt=0;
-				set_(DROPP_LOAD);
+				EpD[SET_DROPPER_K1][0].V1=0; EpD[SET_DROPPER_K1][1].V1=0;
+				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
+				change_fault_state_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+			}
+		} else if (VLOAD_per_avg_sc+dropper_test_var_1 < Vdc_drop_out_min && !is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
+			actvate_drop_cnt++;
+			if (actvate_drop_cnt >= actvate_drop_per) { // 1. kapalıysa 2. dropperi kapat.
+				actvate_drop_cnt=0;
+				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
+				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
+				change_fault_state_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 			}
 		}
 
 ////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
 if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
@@ -153,44 +168,16 @@ if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 		actions_after_charge_mode_change(8);
 		sprintf(DUB,"Timer mode count down ended. Switch to FLOAT mode"); prfm(DUB);
 	}
-//		boost_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
-//		float_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
-//		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-//		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-//		set_V_targ_con_sy(Current_charge_voltage);
-//		LED_7_Data &= !BOOST_CHARGE_LED;
-//		LED_7_Data |= FLOAT_CHARGE_LED;
-//		sprintf(DUB,"switch_to_auto_mode_completed"); prfm(DUB);
-//	else if (IBAT_per_avg_sc > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
-//		float_of_auto_mode_active=0;
-//		boost_of_auto_mode_active=1;
-//		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
-//		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
-//		set_V_targ_con_sy(Current_charge_voltage);
-//		LED_7_Data &= !FLOAT_CHARGE_LED;
-//		LED_7_Data |= BOOST_CHARGE_LED;
-//		sprintf(DUB,"AUTO switch to BOOST %f", IBAT_per_avg_sc); prfm(DUB);
-//	}
-//	else if (IBAT_per_avg_sc < EpD[I_LIM_TO_FLOAT][0].V1 && float_of_auto_mode_active==0) {
-//		float_of_auto_mode_active=1;
-//		boost_of_auto_mode_active=0;
-//		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-//		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-//		set_V_targ_con_sy(Current_charge_voltage);
-//		LED_7_Data &= !BOOST_CHARGE_LED;
-//		LED_7_Data |= FLOAT_CHARGE_LED;
-//		sprintf(DUB,"AUTO switch to FLOAT %f", IBAT_per_avg_sc); prfm(DUB);
-//	}
 }
 ////// MANAGE CHARGE MODE TIMED /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////// MANAGE CHARGE MODE TIMED /////////////////////////////////////////////////////////////////////////////////////
+////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
 if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 
 }
-////// MANAGE CHARGE MODE TIMED /////////////////////////////////////////////////////////////////////////////////////
+////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -201,48 +188,71 @@ if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_thy_drv==1) { // 
 		end_batt_inspect_return_to_normal(5);
 	}
 }
-if (SW_BATT_P_STATUS && !is_fault_active(BATT_FUSE_OFF_FC)) {
+
+
+SW_LINE_OFF=!isInSet_(SW_LINE_P);
+SW_BATT_OFF=!isInSet_(SW_BATT_P);
+SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// MCCB MONITORING //////////////////////////////////////////////////////////////////////////////////////////////
+////// LINE FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
+if (SW_LINE_OFF && !is_state_active(LINE_FUSE_OFF_FC)) {
+	change_fault_state_f(LINE_FUSE_OFF_FC, 1);
+} else if (!SW_LINE_OFF && is_state_active(LINE_FUSE_OFF_FC)) {
+	change_fault_state_f(LINE_FUSE_OFF_FC, 0);
+}
+////// BATT FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
+if (SW_BATT_OFF && !is_state_active(BATT_FUSE_OFF_FC)) {
 	change_fault_state_f(BATT_FUSE_OFF_FC, 1);
-	if (!is_fault_active(BATTERY_FAULT_FC)) {
-	}
-} else if (!SW_BATT_P_STATUS && is_fault_active(BATT_FUSE_OFF_FC)) {
+} else if (!SW_BATT_OFF && is_state_active(BATT_FUSE_OFF_FC)) {
 	change_fault_state_f(BATT_FUSE_OFF_FC, 0);
 }
+////// LOAD FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
+if (SW_LOAD_OFF && !is_state_active(LOAD_FUSE_OFF_FC)) {
+	change_fault_state_f(LOAD_FUSE_OFF_FC, 1);
+} else if (!SW_LOAD_OFF && is_state_active(LOAD_FUSE_OFF_FC)) {
+	change_fault_state_f(LOAD_FUSE_OFF_FC, 0);
+}
+////// MCCB MONITORING //////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////// BATTERY_FAULT_FC decide /////////////////////////////////////////////////////////////////////////////////////
-if (!is_fault_active(BATTERY_FAULT_FC)) {
-	if (is_fault_active(BATT_FUSE_OFF_FC) || is_fault_active(BATT_LINE_BROKEN_FC) || is_fault_active(BATT_REVERSE_FC) || is_fault_active(BATT_SHORT_FC)) {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// BATTERY_FAULT_FC decide //////////////////////////////////////////////////////////////////////////////////////
+if (!is_state_active(BATTERY_FAULT_FC)) {
+	if (is_state_active(BATT_FUSE_OFF_FC) || is_state_active(BATT_LINE_BROKEN_FC) || is_state_active(BATT_REVERSE_FC) || is_state_active(BATT_SHORT_FC)) {
 		change_fault_state_f(BATTERY_FAULT_FC, 1);
 	}
-} else if (is_fault_active(BATTERY_FAULT_FC)) {
-	if (!is_fault_active(BATT_FUSE_OFF_FC) && !is_fault_active(BATT_LINE_BROKEN_FC) && !is_fault_active(BATT_REVERSE_FC) && !is_fault_active(BATT_SHORT_FC)) {
+} else if (is_state_active(BATTERY_FAULT_FC)) {
+	if (!is_state_active(BATT_FUSE_OFF_FC) && !is_state_active(BATT_LINE_BROKEN_FC) && !is_state_active(BATT_REVERSE_FC) && !is_state_active(BATT_SHORT_FC)) {
 		change_fault_state_f(BATTERY_FAULT_FC, 0);
 	}
 }
-////// BATTERY_FAULT_FC decide /////////////////////////////////////////////////////////////////////////////////////
+////// BATTERY_FAULT_FC decide //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// BATT REVERSE MONITORING >>>>>>>>>>>>>>>>>>>
-if (VBAT_per_avg_sc < -10 && EpD[SET_BATT_REV_DET][0].V1==1 && !is_fault_active(BATT_REVERSE_FC)) {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// BATT REVERSE MONITORING //////////////////////////////////////////////////////////////////////////////////////
+if (VBAT_per_avg_sc < -10 && EpD[SET_BATT_REV_DET][0].V1==1 && !is_state_active(BATT_REVERSE_FC)) {
 	batt_reverse_Acc_cnt++;
 	if (batt_reverse_Acc_cnt >= batt_reverse_Acc_per) {
 		batt_reverse_Acc_cnt=0;
 		change_fault_state_f(BATT_REVERSE_FC, 1);
 		change_fault_state_f(BATT_LINE_BROKEN_FC, 0);
 	}
-} else if (VBAT_per_avg_sc >= -0.5 && is_fault_active(BATT_REVERSE_FC)) {
+} else if (VBAT_per_avg_sc >= -0.5 && is_state_active(BATT_REVERSE_FC)) {
 	batt_reverse_return_Acc_cnt++;
 	if (batt_reverse_return_Acc_cnt >= batt_reverse_return_Acc_per) {
 		batt_reverse_return_Acc_cnt=0;
 		change_fault_state_f(BATT_REVERSE_FC, 0);
 	}
 }
-// BATT REVERSE MONITORING <<<<<<<<<<<<<<<<<<<
+////// BATT REVERSE MONITORING //////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (sf_sta_req_ok==1) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
-if (thy_drv_en==1 && bat_inspection_allowed==1 && EpD[SET_BATT_DISC_DET][0].V1==1 && VBAT_per_avg_sc > 10 && !is_fault_active(BATT_FUSE_OFF_FC) && !is_fault_active(BATT_REVERSE_FC)) {
+if (thy_drv_en==1 && bat_inspection_allowed==1 && EpD[SET_BATT_DISC_DET][0].V1==1 && VBAT_per_avg_sc > 10 && !is_state_active(BATT_FUSE_OFF_FC) && !is_state_active(BATT_REVERSE_FC)) {
 	aku_hatti_kopuk_fc_inl();
 } else if (start_bat_inspection_req==1) {
 	end_batt_inspect_return_to_normal(6);
@@ -257,28 +267,28 @@ if (thy_drv_en==1 && bat_inspection_allowed==1 && EpD[SET_BATT_DISC_DET][0].V1==
 DCK_mon_start_cnt++;
 if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 	DCK_mon_start_cnt=DCK_mon_start_per; // start delay passed.
-	if (VDCKP_perc >= EpD[DC_KAC_POS][0].V1 && !is_fault_active(DC_LEAK_POSITIVE_FC)) {
+	if (VDCKP_perc >= EpD[DC_KAC_POS][0].V1 && !is_state_active(DC_LEAK_POSITIVE_FC)) {
 		VDCK_accept_cnt++;
 		if (VDCK_accept_cnt >= VDCK_accept_per) {
 			VDCK_accept_cnt=0;
 			change_fault_state_f(DC_LEAK_POSITIVE_FC, 1);
 			sprintf(DUB,"DC leak above pos lim"); prfm(DUB);
 		 }
-	} else if (VDCKP_perc < EpD[DC_KAC_POS][0].V1 && is_fault_active(DC_LEAK_POSITIVE_FC)) {
+	} else if (VDCKP_perc < EpD[DC_KAC_POS][0].V1 && is_state_active(DC_LEAK_POSITIVE_FC)) {
 		VDCK_return_cnt++;
 		if (VDCK_return_cnt >= VDCK_return_per) {
 			VDCK_return_cnt=0;
 			change_fault_state_f(DC_LEAK_POSITIVE_FC, 0);
 			sprintf(DUB,"DC leak above pos lim removed"); prfm(DUB);
 		}
-	} else if (VDCKN_perc >= EpD[DC_KAC_NEG][0].V1 && !is_fault_active(DC_LEAK_NEGATIVE_FC)) {
+	} else if (VDCKN_perc >= EpD[DC_KAC_NEG][0].V1 && !is_state_active(DC_LEAK_NEGATIVE_FC)) {
 		VDCK_accept_cnt++;
 		if (VDCK_accept_cnt >= VDCK_accept_per) {
 			VDCK_accept_cnt=0;
 			change_fault_state_f(DC_LEAK_NEGATIVE_FC, 1);
 			sprintf(DUB,"DC leak below neg lim"); prfm(DUB);
 		}
-	} else if (VDCKN_perc < EpD[DC_KAC_NEG][0].V1 && is_fault_active(DC_LEAK_NEGATIVE_FC)) {
+	} else if (VDCKN_perc < EpD[DC_KAC_NEG][0].V1 && is_state_active(DC_LEAK_NEGATIVE_FC)) {
 		VDCK_return_cnt++;
 		if (VDCK_return_cnt >= VDCK_return_per) {
 			VDCK_return_cnt=0;
@@ -299,7 +309,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// V DC HIGH/LOW MON ////////////////////////////////////////////////////////////////////////////////////////////
-if (VRECT_per_avg_sc > V_Charg_Hg_10_perc && !is_fault_active(DC_HG_FC)) {
+if (VRECT_per_avg_sc > V_Charg_Hg_10_perc && !is_state_active(DC_HG_FC)) {
 	V_Charg_Hg_10_perc_Acc_cnt++;
 	V_Charg_Hg_10_perc_ret_Acc_cnt=0;
 	if (V_Charg_Hg_10_perc_Acc_cnt >= V_Charg_Hg_10_perc_Acc_per) {
@@ -310,7 +320,7 @@ if (VRECT_per_avg_sc > V_Charg_Hg_10_perc && !is_fault_active(DC_HG_FC)) {
 } else {
 	V_Charg_Hg_10_perc_Acc_cnt=0;
 }
-if (VRECT_per_avg_sc <= V_Charg_Hg_10_perc_ret && is_fault_active(DC_HG_FC)) {
+if (VRECT_per_avg_sc <= V_Charg_Hg_10_perc_ret && is_state_active(DC_HG_FC)) {
 	V_Charg_Hg_10_perc_ret_Acc_cnt++;
 	V_Charg_Hg_10_perc_Acc_cnt=0;
 	if (V_Charg_Hg_10_perc_ret_Acc_cnt >= V_Charg_Hg_10_perc_ret_Acc_per) {
@@ -321,7 +331,7 @@ if (VRECT_per_avg_sc <= V_Charg_Hg_10_perc_ret && is_fault_active(DC_HG_FC)) {
 } else {
 	V_Charg_Hg_10_perc_ret_Acc_cnt=0;
 }
-if (VRECT_per_avg_sc < V_Charg_Lo_10_perc && !is_fault_active(DC_LW_FC)) {
+if (VRECT_per_avg_sc < V_Charg_Lo_10_perc && !is_state_active(DC_LW_FC)) {
 	V_Charg_Lo_10_perc_Acc_cnt++;
 	V_Charg_Lo_10_perc_ret_Acc_cnt=0;
 	if (V_Charg_Lo_10_perc_Acc_cnt >= V_Charg_Lo_10_perc_Acc_per) {
@@ -332,7 +342,7 @@ if (VRECT_per_avg_sc < V_Charg_Lo_10_perc && !is_fault_active(DC_LW_FC)) {
 } else {
 	V_Charg_Lo_10_perc_Acc_cnt=0;
 }
-if (VRECT_per_avg_sc >= V_Charg_Lo_10_perc_ret && is_fault_active(DC_LW_FC)) {
+if (VRECT_per_avg_sc >= V_Charg_Lo_10_perc_ret && is_state_active(DC_LW_FC)) {
 	V_Charg_Lo_10_perc_ret_Acc_cnt++;
 	V_Charg_Lo_10_perc_Acc_cnt=0;
 	if (V_Charg_Lo_10_perc_ret_Acc_cnt >= V_Charg_Lo_10_perc_ret_Acc_per) {
@@ -497,37 +507,37 @@ if (VAC_T_rms_sc >= VAC_LW_RET_LIM && VAC_T_Lo_fc == 1) {
 } else {VAC_T_Lo_Ret_Acc_cnt=0;}
 // TTTTTTTTTTTTTTTTTTT
 // RST RST RST RST RST RST RST
-if ((VAC_R_Off_fc == 0 && VAC_S_Off_fc == 0 && VAC_T_Off_fc == 0) && !is_fault_active(VAC_ON_FC)) {
+if ((VAC_R_Off_fc == 0 && VAC_S_Off_fc == 0 && VAC_T_Off_fc == 0) && !is_state_active(VAC_ON_FC)) {
 	change_fault_state_f(VAC_ON_FC, 1);
 	sprintf(DUB,"VAC_ON_FC 1"); prfm(DUB);
 }
-if ((VAC_R_Off_fc == 1 && VAC_S_Off_fc == 1 && VAC_T_Off_fc == 1) && is_fault_active(VAC_ON_FC)) {
+if ((VAC_R_Off_fc == 1 && VAC_S_Off_fc == 1 && VAC_T_Off_fc == 1) && is_state_active(VAC_ON_FC)) {
 	change_fault_state_f(VAC_ON_FC, 0);
 	sprintf(DUB,"VAC_ON_FC 0"); prfm(DUB);
 }
-if ((VAC_R_Off_fc == 1 || VAC_S_Off_fc == 1 || VAC_T_Off_fc == 1) && !is_fault_active(VAC_OFF_FC)) {
+if ((VAC_R_Off_fc == 1 || VAC_S_Off_fc == 1 || VAC_T_Off_fc == 1) && !is_state_active(VAC_OFF_FC)) {
 	change_fault_state_f(VAC_OFF_FC, 1);
 	sprintf(DUB,"VAC_OFF_FC 1"); prfm(DUB);
 }
-if ((VAC_R_Off_fc == 0 && VAC_S_Off_fc == 0 && VAC_T_Off_fc == 0) && is_fault_active(VAC_OFF_FC)) {
+if ((VAC_R_Off_fc == 0 && VAC_S_Off_fc == 0 && VAC_T_Off_fc == 0) && is_state_active(VAC_OFF_FC)) {
 	change_fault_state_f(VAC_OFF_FC, 0);
 	sprintf(DUB,"VAC_OFF_FC 0"); prfm(DUB);
 }
-if ((VAC_R_Hg_fc == 1 || VAC_S_Hg_fc == 1 || VAC_T_Hg_fc == 1) && !is_fault_active(VAC_HG_FC)) {
+if ((VAC_R_Hg_fc == 1 || VAC_S_Hg_fc == 1 || VAC_T_Hg_fc == 1) && !is_state_active(VAC_HG_FC)) {
 	change_fault_state_f(VAC_HG_FC, 1);	// VAC Hg
 	sprintf(DUB,"VAC HG"); prfm(DUB);
 }
-if ((VAC_R_Hg_fc == 0 && VAC_S_Hg_fc == 0 && VAC_T_Hg_fc == 0) && is_fault_active(VAC_HG_FC)) {
+if ((VAC_R_Hg_fc == 0 && VAC_S_Hg_fc == 0 && VAC_T_Hg_fc == 0) && is_state_active(VAC_HG_FC)) {
 	change_fault_state_f(VAC_HG_FC, 0);	// VAC Hg RET
 	change_fault_state_f(VAC_ON_FC, 1);
 	sprintf(DUB,"VAC HG RETURNED"); prfm(DUB);
 }
-if ((VAC_R_Lo_fc == 1 || VAC_S_Lo_fc == 1 || VAC_T_Lo_fc == 1) && !is_fault_active(VAC_LO_FC)) {
+if ((VAC_R_Lo_fc == 1 || VAC_S_Lo_fc == 1 || VAC_T_Lo_fc == 1) && !is_state_active(VAC_LO_FC)) {
 	change_fault_state_f(VAC_LO_FC, 1);	// VAC Lo
 	change_fault_state_f(VAC_ON_FC, 0);
 	sprintf(DUB,"VAC LO"); prfm(DUB);
 }
-if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_fault_active(VAC_LO_FC)) {
+if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_active(VAC_LO_FC)) {
 	change_fault_state_f(VAC_LO_FC, 0);	// VAC Lo RET
 	change_fault_state_f(VAC_ON_FC, 1);
 	sprintf(DUB,"VAC LO RETURNED"); prfm(DUB);
@@ -535,7 +545,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_fault_activ
 // RST RST RST RST RST RST RST
 // AC VOLTAGE MONITORING <<<<<<<<<<<<<<<<<<<<
 // CURRENT LIMIT STATES >>>>>>>>>>>>>>>>>>>
-	if (pid_output_i_rect < 0 && !is_fault_active(RECTIFIER_CURRENT_LIMIT_FC)) {
+	if (pid_output_i_rect < 0 && !is_state_active(RECTIFIER_CURRENT_LIMIT_FC)) {
 		rectifier_current_limit_Acc_cnt++;
 		rectifier_current_limit_return_Acc_cnt=0;
 		if (rectifier_current_limit_Acc_cnt >= rectifier_current_limit_Acc_per) {
@@ -543,7 +553,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_fault_activ
 			rectifier_current_limit_Acc_cnt=0;
 			rectifier_current_limit_accepted=1;
 		}
-	} else if (pid_output_i_rect >= 0 && is_fault_active(RECTIFIER_CURRENT_LIMIT_FC)) {
+	} else if (pid_output_i_rect >= 0 && is_state_active(RECTIFIER_CURRENT_LIMIT_FC)) {
 		rectifier_current_limit_return_Acc_cnt++;
 		rectifier_current_limit_Acc_cnt=0;
 		if (rectifier_current_limit_return_Acc_cnt >= rectifier_current_limit_return_Acc_per) {
@@ -552,7 +562,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_fault_activ
 			rectifier_current_limit_accepted=0;
 		}
 	}
-	if (pid_output_i_batt < 0 && !is_fault_active(BATTERY_CURRENT_LIMIT_FC)) {
+	if (pid_output_i_batt < 0 && !is_state_active(BATTERY_CURRENT_LIMIT_FC)) {
 		battery_current_limit_Acc_cnt++;
 		battery_current_limit_return_Acc_cnt=0;
 		if (battery_current_limit_Acc_cnt >= battery_current_limit_Acc_per) {
@@ -560,7 +570,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_fault_activ
 			battery_current_limit_Acc_cnt=0;
 			battery_current_limit_accepted=1;
 		}
-	} else if(pid_output_i_batt >= 0 && is_fault_active(BATTERY_CURRENT_LIMIT_FC)) {
+	} else if(pid_output_i_batt >= 0 && is_state_active(BATTERY_CURRENT_LIMIT_FC)) {
 		battery_current_limit_return_Acc_cnt++;
 		battery_current_limit_Acc_cnt=0;
 		if (battery_current_limit_return_Acc_cnt >= battery_current_limit_return_Acc_per) {
@@ -634,9 +644,65 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_fault_activ
 //		}
 //	}
 
-	SW_LINE_P_STATUS=!isInSet_(SW_LINE_P);
-	SW_BATT_P_STATUS=!isInSet_(SW_BATT_P);
-	SW_LOAD_P_STATUS=!isInSet_(SW_LOAD_P);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// TEMP READ ////////////////////////////////////////////////////////////////////////////////////////////////////
+	read_temp_dat_from_rx_buffer_cnt++;
+	if (read_temp_dat_from_rx_buffer_cnt >= 20) {
+		read_temp_dat_from_rx_buffer_cnt=0;
+//		sprintf(DUB,"t cnt per %lu %lu", ovtmp_open_cnt, ovtmp_open_per); prfm(DUB);
+
+		for (int i = 0; i < 3; i++) { // read rx buffer
+			tmp_dat_C[i] = tmp144_convert_temperature((U10_rxBuf[2*i+3] << 8) | U10_rxBuf[2*i+2]);
+
+		}
+
+		U10_rxCount=0; // clear rx buffer cnt
+		for (int i = 0; i < U10_RX_BUFFER_SIZE; i++) { // clear rx buffer
+		    U10_rxBuf[i] = 0;
+		}
+		USART10_SendByte(0x55); // request temperature data
+		delayA_1us(10);
+		USART10_SendByte(0xF1);
+	}
+//// SOĞUTUCU ///////////////////////////////////////////////////////////////////////////////////////////////////////
+	if (sogut_sensor_exists) {
+		if (tmp_dat_C[0]+temp_test_var_1 > EpD[SET_OVTM_ALRM_LIM][0].V1 && !is_state_active(OVERTEMP_ALARM_FC)) { // overtemp alarm enable
+			change_fault_state_f(OVERTEMP_ALARM_FC, 1);
+			ovtmp_open_per=(uint32_t) (EpD[SET_OVTM_OPEN_DUR][0].V1*1000/50); // calculate alarm to open duration in 50ms
+		} else if (tmp_dat_C[0]+temp_test_var_1 > EpD[SET_OVTM_OPEN_LIM][0].V1 && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp open enable
+			change_fault_state_f(OVERTEMP_OPEN_FC, 1);
+		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVTM_ALRM_LIM][0].V1-5 && is_state_active(OVERTEMP_ALARM_FC)) { // overtemp alarm disable
+			change_fault_state_f(OVERTEMP_ALARM_FC, 0);
+			ovtmp_open_cnt=0; // reset open count only when alarm is deactivated
+		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVTM_ALRM_LIM][0].V1-5 && is_state_active(OVERTEMP_OPEN_FC)) { // overtemp open disable
+			change_fault_state_f(OVERTEMP_OPEN_FC, 0);
+		}
+		if (is_state_active(OVERTEMP_ALARM_FC) && !is_state_active(OVERTEMP_OPEN_FC)) {
+			ovtmp_open_cnt++;
+			if (ovtmp_open_cnt >= ovtmp_open_per) {
+				change_fault_state_f(OVERTEMP_OPEN_FC, 1);
+			}
+		}
+	}
+
+//// AKÜ ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	if (batt_sensor_exists) {
+		if (tmp_dat_C[2]+temp_test_var_2 <= 0 && !is_state_active(BAT_TEMP_ZERO_FC)) { // BATT TEMP ZERO disable
+			change_fault_state_f(BAT_TEMP_ZERO_FC, 1);
+		} else if (tmp_dat_C[2]+temp_test_var_2 >= 50 && !is_state_active(BAT_TEMP_50_FC)) { // BATT TEMP 50 disable
+			change_fault_state_f(BAT_TEMP_50_FC, 1);
+		} else if (tmp_dat_C[2]+temp_test_var_2 > 5 && is_state_active(BAT_TEMP_ZERO_FC)) { // BATT TEMP ZERO enable
+			change_fault_state_f(BAT_TEMP_ZERO_FC, 0);
+		} else if (tmp_dat_C[2]+temp_test_var_2 < 45 && is_state_active(BAT_TEMP_50_FC)) { // BATT TEMP 50 enable
+			change_fault_state_f(BAT_TEMP_50_FC, 0);
+		}
+	}
+
+////// TEMP READ ////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
@@ -645,28 +711,16 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 	while_RTC_delay_h=ms_tick_cnt;
     Read_Register_0x00_to_0x06();
     rtc_timestamp_fnc();
-//    sprintf(DUB,"RTC first time started %lu", rtc_timestamp); prfm(DUB);
-//    sprintf(DUB,"RTC first time started %s", asctime(&rtc_timestruct)); prfm(DUB);
-
 }
 
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
-//	cal_sel_item_left=(cal_sel_item_left+1)%5;
-//	cal_sel_item_right=(cal_sel_item_right+1)%3;
-//	cal_sel_col=(cal_sel_col+1)%2;
-
 
 	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
 		while_LCD_reinit_per=ms_tick_cnt;
 		GLCD_Init_while();
 
-
 	}
-//	var2=is_fault_active(DC_HG_FC);
-//	var3=VBAT_per_avg_sc <= V_Charg_Hg_10_perc_ret;
-//	sprintf(DUB,"var2 %lu", var2); prfm(DUB);
-//	sprintf(DUB,"var3 %lu", var3); prfm(DUB);
 
 	GLCD_ClearScreen(0x00);
 
@@ -718,36 +772,12 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 	UART_Debg_t_h=ms_tick_cnt;
 
 	uart_debug_cnt();
-//sprintf(DUB,"VDCK_sc %f", VDCK_sc); prfm(DUB);
-//	Relay_Board_16_Data=1 << var1++;
-//	Relay_Board_16_Data=0b000000001001001001001001;
-//						  123412341234123412341234
-//if (var1 > 24) {var1=0;}
-//	SPI_Send24Bits(Relay_Board_16_Data);
 
 if (unexpected_program_state==1) {	// if else koşulları içinde takılma durumu. olmayan koşula gelme durumu.
 	sprintf(DUB,"%lu %s\033[A", unexpected_program_state, UXPUB); prfm(DUB);
 }
 
-read_data(dev_count, rawVals);
-
-//request temp
-//rx interrupt will generate buffer.
-//read buffer after 200 ms.
-//discard first two bytes.
-//assign temp values to tmp_dat_1, tmp_dat_2, tmp_dat_3
-tmp_dat_1=tmp144_convert_temperature(rawVals[0]);
-tmp_dat_2=tmp144_convert_temperature(rawVals[1]);
-tmp_dat_3=tmp144_convert_temperature(rawVals[2]);
-
-//USART10_SendByte(0x55);
-//delayA_1us(100);
-//USART10_SendByte(0xF1);
-//delay_1ms(100);
-
 }
-//tog_(E2_P);
-//USART10_SendByte(0x55);
 
 buttonScn();
 processShiftRegister_LED_16(LED_16_Data);

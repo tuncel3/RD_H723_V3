@@ -1,6 +1,6 @@
 
 inline extern void DROPPER_pg_disp(void) {
-    GLCD_PrintString(0, 0, "Kalibrasyon");
+    GLCD_PrintString(0, 0, "Dropper");
 	char L[32]; static uint8_t lnhg=9;
 	sprintf(L, " Kademe 1 %s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_DROPPER_K1][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 1*lnhg, L);
 	sprintf(L, " Kademe 2 %s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_DROPPER_K2][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 2*lnhg, L);
@@ -205,9 +205,9 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 		sprintf(L, "Sıcaklık C"); 						GLCD_PrintString(66, 24, L);
-		sprintf(L, "Soğt%6.1f", tmp_dat_1); 		GLCD_PrintString(66, 34, L);
-		sprintf(L, "Traf%6.1f", tmp_dat_2); 		GLCD_PrintString(66, 44, L);
-		sprintf(L, "Akü %6.1f", tmp_dat_3); 		GLCD_PrintString(66, 54, L);
+		sprintf(L, "Soğt%6.1f", tmp_dat_C[0]); 		GLCD_PrintString(66, 34, L);
+		sprintf(L, "Traf%6.1f", tmp_dat_C[1]); 		GLCD_PrintString(66, 44, L);
+		sprintf(L, "Akü %6.1f", tmp_dat_C[2]); 		GLCD_PrintString(66, 54, L);
 
 
 		for (int i = 0; i < 6; ++i) {
@@ -314,6 +314,10 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_BATT_DISC_DET) {
 			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_DISC_DET][dev_setting_edit_mode].V1]);
 			GLCD_PrintString(86, (i + 1) * 9, M);
+		}
+		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_OVTM_OPEN_DUR) {
+			sprintf(M, "%03lusn", (uint32_t) EpD[SET_OVTM_OPEN_DUR][dev_setting_edit_mode].V1);
+			GLCD_PrintString(97, (i + 1) * 9, M);
 		}
 		else if (DEVICE_SETT_Items[dev_set_disp_index_].type == 3) {
 			sprintf(M, "%05.1f", EpD[DEVICE_SETT_Items[dev_set_disp_index_].V1][dev_setting_edit_mode].V1);

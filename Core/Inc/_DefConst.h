@@ -272,7 +272,7 @@ typedef enum {
 } MenuPage;
 
 MenuPage currentPage = HOME_PAGE_pg;
-uint8_t HOME_PAGE_pg_sel = 2;
+uint8_t HOME_PAGE_pg_sel = 1;
 
 uint8_t fault_codes_reset_req = 0;
 uint8_t device_reset_req = 0;
@@ -354,6 +354,9 @@ typedef enum {
 	SET_BATT_DISC_DET,
 	SET_DROPPER_K1,
 	SET_DROPPER_K2,
+	SET_OVTM_ALRM_LIM,
+	SET_OVTM_OPEN_DUR,
+	SET_OVTM_OPEN_LIM,
 	DEV_NOM_VOUT, 		// Cihaz Nom VDC
 	DEV_NOM_IOUT, 		// Cihaz Nom IDC rect out
 	BATT_NOM_IOUT,
@@ -397,6 +400,9 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_BATT_DISC_DET, 0.0}, {SET_BATT_DISC_DET, 0.0} },
     { {SET_DROPPER_K1, 0.0}, {SET_DROPPER_K1, 0.0} },
     { {SET_DROPPER_K2, 0.0}, {SET_DROPPER_K2, 0.0} },
+    { {SET_OVTM_ALRM_LIM, 80.0}, {SET_OVTM_ALRM_LIM, 80.0} },
+    { {SET_OVTM_OPEN_DUR, 120.0}, {SET_OVTM_OPEN_DUR, 120.0} },
+    { {SET_OVTM_OPEN_LIM, 90.0}, {SET_OVTM_OPEN_LIM, 90.0} },
     { {DEV_NOM_VOUT, 48.0}, {DEV_NOM_VOUT, 48.0} }, // Cihaz Nom VDC
     { {DEV_NOM_IOUT, 40.0}, {DEV_NOM_IOUT, 40.0} },
     { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} },
@@ -438,6 +444,9 @@ const char* Eep_data_Names[] = { // for printing in uart
     "SET_BATT_DISC_DET",
     "SET_DROPPER_K1",
     "SET_DROPPER_K2",
+    "SET_OVTM_ALRM_LIM",
+    "SET_OVTM_OPEN_DUR",
+    "SET_OVTM_OPEN_LIM",
     "DEV_NOM_VOUT", // Cihaz Nom VDC
     "DEV_NOM_IOUT",
     "BATT_NOM_IOUT",
@@ -485,10 +494,13 @@ SETT_type DEVICE_SETT_Items[] = {
 {"Tarh Saat Ayr", 255, 1},
 {"Akü Ters Alg", SET_BATT_REV_DET, 2},
 {"Akü Hat Kopuk", SET_BATT_DISC_DET, 2},
+{"Sıck Alrm C", SET_OVTM_ALRM_LIM, 3},
+{"Sıck Açma Sur", SET_OVTM_OPEN_DUR, 2},
+{"Sıck Açma C", SET_OVTM_OPEN_LIM, 3},
 {"Cihaz Nom VDC", DEV_NOM_VOUT, 3},
 {"I Doğrlt Max", IRECT_LIM_RT_, 3},
-{"DC Kaçak +%", DC_KAC_POS, 3},
-{"DC Kaçak -%", DC_KAC_NEG, 3},
+{"DC Kaçak +% L", DC_KAC_POS, 3},
+{"DC Kaçak -% L", DC_KAC_NEG, 3},
 {"KDevr Doğr A", RECT_SHORT, 3},
 {"KDevr Bat A", BATT_SHORT, 3}
 };
@@ -750,17 +762,18 @@ uint32_t rectifier_current_limit_accepted = 0;
 uint32_t DC_leak_above_pos_lim = 0;
 uint32_t DC_leak_below_neg_lim = 0;
 
-#define LOAD_MCB_OFF_LED     	 	(1U << 0)   // bit 0
-#define DROPPER_2_BYPASS_LED	    (1U << 1)   // bit 1
-#define DROPPER_1_BYPASS_LED  	    (1U << 2)   // bit 2
-#define BATT_MCB_OFF_LED		    (1U << 3)   // bit 3
+//#define LOAD_MCB_OFF_LED     	 	(1U << 0)   // bit 0
+//#define DROPPER_2_BYPASS_LED	    (1U << 1)   // bit 1
+//#define DROPPER_1_BYPASS_LED  	    (1U << 2)   // bit 2
+//#define BATT_MCB_OFF_LED		    (1U << 3)   // bit 3
 #define BOOST_CHARGE_LED  			(1U << 4)   // bit 4
 #define FLOAT_CHARGE_LED			(1U << 5)   // bit 5
-#define INPUT_MCB_OFF_LED	    	(1U << 6)   // bit 6
+//#define INPUT_MCB_OFF_LED	    	(1U << 6)   // bit 6
 
-uint8_t SW_LINE_P_STATUS=0;
-uint8_t SW_BATT_P_STATUS=0;
-uint8_t SW_LOAD_P_STATUS=0;
+uint8_t SW_LINE_OFF=0;
+uint8_t SW_BATT_OFF=0;
+uint8_t SW_LOAD_OFF=0;
+
 
 typedef enum {
 	GENERAL_FAULT_FC,
@@ -778,12 +791,20 @@ typedef enum {
 	STOP_FC,
 	START_FC,
 	VAC_OFF_FC,
-	VAC_ON_FC,
+	VAC_ON_FC, // led 16
+	LOAD_FUSE_OFF_FC,
+	DROPPER2_BYP_FC,
+	DROPPER1_BYP_FC,
+	BATT_FUSE_OFF_FC,
+	BOOST_CHARGE_FC,
+	FLOAT_CHARGE_FC,
+	LINE_FUSE_OFF_FC, // led 7
 	RECT_SHORT_FC,
 	BATT_SHORT_FC,
 	BATT_REVERSE_FC,
 	BATT_LINE_BROKEN_FC,
-	BATT_FUSE_OFF_FC,
+	BAT_TEMP_ZERO_FC,
+	BAT_TEMP_50_FC,
 	VAC_R_RMS_HG_FAULT_FC,
 	VAC_S_RMS_HG_FAULT_FC,
 	VAC_T_RMS_HG_FAULT_FC,
@@ -794,7 +815,6 @@ typedef enum {
 	VAC_S_RMS_0_FAULT_FC,
 	VAC_T_RMS_0_FAULT_FC,
 	EEPROM_FAULT_FC,
-    NUM_FAULTS
 } FaultCode;
 
 typedef enum {
@@ -814,8 +834,8 @@ typedef struct {
 FaultInfo faultList[] = {
     { GENERAL_FAULT_FC,           0b0010,	"Genel Arıza" },
 	{ BATTERY_FAULT_FC,           0b0000,	"Akü Arızası" },
-	{ OVERTEMP_ALARM_FC,          0b0110,	"Aşrı Sıckl Uyar" },
-	{ OVERTEMP_OPEN_FC,           0b0110,	"Aşrı Sıckl Açık" },
+	{ OVERTEMP_ALARM_FC,          0b0010,	"Aşrı Sıckl Uyar" },
+	{ OVERTEMP_OPEN_FC,           0b0111,	"Aşrı Sıckl Açık" },
 	{ BATTERY_CURRENT_LIMIT_FC,   0b0000,	"Akü Akım Sınırı" },
 	{ RECTIFIER_CURRENT_LIMIT_FC, 0b0000,	"Doğrltc Akm Sınr" },
 	{ DC_LEAK_NEGATIVE_FC,        0b0010,	"DC Kaçak Negatif" },
@@ -827,12 +847,20 @@ FaultInfo faultList[] = {
 	{ STOP_FC,                    0b0010,	"Manuel Durdur" },
 	{ START_FC,                   0b0000,	"Başlat" },
 	{ VAC_OFF_FC,                 0b0110,	"VAC OFF" },
-	{ VAC_ON_FC,                  0b0000,	"VAC ON" },
+	{ VAC_ON_FC,                  0b0000,	"VAC ON" }, // led 16
+	{ LOAD_FUSE_OFF_FC,      	  0b0010,	"Çıkış Sigrt Atık" },
+	{ DROPPER2_BYP_FC,      	  0b0000,	"Dropper 2 Bypass" },
+	{ DROPPER1_BYP_FC,      	  0b0000,	"Dropper 1 Bypass" },
+	{ BATT_FUSE_OFF_FC,           0b0010,	"Akü Sigorta Atık" },
+	{ BOOST_CHARGE_FC,      	  0b0000,	"Hızlı Şarj" },
+	{ FLOAT_CHARGE_FC,      	  0b0000,	"Normal Şarj" },
+	{ LINE_FUSE_OFF_FC,      	  0b0110,	"Giriş Sigrt Atık" }, // led 7
 	{ RECT_SHORT_FC,              0b0110,	"DC Kısa Devre" },
 	{ BATT_SHORT_FC,              0b0110,	"Akü Kısa Devre" },
 	{ BATT_REVERSE_FC,            0b0010,	"Akü Ters" },
 	{ BATT_LINE_BROKEN_FC,        0b0010,	"Akü Hattı Kopuk" },
-	{ BATT_FUSE_OFF_FC,           0b0010,	"Akü Sigorta Atık" },
+	{ BAT_TEMP_ZERO_FC,           0b0011,	"Akü Sıcaklk Sıfr" },
+	{ BAT_TEMP_50_FC,          	  0b0111,	"Akü Sıcaklk 50 C" },
 	{ VAC_R_RMS_HG_FAULT_FC,      0b0000,	"VINR RMS Yüksek" },
 	{ VAC_S_RMS_HG_FAULT_FC,      0b0000,	"VINS RMS Yüksek" },
 	{ VAC_T_RMS_HG_FAULT_FC,      0b0000,	"VINT RMS Yüksek" },
@@ -880,8 +908,8 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_SCER  		0x20  // Sector Erase
 #define CMD_BKER  		0xD8  // Block Erase
 #define CMD_CHER  		0xC7  // Chip Erase
-//uint32_t var1=0;
-//uint32_t var2=0;
+//int var1=0;
+//int var2=0;
 //uint32_t var3=0;
 //uint32_t var4=0;
 //uint32_t var5=0;
@@ -903,12 +931,20 @@ uint32_t FAULT_CODES_REPORT_disp_mode = 0;
 char lcdd[32];
 
 
-#define U10_RX_BUFFER_SIZE 32
+#define U10_RX_BUFFER_SIZE 14
 volatile uint8_t U10_rxBuf[U10_RX_BUFFER_SIZE];
-volatile uint16_t U10_rxCount = 0;
-int dev_count = 1;
-uint16_t rawVals[20];
-float tmp_dat_1=0;
-float tmp_dat_2=0;
-float tmp_dat_3=0;
+volatile uint8_t U10_rxCount = 0;
+int temp_sens_count = 1;
+uint32_t read_temp_dat_from_rx_buffer_cnt = 0;
+float tmp_dat_C[6]={0};
+uint32_t ovtmp_open_cnt = 0;
+uint32_t ovtmp_open_per = 0; // 1200*50 ms 1dk
+uint8_t temp_test_var_1 = 0;
+uint8_t temp_test_var_2 = 0;
+uint8_t sogut_sensor_exists = 0;
+uint8_t trafo_sensor_exists = 0;
+uint8_t batt_sensor_exists = 0;
+int dropper_test_var_1 = 0;
+
+
 

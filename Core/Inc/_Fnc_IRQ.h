@@ -482,15 +482,11 @@ void TIM6_DAC_IRQHandler(void) {
 void USART10_IRQHandler(void)
 {
     if (LL_USART_IsActiveFlag_RXNE(USART10)) {
-        uint8_t data = LL_USART_ReceiveData8(USART10);
 
-        // Buffer taşmaması için kontrol
         if (U10_rxCount < U10_RX_BUFFER_SIZE) {
-        	U10_rxBuf[U10_rxCount++] = data;
+        	U10_rxBuf[U10_rxCount++] = LL_USART_ReceiveData8(USART10);
         }
 
-        // İsterseniz her yeni baytta bir LED toggle vs.
-        // LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_5);
     }
 
 }

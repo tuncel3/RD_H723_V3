@@ -34,7 +34,19 @@ if (Read_RTC_Osc_Status() == 0) {
 	sprintf(DUB,"RTC already started"); prfm(DUB);
 }
 
-adjust_dropper_accordingly();
+DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
+DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
+change_fault_state_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+change_fault_state_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+
+
+delay_1ms(1000);
+SW_LINE_OFF=!isInSet_(SW_LINE_P);
+SW_BATT_OFF=!isInSet_(SW_BATT_P);
+SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
+change_fault_state_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
+change_fault_state_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
+change_fault_state_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
 
 delay_1ms(100);
 
@@ -91,11 +103,27 @@ delayA_1us(10);
 USART10_SendByte(0xB4);
 delay_1ms(100);
 
-dev_count = tmp144_init_and_assign();
-if (dev_count == 0) {
+temp_sens_count = tmp144_init_and_assign();
+if (temp_sens_count == 0) {
 	sprintf(DUB,"Temp sensor init failed"); prfm(DUB);
+	sogut_sensor_exists = 0;
+	trafo_sensor_exists = 0;
+	batt_sensor_exists = 0;
 } else {
-	sprintf(DUB,"Temp sensor init success %d Sensors", dev_count); prfm(DUB);
+	sprintf(DUB,"Temp sensor init success %d Sensors", temp_sens_count); prfm(DUB);
+	if (temp_sens_count == 1) {
+		sogut_sensor_exists = 1;
+		trafo_sensor_exists = 0;
+		batt_sensor_exists = 0;
+	} else if (temp_sens_count == 2) {
+		sogut_sensor_exists = 1;
+		trafo_sensor_exists = 1;
+		batt_sensor_exists = 0;
+	} else if (temp_sens_count == 3) {
+		sogut_sensor_exists = 1;
+		trafo_sensor_exists = 1;
+		batt_sensor_exists = 1;
+	}
 }
 // Temp sensor init
 ///////////////////////////////////////////////////////////
@@ -109,6 +137,8 @@ if (dev_count == 0) {
 // 1741385888 196036 saniyede bu unix time a geldi. yaklaşık 0.1 saniye geri kaldı. kalibrasyon -5 ti -4 yapıldı
 // 1741536423 150535 saniyede bu unix time a geldi. yaklaşık 0.5 saniye ileri gitti. kalibrasyon -4 ti -6 yapıldı
 // 9pf yapılırsa iyi sonuç alınacaktır
+// butona basınca lcd hemen refresh yapsın diye sayacını ileri almak lazım.
+// dc düşük yüksek alarm aralığı ayarlanabilir değil şu an.
 // akü hattı kopuk için eklemeler gerekiyor. mcb yardımcı kontağını kullan. akım sınırlaması durumunda akü hattı kopuk belirleme sistemi voltajı düşüremiyor ve akü hattı var diyor. bunu akü bağlı değilken ve mcb yardımcı kontak okuma yapmadığım zamanda gördüm.
 // akü arızası. akü voltajı
 // ayarlanan akım ve gerilim değerleri arıza kodu olarak kaydedilecek.

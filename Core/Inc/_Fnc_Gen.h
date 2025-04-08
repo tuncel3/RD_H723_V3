@@ -10,8 +10,7 @@ void change_fault_state_f(FaultCode fault_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 void inline extern toggle_batt_inspection_direction(uint8_t num);
-void inline extern adjust_dropper_accordingly(void);
-static inline uint8_t is_fault_active(FaultCode fault_code);
+static inline uint8_t is_state_active(FaultCode fault_code);
 
 #include "_EEP_M95P32.h"
 #include "_Fnc_RTC.h"
@@ -345,7 +344,7 @@ if (BLEFT == 0 && BRIGHT == 0 && BUP == 0 && BDOWN == 0 && BENTER == 0 && BESC =
 
 
 inline extern void short_circ_monitor_f(void) {
-	if (thy_drv_en==1 && IRECT_smp_sc > EpD[RECT_SHORT][0].V1 && !is_fault_active(RECT_SHORT_FC)) {
+	if (thy_drv_en==1 && IRECT_smp_sc > EpD[RECT_SHORT][0].V1 && !is_state_active(RECT_SHORT_FC)) {
 		IRECT_Short_Acc_cnt++;
 		IRECT_Short_Ret_Acc_cnt=0;
 		if (IRECT_Short_Acc_cnt >= IRECT_Short_Acc_per) {
@@ -354,7 +353,7 @@ inline extern void short_circ_monitor_f(void) {
 			sprintf(DUB,"DC SH %f", IRECT_smp_sc); prfm(DUB);
 		}
 	} else { IRECT_Short_Acc_per=0; }
-	if (IRECT_smp_sc <= EpD[RECT_SHORT][0].V1 && is_fault_active(RECT_SHORT_FC)) {
+	if (IRECT_smp_sc <= EpD[RECT_SHORT][0].V1 && is_state_active(RECT_SHORT_FC)) {
 		IRECT_Short_Ret_Acc_cnt++;
 		IRECT_Short_Acc_cnt=0;
 		if (IRECT_Short_Ret_Acc_cnt >= IRECT_Short_Ret_Acc_per) {
@@ -362,7 +361,7 @@ inline extern void short_circ_monitor_f(void) {
 			change_fault_state_f(RECT_SHORT_FC, 0);
 		}
 	} else { IRECT_Short_Ret_Acc_cnt=0; }
-	if (thy_drv_en==1 && IBAT_smp_sc > EpD[BATT_SHORT][0].V1 && !is_fault_active(BATT_SHORT_FC)) {
+	if (thy_drv_en==1 && IBAT_smp_sc > EpD[BATT_SHORT][0].V1 && !is_state_active(BATT_SHORT_FC)) {
 		IBAT_Short_Acc_cnt++;
 		IBAT_Short_Ret_Acc_cnt=0;
 		if (IBAT_Short_Acc_cnt >= IBAT_Short_Acc_per) {
@@ -371,7 +370,7 @@ inline extern void short_circ_monitor_f(void) {
 			sprintf(DUB,"BT SH %f", IBAT_smp_sc); prfm(DUB);
 		}
 	} else { IBAT_Short_Acc_cnt=0; }
-	if (IBAT_smp_sc <= IBAT_Short_Lim && is_fault_active(BATT_SHORT_FC)) {
+	if (IBAT_smp_sc <= IBAT_Short_Lim && is_state_active(BATT_SHORT_FC)) {
 		IBAT_Short_Ret_Acc_cnt++;
 		IBAT_Short_Acc_cnt=0;
 		if (IBAT_Short_Ret_Acc_cnt >= IBAT_Short_Ret_Acc_per) {
@@ -980,7 +979,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
 		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
-		LED_7_Data &= !BOOST_CHARGE_LED;
+		LED_7_Data &= ~BOOST_CHARGE_LED;
 		LED_7_Data |= FLOAT_CHARGE_LED;
 		switch_to_auto_mode_completed=0; // auto moddan başka bir moda geçildi.
 		timed_mode_actions_do_once=0;
@@ -992,7 +991,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
-		LED_7_Data &= !FLOAT_CHARGE_LED;
+		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0; // auto moddan başka bir moda geçildi.
 		timed_mode_actions_do_once=0;
@@ -1004,7 +1003,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
-		LED_7_Data &= !FLOAT_CHARGE_LED;
+		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0; // auto moddan başka bir moda geçildi.
 		if (timed_mode_actions_do_once==0) {
@@ -1019,10 +1018,13 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 void change_fault_state_f(FaultCode fault_code, uint8_t set) {
 
 	uint32_t fault_bit = (1U << fault_code);
+	uint32_t led7_bit = (1U << (fault_code-16));
 	sprintf(DUB,"fault_code %d %s set %d", fault_code, faultList[fault_code].name, set); prfm(DUB);
     if (set) {
         if (faultList[fault_code].code < 16) {
         	LED_16_Data |= fault_bit; }  // activate LED if required
+        if (faultList[fault_code].code >= 16 && faultList[fault_code].code < 16+7) {
+        	LED_7_Data |= led7_bit; }  // activate LED 7 if required
         if (faultList[fault_code].action & (1 << SET_GEN_F_LED_enum)) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC); } // activate general fault LED if associated
         if (faultList[fault_code].action & (1 << THYSTOP_enum)) {  // stop thy drv if fault requires
@@ -1042,6 +1044,8 @@ void change_fault_state_f(FaultCode fault_code, uint8_t set) {
     } else {
         if (faultList[fault_code].code < 16) {
         	LED_16_Data &= ~fault_bit; }  // deactivate LED if resetting a fault with LED requirement
+        if (faultList[fault_code].code >= 16 && faultList[fault_code].code < 16+7) {
+        	LED_7_Data &= ~led7_bit; }  // deactivate LED 7 if required
         if (faultList[fault_code].action & (1 << SET_GEN_F_LED_enum)) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC); }
         if (faultList[fault_code].action & (1 << THYSTOP_enum)) { // thy stop gerektiren bir arıza reset ediliyor
@@ -1051,7 +1055,7 @@ void change_fault_state_f(FaultCode fault_code, uint8_t set) {
     }
 }
 
-static inline uint8_t is_fault_active(FaultCode fault_code) {
+static inline uint8_t is_state_active(FaultCode fault_code) {
     	return (faultList[fault_code].action & (1U << ACTIVE_enum)) != 0;
 }
 
@@ -1072,7 +1076,7 @@ void USART10_SendByte(uint8_t data)
     }
 }
 
-int read_data(uint8_t dev_count, uint16_t *raw_vals)
+int read_data(uint8_t temp_sens_count, uint16_t *raw_vals)
 {
 
 	U10_rxCount = 0;
@@ -1084,7 +1088,7 @@ int read_data(uint8_t dev_count, uint16_t *raw_vals)
     delayA_1us(10);
     USART10_SendByte(0xF1);
 
-    for (int i = 0; i < dev_count; i++) {
+    for (int i = 0; i < temp_sens_count; i++) {
         // ham değer = LSB + (MSB << 8)
         uint8_t lsb = U10_rxBuf[2 + i*2];
         uint8_t msb = U10_rxBuf[3 + i*2];
@@ -1116,29 +1120,12 @@ int tmp144_init_and_assign(void)
     USART10_SendByte(0x90);
     delay_1ms(1000);
 
-//    while (rxCount < 3) {
-//    }
-
     uint8_t dev_count_raw = U10_rxBuf[2];
-    uint8_t dev_count = dev_count_raw & 0x0F;
+    uint8_t temp_sens_count = dev_count_raw & 0x0F;
 
-    if (dev_count < 1 || dev_count > 16) {
+    if (temp_sens_count < 1 || temp_sens_count > 16) {
         return 0;
     }
-    return dev_count;
+    return temp_sens_count;
 }
 
-
-void inline extern adjust_dropper_accordingly(void) {
-	if (EpD[SET_DROPPER_K1][0].V1==0) {
-		set_(DROPP_BATT);
-	} else if (EpD[SET_DROPPER_K1][0].V1==1) {
-		res_(DROPP_BATT);
-	}
-	if (EpD[SET_DROPPER_K2][0].V1==0) {
-		set_(DROPP_LOAD);
-	} else if (EpD[SET_DROPPER_K2][0].V1==1) {
-		res_(DROPP_LOAD);
-	}
-
-}

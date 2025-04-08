@@ -93,10 +93,14 @@ uint8_t TU_THY=0;
 #define SW_BATT_P GPIOE, LL_GPIO_PIN_6
 #define SW_LOAD_P GPIOC, LL_GPIO_PIN_13
 
-#define DROPP_LOAD GPIOD, LL_GPIO_PIN_12
 #define DROPP_BATT GPIOD, LL_GPIO_PIN_11
+#define DROPP_LOAD GPIOD, LL_GPIO_PIN_12
+#define DROPP_BATT_CTRL(x) ((x) ? LL_GPIO_ResetOutputPin(DROPP_BATT) : LL_GPIO_SetOutputPin(DROPP_BATT))
+#define DROPP_LOAD_CTRL(x) ((x) ? LL_GPIO_ResetOutputPin(DROPP_LOAD) : LL_GPIO_SetOutputPin(DROPP_LOAD))
+
+
 uint32_t actvate_drop_cnt=0;
-uint32_t actvate_drop_per=100;
+uint32_t actvate_drop_per=8;
 char dropper_status[]=" > > ";
 // PIN NAMES
 ///////////////////////////////////////////////////////////////////////////
@@ -126,7 +130,7 @@ uint32_t besc_down_cnt=0;
 uint32_t thy_stop_fault_hold_bits=0b0;
 uint32_t LED_16_Data=0b0;
 uint32_t LED_7_Data=0b0;
-uint32_t Relay_Board_16_Data=0b0001000001000000000010000;
+uint32_t Relay_Board_16_Data=0b0;
 
 // LED SHIFT REGISTER
 ///////////////////////////////////////////////////////////////////////////
