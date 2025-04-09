@@ -773,9 +773,9 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 	uart_debug_cnt();
 
-if (unexpected_program_state==1) {	// if else koşulları içinde takılma durumu. olmayan koşula gelme durumu.
-	sprintf(DUB,"%lu %s\033[A", unexpected_program_state, UXPUB); prfm(DUB);
-}
+	if (unexpected_program_state==1) {	// if else koşulları içinde takılma durumu. olmayan koşula gelme durumu.
+		sprintf(DUB,"%lu %s\033[A", unexpected_program_state, UXPUB); prfm(DUB);
+	}
 
 }
 

@@ -815,6 +815,7 @@ typedef enum {
 	VAC_S_RMS_0_FAULT_FC,
 	VAC_T_RMS_0_FAULT_FC,
 	EEPROM_FAULT_FC,
+	RTC_FAULT_FC
 } FaultCode;
 
 typedef enum {
@@ -870,8 +871,90 @@ FaultInfo faultList[] = {
 	{ VAC_R_RMS_0_FAULT_FC,       0b0000,	"VINR RMS Yok" },
 	{ VAC_S_RMS_0_FAULT_FC,       0b0000,	"VINS RMS Yok" },
 	{ VAC_T_RMS_0_FAULT_FC,       0b0000,	"VINT RMS Yok" },
-	{ EEPROM_FAULT_FC,            0b0000,	"Kayit Sist Arz" }
+	{ EEPROM_FAULT_FC,            0b0000,	"Kayit Sist Arz" },
+	{ RTC_FAULT_FC,               0b0000,	"RTC Arz" }
 };
+
+
+typedef enum {
+    THY_FAN1_REL,                  // *
+    TRF_FAN2_REL,                  // *
+    DROP_FAN3_REL,                 // *
+    AC_CON1_REL,                   // *
+    AC_CON2_REL,                   // *
+    DROP_CON1_REL,                 // *
+    DROP_CON2_REL,                 // *
+    AUX_CON1_REL,                  // *
+    START_STOP_REL,                // *
+    VAC_HG_FC_REL,                 // *
+    VAC_LO_FC_REL,                 // *
+    DC_HG_FC_REL,                  // *
+    DC_LW_FC_REL,                  // *
+    DC_LEAK_POSITIVE_FC_REL,       // *
+    DC_LEAK_NEGATIVE_FC_REL,       // *
+    LINE_FUSE_OFF_FC_REL,          // *
+    BATT_FUSE_OFF_FC_REL,          // *
+    LOAD_FUSE_OFF_FC_REL,          // *
+    OVERTEMP_ALARM_FC_REL,         // *
+    FAN_FAULT_FC_REL,              // *
+    BATT_LINE_BROKEN_FC_REL,       // *
+    BATT_REVERSE_FC_REL,           // *
+    BATTERY_FAULT_FC_REL,          // *
+    GENERAL_FAULT_FC_REL,          // *
+    VAC_OFF_FC_REL,
+    VAC_ON_FC_REL,
+    BOOST_CHARGE_FC_REL,
+    FLOAT_CHARGE_FC_REL,
+    VLOAD_HG_FC_REL,
+    VLOAD_LO_FC_REL
+} rel_sel_t;
+
+typedef struct {
+	rel_sel_t rel_sel_nm;     // hangi eleman
+    uint8_t rel_sel_val;        // 1 = aktif, 0 = pasif
+    uint8_t rel_sel_index;      // 0–23 (bit sırası), 255 = kullanılmıyor
+} ShiftRelayInfo;
+
+ShiftRelayInfo shiftRelayMap[] = {
+    { THY_FAN1_REL,              0,  0  },
+    { TRF_FAN2_REL,              0,  1  },
+    { DROP_FAN3_REL,             0,  2  },
+    { AC_CON1_REL,               0,  3  },
+    { AC_CON2_REL,               0,  4  },
+    { DROP_CON1_REL,             0,  5  },
+    { DROP_CON2_REL,             0,  6  },
+    { AUX_CON1_REL,              0,  7  },
+    { START_STOP_REL,            0,  8  },
+    { VAC_HG_FC_REL,             0,  9  },
+    { VAC_LO_FC_REL,             0,  10 },
+    { DC_HG_FC_REL,              0,  11 },
+    { DC_LW_FC_REL,              0,  12 },
+    { DC_LEAK_POSITIVE_FC_REL,   0,  13 },
+    { DC_LEAK_NEGATIVE_FC_REL,   0,  14 },
+    { LINE_FUSE_OFF_FC_REL,      0,  15 },
+    { BATT_FUSE_OFF_FC_REL,      0,  16 },
+    { LOAD_FUSE_OFF_FC_REL,      0,  17 },
+    { OVERTEMP_ALARM_FC_REL,     0,  18 },
+    { FAN_FAULT_FC_REL,          0,  19 },
+    { BATT_LINE_BROKEN_FC_REL,   0,  20 },
+    { BATT_REVERSE_FC_REL,       0,  21 },
+    { BATTERY_FAULT_FC_REL,      0,  22 },
+    { GENERAL_FAULT_FC_REL,      0,  23 },
+    { VAC_OFF_FC_REL,            0, 255 },
+    { VAC_ON_FC_REL,             0, 255 },
+    { BOOST_CHARGE_FC_REL,       0, 255 },
+    { FLOAT_CHARGE_FC_REL,       0, 255 },
+    { VLOAD_HG_FC_REL,           0, 255 },
+    { VLOAD_LO_FC_REL,           0, 255 }
+};
+
+
+
+
+
+
+
+
 
 #define NUM_FAULT_CODE_NAMES sizeof(faultList) / sizeof(faultList[0])
 
