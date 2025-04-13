@@ -1,5 +1,5 @@
 
-#include "bt_fc\_benter.h"
+#include "_benter.h"
 
 void bleft_fnc(void) {
     if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
@@ -170,8 +170,8 @@ void bright_fnc(void) {
     	if (thy_drv_en == 1 && user_wants_thy_drv==1) {
     		user_wants_thy_drv=0;
     		thy_drv_en=0;
-    		change_fault_state_f(STOP_FC, 1);
-    		change_fault_state_f(START_FC, 0);
+    		apply_state_changes_f(STOP_FC, 1);
+    		apply_state_changes_f(START_FC, 0);
     		sprintf(DUB,"User req STOP rectf"); prfm(DUB);
     	}
     }
@@ -442,6 +442,29 @@ if (!chg_setting_edit_mode) {
 			}
 		}
     }
+
+    else if (currentPage == RELAY_ORDER_pg) {
+
+        if (rel_disp_mode == 1) {
+			if (rel_ord_arrow_loc > 1) {
+				rel_ord_arrow_loc--;
+			} else if (rel_ord_arrow_loc == 1) {
+				rel_ord_disp_index = (rel_ord_disp_index - 1 + rel_ord_tb_size) % rel_ord_tb_size;
+			}
+			rel_ord_tb_sel = (rel_ord_arrow_loc + rel_ord_disp_index) % rel_ord_tb_size;
+
+        } else if (rel_edit_mode == 1) {
+
+			if (rel_dat_arrow_loc > 1) {
+				rel_dat_arrow_loc--;
+			} else if (rel_dat_arrow_loc == 1) {
+				rel_dat_disp_index = (rel_dat_disp_index - 1 + rel_dat_tb_size) % rel_dat_tb_size;
+			}
+			rel_dat_tb_sel = (rel_dat_arrow_loc + rel_dat_disp_index) % rel_dat_tb_size;
+//			if (rel_dat_tb_sel == rel_dat_tb_size-1) rel_dat_tb_sel=rel_dat_tb_size-2;
+        }
+    }
+
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
@@ -761,6 +784,33 @@ if (!chg_setting_edit_mode) {
 		}
 	}
 
+    else if (currentPage == RELAY_ORDER_pg) {
+
+        if (rel_disp_mode == 1) {
+			if (rel_ord_arrow_loc < 4) {
+				rel_ord_arrow_loc++;
+			} else if (rel_ord_arrow_loc == 4) {
+				rel_ord_disp_index = (rel_ord_disp_index + 1 + rel_ord_tb_size) % rel_ord_tb_size;
+			}
+			rel_ord_tb_sel = (rel_ord_arrow_loc + rel_ord_disp_index) % rel_ord_tb_size;
+
+        } else if (rel_edit_mode == 1) {
+
+			if (rel_dat_arrow_loc < 4) {
+				rel_dat_arrow_loc++;
+			} else if (rel_dat_arrow_loc == 4) {
+				rel_dat_disp_index = (rel_dat_disp_index + 1 + rel_dat_tb_size) % rel_dat_tb_size;
+			}
+			rel_dat_tb_sel = (rel_dat_arrow_loc + rel_dat_disp_index) % rel_dat_tb_size;
+//			if (rel_dat_tb_sel == rel_dat_tb_size-1) rel_dat_tb_sel=0;
+
+        }
+    }
+
+    else if (currentPage == MANAGEMENT_pg) {
+    	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
+    }
+
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT+1) % NUM_MANAGEMENT_ITEMS;
     }
@@ -1022,6 +1072,16 @@ void besc_fnc(void) {
     }
     else if (currentPage == DROPPER_pg) {
         currentPage = MAIN_MENU_pg;
+    }
+    else if (currentPage == RELAY_ORDER_pg) {
+        if (rel_disp_mode) {
+        	rel_disp_mode = 1;
+        	rel_edit_mode = 0;
+        	currentPage = MAIN_MENU_pg;
+        } else if (rel_edit_mode) {
+        	rel_disp_mode = 1;
+        	rel_edit_mode = 0;
+        }
     }
     else if (currentPage == MANAGEMENT_pg) {
         currentPage = MAIN_MENU_pg;

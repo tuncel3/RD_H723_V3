@@ -10,7 +10,7 @@ SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
 //write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
 SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
-print_Eep_data_f();
+//print_Eep_data_f();
 
 actions_after_charge_mode_change(5); // set charge mode values
 get_max_min_lims_from_DEV_NOM_VOUT();
@@ -36,17 +36,17 @@ if (Read_RTC_Osc_Status() == 0) {
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
 DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-change_fault_state_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
-change_fault_state_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 
 
 delay_1ms(1000);
 SW_LINE_OFF=!isInSet_(SW_LINE_P);
 SW_BATT_OFF=!isInSet_(SW_BATT_P);
 SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
-change_fault_state_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
-change_fault_state_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
-change_fault_state_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
+apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
+apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
+apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
 
 delay_1ms(100);
 
@@ -94,7 +94,8 @@ disb_uart_msg_group(pr_btln);
 bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast restart inspection
 
 
-
+//REL_OUT_order_chng_f(17, BATTERY_FAULT_FC_REL);
+//print_REL_OUT_Table();
 
 ///////////////////////////////////////////////////////////
 // Temp sensor init
@@ -128,16 +129,13 @@ if (temp_sens_count == 0) {
 // Temp sensor init
 ///////////////////////////////////////////////////////////
 
+generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
+generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar
+
+
 //LED_7_Data |= FLOAT_CHARGE_LED;
 
-// saat ayarlarlandı
-// 1740176028 (2.2+6pf)+(2.2+6pf)
-// 1740873329 -10 cal yapıldı.
-// 1741189852 316523 saniyede bu unix time a geldi. 1 saniye geri kaldı. kalibrasyon -10 du -5 yapıldı
-// 1741385888 196036 saniyede bu unix time a geldi. yaklaşık 0.1 saniye geri kaldı. kalibrasyon -5 ti -4 yapıldı
-// 1741536423 150535 saniyede bu unix time a geldi. yaklaşık 0.5 saniye ileri gitti. kalibrasyon -4 ti -6 yapıldı
-// 9pf yapılırsa iyi sonuç alınacaktır
-// butona basınca lcd hemen refresh yapsın diye sayacını ileri almak lazım.
+// kontak çıkışlarını tabloya aktar
 // dc düşük yüksek alarm aralığı ayarlanabilir değil şu an.
 // akü hattı kopuk için eklemeler gerekiyor. mcb yardımcı kontağını kullan. akım sınırlaması durumunda akü hattı kopuk belirleme sistemi voltajı düşüremiyor ve akü hattı var diyor. bunu akü bağlı değilken ve mcb yardımcı kontak okuma yapmadığım zamanda gördüm.
 // akü arızası. akü voltajı

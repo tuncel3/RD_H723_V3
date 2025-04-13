@@ -445,15 +445,15 @@ float SPI4_ReadDataSetting(uint32_t address) {
 			return float_value;
 }
 
-void Record_Fault_Code(uint32_t fault_code) {
+void Record_Fault_Code(uint32_t state_code) {
 
 static uint32_t prev_fault_code=0;
 
 
-if (prev_fault_code!=fault_code) {
+if (prev_fault_code!=state_code) {
 
 array_fault_data[flt_array_index_next][0]=rtc_timestamp;
-array_fault_data[flt_array_index_next][1]=fault_code;
+array_fault_data[flt_array_index_next][1]=state_code;
 
 uint32_t address = flt_array_index_next * 8;
 uint32_t timestamp = array_fault_data[flt_array_index_next][0];
@@ -485,12 +485,12 @@ flt_array_index_next=(flt_array_index_next+1) % NUM_FAULT_RECORD;
     // Step 5: Send Second uint32_t (MSB First)
     for (int i = 3; i >= 0; i--)
     {
-        SPI4_SendByte((fault_code >> (i * 8)) & 0xFF);
+        SPI4_SendByte((state_code >> (i * 8)) & 0xFF);
     }
 
     set_(CS_M95P32);  // End Transmission
 
-    sprintf(DUB,"Saved fault_code %lu flt %s", fault_code, faultList[fault_code].name); prfm(DUB);
+    sprintf(DUB,"Saved state_code %lu flt %s", state_code, state_list[state_code].name); prfm(DUB);
 
     while (SPI4_ReadStatusRegister() & 0x01) {
         delayA_1us(10);
@@ -503,7 +503,7 @@ flt_array_index_next=(flt_array_index_next+1) % NUM_FAULT_RECORD;
 		there_is_past_unseen_fault=1;
 	}
 }
-	prev_fault_code=fault_code;
+	prev_fault_code=state_code;
 }
 
 void SPI4_ReadDataFaultRegion(uint32_t address, uint32_t nm_fault) {
@@ -530,8 +530,8 @@ void printFaultCodes(void) {
 for (int i = 0; i < NUM_FAULT_RECORD-1; i++) {
 	SPI4_ReadDataFaultRegion(FAULT_RECORD_START_ADDRESS, NUM_FAULT_RECORD);
 	convert_timestamp_to_date_string(array_fault_data[i][0], rtc_timestring, sizeof(rtc_timestring));
-    if (array_fault_data[i][1] < NUM_FAULT_CODE_NAMES) {
-        sprintf(DUB, "%s %s", rtc_timestring, faultList[array_fault_data[i][1]].name); prfm(DUB);
+    if (array_fault_data[i][1] < NUM_STATE_NAMES) {
+        sprintf(DUB, "%s %s", rtc_timestring, state_list[array_fault_data[i][1]].name); prfm(DUB);
     } else {
         sprintf(DUB, "%s Bos Kayit", rtc_timestring); prfm(DUB);
     }

@@ -1,4 +1,8 @@
 
+
+
+
+
 inline extern void DROPPER_pg_disp(void) {
     GLCD_PrintString(0, 0, "Dropper");
 	char L[32]; static uint8_t lnhg=9;
@@ -13,7 +17,6 @@ inline extern void DROPPER_pg_disp(void) {
 	if (dropper_edit_mode) {
 		GLCD_Rect_E(69,(selected_DROPPER+1)*9-2,101,(selected_DROPPER+2)*9-1); // batt rect
 	}
-
 }
 
 inline extern void CALIBRATION_pg_disp(void) {
@@ -22,8 +25,8 @@ inline extern void CALIBRATION_pg_disp(void) {
     sprintf(L, "VR%7.2f", VRECT_per_avg_roll_sc); 		GLCD_PrintString(0, 1*lnhg, L);
     sprintf(L, "VL%7.2f", VLOAD_per_avg_roll_sc); 		GLCD_PrintString(0, 2*lnhg, L);
     sprintf(L, "VB%7.2f", VBAT_per_avg_roll_sc); 		GLCD_PrintString(0, 3*lnhg, L);
-    sprintf(L, "IR%7.2f", IRECT_per_avg_sc); 		GLCD_PrintString(0, 4*lnhg, L);
-    sprintf(L, "IB%7.2f", IBAT_per_avg_sc); 		GLCD_PrintString(0, 5*lnhg, L);
+    sprintf(L, "IR%7.2f", IRECT_per_avg_sc); 			GLCD_PrintString(0, 4*lnhg, L);
+    sprintf(L, "IB%7.2f", IBAT_per_avg_sc); 			GLCD_PrintString(0, 5*lnhg, L);
     sprintf(L, "CR%7.2f", VAC_R_rms_roll_per_avg); 		GLCD_PrintString(64, 1*lnhg, L);
     sprintf(L, "CS%7.2f", VAC_S_rms_roll_per_avg); 		GLCD_PrintString(64, 2*lnhg, L);
     sprintf(L, "CT%7.2f", VAC_T_rms_roll_per_avg); 		GLCD_PrintString(64, 3*lnhg, L);
@@ -238,6 +241,61 @@ inline extern void MAIN_MENU_pg_disp(void) {
         GLCD_PrintString(0, (i + 1) * 9, L);
     }
 }
+inline extern void RELAY_ORDER_pg_disp(void) {
+
+	char L[32];
+    if (rel_disp_mode == 1) {
+		GLCD_PrintString(0, 0, "Kontak Sıralama");
+		uint8_t rel_ord_disp_index_=rel_ord_disp_index;
+		for (uint8_t i = 0; i < 6; i++) {
+
+		    if (rel_ord_disp_index_ < 16) {
+		    	sprintf(L, " %02d", rel_ord_tb[rel_ord_disp_index_].rel_ord_order);
+				GLCD_PrintString(0, (i + 1) * 9, L);
+		    }
+			sprintf(L, "%s ", rel_ord_tb[rel_ord_disp_index_].rel_ord_desc);
+			GLCD_PrintString(22, (i + 1) * 9, L);
+			sprintf(L, "%d ", rel_ord_tb[rel_ord_disp_index_].rel_ord_val);
+			GLCD_PrintString(122, (i + 1) * 9, L);
+
+			rel_ord_disp_index_=(rel_ord_disp_index_+1+rel_ord_tb_size) % rel_ord_tb_size;
+
+		}
+
+		GLCD_PrintString(0, (rel_ord_arrow_loc+1) * 9, ">");
+
+	} else if (rel_edit_mode == 1) {
+		sprintf(L, "Kontak %02d İçin Seçim", rel_ord_tb[rel_ord_tb_sel].rel_ord_order);
+		GLCD_PrintString(0, 0, L);
+		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
+		for (uint8_t i = 0; i < 6; i++) {
+
+			sprintf(L, " %s ", rel_dat_tb[rel_dat_disp_index_].rel_dat_desc);
+			GLCD_PrintString(3, (i + 1) * 9, L);
+			sprintf(L, "%d ", rel_dat_tb[rel_dat_disp_index_].rel_dat_val);
+			GLCD_PrintString(122, (i + 1) * 9, L);
+			rel_dat_disp_index_=(rel_dat_disp_index_+1+rel_dat_tb_size) % rel_dat_tb_size;
+
+		}
+
+		GLCD_PrintString(0, (rel_dat_arrow_loc+1) * 9, ">");
+
+		uint8_t x0=0; uint8_t y0=0; uint8_t w=100; uint8_t h=10;
+		if (cal_sel_edit_mode==cal_none) {
+			if (cal_sel_col==0) {
+				x0=6; y0=(rel_dat_arrow_loc+1) * 9-2;
+				GLCD_Rect_E(x0,y0,x0+w,y0+h);
+			}
+		}
+    }
+
+
+
+
+
+
+
+}
 inline extern void CHARGE_SETT_pg_disp(void) {
     GLCD_PrintString(0, 0, "Şarj Ayarları");
 	char L[32]; char M[32];
@@ -357,8 +415,8 @@ inline extern void FAULT_CODES_REPORT_pg_disp(void) {
     for (uint8_t j = 0; j < 6; j++) {
     	if (!FAULT_CODES_REPORT_disp_mode) {
 
-    	    if (array_fault_data[disp_index_][1] < NUM_FAULT_CODE_NAMES) {
-        		sprintf(L, "%03d %s", disp_index_+1, faultList[array_fault_data[disp_index_][1]].name);
+    	    if (array_fault_data[disp_index_][1] < NUM_STATE_NAMES) {
+        		sprintf(L, "%03d %s", disp_index_+1, state_list[array_fault_data[disp_index_][1]].name);
     	    } else {
         		sprintf(L, "%03d -", disp_index_+1);
     	    }

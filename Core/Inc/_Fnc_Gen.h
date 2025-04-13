@@ -6,11 +6,17 @@ inline void delayA_1us(uint32_t us);
 inline void delayA_100ns(uint32_t us);
 void printFaultCodes(void);
 void inline extern get_max_min_lims_from_DEV_NOM_VOUT(void);
-void change_fault_state_f(FaultCode fault_code, uint8_t set);
+void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 void inline extern toggle_batt_inspection_direction(uint8_t num);
-static inline uint8_t is_state_active(FaultCode fault_code);
+static inline uint8_t is_state_active(State_Codes state_code);
+
+void compress_REL_OUT_order_to_parts(void);
+void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void);
+void generate_rel_ord_tb_from_REL_OUT_order_vector_fc(void);
+void generate_REL_OUT_order_vect_from_ord_table_fc(void);
+void generate_REL_24Bit_Data_fc(void);
 
 #include "_EEP_M95P32.h"
 #include "_Fnc_RTC.h"
@@ -221,7 +227,7 @@ void printBinary(uint8_t num) {
 
 
 void buttonScn(void) {
-	if (ButtScanDelay_cnt > 50) {
+	if (ButtScanDelay_cnt > 30) {
 		ButtScanDelay_cnt=0;
 
 // BLEFT
@@ -349,7 +355,7 @@ inline extern void short_circ_monitor_f(void) {
 		IRECT_Short_Ret_Acc_cnt=0;
 		if (IRECT_Short_Acc_cnt >= IRECT_Short_Acc_per) {
 			IRECT_Short_Acc_cnt=0;
-			change_fault_state_f(RECT_SHORT_FC, 1);
+			apply_state_changes_f(RECT_SHORT_FC, 1);
 			sprintf(DUB,"DC SH %f", IRECT_smp_sc); prfm(DUB);
 		}
 	} else { IRECT_Short_Acc_per=0; }
@@ -358,7 +364,7 @@ inline extern void short_circ_monitor_f(void) {
 		IRECT_Short_Acc_cnt=0;
 		if (IRECT_Short_Ret_Acc_cnt >= IRECT_Short_Ret_Acc_per) {
 			IRECT_Short_Ret_Acc_cnt=0;
-			change_fault_state_f(RECT_SHORT_FC, 0);
+			apply_state_changes_f(RECT_SHORT_FC, 0);
 		}
 	} else { IRECT_Short_Ret_Acc_cnt=0; }
 	if (thy_drv_en==1 && IBAT_smp_sc > EpD[BATT_SHORT][0].V1 && !is_state_active(BATT_SHORT_FC)) {
@@ -366,7 +372,7 @@ inline extern void short_circ_monitor_f(void) {
 		IBAT_Short_Ret_Acc_cnt=0;
 		if (IBAT_Short_Acc_cnt >= IBAT_Short_Acc_per) {
 			IBAT_Short_Acc_cnt=0;
-			change_fault_state_f(BATT_SHORT_FC, 1);
+			apply_state_changes_f(BATT_SHORT_FC, 1);
 			sprintf(DUB,"BT SH %f", IBAT_smp_sc); prfm(DUB);
 		}
 	} else { IBAT_Short_Acc_cnt=0; }
@@ -375,7 +381,7 @@ inline extern void short_circ_monitor_f(void) {
 		IBAT_Short_Acc_cnt=0;
 		if (IBAT_Short_Ret_Acc_cnt >= IBAT_Short_Ret_Acc_per) {
 			IBAT_Short_Ret_Acc_cnt=0;
-			change_fault_state_f(BATT_SHORT_FC, 0);
+			apply_state_changes_f(BATT_SHORT_FC, 0);
 		}
 	} else { IBAT_Short_Ret_Acc_cnt=0; }
 }
@@ -768,7 +774,7 @@ void inline extern batt_line_broken_fn(void) {
 		reset_batt_inspection_procedure_state_vars();
 
 			batt_line_broken=1;
-			change_fault_state_f(BATT_LINE_BROKEN_FC, 1);
+			apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 
 }
 void inline extern batt_line_OK_fn(void) {
@@ -777,7 +783,7 @@ void inline extern batt_line_OK_fn(void) {
 		reset_batt_inspection_procedure_state_vars();
 
 			batt_line_broken=0;
-			change_fault_state_f(BATT_LINE_BROKEN_FC, 0);
+			apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 }
 void inline extern toggle_batt_inspection_direction(uint8_t num) {
 
@@ -1015,48 +1021,71 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 	}
 }
 
-void change_fault_state_f(FaultCode fault_code, uint8_t set) {
+void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 
-	uint32_t fault_bit = (1U << fault_code);
-	uint32_t led7_bit = (1U << (fault_code-16));
-	sprintf(DUB,"fault_code %d %s set %d", fault_code, faultList[fault_code].name, set); prfm(DUB);
+	uint32_t fault_bit = (1U << state_code);
+	uint32_t led7_bit = (1U << (state_code-16));
+	uint32_t REL8_bit = (1U << (state_code-29));
+	sprintf(DUB,"state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
     if (set) {
-        if (faultList[fault_code].code < 16) {
+        if (state_list[state_code].code < 16) {
         	LED_16_Data |= fault_bit; }  // activate LED if required
-        if (faultList[fault_code].code >= 16 && faultList[fault_code].code < 16+7) {
+        if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
         	LED_7_Data |= led7_bit; }  // activate LED 7 if required
-        if (faultList[fault_code].action & (1 << SET_GEN_F_LED_enum)) {
+        if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
+        	REL_MB_8Bit_Data |= REL8_bit; }  // activate REL 8 if required
+        if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC); } // activate general fault LED if associated
-        if (faultList[fault_code].action & (1 << THYSTOP_enum)) {  // stop thy drv if fault requires
+        if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) {  // stop thy drv if fault requires
         	thy_drv_en=0;
 			sf_sta_req=0;
 			sf_sta_req_ok=0;
             thy_stop_fault_hold_bits |= fault_bit;
         	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
-        if (fault_code == START_FC) {
+        if (state_code == START_FC) {
         	LED_16_Data &= ~(1U << STOP_FC); }
 
-		faultList[fault_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
+		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
 
-		if (!!(faultList[fault_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
-			Record_Fault_Code(fault_code); }
+		if (!!(state_list[state_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
+			Record_Fault_Code(state_code); }
     } else {
-        if (faultList[fault_code].code < 16) {
+        if (state_list[state_code].code < 16) {
         	LED_16_Data &= ~fault_bit; }  // deactivate LED if resetting a fault with LED requirement
-        if (faultList[fault_code].code >= 16 && faultList[fault_code].code < 16+7) {
+        if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
         	LED_7_Data &= ~led7_bit; }  // deactivate LED 7 if required
-        if (faultList[fault_code].action & (1 << SET_GEN_F_LED_enum)) { // deactivate general fault LED if associated
+        if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
+        	REL_MB_8Bit_Data &= ~REL8_bit; }  // deactivate REL 8 if required
+        if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC); }
-        if (faultList[fault_code].action & (1 << THYSTOP_enum)) { // thy stop gerektiren bir arıza reset ediliyor
+        if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
-        (faultList[fault_code].action &= ~(1 << ACTIVE_enum));
+    }
+
+    rel_names_t relCode = state_list[state_code].rel_dat_nm;  // 4. sütunda tanımlı enum
+    // ACTIVE_enum set mi değil mi
+    uint8_t activeBitSet = (state_list[state_code].action & (1 << ACTIVE_enum)) ? 1 : 0;
+
+    // rel_dat_tb içinde eşleşen varsa val’i güncelle
+    for (int i = 0; i < rel_dat_tb_size; i++) {
+        if (rel_dat_tb[i].rel_dat_nm == relCode) {
+            rel_dat_tb[i].rel_dat_val = activeBitSet;
+            break;
+        }
+    }
+    for (int i = 0; i < rel_ord_tb_size; i++) {
+        if (rel_ord_tb[i].rel_ord_nm == relCode) {
+            rel_ord_tb[i].rel_ord_val = activeBitSet;
+            generate_REL_24Bit_Data_fc();
+            break;
+        }
     }
 }
 
-static inline uint8_t is_state_active(FaultCode fault_code) {
-    	return (faultList[fault_code].action & (1U << ACTIVE_enum)) != 0;
+static inline uint8_t is_state_active(State_Codes state_code) {
+    	return (!!(state_list[state_code].action & (1U << ACTIVE_enum))) == 1;
 }
 
 void swap_scr_lines(SCR_Line *line1, SCR_Line *line2) {
@@ -1128,4 +1157,139 @@ int tmp144_init_and_assign(void)
     }
     return temp_sens_count;
 }
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// OUT RELAY OPERATION //////////////////////////////////////////////////////////////////////////////////////////
+
+
+void print_REL_OUT_Table() {
+    for (int i = 0; i < 16; i++) {
+		sprintf(DUB,"Order %d %s", rel_ord_tb[i].rel_ord_nm, rel_ord_tb[i].rel_ord_desc); prfm(DUB);
+		delay_1ms(10);
+    }
+}
+
+void calc_REL_24Bit_Data_f(void) {
+	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
+}
+
+
+void compress_REL_OUT_order_to_parts(void) {
+    REL_OUT_order_part1 = 0;
+    REL_OUT_order_part2 = 0;
+    REL_OUT_order_part3 = 0;
+    REL_OUT_order_part4 = 0;
+
+    for (int i = 0; i < 16; i++) {
+        uint32_t val = REL_OUT_order[i] & 0x1F;  // 5-bit
+
+        if (i < 4) {
+            REL_OUT_order_part1 |= (val << (i * 5));
+        } else if (i < 8) {
+            REL_OUT_order_part2 |= (val << ((i - 4) * 5));
+        } else if (i < 12) {
+            REL_OUT_order_part3 |= (val << ((i - 8) * 5));
+        } else {
+            REL_OUT_order_part4 |= (val << ((i - 12) * 5));
+        }
+    }
+
+    EpD[REL_OUT_1][0].V1 = REL_OUT_order_part1; EpD[REL_OUT_1][1].V1 = REL_OUT_order_part1;
+    EpD[REL_OUT_2][0].V1 = REL_OUT_order_part2; EpD[REL_OUT_2][1].V1 = REL_OUT_order_part2;
+    EpD[REL_OUT_3][0].V1 = REL_OUT_order_part3; EpD[REL_OUT_3][1].V1 = REL_OUT_order_part3;
+    EpD[REL_OUT_4][0].V1 = REL_OUT_order_part4; EpD[REL_OUT_4][1].V1 = REL_OUT_order_part4;
+
+    Rec_Dat_to_EEp_f(REL_OUT_1);
+    Rec_Dat_to_EEp_f(REL_OUT_2);
+    Rec_Dat_to_EEp_f(REL_OUT_3);
+    Rec_Dat_to_EEp_f(REL_OUT_4);
+}
+
+
+void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void) {
+
+    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
+    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
+    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
+    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
+
+    for (int i = 0; i < 16; i++) {
+        uint32_t val;
+
+        if (i < 4) {
+            val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
+        } else if (i < 8) {
+            val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
+        } else if (i < 12) {
+            val = (REL_OUT_order_part3 >> ((i - 8) * 5)) & 0x1F;
+        } else {
+            val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
+        }
+        REL_OUT_order[i] = (rel_names_t)val;
+    }
+}
+
+void generate_rel_ord_tb_from_REL_OUT_order_vector_fc(void) {
+    for (int i = 0; i < 16; i++) {
+    	rel_ord_tb[i].rel_ord_nm=REL_OUT_order[i];
+    	rel_ord_tb[i].rel_ord_desc=rel_dat_tb[rel_ord_tb[i].rel_ord_nm].rel_dat_desc;
+    }
+}
+
+void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
+    for (int i = 0; i < 16; ++i) {
+        REL_OUT_order[i] = rel_ord_tb[i].rel_ord_nm;
+    }
+}
+void generate_REL_24Bit_Data_fc(void) {
+    rel_out_16Bit_Data = 0; // Clear current value
+
+    for (int i = 0; i < 16; ++i) {
+        uint8_t order = rel_ord_tb[i].rel_ord_order;
+        uint8_t val = rel_ord_tb[i].rel_ord_val;
+
+        if (order < 16) {
+            if (val) {
+                rel_out_16Bit_Data |= (1 << order);
+            } else {
+                rel_out_16Bit_Data &= ~(1 << order);
+            }
+        	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
+        }
+    }
+}
+
+void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val)
+{
+    // 1) Update rel_dat_tb
+    for (int i = 0; i < rel_dat_tb_size; i++)
+    {
+        if (rel_dat_tb[i].rel_dat_nm == rname)
+        {
+            rel_dat_tb[i].rel_dat_val = new_val;
+            break;  // Found the matching enum, so we can stop searching
+        }
+    }
+
+    // 2) Update rel_ord_tb
+    //    We only update if we actually find the same enum in this table.
+    for (int j = 0; j < rel_ord_tb_size; j++)
+    {
+        if (rel_ord_tb[j].rel_ord_nm == rname)
+        {
+            rel_ord_tb[j].rel_ord_val = new_val;
+            break;  // Found and updated, so we can stop searching
+        }
+    }
+    generate_REL_24Bit_Data_fc();
+}
+
+
+////// OUT RELAY OPERATION //////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

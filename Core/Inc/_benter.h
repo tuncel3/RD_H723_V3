@@ -16,6 +16,8 @@ void benter_fnc(void) {
 		} else if (selected_MAIN_MENU == 3) {
 			currentPage = DROPPER_pg;
 		} else if (selected_MAIN_MENU == 4) {
+			currentPage = RELAY_ORDER_pg;
+        } else if (selected_MAIN_MENU == 5) {
 			currentPage = MANAGEMENT_pg;
         }
     }
@@ -217,16 +219,33 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==BATT_SHORT) {
 			if (selected_DROPPER == 0) {
 				EpD[SET_DROPPER_K1][0].V1 = EpD[SET_DROPPER_K1][1].V1;
 				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
-				change_fault_state_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
 				Rec_Dat_to_EEp_f(SET_DROPPER_K1);
 			} else if (selected_DROPPER == 1) {
 				EpD[SET_DROPPER_K2][0].V1 = EpD[SET_DROPPER_K2][1].V1;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				change_fault_state_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 				Rec_Dat_to_EEp_f(SET_DROPPER_K2);
 			}
 		}
 	}
+    else if (currentPage == RELAY_ORDER_pg) {
+    	rel_disp_mode ^=1;
+    	rel_edit_mode ^=1;
+
+        if (rel_disp_mode == 1) { // ekranda order değiştirildi. tabloda değiş
+        	rel_ord_tb[rel_ord_tb_sel].rel_ord_nm= rel_dat_tb[rel_dat_tb_sel].rel_dat_nm;
+        	rel_ord_tb[rel_ord_tb_sel].rel_ord_desc= rel_dat_tb[rel_dat_tb_sel].rel_dat_desc; // rel_dat_tb den seçili olanı al ve rel_ord_tb ye kopyala
+        	rel_ord_tb[rel_ord_tb_sel].rel_ord_val= rel_dat_tb[rel_dat_tb_sel].rel_dat_val;
+        	generate_REL_OUT_order_vect_from_ord_table_fc(); // relout order vector üret
+        	generate_REL_24Bit_Data_fc(); // 24 bit data üret, shift register için
+        	compress_REL_OUT_order_to_parts(); //sıkıştırılmış orderı 20 bitlik parçalara ayır ve eeproma kaydet
+        } else if (rel_edit_mode == 1) {
+        }
+
+
+    }
+
 
 
     else if (currentPage == MANAGEMENT_pg) {
