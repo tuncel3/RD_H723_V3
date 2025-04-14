@@ -8,6 +8,7 @@ void printFaultCodes(void);
 void inline extern get_max_min_lims_from_DEV_NOM_VOUT(void);
 void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
+void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 void inline extern toggle_batt_inspection_direction(uint8_t num);
 static inline uint8_t is_state_active(State_Codes state_code);
@@ -17,6 +18,7 @@ void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void);
 void generate_rel_ord_tb_from_REL_OUT_order_vector_fc(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
 void generate_REL_24Bit_Data_fc(void);
+void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val);
 
 #include "_EEP_M95P32.h"
 #include "_Fnc_RTC.h"
@@ -867,6 +869,7 @@ if (start_bat_inspection_req==1) {
 					} else if (gercek_baslangic_fark <= 0.6 && hedef_gercek_fark > 0.6 && hedef_baslangic_fark >= 1) {
 						batt_line_OK_fn();
 						sprintf(DUB,"Batt line OK by cannot reduce vout. End of inspection"); umsg(pr_btln, DUB);
+						toggle_batt_inspection_direction(6);
 					} else {
 						bat_inspection_unknow_state_cnt++;
 						sprintf(DUB,"unknown state when dir was -1 %lu", bat_inspection_unknow_state_cnt); umsg(pr_btln, DUB);
@@ -931,7 +934,7 @@ if ((IBAT_per_avg_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc < -BATT_
 	batt_current_detected_Acc_cnt++;
 	if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
 		batt_current_detected=1;
-		sprintf(DUB,"batt_current_detected 1"); umsg(pr_btln, DUB);
+		sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_per_avg_sc); umsg(pr_btln, DUB);
 		if (batt_line_broken==1) {
 			batt_line_OK_fn();
 			sprintf(DUB,"Batt line OK. batt curr det whil batt_line_brokn=1. Dir was %d", batt_inspection_direction); umsg(pr_btln, DUB);
@@ -971,12 +974,19 @@ Ibat_min=EpD[DEV_NOM_IOUT][0].V1*0.1; // Akümülatör çıkış // release_chg 
 VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 }
+void inline extern update_VDC_high_low_lim_fc(void) {
+	VRECT_DC_HIGH_LIM=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100));
+	VRECT_DC_HIGH_LIM_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
+	VRECT_DC_LOW_LIM=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_ADD][0].V1/100));
+	VRECT_DC_LOW_LIM_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_ADD][0].V1/100)-0.01);
+	VLOAD_DC_HIGH_LIM=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100));
+	VLOAD_DC_HIGH_LIM_ret=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
+	VLOAD_DC_LOW_LIM=V_targ_con_sy/(1+(EpD[VLOAD_DC_LOW_LIM_ADD][0].V1/100));
+	VLOAD_DC_LOW_LIM_ret=V_targ_con_sy/(1+(EpD[VLOAD_DC_LOW_LIM_ADD][0].V1/100)-0.01);
+}
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
-	V_Charg_Hg_10_perc=V_targ_con_sy*1.1;
-	V_Charg_Hg_10_perc_ret=V_targ_con_sy*1.09;
-	V_Charg_Lo_10_perc=V_targ_con_sy/1.1;
-	V_Charg_Lo_10_perc_ret=V_targ_con_sy/1.09;
+	update_VDC_high_low_lim_fc();
 }
 
 // does required changes after a charge mode chage
@@ -1022,11 +1032,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 }
 
 void apply_state_changes_f(State_Codes state_code, uint8_t set) {
-
 	uint32_t fault_bit = (1U << state_code);
 	uint32_t led7_bit = (1U << (state_code-16));
 	uint32_t REL8_bit = (1U << (state_code-29));
-	sprintf(DUB,"state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
     if (set) {
         if (state_list[state_code].code < 16) {
         	LED_16_Data |= fault_bit; }  // activate LED if required
@@ -1044,12 +1052,17 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
         if (state_code == START_FC) {
-        	LED_16_Data &= ~(1U << STOP_FC); }
-
+        	change_rel_vals_in_tables_f(START_STOP_REL, 1);
+        }
+        if (state_code == STOP_FC) {
+        	change_rel_vals_in_tables_f(START_STOP_REL, 0);
+        }
 		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
 
 		if (!!(state_list[state_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(state_code); }
+		sprintf(DUB,"     state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
+
     } else {
         if (state_list[state_code].code < 16) {
         	LED_16_Data &= ~fault_bit; }  // deactivate LED if resetting a fault with LED requirement
@@ -1062,26 +1075,19 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
+		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
+		sprintf(DUB,"          state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
     }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// OUT RELAY ACTIVATE DEACTIVATE ////////////////////////////////////////////////////////////////////////////////
     rel_names_t relCode = state_list[state_code].rel_dat_nm;  // 4. sütunda tanımlı enum
     // ACTIVE_enum set mi değil mi
     uint8_t activeBitSet = (state_list[state_code].action & (1 << ACTIVE_enum)) ? 1 : 0;
+    change_rel_vals_in_tables_f(relCode, activeBitSet);
+////// OUT RELAY ACTIVATE DEACTIVATE ////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // rel_dat_tb içinde eşleşen varsa val’i güncelle
-    for (int i = 0; i < rel_dat_tb_size; i++) {
-        if (rel_dat_tb[i].rel_dat_nm == relCode) {
-            rel_dat_tb[i].rel_dat_val = activeBitSet;
-            break;
-        }
-    }
-    for (int i = 0; i < rel_ord_tb_size; i++) {
-        if (rel_ord_tb[i].rel_ord_nm == relCode) {
-            rel_ord_tb[i].rel_ord_val = activeBitSet;
-            generate_REL_24Bit_Data_fc();
-            break;
-        }
-    }
 }
 
 static inline uint8_t is_state_active(State_Codes state_code) {
@@ -1265,31 +1271,32 @@ void generate_REL_24Bit_Data_fc(void) {
 
 void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val)
 {
-    // 1) Update rel_dat_tb
-    for (int i = 0; i < rel_dat_tb_size; i++)
-    {
-        if (rel_dat_tb[i].rel_dat_nm == rname)
-        {
+    // Update rel_dat_tb
+    for (int i = 0; i < rel_dat_tb_size; i++) {
+        if (rel_dat_tb[i].rel_dat_nm == rname) {
             rel_dat_tb[i].rel_dat_val = new_val;
             break;  // Found the matching enum, so we can stop searching
         }
     }
-
-    // 2) Update rel_ord_tb
-    //    We only update if we actually find the same enum in this table.
-    for (int j = 0; j < rel_ord_tb_size; j++)
-    {
-        if (rel_ord_tb[j].rel_ord_nm == rname)
-        {
+    // Update rel_ord_tb
+    for (int j = 0; j < rel_ord_tb_size; j++) {
+        if (rel_ord_tb[j].rel_ord_nm == rname) {
             rel_ord_tb[j].rel_ord_val = new_val;
+            generate_REL_24Bit_Data_fc(); // röle değerleri update edildiği için 24 bit değer de güncelleniyor.
             break;  // Found and updated, so we can stop searching
         }
     }
-    generate_REL_24Bit_Data_fc();
 }
 
 
 ////// OUT RELAY OPERATION //////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum_y2, float sum_xy, uint16_t n) {
+    float numerator = n * sum_xy - sum_x * sum_y;
+    float denominator = sqrtf((n * sum_x2 - sum_x * sum_x) * (n * sum_y2 - sum_y * sum_y));
+    if (denominator == 0.0f) return 0.0f;
+    return numerator / denominator;
+}
 

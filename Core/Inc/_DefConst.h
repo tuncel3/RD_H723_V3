@@ -70,18 +70,30 @@ float VLOAD_smp_offst = 0.0f;
 float VRECT_smp_offst = 0.0f;
 
 
-float V_Charg_Hg_10_perc = 0.0f;
-float V_Charg_Hg_10_perc_ret = 0.0f;
-uint32_t V_Charg_Hg_10_perc_Acc_cnt = 0;
-uint32_t V_Charg_Hg_10_perc_Acc_per = 200;
-uint32_t V_Charg_Hg_10_perc_ret_Acc_cnt = 0;
-uint32_t V_Charg_Hg_10_perc_ret_Acc_per = 20;
-float V_Charg_Lo_10_perc = 0.0f;
-float V_Charg_Lo_10_perc_ret = 0.0f;
-uint32_t V_Charg_Lo_10_perc_Acc_cnt = 0;
-uint32_t V_Charg_Lo_10_perc_Acc_per = 200;
-uint32_t V_Charg_Lo_10_perc_ret_Acc_cnt = 0;
-uint32_t V_Charg_Lo_10_perc_ret_Acc_per = 20;
+float VRECT_DC_HIGH_LIM = 0.0f;
+float VRECT_DC_HIGH_LIM_ret = 0.0f;
+uint32_t VRECT_DC_HIGH_LIM_Acc_cnt = 0;
+uint32_t VRECT_DC_HIGH_LIM_Acc_per = 200;
+uint32_t VRECT_DC_HIGH_LIM_ret_Acc_cnt = 0;
+uint32_t VRECT_DC_HIGH_LIM_ret_Acc_per = 20;
+float VRECT_DC_LOW_LIM = 0.0f;
+float VRECT_DC_LOW_LIM_ret = 0.0f;
+uint32_t VRECT_DC_LOW_LIM_Acc_cnt = 0;
+uint32_t VRECT_DC_LOW_LIM_Acc_per = 200;
+uint32_t VRECT_DC_LOW_LIM_ret_Acc_cnt = 0;
+uint32_t VRECT_DC_LOW_LIM_ret_Acc_per = 20;
+float VLOAD_DC_HIGH_LIM = 0.0f;
+float VLOAD_DC_HIGH_LIM_ret = 0.0f;
+uint32_t VLOAD_DC_HIGH_LIM_Acc_cnt = 0;
+uint32_t VLOAD_DC_HIGH_LIM_Acc_per = 200;
+uint32_t VLOAD_DC_HIGH_LIM_ret_Acc_cnt = 0;
+uint32_t VLOAD_DC_HIGH_LIM_ret_Acc_per = 20;
+float VLOAD_DC_LOW_LIM = 0.0f;
+float VLOAD_DC_LOW_LIM_ret = 0.0f;
+uint32_t VLOAD_DC_LOW_LIM_Acc_cnt = 0;
+uint32_t VLOAD_DC_LOW_LIM_Acc_per = 200;
+uint32_t VLOAD_DC_LOW_LIM_ret_Acc_cnt = 0;
+uint32_t VLOAD_DC_LOW_LIM_ret_Acc_per = 20;
 float IRECT_smp_sc = 0.0f;
 float IRECT_per_avg_sc = 0.0f;
 float ILOAD_per_sc = 0.0f;
@@ -370,6 +382,10 @@ typedef enum {
 	REL_OUT_2,
 	REL_OUT_3,
 	REL_OUT_4,
+	VRECT_DC_HIGH_LIM_ADD,
+	VRECT_DC_LOW_LIM_ADD,
+	VLOAD_DC_HIGH_LIM_ADD,
+	VLOAD_DC_LOW_LIM_ADD,
     NUM_SET_ENUM            // Keeps track of total settings
 } EEPROM_Setting_ID;
 
@@ -416,10 +432,14 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {DC_KAC_NEG, 20.0}, {DC_KAC_NEG, 20.0} }, // DC kaçak negatif
     { {RECT_SHORT, 20.0}, {RECT_SHORT, 20.0} }, // RECT short Amp
     { {BATT_SHORT, 20.0}, {BATT_SHORT, 20.0} }, // BATT short Amp
-    { {REL_OUT_1, 865920825.0}, {REL_OUT_1, 865920825.0} },
-    { {REL_OUT_2, 865920825.0}, {REL_OUT_2, 865920825.0} },
-    { {REL_OUT_3, 845625.0}, {REL_OUT_3, 845625.0} },
-    { {REL_OUT_4, 845625.0}, {REL_OUT_4, 845625.0} }
+    { {REL_OUT_1, 657440.0}, {REL_OUT_1, 657440.0} },
+    { {REL_OUT_2, 235701.0}, {REL_OUT_2, 235701.0} },
+    { {REL_OUT_3, 370984.0}, {REL_OUT_3, 370984.0} },
+    { {REL_OUT_4, 506284.0}, {REL_OUT_4, 506284.0} },
+    { {VRECT_DC_HIGH_LIM_ADD, 10.0}, {VRECT_DC_HIGH_LIM_ADD, 10.0} },
+    { {VRECT_DC_LOW_LIM_ADD, 10.0}, {VRECT_DC_LOW_LIM_ADD, 10.0} },
+    { {VLOAD_DC_HIGH_LIM_ADD, 10.0}, {VLOAD_DC_HIGH_LIM_ADD, 10.0} },
+    { {VLOAD_DC_LOW_LIM_ADD, 10.0}, {VLOAD_DC_LOW_LIM_ADD, 10.0} }
 };
 
 const char* Eep_data_Names[] = { // for printing in uart
@@ -467,7 +487,11 @@ const char* Eep_data_Names[] = { // for printing in uart
     "REL_OUT_1",
 	"REL_OUT_2",
 	"REL_OUT_3",
-	"REL_OUT_4"
+	"REL_OUT_4",
+	"VRECT_DC_HIGH_LIM_ADD",
+	"VRECT_DC_LOW_LIM_ADD",
+	"VLOAD_DC_HIGH_LIM_ADD",
+	"VLOAD_DC_LOW_LIM_ADD"
 };
 
 typedef struct {
@@ -516,7 +540,11 @@ SETT_type DEVICE_SETT_Items[] = {
 {"DC Kaçak +% L", DC_KAC_POS, 3},
 {"DC Kaçak -% L", DC_KAC_NEG, 3},
 {"K.Devr Doğr A", RECT_SHORT, 3},
-{"K.Devr Bat A", BATT_SHORT, 3}
+{"K.Devr Bat A", BATT_SHORT, 3},
+{"Doğ VDC Üst L%", VRECT_DC_HIGH_LIM_ADD, 3},
+{"Doğ VDC Alt L%", VRECT_DC_LOW_LIM_ADD, 3},
+{"Yük VDC Üst L%", VLOAD_DC_HIGH_LIM_ADD, 3},
+{"Yük VDC Alt L%", VLOAD_DC_LOW_LIM_ADD, 3}
 };
 #define NUM_DEVICE_SETT_ITEMS (sizeof(DEVICE_SETT_Items) / sizeof(DEVICE_SETT_Items[0]))
 uint8_t selected_DEVICE_SETT = 0;
@@ -789,6 +817,10 @@ uint8_t SW_BATT_OFF=0;
 uint8_t SW_LOAD_OFF=0;
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// STATE CHANGES ////////////////////////////////////////////////////////////////////////////////////////////////
+
 typedef enum {
 	GENERAL_FAULT_FC,
 	BATTERY_FAULT_FC,
@@ -827,6 +859,8 @@ typedef enum {
     AC_CON2_REL,
     DROP_CON1_REL,
     DROP_CON2_REL,
+	LOAD_DC_HG_FC,
+	LOAD_DC_LW_FC,
 	EEPROM_FAULT_FC,
 	RTC_FAULT_FC,
 	VAC_R_RMS_HG_FAULT_FC,
@@ -896,8 +930,8 @@ State_Info state_list[] = {
 	{ RECTIFIER_CURRENT_LIMIT_FC, 0b0000,	"Doğrltc Akm Sınr",    NUM_REL_CODES },
 	{ DC_LEAK_NEGATIVE_FC,        0b0010,	"DC Kaçak Negatif",    DC_LEAK_NEGATIVE_FC_REL },
 	{ DC_LEAK_POSITIVE_FC,        0b0010,	"DC Kaçak Pozitif",    DC_LEAK_POSITIVE_FC_REL },
-	{ RECT_DC_LW_FC,              0b0011,	"DC Düşük",            RECT_DC_LW_FC_REL },
-	{ RECT_DC_HG_FC,              0b0111,	"DC Yüksek",           RECT_DC_HG_FC_REL },
+	{ RECT_DC_LW_FC,              0b0011,	"Doğr VDC Düşük",      RECT_DC_LW_FC_REL },
+	{ RECT_DC_HG_FC,              0b0111,	"Doğr VDC Yüksk",      RECT_DC_HG_FC_REL },
 	{ VAC_LO_FC,                  0b0110,	"Şebeke Düşük",        VAC_LO_FC_REL },
 	{ VAC_HG_FC,                  0b0110,	"Şebeke Yüksek",       VAC_HG_FC_REL },
 	{ STOP_FC,                    0b0010,	"Manuel Durdur",       NUM_REL_CODES },
@@ -930,6 +964,8 @@ State_Info state_list[] = {
 	{ DROP_CON1_REL,    		  0b0000,	"Dropper 1 Bypass",    NUM_REL_CODES },
 	{ DROP_CON2_REL,    		  0b0000,	"Dropper 2 Bypass",    NUM_REL_CODES },
 	// REL MB 8 BIT7 enum 36
+	{ LOAD_DC_HG_FC,              0b0111,	"Yük VDC Yüksk",       LOAD_DC_HG_FC_REL },
+	{ LOAD_DC_LW_FC,              0b0011,	"Yük VDC Düşük",       LOAD_DC_LW_FC_REL },
 	{ EEPROM_FAULT_FC,            0b0000,	"Kayit Sist Arz",      NUM_REL_CODES },
 	{ RTC_FAULT_FC,               0b0000,	"RTC Arz",             NUM_REL_CODES },
 	{ VAC_R_RMS_HG_FAULT_FC,      0b0000,	"VINR RMS Yüksek",     NUM_REL_CODES },
@@ -947,10 +983,6 @@ State_Info state_list[] = {
 #define NUM_STATE_NAMES sizeof(state_list) / sizeof(state_list[0])
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////// OUT RELAY OPERATION //////////////////////////////////////////////////////////////////////////////////////////
-
 
 rel_names_t REL_OUT_order[16]; // sıralama buna kaydediliyor
 uint32_t REL_OUT_order_part1 = 0;  // 20 bit. float olarak kaydedildiği için 24 bit max
@@ -960,65 +992,72 @@ uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 
 
 
+typedef enum {
+	REL_NO,
+	REL_NC
+} NO_NC;
+
 typedef struct {
 	rel_names_t rel_dat_nm;
     uint8_t rel_dat_val;
+    uint8_t rel_dat_NO_NC;
     char* rel_dat_desc;
 } rel_dat_stru;
 
 rel_dat_stru rel_dat_tb[] = {
-	{ START_STOP_REL,            0, "Başlat-Durdur" },
-	{ VAC_HG_FC_REL,             0, "Şebeke Yüksek" },
-	{ VAC_LO_FC_REL,             0, "Şebeke Düşük" },
-	{ LOAD_DC_HG_FC_REL,         0, "Yük VDC Yüksk" },
-	{ LOAD_DC_LW_FC_REL,         0, "Yük VDC Düşük" },
-	{ DC_LEAK_POSITIVE_FC_REL,   0, "DC Kaçak Poztf" },
-	{ DC_LEAK_NEGATIVE_FC_REL,   0, "DC Kaçak Negtf" },
-	{ LINE_FUSE_OFF_FC_REL,      0, "Giriş Sigr Off" },
-	{ BATT_FUSE_OFF_FC_REL,      0, "Akü Sigrta Off" },
-	{ LOAD_FUSE_OFF_FC_REL,      0, "Yük Sigrt Atık" },
-	{ OVERTEMP_ALARM_FC_REL,     0, "Aşrı Sıckl Uyar" },
-	{ FAN_FAULT_FC_REL,          0, "Fan Arızası" },
-	{ BATT_LINE_BROKEN_FC_REL,   0, "Akü Hattı Kopuk" },
-	{ BATT_REVERSE_FC_REL,       0, "Akü Ters" },
-	{ BATTERY_FAULT_FC_REL,      0, "Akü Arızası" },
-	{ GENERAL_FAULT_FC_REL,      0, "Genel Arıza" },
-	{ VAC_OFF_FC_REL,            0, "Şebeke Yok" },
-	{ VAC_ON_FC_REL,             0, "Şebeke Var" },
-	{ BOOST_CHARGE_FC_REL,       0, "Hızlı Şarj" },
-	{ FLOAT_CHARGE_FC_REL,       0, "Normal Şarj" },
-	{ RECT_DC_HG_FC_REL,         0, "Doğr VDC Yüksk" },
-	{ RECT_DC_LW_FC_REL,         0, "Doğr VDC Düşük" },
-	{ OVERTEMP_OPEN_FC_REL,      0, "Aşrı Sıck Açma" },
-	{ BAT_TEMP_ZERO_FC_REL,      0, "Akü Sıck Sıfr C" },
-	{ BAT_TEMP_50_FC_REL,        0, "Akü Sıck 50 C" },
-	{ EMPTY_REL,        		 0, "     Boş" }
+	{ START_STOP_REL,            0, REL_NO, "Başlat-Durdur" },
+	{ VAC_HG_FC_REL,             0, REL_NO, "Şebeke Yüksek" },
+	{ VAC_LO_FC_REL,             0, REL_NO, "Şebeke Düşük" },
+	{ LOAD_DC_HG_FC_REL,         0, REL_NO, "Yük VDC Yüksk" },
+	{ LOAD_DC_LW_FC_REL,         0, REL_NO, "Yük VDC Düşük" },
+	{ DC_LEAK_POSITIVE_FC_REL,   0, REL_NO, "DC Kaçak Poztf" },
+	{ DC_LEAK_NEGATIVE_FC_REL,   0, REL_NO, "DC Kaçak Negtf" },
+	{ LINE_FUSE_OFF_FC_REL,      0, REL_NO, "Giriş Sigr Off" },
+	{ BATT_FUSE_OFF_FC_REL,      0, REL_NO, "Akü Sigrta Off" },
+	{ LOAD_FUSE_OFF_FC_REL,      0, REL_NO, "Yük Sigrt Atık" },
+	{ OVERTEMP_ALARM_FC_REL,     0, REL_NO, "Aşrı Sıck Uyar" },
+	{ FAN_FAULT_FC_REL,          0, REL_NO, "Fan Arızası" },
+	{ BATT_LINE_BROKEN_FC_REL,   0, REL_NO, "Akü Hattı Kopuk" },
+	{ BATT_REVERSE_FC_REL,       0, REL_NO, "Akü Ters" },
+	{ BATTERY_FAULT_FC_REL,      0, REL_NO, "Akü Arızası" },
+	{ GENERAL_FAULT_FC_REL,      0, REL_NO, "Genel Arıza" },
+	{ VAC_OFF_FC_REL,            0, REL_NO, "Şebeke Yok" },
+	{ VAC_ON_FC_REL,             0, REL_NO, "Şebeke Var" },
+	{ BOOST_CHARGE_FC_REL,       0, REL_NO, "Hızlı Şarj" },
+	{ FLOAT_CHARGE_FC_REL,       0, REL_NO, "Normal Şarj" },
+	{ RECT_DC_HG_FC_REL,         0, REL_NO, "Doğr VDC Yüksk" },
+	{ RECT_DC_LW_FC_REL,         0, REL_NO, "Doğr VDC Düşük" },
+	{ OVERTEMP_OPEN_FC_REL,      0, REL_NO, "Aşrı Sıck Açma" },
+	{ BAT_TEMP_ZERO_FC_REL,      0, REL_NO, "Akü Sıck Sıfr C" },
+	{ BAT_TEMP_50_FC_REL,        0, REL_NO, "Akü Sıck 50 C" },
+	{ EMPTY_REL,        		 0, REL_NO, "     Boş" }
 };
 
 typedef struct {
 	rel_names_t rel_ord_nm;
     uint8_t rel_ord_order;
     uint8_t rel_ord_val;
+    uint8_t rel_dat_NO_NC;
     char* rel_ord_desc;
 } rel_ord_st;
 
 rel_ord_st rel_ord_tb[] = {
-    { START_STOP_REL,            1,  0, "Başlat-Durdur" },
-    { VAC_HG_FC_REL,             2,  0, "Şebeke Yüksek" },
-    { VAC_LO_FC_REL,             3,  0, "Şebeke Düşük" },
-    { LOAD_DC_HG_FC_REL,         4,  0, "Yük VDC Yüksk" },
-    { LOAD_DC_LW_FC_REL,         5,  0, "Yük VDC Düşük" },
-    { DC_LEAK_POSITIVE_FC_REL,   6,  0, "DC Kaçak Poztf" },
-    { DC_LEAK_NEGATIVE_FC_REL,   7,  0, "DC Kaçak Negtf" },
-    { LINE_FUSE_OFF_FC_REL,      8,  0, "Giriş Sigr Off" },
-    { BATT_FUSE_OFF_FC_REL,      9,  0, "Akü Sigrta Off" },
-    { LOAD_FUSE_OFF_FC_REL,      10, 0, "Yük Sigrt Atık" },
-    { OVERTEMP_ALARM_FC_REL,     11, 0, "Aşrı Sıckl Uyar" },
-    { FAN_FAULT_FC_REL,          12, 0, "Fan Arızası" },
-    { BATT_LINE_BROKEN_FC_REL,   13, 0, "Akü Hattı Kopuk" },
-    { BATT_REVERSE_FC_REL,       14, 0, "Akü Ters" },
-    { BATTERY_FAULT_FC_REL,      15, 0, "Akü Arızası" },
-    { GENERAL_FAULT_FC_REL,      16, 0, "Genel Arıza" }
+    { START_STOP_REL,            1,  0, REL_NO, "Başlat-Durdur" },
+    { VAC_HG_FC_REL,             2,  0, REL_NO, "Şebeke Yüksek" },
+    { VAC_LO_FC_REL,             3,  0, REL_NO, "Şebeke Düşük" },
+    { LOAD_DC_HG_FC_REL,         4,  0, REL_NO, "Yük VDC Yüksk" },
+    { LOAD_DC_LW_FC_REL,         5,  0, REL_NO, "Yük VDC Düşük" },
+    { DC_LEAK_POSITIVE_FC_REL,   6,  0, REL_NO, "DC Kaçak Poztf" },
+    { DC_LEAK_NEGATIVE_FC_REL,   7,  0, REL_NO, "DC Kaçak Negtf" },
+    { LINE_FUSE_OFF_FC_REL,      8,  0, REL_NO, "Giriş Sigr Off" },
+    { BATT_FUSE_OFF_FC_REL,      9,  0, REL_NO, "Akü Sigrta Off" },
+    { LOAD_FUSE_OFF_FC_REL,      10, 0, REL_NO, "Yük Sigrt Atık" },
+    { OVERTEMP_ALARM_FC_REL,     11, 0, REL_NO, "Aşrı Sıck Uyar" },
+    { FAN_FAULT_FC_REL,          12, 0, REL_NO, "Fan Arızası" },
+    { BATT_LINE_BROKEN_FC_REL,   13, 0, REL_NO, "Akü Hattı Kopuk" },
+    { BATT_REVERSE_FC_REL,       14, 0, REL_NO, "Akü Ters" },
+    { BATTERY_FAULT_FC_REL,      15, 0, REL_NO, "Akü Arızası" },
+    { GENERAL_FAULT_FC_REL,      16, 0, REL_NO, "Genel Arıza" }
 };
 
 uint8_t rel_dat_tb_size = NUM_REL_CODES;
@@ -1032,7 +1071,7 @@ uint8_t rel_ord_tb_sel = 1;
 uint8_t rel_ord_disp_index =0;
 uint8_t rel_ord_arrow_loc = 1;
 
-////// OUT RELAY OPERATION //////////////////////////////////////////////////////////////////////////////////////////
+////// STATE CHANGES ////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1073,7 +1112,8 @@ volatile uint8_t EEP_reg_volatile=0b10;
 int var1=0;
 int var2=0;
 int var3=0;
-//uint32_t var4=0;
+char var4[]="ü";
+char var5[]="ş";
 //uint32_t var5=0;
 //uint8_t var6=0;
 //uint8_t var7=0;
@@ -1108,5 +1148,33 @@ uint8_t trafo_sensor_exists = 0;
 uint8_t batt_sensor_exists = 0;
 int dropper_test_var_1 = 0;
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// CORRELATION CALC  ////////////////////////////////////////////////////////////////////////////////////////////
+
+#define CORR_WINDOW 5000
+
+float vrect_corr_buf_A[CORR_WINDOW];
+float vbat_corr_buf_A[CORR_WINDOW];
+float vrect_corr_buf_B[CORR_WINDOW];
+float vbat_corr_buf_B[CORR_WINDOW];
+
+float corr_result=0.0f;
+uint8_t active_corr_buffer = 0; // 0 = A, 1 = B
+uint16_t corr_index = 0;
+
+volatile uint8_t can_calc_corr_A = 0;
+volatile uint8_t can_calc_corr_B = 0;
+
+uint8_t corr_ready = 0;
+
+float sum_x_A = 0, sum_y_A = 0, sum_x2_A = 0, sum_y2_A = 0, sum_xy_A = 0;
+float sum_x_B = 0, sum_y_B = 0, sum_x2_B = 0, sum_y2_B = 0, sum_xy_B = 0;
+
+
+////// CORRELATION CALC  ////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

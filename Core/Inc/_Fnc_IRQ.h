@@ -177,6 +177,37 @@ void DMA1_Stream1_IRQHandler(void) {
 				VAC_T_rms_roll_per_avg=VAC_T_rms_roll_per_avg*63.0/64.0+VAC_T_rms_sc/64.0;
 			}
     }
+
+    if (active_corr_buffer == 0) {
+        vrect_corr_buf_A[corr_index] = VRECT_smp_sc;
+        vbat_corr_buf_A[corr_index] = VBAT_smp_sc;
+        sum_x_A  += VRECT_smp_sc;
+        sum_y_A  += VBAT_smp_sc;
+        sum_x2_A += VRECT_smp_sc * VRECT_smp_sc;
+        sum_y2_A += VBAT_smp_sc * VBAT_smp_sc;
+        sum_xy_A += VRECT_smp_sc * VBAT_smp_sc;
+    } else {
+        vrect_corr_buf_B[corr_index] = VRECT_smp_sc;
+        vbat_corr_buf_B[corr_index] = VBAT_smp_sc;
+        sum_x_B  += VRECT_smp_sc;
+        sum_y_B  += VBAT_smp_sc;
+        sum_x2_B += VRECT_smp_sc * VRECT_smp_sc;
+        sum_y2_B += VBAT_smp_sc * VBAT_smp_sc;
+        sum_xy_B += VRECT_smp_sc * VBAT_smp_sc;
+    }
+
+    corr_index++;
+    if (corr_index >= CORR_WINDOW) {
+        corr_index = 0;
+        if (active_corr_buffer == 0) {
+            can_calc_corr_A = 1;
+            active_corr_buffer = 1;
+        } else {
+            can_calc_corr_B = 1;
+            active_corr_buffer = 0;
+        }
+    }
+
 }
 
 void TIM2_IRQHandler(void) {

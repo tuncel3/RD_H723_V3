@@ -33,7 +33,7 @@ NVIC_EnableIRQ(TIM16_IRQn);
 NVIC_EnableIRQ(TIM17_IRQn);
 NVIC_EnableIRQ(TIM23_IRQn);
 NVIC_EnableIRQ(TIM24_IRQn);
-
+// TIMER CLOCKS 					275 MHz
 //////////////SysTick Settings///////////////////
 SysTick->VAL   = 0xffffff;			// SysTick Current Value Register (Start Value)
 SysTick->LOAD  = 10999;				// Reload value
@@ -48,7 +48,7 @@ LL_TIM_EnableCounter(TIM5);
 // TIM5 Settings
 ////////////////////////////////////////////
 // TIM6		TRIGGER ADC
-LL_TIM_SetPrescaler(TIM6, 4);
+LL_TIM_SetPrescaler(TIM6, 4);	// 275 MHz
 LL_TIM_SetCounterMode(TIM6, LL_TIM_COUNTERMODE_UP);
 LL_TIM_SetTriggerOutput(TIM6, LL_TIM_TRGO_UPDATE);
 LL_TIM_EnableARRPreload(TIM6);

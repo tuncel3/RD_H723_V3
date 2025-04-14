@@ -59,6 +59,7 @@ if (device_start_up_delay_completed==1) {
 //			V_targ_con_sy=5;
 			set_V_targ_con_sy(5);
 			thy_drv_en=1;
+			apply_state_changes_f(STOP_FC, 0);
 			apply_state_changes_f(START_FC, 1);
 			sf_sta_req=1;
 			sf_sta_req_ok=0;
@@ -308,52 +309,102 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////// V DC HIGH/LOW MON ////////////////////////////////////////////////////////////////////////////////////////////
-if (VRECT_per_avg_sc > V_Charg_Hg_10_perc && !is_state_active(RECT_DC_HG_FC)) {
-	V_Charg_Hg_10_perc_Acc_cnt++;
-	V_Charg_Hg_10_perc_ret_Acc_cnt=0;
-	if (V_Charg_Hg_10_perc_Acc_cnt >= V_Charg_Hg_10_perc_Acc_per) {
-		V_Charg_Hg_10_perc_Acc_cnt=0;
+////// V RECT DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
+if (VRECT_per_avg_sc > VRECT_DC_HIGH_LIM && !is_state_active(RECT_DC_HG_FC)) {
+	VRECT_DC_HIGH_LIM_Acc_cnt++;
+	VRECT_DC_HIGH_LIM_ret_Acc_cnt=0;
+	if (VRECT_DC_HIGH_LIM_Acc_cnt >= VRECT_DC_HIGH_LIM_Acc_per) {
+		VRECT_DC_HIGH_LIM_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_HG_FC, 1);
-		sprintf(DUB,"DC High"); prfm(DUB);
+		sprintf(DUB,"RECT DC High"); prfm(DUB);
 	}
 } else {
-	V_Charg_Hg_10_perc_Acc_cnt=0;
+	VRECT_DC_HIGH_LIM_Acc_cnt=0;
 }
-if (VRECT_per_avg_sc <= V_Charg_Hg_10_perc_ret && is_state_active(RECT_DC_HG_FC)) {
-	V_Charg_Hg_10_perc_ret_Acc_cnt++;
-	V_Charg_Hg_10_perc_Acc_cnt=0;
-	if (V_Charg_Hg_10_perc_ret_Acc_cnt >= V_Charg_Hg_10_perc_ret_Acc_per) {
-		V_Charg_Hg_10_perc_ret_Acc_cnt=0;
+if (VRECT_per_avg_sc <= VRECT_DC_HIGH_LIM_ret && is_state_active(RECT_DC_HG_FC)) {
+	VRECT_DC_HIGH_LIM_ret_Acc_cnt++;
+	VRECT_DC_HIGH_LIM_Acc_cnt=0;
+	if (VRECT_DC_HIGH_LIM_ret_Acc_cnt >= VRECT_DC_HIGH_LIM_ret_Acc_per) {
+		VRECT_DC_HIGH_LIM_ret_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_HG_FC, 0);
-		sprintf(DUB,"DC High Return"); prfm(DUB);
+		sprintf(DUB,"RECT DC High Return"); prfm(DUB);
 	}
 } else {
-	V_Charg_Hg_10_perc_ret_Acc_cnt=0;
+	VRECT_DC_HIGH_LIM_ret_Acc_cnt=0;
 }
-if (VRECT_per_avg_sc < V_Charg_Lo_10_perc && !is_state_active(RECT_DC_LW_FC)) {
-	V_Charg_Lo_10_perc_Acc_cnt++;
-	V_Charg_Lo_10_perc_ret_Acc_cnt=0;
-	if (V_Charg_Lo_10_perc_Acc_cnt >= V_Charg_Lo_10_perc_Acc_per) {
-		V_Charg_Lo_10_perc_Acc_cnt=0;
+if (VRECT_per_avg_sc < VRECT_DC_LOW_LIM && !is_state_active(RECT_DC_LW_FC)) {
+	VRECT_DC_LOW_LIM_Acc_cnt++;
+	VRECT_DC_LOW_LIM_ret_Acc_cnt=0;
+	if (VRECT_DC_LOW_LIM_Acc_cnt >= VRECT_DC_LOW_LIM_Acc_per) {
+		VRECT_DC_LOW_LIM_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_LW_FC, 1);
-		sprintf(DUB,"DC Low"); prfm(DUB);
+		sprintf(DUB,"RECT DC Low"); prfm(DUB);
 	}
 } else {
-	V_Charg_Lo_10_perc_Acc_cnt=0;
+	VRECT_DC_LOW_LIM_Acc_cnt=0;
 }
-if (VRECT_per_avg_sc >= V_Charg_Lo_10_perc_ret && is_state_active(RECT_DC_LW_FC)) {
-	V_Charg_Lo_10_perc_ret_Acc_cnt++;
-	V_Charg_Lo_10_perc_Acc_cnt=0;
-	if (V_Charg_Lo_10_perc_ret_Acc_cnt >= V_Charg_Lo_10_perc_ret_Acc_per) {
-		V_Charg_Lo_10_perc_ret_Acc_cnt=0;
+if (VRECT_per_avg_sc >= VRECT_DC_LOW_LIM_ret && is_state_active(RECT_DC_LW_FC)) {
+	VRECT_DC_LOW_LIM_ret_Acc_cnt++;
+	VRECT_DC_LOW_LIM_Acc_cnt=0;
+	if (VRECT_DC_LOW_LIM_ret_Acc_cnt >= VRECT_DC_LOW_LIM_ret_Acc_per) {
+		VRECT_DC_LOW_LIM_ret_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_LW_FC, 0);
-		sprintf(DUB,"DC Low Return"); prfm(DUB);
+		sprintf(DUB,"RECT DC Low Return"); prfm(DUB);
 	}
 } else {
-	V_Charg_Lo_10_perc_ret_Acc_cnt=0;
+	VRECT_DC_LOW_LIM_ret_Acc_cnt=0;
 }
-////// V DC HIGH/LOW MON ////////////////////////////////////////////////////////////////////////////////////////////
+////// V RECT DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// V LOAD DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
+if (VLOAD_per_avg_sc > VLOAD_DC_HIGH_LIM && !is_state_active(LOAD_DC_HG_FC)) {
+	VLOAD_DC_HIGH_LIM_Acc_cnt++;
+	VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
+	if (VLOAD_DC_HIGH_LIM_Acc_cnt >= VLOAD_DC_HIGH_LIM_Acc_per) {
+		VLOAD_DC_HIGH_LIM_Acc_cnt=0;
+		apply_state_changes_f(LOAD_DC_HG_FC, 1);
+		sprintf(DUB,"LOAD DC High"); prfm(DUB);
+	}
+} else {
+	VLOAD_DC_HIGH_LIM_Acc_cnt=0;
+}
+if (VLOAD_per_avg_sc <= VLOAD_DC_HIGH_LIM_ret && is_state_active(LOAD_DC_HG_FC)) {
+	VLOAD_DC_HIGH_LIM_ret_Acc_cnt++;
+	VLOAD_DC_HIGH_LIM_Acc_cnt=0;
+	if (VLOAD_DC_HIGH_LIM_ret_Acc_cnt >= VLOAD_DC_HIGH_LIM_ret_Acc_per) {
+		VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
+		apply_state_changes_f(LOAD_DC_HG_FC, 0);
+		sprintf(DUB,"LOAD DC High Return"); prfm(DUB);
+	}
+} else {
+	VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
+}
+if (VLOAD_per_avg_sc < VLOAD_DC_LOW_LIM && !is_state_active(LOAD_DC_LW_FC)) {
+	VLOAD_DC_LOW_LIM_Acc_cnt++;
+	VLOAD_DC_LOW_LIM_ret_Acc_cnt=0;
+	if (VLOAD_DC_LOW_LIM_Acc_cnt >= VLOAD_DC_LOW_LIM_Acc_per) {
+		VLOAD_DC_LOW_LIM_Acc_cnt=0;
+		apply_state_changes_f(LOAD_DC_LW_FC, 1);
+		sprintf(DUB,"LOAD DC Low"); prfm(DUB);
+	}
+} else {
+	VLOAD_DC_LOW_LIM_Acc_cnt=0;
+}
+if (VLOAD_per_avg_sc >= VLOAD_DC_LOW_LIM_ret && is_state_active(LOAD_DC_LW_FC)) {
+	VLOAD_DC_LOW_LIM_ret_Acc_cnt++;
+	VLOAD_DC_LOW_LIM_Acc_cnt=0;
+	if (VLOAD_DC_LOW_LIM_ret_Acc_cnt >= VLOAD_DC_LOW_LIM_ret_Acc_per) {
+		VLOAD_DC_LOW_LIM_ret_Acc_cnt=0;
+		apply_state_changes_f(LOAD_DC_LW_FC, 0);
+		sprintf(DUB,"LOAD DC Low Return"); prfm(DUB);
+	}
+} else {
+	VLOAD_DC_LOW_LIM_ret_Acc_cnt=0;
+}
+////// V LOAD DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } // if (sf_sta_req_ok) {
@@ -529,7 +580,6 @@ if ((VAC_R_Hg_fc == 1 || VAC_S_Hg_fc == 1 || VAC_T_Hg_fc == 1) && !is_state_acti
 }
 if ((VAC_R_Hg_fc == 0 && VAC_S_Hg_fc == 0 && VAC_T_Hg_fc == 0) && is_state_active(VAC_HG_FC)) {
 	apply_state_changes_f(VAC_HG_FC, 0);	// VAC Hg RET
-	apply_state_changes_f(VAC_ON_FC, 1);
 	sprintf(DUB,"VAC HG RETURNED"); prfm(DUB);
 }
 if ((VAC_R_Lo_fc == 1 || VAC_S_Lo_fc == 1 || VAC_T_Lo_fc == 1) && !is_state_active(VAC_LO_FC)) {
@@ -706,6 +756,28 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
+if (can_calc_corr_A) {
+    can_calc_corr_A = 0;
+    float corr = calculate_corr_from_sums(
+        sum_x_A, sum_y_A, sum_x2_A, sum_y2_A, sum_xy_A, CORR_WINDOW
+    );
+    sum_x_A = sum_y_A = sum_x2_A = sum_y2_A = sum_xy_A = 0;
+    sprintf(DUB, "Corr A: %.4f", corr); prfm(DUB);
+}
+if (can_calc_corr_B) {
+    can_calc_corr_B = 0;
+    float corr = calculate_corr_from_sums(
+        sum_x_B, sum_y_B, sum_x2_B, sum_y2_B, sum_xy_B, CORR_WINDOW
+    );
+    sum_x_B = sum_y_B = sum_x2_B = sum_y2_B = sum_xy_B = 0;
+    sprintf(DUB, "Corr B: %.4f", corr); prfm(DUB);
+}
+
+//if (corr_ready) {
+//	corr_ready=0;
+//	sprintf(DUB, "Corr Result: %.5f", corr_result); prfm(DUB);
+//}
+
 
 if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 	while_RTC_delay_h=ms_tick_cnt;
@@ -778,6 +850,8 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 	if (var1==1) {
 		var1=0;
 		change_rel_vals_in_tables_f(START_STOP_REL, 1);
+		sprintf(DUB,"%s", var4); prfm(DUB);
+		sprintf(DUB,"%s", var5); prfm(DUB);
 	}
 	if (var1==2) {
 		var1=0;

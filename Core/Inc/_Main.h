@@ -89,8 +89,8 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 
 
 
-//en_uart_msg_group(pr_btln);  // Enable uart messages for batt line inspection
-disb_uart_msg_group(pr_btln);
+en_uart_msg_group(pr_btln);  // Enable uart messages for batt line inspection
+//disb_uart_msg_group(pr_btln);
 bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast restart inspection
 
 
@@ -130,14 +130,14 @@ if (temp_sens_count == 0) {
 ///////////////////////////////////////////////////////////
 
 generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
-generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar
+generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
 
 
 //LED_7_Data |= FLOAT_CHARGE_LED;
 
-// kontak çıkışlarını tabloya aktar
-// dc düşük yüksek alarm aralığı ayarlanabilir değil şu an.
-// akü hattı kopuk için eklemeler gerekiyor. mcb yardımcı kontağını kullan. akım sınırlaması durumunda akü hattı kopuk belirleme sistemi voltajı düşüremiyor ve akü hattı var diyor. bunu akü bağlı değilken ve mcb yardımcı kontak okuma yapmadığım zamanda gördüm.
+// akü hattı kopuk için eklemeler gerekiyor. mcb yardımcı kontağını kullan. akım sınırlaması durumunda akü hattı kopuk
+// belirleme sistemi voltajı düşüremiyor ve akü hattı var diyor. bunu akü bağlı değilken ve mcb yardımcı kontak
+// okuma yapmadığım zamanda gördüm.
 // akü arızası. akü voltajı
 // ayarlanan akım ve gerilim değerleri arıza kodu olarak kaydedilecek.
 // button release disables buttons for some ms

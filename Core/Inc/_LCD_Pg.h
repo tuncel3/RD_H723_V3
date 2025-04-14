@@ -361,11 +361,7 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 	for (uint8_t i = 0; i < 6; i++) {
 		sprintf(L, " %s ", DEVICE_SETT_Items[dev_set_disp_index_].setting_id);
 		GLCD_PrintString(0, (i + 1) * 9, L);
-		if (DEVICE_SETT_Items[dev_set_disp_index_].type == 99) {
-			sprintf(M, " ");
-			GLCD_PrintString(96, (i + 1) * 9, M);
-		}
-		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_BATT_REV_DET) {
+		if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_BATT_REV_DET) {
 			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_REV_DET][dev_setting_edit_mode].V1]);
 			GLCD_PrintString(86, (i + 1) * 9, M);
 		}
@@ -384,7 +380,7 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 		dev_set_disp_index_=(dev_set_disp_index_+1+NUM_DEVICE_SETT_ITEMS) % NUM_DEVICE_SETT_ITEMS;
 	}
 	GLCD_PrintString(0, (dev_set_arrow_loc+1) * 9, ">");
-	GLCD_PrintString(90, (dev_set_arrow_loc+1) * 9, ">");
+	GLCD_PrintString(91, (dev_set_arrow_loc+1) * 9, ">");
 
 if (dev_setting_edit_mode) {
 	GLCD_Rect_E(95,(dev_set_arrow_loc+1)*9-2,127,(dev_set_arrow_loc+2)*9-1); // batt rect
