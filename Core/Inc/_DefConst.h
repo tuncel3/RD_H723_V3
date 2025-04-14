@@ -42,13 +42,13 @@ uint32_t there_is_past_unseen_fault=0;
 uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
 #define ZCRENDELY 475
-float VRECT_smp_sc = 0.0f;
-float VLOAD_smp_sc = 0.0f;
-float VLOAD_per_avg_sc = 0.0f;
-float VDCKP = 0.0f;
-float VDCKN = 0.0f;
-float VOUT_max_float = 55.2f;
-float VOUT_max_boost = 62.4f;
+double VRECT_smp_sc = 0.0f;
+double VLOAD_smp_sc = 0.0f;
+double VLOAD_per_avg_sc = 0.0f;
+double VDCKP = 0.0f;
+double VDCKN = 0.0f;
+double VOUT_max_float = 55.2f;
+double VOUT_max_boost = 62.4f;
 
 float AUX1_smp = 0.0f;
 float A_16_smp = 0.0f;
@@ -226,7 +226,6 @@ uint32_t VLOAD_smp_count = 0;
 uint32_t VDCKP_samp_end = 0;
 uint32_t VDCKN_samp_end = 0;
 uint32_t VAC_R_samp_end = 0;
-uint32_t VAC_R_samp_end2 = 0;
 uint32_t VAC_S_samp_end = 0;
 uint32_t VAC_T_samp_end = 0;
 uint32_t VRECT_samp_end = 0;
@@ -1179,32 +1178,3 @@ float sum_x_B = 0, sum_y_B = 0, sum_x2_B = 0, sum_y2_B = 0, sum_xy_B = 0;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////// RIPPLE CALC  /////////////////////////////////////////////////////////////////////////////////////////////////
-
-uint32_t ripp_samp_size=500;
-
-// Only accumulators are uint32_t
-float ripple_sum_vbat = 0;
-float ripple_sum_vbat2 = 0;
-float ripple_sum_vrect = 0;
-float ripple_sum_vrect2 = 0;
-
-uint16_t ripple_sample_count = 0;
-uint32_t ripple_sample_count_h = 0;
-uint8_t can_calc_ripple = 0;
-
-// Others stay as float
-float ripple_mean_vbat = 0;
-float ripple_mean_vrect = 0;
-float ripple_var_vbat = 0;
-float ripple_var_vrect = 0;
-float ripple_ratio = 0;
-
-float ripple_ratio_moving_avg = 0.0f;
-
-
-////// RIPPLE CALC  /////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
