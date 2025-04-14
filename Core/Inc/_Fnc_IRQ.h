@@ -154,7 +154,7 @@ void DMA1_Stream1_IRQHandler(void) {
 			VACT_sum_of_sqr_sc=VACT_sum_of_sqr_sc+(VACT_smp_sc*VACT_smp_sc);VACT_smp_count++;
 
 			if(VAC_R_samp_end==1){
-				VAC_R_samp_end=0;
+				VAC_R_samp_end=0; VAC_R_samp_end2=1;
 				VAC_R_rms_sc=sqrt(VACR_sum_of_sqr_sc/VACR_smp_count);
 				VACR_smp_count=0;
 				VACR_sum_of_sqr_sc=0;
@@ -178,35 +178,103 @@ void DMA1_Stream1_IRQHandler(void) {
 			}
     }
 
-    if (active_corr_buffer == 0) {
-        vrect_corr_buf_A[corr_index] = VRECT_smp_sc;
-        vbat_corr_buf_A[corr_index] = VBAT_smp_sc;
-        sum_x_A  += VRECT_smp_sc;
-        sum_y_A  += VBAT_smp_sc;
-        sum_x2_A += VRECT_smp_sc * VRECT_smp_sc;
-        sum_y2_A += VBAT_smp_sc * VBAT_smp_sc;
-        sum_xy_A += VRECT_smp_sc * VBAT_smp_sc;
-    } else {
-        vrect_corr_buf_B[corr_index] = VRECT_smp_sc;
-        vbat_corr_buf_B[corr_index] = VBAT_smp_sc;
-        sum_x_B  += VRECT_smp_sc;
-        sum_y_B  += VBAT_smp_sc;
-        sum_x2_B += VRECT_smp_sc * VRECT_smp_sc;
-        sum_y2_B += VBAT_smp_sc * VBAT_smp_sc;
-        sum_xy_B += VRECT_smp_sc * VBAT_smp_sc;
+//    if (active_corr_buffer == 0) {
+//        vrect_corr_buf_A[corr_index] = VRECT_smp_sc;
+//        vbat_corr_buf_A[corr_index] = VBAT_smp_sc;
+//        sum_x_A  += VRECT_smp_sc;
+//        sum_y_A  += VBAT_smp_sc;
+//        sum_x2_A += VRECT_smp_sc * VRECT_smp_sc;
+//        sum_y2_A += VBAT_smp_sc * VBAT_smp_sc;
+//        sum_xy_A += VRECT_smp_sc * VBAT_smp_sc;
+//    } else {
+//        vrect_corr_buf_B[corr_index] = VRECT_smp_sc;
+//        vbat_corr_buf_B[corr_index] = VBAT_smp_sc;
+//        sum_x_B  += VRECT_smp_sc;
+//        sum_y_B  += VBAT_smp_sc;
+//        sum_x2_B += VRECT_smp_sc * VRECT_smp_sc;
+//        sum_y2_B += VBAT_smp_sc * VBAT_smp_sc;
+//        sum_xy_B += VRECT_smp_sc * VBAT_smp_sc;
+//    }
+//
+//    corr_index++;
+//    if (corr_index >= CORR_WINDOW) {
+//        corr_index = 0;
+//        if (active_corr_buffer == 0) {
+//            can_calc_corr_A = 1;
+//            active_corr_buffer = 1;
+//        } else {
+//            can_calc_corr_B = 1;
+//            active_corr_buffer = 0;
+//        }
+//    }
+
+    ripple_sum_vbat   += VBAT_smp_sc;
+    ripple_sum_vbat2  += (VBAT_smp_sc * VBAT_smp_sc);
+
+    ripple_sum_vrect  += VRECT_smp_sc;
+    ripple_sum_vrect2 += (VRECT_smp_sc * VRECT_smp_sc);
+
+    ripple_sample_count++;
+
+    if (VAC_R_samp_end2 == 1) {
+    	VAC_R_samp_end2=0;
+    	ripple_sample_count_h=ripple_sample_count;
+    	ripple_sample_count=0;
+                ripple_mean_vbat  = ripple_sum_vbat   / ripple_sample_count_h;
+                ripple_mean_vrect = ripple_sum_vrect  / ripple_sample_count_h;
+				ripple_var_vbat  = (ripple_sum_vbat2  / ripple_sample_count_h) - (ripple_mean_vbat  * ripple_mean_vbat);
+				ripple_var_vrect = (ripple_sum_vrect2 / ripple_sample_count_h) - (ripple_mean_vrect * ripple_mean_vrect);
+
+		        ripple_sum_vbat   = 0.0f;
+		        ripple_sum_vbat2  = 0.0f;
+		        ripple_sum_vrect  = 0.0f;
+		        ripple_sum_vrect2 = 0.0f;
+
+				if (ripple_var_vrect > 1e-6f) {
+					ripple_ratio = ripple_var_vbat / ripple_var_vrect;
+
+				} else {
+					ripple_ratio = 0.0f;
+				}
+
+				ripple_ratio_moving_avg = (ripple_ratio_moving_avg * 63.0f / 64.0f) + (ripple_ratio * 1.0f / 64.0f);
+				sprintf(DUB, "Ripple Ratio: %.3f", ripple_ratio_moving_avg); prfm(DUB);
+
     }
 
-    corr_index++;
-    if (corr_index >= CORR_WINDOW) {
-        corr_index = 0;
-        if (active_corr_buffer == 0) {
-            can_calc_corr_A = 1;
-            active_corr_buffer = 1;
-        } else {
-            can_calc_corr_B = 1;
-            active_corr_buffer = 0;
-        }
-    }
+
+//    if (ripple_sample_count >= ripp_samp_size) {
+//        ripple_sample_count = 0;
+//
+//        // Compute means
+//        float N = (float)RIPPLE_WINDOW;
+//        ripple_mean_vbat  = ripple_sum_vbat   / N;
+//        ripple_mean_vrect = ripple_sum_vrect  / N;
+//
+//        // Compute variances
+//        ripple_var_vbat  = (ripple_sum_vbat2  / N) - (ripple_mean_vbat  * ripple_mean_vbat);
+//        ripple_var_vrect = (ripple_sum_vrect2 / N) - (ripple_mean_vrect * ripple_mean_vrect);
+//
+//        // Reset accumulators for next window
+//        ripple_sum_vbat   = 0.0f;
+//        ripple_sum_vbat2  = 0.0f;
+//        ripple_sum_vrect  = 0.0f;
+//        ripple_sum_vrect2 = 0.0f;
+//
+//        // Compute ratio safely
+//        if (ripple_var_vrect > 1e-6f)
+//            ripple_ratio = ripple_var_vbat / ripple_var_vrect;
+//        else
+//            ripple_ratio = 1.0f;
+//
+//        // Example debug log (optional)
+//        sprintf(DUB, "Ripple Ratio: %.3f", ripple_ratio);
+//        prfm(DUB);
+//    }
+
+
+
+
 
 }
 
