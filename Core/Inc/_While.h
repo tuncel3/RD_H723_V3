@@ -756,63 +756,6 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
-//if (can_calc_corr_A) {
-//    can_calc_corr_A = 0;
-//    float corr = calculate_corr_from_sums(
-//        sum_x_A, sum_y_A, sum_x2_A, sum_y2_A, sum_xy_A, CORR_WINDOW
-//    );
-//    sum_x_A = sum_y_A = sum_x2_A = sum_y2_A = sum_xy_A = 0;
-//    sprintf(DUB, "Corr A: %.4f", corr); prfm(DUB);
-//}
-//if (can_calc_corr_B) {
-//    can_calc_corr_B = 0;
-//    float corr = calculate_corr_from_sums(
-//        sum_x_B, sum_y_B, sum_x2_B, sum_y2_B, sum_xy_B, CORR_WINDOW
-//    );
-//    sum_x_B = sum_y_B = sum_x2_B = sum_y2_B = sum_xy_B = 0;
-//    sprintf(DUB, "Corr B: %.4f", corr); prfm(DUB);
-//}
-
-//if (corr_ready) {
-//	corr_ready=0;
-//	sprintf(DUB, "Corr Result: %.5f", corr_result); prfm(DUB);
-//}
-
-// In your main while(1) loop:
-//if (can_calc_ripple) {
-//    can_calc_ripple = 0;
-//
-//    float N = (float)RIPPLE_WINDOW;
-//
-//    // Compute means
-//    ripple_mean_vbat  = ripple_sum_vbat  / N;
-//    ripple_mean_vrect = ripple_sum_vrect / N;
-//
-//    // Compute variances
-//    ripple_var_vbat  = (ripple_sum_vbat2  / N) - (ripple_mean_vbat  * ripple_mean_vbat);
-//    ripple_var_vrect = (ripple_sum_vrect2 / N) - (ripple_mean_vrect * ripple_mean_vrect);
-//
-//    // Reset accumulators for next window
-//    ripple_sum_vbat  = 0;
-//    ripple_sum_vbat2 = 0;
-//    ripple_sum_vrect = 0;
-//    ripple_sum_vrect2 = 0;
-//
-//    // Protect against tiny denominators
-//    if (ripple_var_vrect > 1e-6f) {
-//        ripple_ratio = ripple_var_vbat / ripple_var_vrect;
-//    } else {
-//        ripple_ratio = 1.0f;
-//    }
-//
-//    // Log the ratio for debugging
-//    sprintf(DUB, "Ripple Ratio: %.3f", ripple_ratio);
-//    prfm(DUB);
-//}
-
-
-
-
 
 
 if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
