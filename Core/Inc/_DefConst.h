@@ -1186,23 +1186,11 @@ float sum_x_B = 0, sum_y_B = 0, sum_x2_B = 0, sum_y2_B = 0, sum_xy_B = 0;
 uint32_t ripp_samp_size=500;
 
 // Only accumulators are uint32_t
-float ripple_sum_vbat = 0;
-float ripple_sum_vbat2 = 0;
-float ripple_sum_vrect = 0;
-float ripple_sum_vrect2 = 0;
-
-uint16_t ripple_sample_count = 0;
-uint32_t ripple_sample_count_h = 0;
-uint8_t can_calc_ripple = 0;
-
-// Others stay as float
-float ripple_mean_vbat = 0;
-float ripple_mean_vrect = 0;
-float ripple_var_vbat = 0;
-float ripple_var_vrect = 0;
-float ripple_ratio = 0;
-
-float ripple_ratio_moving_avg = 0.0f;
+float bld_smp_diffs = 0;
+float bld_smp_diffs_sq_sm = 0;
+float bld_sm_of_rect = 0;
+float bld_df_div_sm_rect = 0;
+float bld_cnt1 = 0;
 
 
 ////// RIPPLE CALC  /////////////////////////////////////////////////////////////////////////////////////////////////

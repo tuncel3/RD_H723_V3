@@ -208,38 +208,22 @@ void DMA1_Stream1_IRQHandler(void) {
 //        }
 //    }
 
-    ripple_sum_vbat   += VBAT_smp_sc;
-    ripple_sum_vbat2  += (VBAT_smp_sc * VBAT_smp_sc);
-
-    ripple_sum_vrect  += VRECT_smp_sc;
-    ripple_sum_vrect2 += (VRECT_smp_sc * VRECT_smp_sc);
-
-    ripple_sample_count++;
+    bld_smp_diffs = VRECT_smp_sc-VBAT_smp_sc;
+    bld_smp_diffs_sq_sm += (bld_smp_diffs * bld_smp_diffs);
+//    bld_sm_of_rect+=VRECT_smp_sc;
 
     if (VAC_R_samp_end2 == 1) {
     	VAC_R_samp_end2=0;
-    	ripple_sample_count_h=ripple_sample_count;
-    	ripple_sample_count=0;
-                ripple_mean_vbat  = ripple_sum_vbat   / ripple_sample_count_h;
-                ripple_mean_vrect = ripple_sum_vrect  / ripple_sample_count_h;
-				ripple_var_vbat  = (ripple_sum_vbat2  / ripple_sample_count_h) - (ripple_mean_vbat  * ripple_mean_vbat);
-				ripple_var_vrect = (ripple_sum_vrect2 / ripple_sample_count_h) - (ripple_mean_vrect * ripple_mean_vrect);
+    	bld_cnt1++;
 
-		        ripple_sum_vbat   = 0.0f;
-		        ripple_sum_vbat2  = 0.0f;
-		        ripple_sum_vrect  = 0.0f;
-		        ripple_sum_vrect2 = 0.0f;
+        if (bld_cnt1 >= 50) {
+	//    	bld_df_div_sm_rect=bld_smp_diffs_sq_sm/bld_sm_of_rect*256;
+        	bld_cnt1=0;
+			sprintf(DUB, "sqsm: %.5f", bld_smp_diffs_sq_sm); prfm(DUB);
+			bld_smp_diffs_sq_sm=0;
+//			bld_sm_of_rect=0;
 
-				if (ripple_var_vrect > 1e-6f) {
-					ripple_ratio = ripple_var_vbat / ripple_var_vrect;
-
-				} else {
-					ripple_ratio = 0.0f;
-				}
-
-				ripple_ratio_moving_avg = (ripple_ratio_moving_avg * 63.0f / 64.0f) + (ripple_ratio * 1.0f / 64.0f);
-				sprintf(DUB, "Ripple Ratio: %.3f", ripple_ratio_moving_avg); prfm(DUB);
-
+        }
     }
 
 
