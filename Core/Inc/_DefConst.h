@@ -146,6 +146,7 @@ uint8_t batt_line_broken = 0;
 // CONTROL SYSTEM
 ///////////////////////////////////////////////////////////////////////////
 
+uint32_t EXTI_Zero_crossing = 0;
 float IRECT_sum_sc = 0;
 float IRECT_avg_sc = 0;
 float IRECT_lim = 15;
@@ -161,6 +162,7 @@ float IRECT_zero = 32784;
 float IBAT_sum_sc = 0;
 float IBAT_avg = 0;
 float IBAT_lim = 15;
+float IBAT_per_avg_roll_sc = 0;
 uint32_t IBAT_smp_count = 0;
 uint32_t IBAT_samp_end = 0;
 float IBAT_zero = 32768;
@@ -1113,8 +1115,8 @@ volatile uint8_t EEP_reg_volatile=0b10;
 int var1=0;
 int var2=0;
 int var3=0;
-char var4[]="ü";
-char var5[]="ş";
+//char var4[]="ü";
+//char var5[]="ş";
 //uint32_t var5=0;
 //uint8_t var6=0;
 //uint8_t var7=0;
@@ -1148,4 +1150,31 @@ uint8_t sogut_sensor_exists = 0;
 uint8_t trafo_sensor_exists = 0;
 uint8_t batt_sensor_exists = 0;
 int dropper_test_var_1 = 0;
+
+
+
+uint8_t a_batt_connected=0;
+uint8_t a_batt_broken=0;
+uint8_t balance_detected=0;
+uint32_t sync_diff_det_cnt=0;
+uint32_t sync_diff_det_per=40;
+int V_targ_change_dir=-1;
+
+
+// Circular buffer
+float blm_sample_buffer[3][150] = {
+		{0,0,0},
+		{0,0,0},
+		{0,0,0}
+};
+uint16_t blm_sample_index = 0;
+
+float VRECT_per_avg_sc_old=0;
+float VBAT_per_avg_sc_old=0;
+float IBAT_per_avg_roll_sc_old=0;
+
+float VRECT_old_diff=0;
+float VBAT_old_diff=0;
+float IBAT_old_diff=0;
+
 

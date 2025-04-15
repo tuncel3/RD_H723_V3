@@ -55,63 +55,47 @@ void DMA1_Stream1_IRQHandler(void) {
 		short_circ_monitor_f();
 
 		IRECT_sum_sc=IRECT_sum_sc+IRECT_smp_sc; IRECT_smp_count++;
-		if (IRECT_samp_end == 1) {
-			IRECT_samp_end = 0;
+		IBAT_sum_sc=IBAT_sum_sc+IBAT_smp_sc; IBAT_smp_count++;
+		ILOAD_per_sc=IRECT_per_avg_sc-IBAT_per_avg_sc;
+		VBAT_sum_sc=VBAT_sum_sc+VBAT_smp_sc; VBAT_smp_count++;
+		VDCKP_sum=VDCKP_sum+DCKP_smp; VDCKP_smp_count++;
+		VDCKN_sum=VDCKN_sum+DCKN_smp; VDCKN_smp_count++;
+		VLOAD_sum_sc=VLOAD_sum_sc+VLOAD_smp_sc; VLOAD_smp_count++;
+		VRECT_sum_sc=VRECT_sum_sc+VRECT_smp_sc;
+		VRECT_sum=VRECT_sum+VRECT_smp; VRECT_smp_count++;
+
+		if (EXTI_Zero_crossing == 1) {
+			EXTI_Zero_crossing = 0;
 			IRECT_per_avg_sc=IRECT_sum_sc/IRECT_smp_count;
 			IRECT_smp_count=0;
 			IRECT_sum_sc=0;
-		}
 
-		IBAT_sum_sc=IBAT_sum_sc+IBAT_smp_sc; IBAT_smp_count++;
-		if (IBAT_samp_end == 1) {
-			IBAT_samp_end = 0;
 			IBAT_per_avg_sc=IBAT_sum_sc/IBAT_smp_count;
 			IBAT_smp_count=0;
 			IBAT_sum_sc=0;
-		}
-		ILOAD_per_sc=IRECT_per_avg_sc-IBAT_per_avg_sc;
+			IBAT_per_avg_roll_sc=IBAT_per_avg_roll_sc*63.0/64.0+IBAT_per_avg_sc/64.0;
 
-		VBAT_sum_sc=VBAT_sum_sc+VBAT_smp_sc; VBAT_smp_count++;
-		if (VBAT_samp_end == 1) {
-			VBAT_samp_end = 0;
 			VBAT_per_avg_sc=VBAT_sum_sc/VBAT_smp_count;
 			VBAT_smp_count=0;
 			VBAT_sum_sc=0;
 			VBAT_per_avg_roll_sc=VBAT_per_avg_roll_sc*63.0/64.0+VBAT_per_avg_sc/64.0;
-		}
 
-
-		VDCKP_sum=VDCKP_sum+DCKP_smp; VDCKP_smp_count++;
-		if (VDCKP_samp_end == 1) {
 			VDCKP_samp_end = 0;
 			VDCKP_per_avg=VDCKP_sum/VDCKP_smp_count;
 			VDCKP_smp_count=0;
 			VDCKP_sum=0;
 			VDCKP_per_avg_roll=VDCKP_per_avg_roll*127.0/128.0+VDCKP_per_avg/128.0;
-		}
 
-		VDCKN_sum=VDCKN_sum+DCKN_smp; VDCKN_smp_count++;
-		if (VDCKN_samp_end == 1) {
-			VDCKN_samp_end = 0;
 			VDCKN_per_avg=VDCKN_sum/VDCKN_smp_count;
 			VDCKN_smp_count=0;
 			VDCKN_sum=0;
 			VDCKN_per_avg_roll=VDCKN_per_avg_roll*127.0/128.0+VDCKN_per_avg/128.0;
-		}
 
-		VLOAD_sum_sc=VLOAD_sum_sc+VLOAD_smp_sc; VLOAD_smp_count++;
-		if (VLOAD_samp_end == 1) {
-			VLOAD_samp_end = 0;
 			VLOAD_per_avg_sc=VLOAD_sum_sc/VLOAD_smp_count;
 			VLOAD_smp_count=0;
 			VLOAD_sum_sc=0;
 			VLOAD_per_avg_roll_sc=VLOAD_per_avg_roll_sc*63.0/64.0+VLOAD_per_avg_sc/64.0;
-		}
 
-		VRECT_sum_sc=VRECT_sum_sc+VRECT_smp_sc;
-		VRECT_sum=VRECT_sum+VRECT_smp; VRECT_smp_count++;
-		if (VRECT_samp_end == 1) {
-			VRECT_samp_end = 0;
 			VRECT_per_avg_sc=VRECT_sum_sc/VRECT_smp_count;
 			VRECT_per_avg=VRECT_sum/VRECT_smp_count;
 			VRECT_smp_count=0;
@@ -119,6 +103,20 @@ void DMA1_Stream1_IRQHandler(void) {
 			VRECT_sum=0;
 			VRECT_per_avg_roll_sc=VRECT_per_avg_roll_sc*63.0/64.0+VRECT_per_avg_sc/64.0;
 			VRECT_per_avg_roll=VRECT_per_avg_roll*63.0/64.0+VRECT_per_avg/64.0;
+
+		    blm_sample_index = (blm_sample_index + 1) % 150;
+			VRECT_per_avg_sc_old=blm_sample_buffer[0][blm_sample_index];						// BLM
+			VBAT_per_avg_sc_old=blm_sample_buffer[1][blm_sample_index];							// BLM
+			IBAT_per_avg_roll_sc_old=blm_sample_buffer[2][blm_sample_index];							// BLM
+			blm_sample_buffer[0][blm_sample_index]=VRECT_per_avg_sc;							// BLM
+			blm_sample_buffer[1][blm_sample_index]=VBAT_per_avg_sc;								// BLM
+			blm_sample_buffer[2][blm_sample_index]=IBAT_per_avg_roll_sc;								// BLM
+
+			VRECT_old_diff=ABS((VRECT_per_avg_sc/VRECT_per_avg_sc_old-1)*100);
+			VBAT_old_diff=ABS((VBAT_per_avg_sc/VBAT_per_avg_sc_old-1)*100);
+			IBAT_old_diff=ABS(IBAT_per_avg_roll_sc-IBAT_per_avg_roll_sc_old);
+//			IBAT_old_diff=ABS((IBAT_per_avg_roll_sc-IBAT_per_avg_roll_sc_old)/IBAT_per_avg_roll_sc_old*100);
+
 		}
 
 		VDCKP_per_avg_roll_perc=VDCKP_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_per_avg_roll;
@@ -300,13 +298,7 @@ void EXTI9_5_IRQHandler(void){
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
 		en_t_dely_up_r=1;
 		en_t_dely_dn_r=0;
-		IRECT_samp_end=1;
-		IBAT_samp_end=1;
-		VBAT_samp_end=1;
-		VDCKP_samp_end=1;
-		VDCKN_samp_end=1;
-		VLOAD_samp_end=1;
-		VRECT_samp_end=1;
+		EXTI_Zero_crossing=1;
 		VAC_R_samp_end=1;
 		per_r_dn_avg_m_f();
 	} else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_7)) {

@@ -611,6 +611,9 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 			rectifier_current_limit_return_Acc_cnt=0;
 			rectifier_current_limit_accepted=0;
 		}
+	} else {
+		rectifier_current_limit_Acc_cnt=0;
+		rectifier_current_limit_return_Acc_cnt=0;
 	}
 	if (pid_output_i_batt < 0 && !is_state_active(BATTERY_CURRENT_LIMIT_FC)) {
 		battery_current_limit_Acc_cnt++;
@@ -628,7 +631,10 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 			battery_current_limit_return_Acc_cnt=0;
 			battery_current_limit_accepted=0;
 		}
-	}
+		} else {
+			battery_current_limit_Acc_cnt=0;
+			battery_current_limit_return_Acc_cnt=0;
+		}
 }	// if (device_start_up_delay_completed==1) {
 // CURRENT LIMIT STATES <<<<<<<<<<<<<<<<<<<<<<
 
@@ -754,7 +760,109 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+	if (SW_BATT_OFF) {
+		a_batt_connected=0;
+		a_batt_broken=1;
+		// end of inspection
+	} else {
+
+		BATT_CURRENT_MONITOR_fn();
+		if (batt_current_detected) {
+			a_batt_connected=1;
+			a_batt_broken=0;
+			balance_detected=0;
+			// end of inspection
+		} else {
+// rest of inspection. switch on, current not detected.
+
+//if (VRECT_old_diff >= 2 && VBAT_old_diff >= 2 && fabs(IBAT_per_avg_roll_sc_old) < 0.2 && fabs(IBAT_per_avg_sc) < 0.2 && !a_batt_broken) {
+if (VRECT_old_diff >= 2 && VBAT_old_diff >= 2 && IBAT_old_diff < 0.2 && !a_batt_broken) {
+	sync_diff_det_cnt++;
+	if (sync_diff_det_cnt >= sync_diff_det_per) {
+		sync_diff_det_cnt=0;
+		a_batt_connected=0;
+		a_batt_broken=1;
+		sprintf(DUB,"a_batt_broken"); prfm(DUB);
+		sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old); prfm(DUB);
+		sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc, VBAT_per_avg_sc, IBAT_per_avg_sc); prfm(DUB);
+		sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, IBAT_old_diff); prfm(DUB);
+	} else {
+		//a_batt_connected=0;
+		//a_batt_broken=1;
+	}
+} else {
+	sync_diff_det_cnt=0;
+	//a_batt_connected=0;
+	//a_batt_broken=1;
+}
+
+
+if (VRECT_old_diff < 2 && VBAT_old_diff < 2 && IBAT_old_diff < 0.2 && !a_batt_broken) {
+	balance_detected=1;
+	sprintf(DUB,"balance_detected"); prfm(DUB);
+	sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old); prfm(DUB);
+	sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc, VBAT_per_avg_sc, IBAT_per_avg_sc); prfm(DUB);
+	sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, IBAT_old_diff); prfm(DUB);
+}
+
+		}
+
+	}
+
+var2++;
+	if (var1==0 && var2 >= 10) {
+	var2=0;
+sprintf(DUB,"v inf"); prfm(DUB);
+sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old); prfm(DUB);
+sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc, VBAT_per_avg_sc, IBAT_per_avg_roll_sc); prfm(DUB);
+sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, IBAT_old_diff); prfm(DUB);
+}
+
+
+
+
+
+
+
+
+if (V_targ_con_sy >= 46 && V_targ_change_dir==-1) {
+	V_targ_con_sy-=0.1;
+		if (V_targ_con_sy <= 46) {
+			V_targ_change_dir=1;
+		}
+} else if (V_targ_con_sy <= 48 && V_targ_change_dir==1) {
+	V_targ_con_sy+=0.1;
+		if (V_targ_con_sy >= 48) {
+			V_targ_change_dir=-1;
+		}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
+
+
+
+
+
+
+
 
 
 
@@ -825,16 +933,6 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 	if (unexpected_program_state==1) {	// if else koşulları içinde takılma durumu. olmayan koşula gelme durumu.
 		sprintf(DUB,"%lu %s\033[A", unexpected_program_state, UXPUB); prfm(DUB);
-	}
-	if (var1==1) {
-		var1=0;
-		change_rel_vals_in_tables_f(START_STOP_REL, 1);
-		sprintf(DUB,"%s", var4); prfm(DUB);
-		sprintf(DUB,"%s", var5); prfm(DUB);
-	}
-	if (var1==2) {
-		var1=0;
-		change_rel_vals_in_tables_f(START_STOP_REL, 0);
 	}
 //	if (var1==3) {
 //		var1=0;

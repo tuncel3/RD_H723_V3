@@ -946,11 +946,38 @@ if ((IBAT_per_avg_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc < -BATT_
 		batt_current_detected=0;
 		sprintf(DUB,"batt_current_detected 0"); umsg(pr_btln, DUB);
 	}
+} else {
+	batt_current_zero_Acc_cnt = 0;
+	batt_current_detected_Acc_cnt = 0;
 }
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } // void inline extern aku_hatti_kopuk_fc_inl(void) {
+
+void inline extern BATT_CURRENT_MONITOR_fn(void) {
+
+	if ((IBAT_per_avg_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc < -BATT_CURRENT_DETECT_THRESHOLD)) {
+		batt_current_detected_Acc_cnt++;
+		batt_current_zero_Acc_cnt=0;
+		if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
+			batt_current_detected=1;
+			batt_current_detected_Acc_cnt=0;
+			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_per_avg_sc); umsg(pr_btln, DUB);
+		}
+	} else if (IBAT_per_avg_sc <= BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc >= -BATT_CURRENT_DETECT_THRESHOLD) {
+		batt_current_zero_Acc_cnt++;
+		batt_current_detected_Acc_cnt=0;
+		if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
+			batt_current_detected=0;
+			batt_current_zero_Acc_cnt=0;
+			sprintf(DUB,"batt_current_detected 0"); umsg(pr_btln, DUB);
+		}
+	} else {
+		batt_current_zero_Acc_cnt = 0;
+		batt_current_detected_Acc_cnt = 0;
+	}
+}
 
 void inline extern get_max_min_lims_from_DEV_NOM_VOUT(void) { // n012
 Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
