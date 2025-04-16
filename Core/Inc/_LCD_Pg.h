@@ -25,8 +25,8 @@ inline extern void CALIBRATION_pg_disp(void) {
     sprintf(L, "VR%7.2f", VRECT_per_avg_roll_sc); 		GLCD_PrintString(0, 1*lnhg, L);
     sprintf(L, "VL%7.2f", VLOAD_per_avg_roll_sc); 		GLCD_PrintString(0, 2*lnhg, L);
     sprintf(L, "VB%7.2f", VBAT_per_avg_roll_sc); 		GLCD_PrintString(0, 3*lnhg, L);
-    sprintf(L, "IR%7.2f", IRECT_per_avg_sc); 			GLCD_PrintString(0, 4*lnhg, L);
-    sprintf(L, "IB%7.2f", IBAT_per_avg_sc); 			GLCD_PrintString(0, 5*lnhg, L);
+    sprintf(L, "IR%7.2f", IRECT_per_avg_roll_sc); 		GLCD_PrintString(0, 4*lnhg, L);
+    sprintf(L, "IB%7.2f", IBAT_per_avg_roll_sc); 		GLCD_PrintString(0, 5*lnhg, L);
     sprintf(L, "CR%7.2f", VAC_R_rms_roll_per_avg); 		GLCD_PrintString(64, 1*lnhg, L);
     sprintf(L, "CS%7.2f", VAC_S_rms_roll_per_avg); 		GLCD_PrintString(64, 2*lnhg, L);
     sprintf(L, "CT%7.2f", VAC_T_rms_roll_per_avg); 		GLCD_PrintString(64, 3*lnhg, L);

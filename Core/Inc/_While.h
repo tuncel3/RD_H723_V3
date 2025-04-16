@@ -760,85 +760,177 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-	if (SW_BATT_OFF) {
-		a_batt_connected=0;
-		a_batt_broken=1;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	blm_batt_check_timer_cnt++;
+// Birincil kontrol, rectf voltaj ve bat akım dengede mi. dengede ise voltaj kaydırma yapılacak.
+if (SW_BATT_OFF && blm_batt_connected) {
+	blm_batt_connected=0;
+	blm_cancel_op_return_normal();
+	sprintf(DUB,"SW off"); prfm(DUB);												// BATT SWITCH OFF
+} else if (VBAT_per_avg_sc <= Vbat_flt && blm_batt_connected) {
+	blm_batt_connected=0;
+	blm_cancel_op_return_normal();
+	sprintf(DUB,"Vbat too low"); prfm(DUB);											// V BATT LOW
+	// end of inspection
+} else {
+	BATT_CURRENT_MONITOR_fn();
+	if (batt_current_detected) {
+		blm_batt_connected=1;																// CURRENT DETECTED
+		blm_balance_accepted=0;
+		blm_cancel_op_return_normal();
+		sprintf(DUB,"blm_balance_broken"); prfm(DUB);
 		// end of inspection
 	} else {
-
-		BATT_CURRENT_MONITOR_fn();
-		if (batt_current_detected) {
-			a_batt_connected=1;
-			a_batt_broken=0;
-			balance_detected=0;
-			// end of inspection
+		if (VRECT_old_diff < VRECT_VBAT_dev_threshold && VBAT_old_diff < VRECT_VBAT_dev_threshold && IBAT_per_avg_roll2_sc < batt_current_detect_threshold && !blm_balance_accepted) {
+//			sprintf(DUB,"blm_balance_detected"); prfm(DUB);
+				blm_balance_accept_cnt++;
+				if (blm_balance_accept_cnt >= blm_balance_accept_per && !blm_balance_accepted) {
+					blm_balance_accept_cnt=0;
+					blm_balance_accepted=1;												// BALANCE ACCEPTED
+					blm_balance_voltage=VRECT_per_avg_roll2_sc;							// BALANCE VOLTAGE DETECTED FOUND SET
+					blm_balance_voltage_low_1=blm_balance_voltage*0.98;
+					blm_balance_voltage_low_2=blm_balance_voltage*0.96;
+					blm_batt_check_timer_cnt=blm_batt_check_per;
+					sprintf(DUB,"blm_balance_accepted"); prfm(DUB);
+				}
 		} else {
-// rest of inspection. switch on, current not detected.
+			blm_balance_accept_cnt=0;
+		}
+	}
+}
+// balance noktası iyi tespit ediliyor. balance noktası voltajı kaydediliyor.
 
-//if (VRECT_old_diff >= 2 && VBAT_old_diff >= 2 && fabs(IBAT_per_avg_roll_sc_old) < 0.2 && fabs(IBAT_per_avg_sc) < 0.2 && !a_batt_broken) {
-if (VRECT_old_diff >= 2 && VBAT_old_diff >= 2 && IBAT_old_diff < 0.2 && !a_batt_broken) {
-	sync_diff_det_cnt++;
-	if (sync_diff_det_cnt >= sync_diff_det_per) {
-		sync_diff_det_cnt=0;
-		a_batt_connected=0;
-		a_batt_broken=1;
-		sprintf(DUB,"a_batt_broken"); prfm(DUB);
-		sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old); prfm(DUB);
-		sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc, VBAT_per_avg_sc, IBAT_per_avg_sc); prfm(DUB);
-		sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, IBAT_old_diff); prfm(DUB);
+	if (blm_req_voltage_reduce) {
+		if (V_targ_con_sy > blm_balance_voltage_low_2) {
+			V_targ_con_sy=V_targ_con_sy*(1-blm_voltage_change_mult);
+//			sprintf(DUB,"vtarg_reducing"); prfm(DUB); 								// REDUCING VOLTAGE HERE
+			blm_balance_accepted=0;
+			blm_return_voltage_to_normal_completed=0;
+		}
+		if (V_targ_con_sy <= blm_balance_voltage_low_2 && !blm_req_wait_at_low_lim_fl) {
+			blm_req_wait_at_low_lim_fl=1;
+			blm_req_voltage_reduce=0; 													// REDUCING VOLTAGE COMPLETED
+			sprintf(DUB,"vtarg_reduced_to low lim step2"); prfm(DUB);
+		}
+	}
+	if (blm_req_wait_at_low_lim_fl) {
+		blm_wait_at_low_lim_cnt++;
+		if (blm_wait_at_low_lim_cnt >= blm_wait_at_low_lim_per && !blm_req_return_voltage_to_normal) {
+			blm_req_return_voltage_to_normal=1; 										// WAITING AT LOW LIMIT COMPLETED
+			blm_req_wait_at_low_lim_fl=0;
+			blm_wait_at_low_lim_cnt=0;
+			sprintf(DUB,"wait at low lim completed"); prfm(DUB);
+		}
 	} else {
-		//a_batt_connected=0;
-		//a_batt_broken=1;
-	}
-} else {
-	sync_diff_det_cnt=0;
-	//a_batt_connected=0;
-	//a_batt_broken=1;
-}
-
-
-if (VRECT_old_diff < 2 && VBAT_old_diff < 2 && IBAT_old_diff < 0.2 && !a_batt_broken) {
-	balance_detected=1;
-	sprintf(DUB,"balance_detected"); prfm(DUB);
-	sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old); prfm(DUB);
-	sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc, VBAT_per_avg_sc, IBAT_per_avg_sc); prfm(DUB);
-	sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, IBAT_old_diff); prfm(DUB);
-}
-
-		}
-
+		blm_wait_at_low_lim_cnt=0;
 	}
 
-var2++;
-	if (var1==0 && var2 >= 10) {
-	var2=0;
-sprintf(DUB,"v inf"); prfm(DUB);
-sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old); prfm(DUB);
-sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_per_avg_sc, VBAT_per_avg_sc, IBAT_per_avg_roll_sc); prfm(DUB);
-sprintf(DUB,"bb1 %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, IBAT_old_diff); prfm(DUB);
-}
-
-
-
-
-
-
-
-
-if (V_targ_con_sy >= 46 && V_targ_change_dir==-1) {
-	V_targ_con_sy-=0.1;
-		if (V_targ_con_sy <= 46) {
-			V_targ_change_dir=1;
+	if (blm_req_return_voltage_to_normal) {
+		if (V_targ_con_sy < Current_charge_voltage) {
+			V_targ_con_sy=V_targ_con_sy*(1+blm_voltage_change_mult);
+//			sprintf(DUB,"returning vtarg to normal"); prfm(DUB); 					// RETURNING VOLTAGE TO NORMAL HERE
 		}
-} else if (V_targ_con_sy <= 48 && V_targ_change_dir==1) {
-	V_targ_con_sy+=0.1;
-		if (V_targ_con_sy >= 48) {
-			V_targ_change_dir=-1;
+		if (V_targ_con_sy >= Current_charge_voltage && !blm_return_voltage_to_normal_completed) {
+			actions_after_charge_mode_change(9);
+			blm_req_return_voltage_to_normal=0;
+			blm_return_voltage_to_normal_completed=1;									// RETURNING VOLTAGE TO NORMAL COMPLETED
+			sprintf(DUB,"returned vtarg to normal"); prfm(DUB);
 		}
-}
+	}
 
+
+şu haliyle volt reduce yap deyince durumu izle. sorun burda. redrs akım sınırı var. v targ yukarda kalıyor.
+voltaj aşağıya kaydırılmalı. balance voltaj 47 mi olarak belirleniyor ekranda 44 45 yazarken.
+
+
+
+
+//	if (V_targ_con_sy) {
+//
+//	}
+
+
+
+
+
+
+//	if (blm_req_voltage_reduce && blm_batt_connected && !blm_req_return_voltage_to_normal) {	// Batt broken olduğuna göre voltage change request iptal et.
+//		blm_req_voltage_reduce=0;
+//		blm_req_return_voltage_to_normal=1;
+//	}
+
+	if (blm_balance_accepted && blm_batt_check_timer_cnt >= blm_batt_check_per && !blm_req_voltage_reduce) {
+//		blm_req_voltage_reduce=1;
+	}
+
+//		if (vtarg_reduced_step2_fl && V_targ_con_sy < Current_charge_voltage && !V_targ_con_sy_returned_fl && change_v_targ_cnt >= change_v_targ_per) {
+//			change_v_targ_cnt=0;
+////			V_targ_con_sy=V_targ_con_sy*1.005;
+//			if (V_targ_con_sy >= Current_charge_voltage && !V_targ_con_sy_returned_fl) {
+//				V_targ_con_sy=Current_charge_voltage;
+//				V_targ_con_sy_returned_fl=1;
+//			}
+//		}
+
+
+
+//		if (V_targ_con_sy < blm_balance_voltage_low_2 && !vtarg_reduced_step2_fl) {
+//			vtarg_reduced_step2_fl=1;
+//			sprintf(DUB,"vtarg_reduced_fl 1"); prfm_rep(DUB);
+//		} else if (V_targ_con_sy >= blm_balance_voltage_low_1 && vtarg_reduced_step2_fl) {
+//			vtarg_reduced_step2_fl=0;
+//			sprintf(DUB,"vtarg_reduced_fl 0"); prfm_rep(DUB);
+//		}
+//
+//		if (VRECT_per_avg_roll2_sc > V_targ_con_sy*1.03 && !gercV_yuks_contsV_fl) {
+//			gercV_yuks_contsV_fl=1;
+//			sprintf(DUB,"gercV_yuks_contsV"); prfm_rep(DUB);
+//		} else if (VRECT_per_avg_roll2_sc <= V_targ_con_sy*1.03 && gercV_yuks_contsV_fl) {
+//			vtarg_reduced_step2_fl=0;
+//			sprintf(DUB,"vtarg_reduced_fl 0"); prfm_rep(DUB);
+//		}
+
+
+//			if (fabs(VRECT_per_avg_roll2_sc-V_targ_con_sy) < V_targ_con_sy*0.02 && !gercV_contsV_fark_dusuk_fl) {
+//				gercV_contsV_fark_dusuk_fl=1;
+//				sprintf(DUB,"gercV_yuks_contsV"); prfm_rep(DUB);
+//			} else { gercV_contsV_fark_dusuk_fl=0;	}
+//			if (VRECT_per_avg_roll2_sc < blm_balance_voltage_low_1 && !gercV_dusuk_balncV_step1_fl) {
+//				gercV_dusuk_balncV_step1_fl=1;
+//				sprintf(DUB,"gercV_dusuk_balncV_step1_fl"); prfm_rep(DUB);
+//			} else { gercV_dusuk_balncV_step1_fl=0;	}
+//
+//			if (vtarg_reduced_step2_fl && gercV_yuks_contsV_fl) {
+//				sprintf(DUB,"combination 1"); prfm_rep(DUB);
+//			}
+//			if (vtarg_reduced_step2_fl && gercV_contsV_fark_dusuk_fl && gercV_dusuk_balncV_step1_fl) {
+//				sprintf(DUB,"combination 2"); prfm_rep(DUB);
+//			}
+
+
+//			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old, V_targ_con_sy_old); prfm(DUB);
+//			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_per_avg_sc, VBAT_per_avg_sc, IBAT_per_avg_roll_sc, V_targ_con_sy); prfm(DUB);
+//			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, 0.0f, V_targ_con_sy_old_diff); prfm(DUB);
+
+
+
+
+
+//if (var1==1 && !blm_balance_detected) {
+//	if (V_targ_con_sy >= 45 && V_targ_change_dir==-1) {
+//		V_targ_con_sy-=0.05;
+//			if (V_targ_con_sy <= 45) {
+//				V_targ_change_dir=1;
+//			}
+//	} else if (V_targ_con_sy <= 50 && V_targ_change_dir==1) {
+//		V_targ_con_sy+=0.05;
+//			if (V_targ_con_sy >= 50) {
+//				V_targ_change_dir=-1;
+//			}
+//	}
+//} else if (var1==0) {
+//	V_targ_con_sy = 47;
+//}
 
 
 

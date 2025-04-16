@@ -930,21 +930,21 @@ if (start_bat_inspection_req==1) {
 }
 
 // BATT CURRENT MONITOR
-if ((IBAT_per_avg_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc < -BATT_CURRENT_DETECT_THRESHOLD)) {
+if (fabs(IBAT_per_avg_roll2_sc) > batt_current_detect_threshold) {
 	batt_current_detected_Acc_cnt++;
 	if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
 		batt_current_detected=1;
-		sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_per_avg_sc); umsg(pr_btln, DUB);
+//		sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_per_avg_sc); umsg(pr_btln, DUB);
 		if (batt_line_broken==1) {
 			batt_line_OK_fn();
 			sprintf(DUB,"Batt line OK. batt curr det whil batt_line_brokn=1. Dir was %d", batt_inspection_direction); umsg(pr_btln, DUB);
 		}
 	}
-} else if (IBAT_per_avg_sc <= BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc >= -BATT_CURRENT_DETECT_THRESHOLD) {
+} else if (fabs(IBAT_per_avg_roll2_sc) <= batt_current_detect_threshold) {
 	batt_current_zero_Acc_cnt++;
 	if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
 		batt_current_detected=0;
-		sprintf(DUB,"batt_current_detected 0"); umsg(pr_btln, DUB);
+//		sprintf(DUB,"batt_current_detected 0"); umsg(pr_btln, DUB);
 	}
 } else {
 	batt_current_zero_Acc_cnt = 0;
@@ -957,7 +957,7 @@ if ((IBAT_per_avg_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc < -BATT_
 
 void inline extern BATT_CURRENT_MONITOR_fn(void) {
 
-	if ((IBAT_per_avg_sc > BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc < -BATT_CURRENT_DETECT_THRESHOLD)) {
+	if (fabs(IBAT_per_avg_roll2_sc) > batt_current_detect_threshold) {
 		batt_current_detected_Acc_cnt++;
 		batt_current_zero_Acc_cnt=0;
 		if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
@@ -965,7 +965,7 @@ void inline extern BATT_CURRENT_MONITOR_fn(void) {
 			batt_current_detected_Acc_cnt=0;
 			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_per_avg_sc); umsg(pr_btln, DUB);
 		}
-	} else if (IBAT_per_avg_sc <= BATT_CURRENT_DETECT_THRESHOLD || IBAT_per_avg_sc >= -BATT_CURRENT_DETECT_THRESHOLD) {
+	} else if (fabs(IBAT_per_avg_roll2_sc) <= batt_current_detect_threshold) {
 		batt_current_zero_Acc_cnt++;
 		batt_current_detected_Acc_cnt=0;
 		if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
@@ -978,7 +978,6 @@ void inline extern BATT_CURRENT_MONITOR_fn(void) {
 		batt_current_detected_Acc_cnt = 0;
 	}
 }
-
 void inline extern get_max_min_lims_from_DEV_NOM_VOUT(void) { // n012
 Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
 Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
@@ -997,10 +996,15 @@ Irect_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Toplam çıkış
 Irect_min=EpD[DEV_NOM_IOUT][0].V1*0.01; // Toplam çıkış
 Ibat_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Akümülatör çıkış // release_chg -> EpD[DEV_NOM_IOUT][0].V1*1.0;
 Ibat_min=EpD[DEV_NOM_IOUT][0].V1*0.1; // Akümülatör çıkış // release_chg -> EpD[DEV_NOM_IOUT][0].V1*0.1;
+Vbat_flt=EpD[DEV_NOM_VOUT][0].V1*0.1;
 
 VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
+
+batt_current_detect_threshold=EpD[DEV_NOM_IOUT][0].V1*0.005;
+VRECT_VBAT_dev_threshold=EpD[DEV_NOM_VOUT][0].V1*0.01;
 }
+
 void inline extern update_VDC_high_low_lim_fc(void) {
 	VRECT_DC_HIGH_LIM=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100));
 	VRECT_DC_HIGH_LIM_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
@@ -1325,5 +1329,21 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
     float denominator = sqrtf((n * sum_x2 - sum_x * sum_x) * (n * sum_y2 - sum_y * sum_y));
     if (denominator == 0.0f) return 0.0f;
     return numerator / denominator;
+}
+
+void inline extern blm_cancel_op_return_normal(void);
+
+void inline extern blm_cancel_op_return_normal(void) {
+	blm_balance_accepted=0;
+	blm_batt_check_timer_cnt=0;
+
+	if (!blm_return_voltage_to_normal_completed && V_targ_con_sy < Current_charge_voltage &&
+			(blm_req_voltage_reduce || blm_req_wait_at_low_lim_fl)) {
+		blm_req_voltage_reduce=0;
+		blm_req_wait_at_low_lim_fl=0;
+		blm_req_return_voltage_to_normal=1;
+	}
+
+
 }
 

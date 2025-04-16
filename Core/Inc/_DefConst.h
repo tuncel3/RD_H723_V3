@@ -163,6 +163,8 @@ float IBAT_sum_sc = 0;
 float IBAT_avg = 0;
 float IBAT_lim = 15;
 float IBAT_per_avg_roll_sc = 0;
+float IBAT_per_avg_roll2_sc = 0;
+float IRECT_per_avg_roll_sc = 0;
 uint32_t IBAT_smp_count = 0;
 uint32_t IBAT_samp_end = 0;
 float IBAT_zero = 32768;
@@ -212,7 +214,9 @@ float IAC_R_rms_roll_per_avg = 0;
 float IAC_S_rms_roll_per_avg = 0;
 float IAC_T_rms_roll_per_avg = 0;
 float VRECT_per_avg_roll_sc = 0;
+float VRECT_per_avg_roll2_sc = 0;
 float VBAT_per_avg_roll_sc = 0;
+float VBAT_per_avg_roll2_sc = 0;
 float VLOAD_per_avg_roll_sc = 0;
 float VRECT_per_avg_roll = 0;
 float VRECT_per_avg_roll_half = 0;
@@ -430,7 +434,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_OVTM_OPEN_LIM, 90.0}, {SET_OVTM_OPEN_LIM, 90.0} },
     { {DEV_NOM_VOUT, 48.0}, {DEV_NOM_VOUT, 48.0} }, // Cihaz Nom VDC
     { {DEV_NOM_IOUT, 40.0}, {DEV_NOM_IOUT, 40.0} },
-    { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} },
+    { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} }, //
     { {DC_KAC_POS, 20.0}, {DC_KAC_POS, 20.0} }, // DC kaçak pozitif
     { {DC_KAC_NEG, 20.0}, {DC_KAC_NEG, 20.0} }, // DC kaçak negatif
     { {RECT_SHORT, 20.0}, {RECT_SHORT, 20.0} }, // RECT short Amp
@@ -551,7 +555,7 @@ SETT_type DEVICE_SETT_Items[] = {
 };
 #define NUM_DEVICE_SETT_ITEMS (sizeof(DEVICE_SETT_Items) / sizeof(DEVICE_SETT_Items[0]))
 uint8_t selected_DEVICE_SETT = 0;
-uint8_t dev_set_disp_index =7;
+uint8_t dev_set_disp_index =NUM_DEVICE_SETT_ITEMS-1;
 uint8_t dev_set_arrow_loc = 1;
 uint8_t dev_setting_edit_mode = 0;
 
@@ -600,6 +604,7 @@ float Irect_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 float Irect_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 float Ibat_max=0; // updated at startup and when DEV_NOM_VOUT changed
 float Ibat_min=0; // updated at startup and when DEV_NOM_VOUT changed
+float Vbat_flt=0; // updated at startup and when DEV_NOM_VOUT changed
 float Vdc_drop_in_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 float Vdc_drop_in_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 float Vdc_drop_out_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
@@ -700,7 +705,6 @@ uint32_t batt_inspection_vchange_cnt = 0;
 uint32_t can_reduce_voltage_0_2 = 40;
 uint32_t decrease_vout_0_2_disp = 40;
 uint32_t bat_inspection_unknow_state_cnt = 0;
-#define BATT_CURRENT_DETECT_THRESHOLD 0.2f
 uint32_t device_start_up_delay_completed_cnt = 0;
 uint32_t batt_not_connected_fc = 0;
 uint32_t VDCK_pos_fc = 0;
@@ -1153,28 +1157,62 @@ int dropper_test_var_1 = 0;
 
 
 
-uint8_t a_batt_connected=0;
-uint8_t a_batt_broken=0;
-uint8_t balance_detected=0;
+uint8_t blm_batt_connected=0;
 uint32_t sync_diff_det_cnt=0;
 uint32_t sync_diff_det_per=40;
 int V_targ_change_dir=-1;
+int V_targ_change_cnt=0;
+int V_targ_change_per=0;
 
 
 // Circular buffer
 float blm_sample_buffer[3][150] = {
 		{0,0,0},
-		{0,0,0},
 		{0,0,0}
 };
 uint16_t blm_sample_index = 0;
 
+float batt_current_detect_threshold=0.2f;
+float VRECT_VBAT_dev_threshold=0.2f;
 float VRECT_per_avg_sc_old=0;
 float VBAT_per_avg_sc_old=0;
+float V_targ_con_sy_old=0;
 float IBAT_per_avg_roll_sc_old=0;
 
 float VRECT_old_diff=0;
 float VBAT_old_diff=0;
-float IBAT_old_diff=0;
+float V_targ_con_sy_old_diff=0;
+//uint8_t blm_balance_detected=0;
+uint8_t blm_balance_accepted=0;
+float blm_balance_voltage=0;
+float blm_balance_voltage_low_1=0;
+float blm_balance_voltage_low_2=0;
+uint8_t blm_balance_voltage_set=0;
+uint32_t blm_balance_accept_cnt=0;
+uint32_t blm_balance_accept_per=60;
+uint32_t change_v_targ_cnt=0;
+uint32_t change_v_targ_per=20;
+uint32_t blm_batt_check_timer_cnt=0;
+uint32_t blm_batt_check_per=20;
+uint32_t blm_wait_at_low_lim_cnt=0;
+uint32_t blm_wait_at_low_lim_per=40;
+
+uint8_t V_targ_con_sy_returned_fl=0;
+uint8_t blm_req_wait_at_low_lim_fl=0;
+uint8_t gercV_yuks_contsV_fl=0;
+uint8_t gercV_contsV_fark_dusuk_fl=0;
+uint8_t gercV_dusuk_balncV_step1_fl=0;
+
+uint8_t blm_req_voltage_reduce=0;
+uint8_t blm_req_return_voltage_to_normal=0;
+uint8_t blm_return_voltage_to_normal_completed=1;
+
+
+float blm_voltage_change_mult=0.0005;
+//#define V_targ_con_sy < blm_balance_voltage_low_2 vtarg_reduced_step2_fl
+//#define V_targ_con_sy >= blm_balance_voltage_low_1 vtarg_reduced_step2_fl
+//#define VRECT_per_avg_roll2_sc > V_targ_con_sy*1.03 gercV_yuks_contsV_fl
+
+
 
 
