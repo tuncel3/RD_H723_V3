@@ -81,7 +81,7 @@ void DMA1_Stream1_IRQHandler(void) {
 			VBAT_smp_count=0;
 			VBAT_sum_sc=0;
 			VBAT_per_avg_roll_sc=VBAT_per_avg_roll_sc*63.0/64.0+VBAT_per_avg_sc/64.0;
-			VBAT_per_avg_roll2_sc=VBAT_per_avg_roll_sc*15.0/16.0+VBAT_per_avg_sc/16.0;
+			VBAT_per_avg_roll2_sc=VBAT_per_avg_roll_sc*3.0/4.0+VBAT_per_avg_sc/4.0;
 
 			VDCKP_samp_end = 0;
 			VDCKP_per_avg=VDCKP_sum/VDCKP_smp_count;

@@ -163,7 +163,7 @@ float IBAT_sum_sc = 0;
 float IBAT_avg = 0;
 float IBAT_lim = 15;
 float IBAT_per_avg_roll_sc = 0;
-float IBAT_per_avg_roll16_sc = 0;
+float IBAT_per_avg_roll2_sc = 0;
 float IRECT_per_avg_roll_sc = 0;
 uint32_t IBAT_smp_count = 0;
 uint32_t IBAT_samp_end = 0;
@@ -193,8 +193,8 @@ float VDCKP_per_avg = 0;
 float VDCKN_per_avg = 0;
 float VRECT_per_avg_sc = 0;
 float VRECT_per_avg = 0;
-float VDCKP_per_avg_roll128 = 0;
-float VDCKN_per_avg_roll128 = 0;
+float VDCKP_per_avg_roll = 0;
+float VDCKN_per_avg_roll = 0;
 float VACR_smp_count = 0;
 float VACS_smp_count = 0;
 float VACT_smp_count = 0;
@@ -213,12 +213,12 @@ float VAC_T_rms_roll_per_avg = 0;
 float IAC_R_rms_roll_per_avg = 0;
 float IAC_S_rms_roll_per_avg = 0;
 float IAC_T_rms_roll_per_avg = 0;
-float VRECT_per_avg_roll64_sc = 0;
-float VRECT_per_avg_roll16_sc = 0;
-float VBAT_per_avg_roll64_sc = 0;
-float VBAT_per_avg_roll16_sc = 0;
-float VLOAD_per_avg_roll64_sc = 0;
-float VRECT_per_avg_roll64 = 0;
+float VRECT_per_avg_roll_sc = 0;
+float VRECT_per_avg_roll2_sc = 0;
+float VBAT_per_avg_roll_sc = 0;
+float VBAT_per_avg_roll2_sc = 0;
+float VLOAD_per_avg_roll_sc = 0;
+float VRECT_per_avg_roll = 0;
 float VRECT_per_avg_roll_half = 0;
 float VDCKP_avg2_s = 0;
 float VDCKN_avg2_s = 0;
@@ -242,10 +242,10 @@ float VDCKN_sum = 0;
 float VLOAD_sum_sc = 0;
 float VRECT_sum_sc = 0;
 uint32_t VRECT_sum = 0;
-uint32_t VDCKP_per_avg_roll128_perc = 0;
-uint32_t VDCKN_per_avg_roll64_perc = 0;
-float VDCKP_per_avg_roll128_sc = 0;
-float VDCKN_per_avg_roll64_sc = 0;
+uint32_t VDCKP_per_avg_roll_perc = 0;
+uint32_t VDCKN_per_avg_roll_perc = 0;
+float VDCKP_per_avg_roll_scaled = 0;
+float VDCKN_per_avg_roll_scaled = 0;
 float VDCK_sc = 0;
 float VDCK_raw = 0;
 float VDCK_perc = 0;
@@ -292,7 +292,7 @@ typedef enum {
 } MenuPage;
 
 MenuPage currentPage = HOME_PAGE_pg;
-uint8_t HOME_PAGE_pg_sel = 2;
+uint8_t HOME_PAGE_pg_sel = 1;
 
 uint8_t fault_codes_reset_req = 0;
 uint8_t device_reset_req = 0;
@@ -1211,7 +1211,7 @@ uint8_t blm_return_voltage_to_normal_completed=1;
 float blm_voltage_change_mult=0.0005;
 //#define V_targ_con_sy < blm_balance_voltage_low_2 vtarg_reduced_step2_fl
 //#define V_targ_con_sy >= blm_balance_voltage_low_1 vtarg_reduced_step2_fl
-//#define VRECT_per_avg_roll16_sc > V_targ_con_sy*1.03 gercV_yuks_contsV_fl
+//#define VRECT_per_avg_roll2_sc > V_targ_con_sy*1.03 gercV_yuks_contsV_fl
 
 
 

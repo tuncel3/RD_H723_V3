@@ -781,13 +781,13 @@ if (SW_BATT_OFF && blm_batt_connected) {
 		sprintf(DUB,"blm_balance_broken"); prfm(DUB);
 		// end of inspection
 	} else {
-		if (VRECT_old_diff < VRECT_VBAT_dev_threshold && VBAT_old_diff < VRECT_VBAT_dev_threshold && IBAT_per_avg_roll16_sc < batt_current_detect_threshold && !blm_balance_accepted) {
+		if (VRECT_old_diff < VRECT_VBAT_dev_threshold && VBAT_old_diff < VRECT_VBAT_dev_threshold && IBAT_per_avg_roll2_sc < batt_current_detect_threshold && !blm_balance_accepted) {
 //			sprintf(DUB,"blm_balance_detected"); prfm(DUB);
 				blm_balance_accept_cnt++;
 				if (blm_balance_accept_cnt >= blm_balance_accept_per && !blm_balance_accepted) {
 					blm_balance_accept_cnt=0;
 					blm_balance_accepted=1;												// BALANCE ACCEPTED
-					blm_balance_voltage=VRECT_per_avg_roll16_sc;							// BALANCE VOLTAGE DETECTED FOUND SET
+					blm_balance_voltage=VRECT_per_avg_roll2_sc;							// BALANCE VOLTAGE DETECTED FOUND SET
 					blm_balance_voltage_low_1=blm_balance_voltage*0.98;
 					blm_balance_voltage_low_2=blm_balance_voltage*0.96;
 					blm_batt_check_timer_cnt=blm_batt_check_per;
@@ -839,8 +839,8 @@ if (SW_BATT_OFF && blm_batt_connected) {
 	}
 
 
-//şu haliyle volt reduce yap deyince durumu izle. sorun burda. redrs akım sınırı var. v targ yukarda kalıyor.
-//voltaj aşağıya kaydırılmalı. balance voltaj 47 mi olarak belirleniyor ekranda 44 45 yazarken.
+şu haliyle volt reduce yap deyince durumu izle. sorun burda. redrs akım sınırı var. v targ yukarda kalıyor.
+voltaj aşağıya kaydırılmalı. balance voltaj 47 mi olarak belirleniyor ekranda 44 45 yazarken.
 
 
 
@@ -882,20 +882,20 @@ if (SW_BATT_OFF && blm_batt_connected) {
 //			sprintf(DUB,"vtarg_reduced_fl 0"); prfm_rep(DUB);
 //		}
 //
-//		if (VRECT_per_avg_roll16_sc > V_targ_con_sy*1.03 && !gercV_yuks_contsV_fl) {
+//		if (VRECT_per_avg_roll2_sc > V_targ_con_sy*1.03 && !gercV_yuks_contsV_fl) {
 //			gercV_yuks_contsV_fl=1;
 //			sprintf(DUB,"gercV_yuks_contsV"); prfm_rep(DUB);
-//		} else if (VRECT_per_avg_roll16_sc <= V_targ_con_sy*1.03 && gercV_yuks_contsV_fl) {
+//		} else if (VRECT_per_avg_roll2_sc <= V_targ_con_sy*1.03 && gercV_yuks_contsV_fl) {
 //			vtarg_reduced_step2_fl=0;
 //			sprintf(DUB,"vtarg_reduced_fl 0"); prfm_rep(DUB);
 //		}
 
 
-//			if (fabs(VRECT_per_avg_roll16_sc-V_targ_con_sy) < V_targ_con_sy*0.02 && !gercV_contsV_fark_dusuk_fl) {
+//			if (fabs(VRECT_per_avg_roll2_sc-V_targ_con_sy) < V_targ_con_sy*0.02 && !gercV_contsV_fark_dusuk_fl) {
 //				gercV_contsV_fark_dusuk_fl=1;
 //				sprintf(DUB,"gercV_yuks_contsV"); prfm_rep(DUB);
 //			} else { gercV_contsV_fark_dusuk_fl=0;	}
-//			if (VRECT_per_avg_roll16_sc < blm_balance_voltage_low_1 && !gercV_dusuk_balncV_step1_fl) {
+//			if (VRECT_per_avg_roll2_sc < blm_balance_voltage_low_1 && !gercV_dusuk_balncV_step1_fl) {
 //				gercV_dusuk_balncV_step1_fl=1;
 //				sprintf(DUB,"gercV_dusuk_balncV_step1_fl"); prfm_rep(DUB);
 //			} else { gercV_dusuk_balncV_step1_fl=0;	}
