@@ -56,7 +56,7 @@ void DMA1_Stream1_IRQHandler(void) {
 
 		IRECT_sum_sc=IRECT_sum_sc+IRECT_smp_sc; IRECT_smp_count++;
 		IBAT_sum_sc=IBAT_sum_sc+IBAT_smp_sc; IBAT_smp_count++;
-		ILOAD_per_sc=IRECT_per_avg_sc-IBAT_per_avg_sc;
+//		ILOAD_sum_sc=IRECT_sum_sc-IBAT_sum_sc;
 		VBAT_sum_sc=VBAT_sum_sc+VBAT_smp_sc; VBAT_smp_count++;
 		VDCKP_sum=VDCKP_sum+DCKP_smp; VDCKP_smp_count++;
 		VDCKN_sum=VDCKN_sum+DCKN_smp; VDCKN_smp_count++;
@@ -66,22 +66,26 @@ void DMA1_Stream1_IRQHandler(void) {
 
 		if (EXTI_Zero_crossing == 1) {
 			EXTI_Zero_crossing = 0;
-			IRECT_per_avg_sc=IRECT_sum_sc/IRECT_smp_count;
+			IRECT_pas.a1=IRECT_sum_sc/IRECT_smp_count;
 			IRECT_smp_count=0;
 			IRECT_sum_sc=0;
-			IRECT_per_avg_roll_sc=IRECT_per_avg_roll_sc*63.0/64.0+IRECT_per_avg_sc/64.0;
+			IRECT_pas.a64=IRECT_pas.a64*63.0/64.0+IRECT_pas.a1/64.0;
+			IRECT_pas.a16=IRECT_pas.a16*15.0/16.0+IRECT_pas.a1/16.0;
 
-			IBAT_per_avg_sc=IBAT_sum_sc/IBAT_smp_count;
+			IBAT_pas.a1=IBAT_sum_sc/IBAT_smp_count;
 			IBAT_smp_count=0;
 			IBAT_sum_sc=0;
-			IBAT_per_avg_roll_sc=IBAT_per_avg_roll_sc*63.0/64.0+IBAT_per_avg_sc/64.0;
-			IBAT_per_avg_roll2_sc=IBAT_per_avg_roll_sc*15.0/16.0+IBAT_per_avg_sc/16.0;
+			IBAT_pas.a64=IBAT_pas.a64*63.0/64.0+IBAT_pas.a1/64.0;
+			IBAT_pas.a16=IBAT_pas.a16*15.0/16.0+IBAT_pas.a1/16.0;
 
-			VBAT_per_avg_sc=VBAT_sum_sc/VBAT_smp_count;
+			ILOAD_pas.a64=IRECT_pas.a64-IBAT_pas.a64;
+			ILOAD_pas.a16=IRECT_pas.a16-IBAT_pas.a16;
+
+			VBAT_pas.a1=VBAT_sum_sc/VBAT_smp_count;
 			VBAT_smp_count=0;
 			VBAT_sum_sc=0;
-			VBAT_per_avg_roll_sc=VBAT_per_avg_roll_sc*63.0/64.0+VBAT_per_avg_sc/64.0;
-			VBAT_per_avg_roll2_sc=VBAT_per_avg_roll_sc*3.0/4.0+VBAT_per_avg_sc/4.0;
+			VBAT_pas.a64=VBAT_pas.a64*63.0/64.0+VBAT_pas.a1/64.0;
+			VBAT_pas.a16=VBAT_pas.a16*15.0/16.0+VBAT_pas.a1/16.0;
 
 			VDCKP_samp_end = 0;
 			VDCKP_per_avg=VDCKP_sum/VDCKP_smp_count;
@@ -94,30 +98,31 @@ void DMA1_Stream1_IRQHandler(void) {
 			VDCKN_sum=0;
 			VDCKN_per_avg_roll=VDCKN_per_avg_roll*127.0/128.0+VDCKN_per_avg/128.0;
 
-			VLOAD_per_avg_sc=VLOAD_sum_sc/VLOAD_smp_count;
+			VLOAD_pas.a1=VLOAD_sum_sc/VLOAD_smp_count;
 			VLOAD_smp_count=0;
 			VLOAD_sum_sc=0;
-			VLOAD_per_avg_roll_sc=VLOAD_per_avg_roll_sc*63.0/64.0+VLOAD_per_avg_sc/64.0;
+			VLOAD_pas.a64=VLOAD_pas.a64*63.0/64.0+VLOAD_pas.a1/64.0;
+			VLOAD_pas.a16=VLOAD_pas.a16*15.0/16.0+VLOAD_pas.a1/16.0;
 
-			VRECT_per_avg_sc=VRECT_sum_sc/VRECT_smp_count;
+			VRECT_pas.a1=VRECT_sum_sc/VRECT_smp_count;
 			VRECT_per_avg=VRECT_sum/VRECT_smp_count;
 			VRECT_smp_count=0;
 			VRECT_sum_sc=0;
 			VRECT_sum=0;
-			VRECT_per_avg_roll_sc=VRECT_per_avg_roll_sc*63.0/64.0+VRECT_per_avg_sc/64.0;
-			VRECT_per_avg_roll2_sc=VRECT_per_avg_roll_sc*15.0/16.0+VRECT_per_avg_sc/16.0;
+			VRECT_pas.a64=VRECT_pas.a64*63.0/64.0+VRECT_pas.a1/64.0;
+			VRECT_pas.a16=VRECT_pas.a16*15.0/16.0+VRECT_pas.a1/16.0;
 			VRECT_per_avg_roll=VRECT_per_avg_roll*63.0/64.0+VRECT_per_avg/64.0;
 
 		    blm_sample_index = (blm_sample_index + 1) % 150;
 			VRECT_per_avg_sc_old=blm_sample_buffer[0][blm_sample_index];						// BLM
 			VBAT_per_avg_sc_old=blm_sample_buffer[1][blm_sample_index];							// BLM
 			V_targ_con_sy_old=blm_sample_buffer[2][blm_sample_index];							// BLM
-			blm_sample_buffer[0][blm_sample_index]=VRECT_per_avg_roll2_sc;							// BLM
-			blm_sample_buffer[1][blm_sample_index]=VBAT_per_avg_roll2_sc;								// BLM
+			blm_sample_buffer[0][blm_sample_index]=VRECT_pas.a16;							// BLM
+			blm_sample_buffer[1][blm_sample_index]=VBAT_pas.a16;								// BLM
 			blm_sample_buffer[2][blm_sample_index]=V_targ_con_sy;								// BLM
 
-			VRECT_old_diff=ABS((VRECT_per_avg_roll2_sc/VRECT_per_avg_sc_old-1)*100);
-			VBAT_old_diff=ABS((VBAT_per_avg_roll2_sc/VBAT_per_avg_sc_old-1)*100);
+			VRECT_old_diff=fabs((VRECT_pas.a16/VRECT_per_avg_sc_old-1)*100);
+			VBAT_old_diff=fabs((VBAT_pas.a16/VBAT_per_avg_sc_old-1)*100);
 			V_targ_con_sy_old_diff=ABS((V_targ_con_sy/V_targ_con_sy_old-1)*100);
 
 		}
@@ -125,8 +130,8 @@ void DMA1_Stream1_IRQHandler(void) {
 		VDCKP_per_avg_roll_perc=VDCKP_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_per_avg_roll;
 		VDCKN_per_avg_roll_perc=VDCKN_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_per_avg_roll;
 
-		VDCKP_per_avg_roll_scaled=VDCKP_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_per_avg_roll_sc;
-		VDCKN_per_avg_roll_scaled=VDCKN_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_per_avg_roll_sc;
+		VDCKP_per_avg_roll_scaled=VDCKP_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_pas.a64;
+		VDCKN_per_avg_roll_scaled=VDCKN_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_pas.a64;
 
 		VRECT_per_avg_roll_half=VRECT_per_avg_roll/2;
 
@@ -159,7 +164,7 @@ void DMA1_Stream1_IRQHandler(void) {
 				VAC_R_rms_sc=sqrt(VACR_sum_of_sqr_sc/VACR_smp_count);
 				VACR_smp_count=0;
 				VACR_sum_of_sqr_sc=0;
-				VAC_R_rms_roll_per_avg=VAC_R_rms_roll_per_avg*63.0/64.0+VAC_R_rms_sc/64.0;
+				VAC_R_rms_roll_per_avg.a64=VAC_R_rms_roll_per_avg.a64*63.0/64.0+VAC_R_rms_sc/64.0;
 			}
 
 			if(VAC_S_samp_end==1){
@@ -167,7 +172,7 @@ void DMA1_Stream1_IRQHandler(void) {
 				VAC_S_rms_sc=sqrt(VACS_sum_of_sqr_sc/VACS_smp_count);
 				VACS_smp_count=0;
 				VACS_sum_of_sqr_sc=0;
-				VAC_S_rms_roll_per_avg=VAC_S_rms_roll_per_avg*63.0/64.0+VAC_S_rms_sc/64.0;
+				VAC_S_rms_roll_per_avg.a64=VAC_S_rms_roll_per_avg.a64*63.0/64.0+VAC_S_rms_sc/64.0;
 			}
 
 			if(VAC_T_samp_end==1){
@@ -175,7 +180,7 @@ void DMA1_Stream1_IRQHandler(void) {
 				VAC_T_rms_sc=sqrt(VACT_sum_of_sqr_sc/VACT_smp_count);
 				VACT_smp_count=0;
 				VACT_sum_of_sqr_sc=0;
-				VAC_T_rms_roll_per_avg=VAC_T_rms_roll_per_avg*63.0/64.0+VAC_T_rms_sc/64.0;
+				VAC_T_rms_roll_per_avg.a64=VAC_T_rms_roll_per_avg.a64*63.0/64.0+VAC_T_rms_sc/64.0;
 			}
     }
 

@@ -805,7 +805,7 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 
 // VOUT STABILITY
 if (ms_50_cnt-gercek_voltaj_smp_ms_timer_h >= gercek_voltaj_smp_ms_timer_per && check_gercek_voltaj_stable_ms==1) {
-	gercek_voltaj_diff_from_sec_ms=ABS(gercek_voltaj_smp_ms-VRECT_per_avg_roll_sc);
+	gercek_voltaj_diff_from_sec_ms=ABS(gercek_voltaj_smp_ms-VRECT_pas.a64);
 	if (gercek_voltaj_diff_from_sec_ms <= 0.1) { // önceki sample ile aralarıdaki fark düşünce. stabil olduğu varsayılıyor.
 		gercek_voltaj_stable_ms_Acc_cnt++;
 //		sprintf(DUB,"diff < set val"); umsg(pr_btln, DUB);
@@ -819,14 +819,14 @@ if (ms_50_cnt-gercek_voltaj_smp_ms_timer_h >= gercek_voltaj_smp_ms_timer_per && 
 //		sprintf(DUB,"diff > set val"); umsg(pr_btln, DUB);
 	}
 	gercek_voltaj_smp_ms_timer_h=ms_50_cnt;
-	gercek_voltaj_smp_ms=VRECT_per_avg_roll_sc; // önceki sample
+	gercek_voltaj_smp_ms=VRECT_pas.a64; // önceki sample
 }
 
 // ÇIKIŞ VOLTAJI TUT
 if (gercek_voltaj_stable_ms==1 && vout_sample_req==1 && vout_sample_ready==0) {
 	vout_sample_req=0; // voltaj stabil ise ve istek varsa o anki voltaj değeri tututluyor.
 	vout_sample_ready=1;
-	baslangic_voltaj_ms=VRECT_per_avg_roll_sc; // ismi baslangıc voltajı. yani inspection baslangıc voltajı.
+	baslangic_voltaj_ms=VRECT_pas.a64; // ismi baslangıc voltajı. yani inspection baslangıc voltajı.
 	sprintf(DUB,"Vout sample taken"); umsg(pr_btln, DUB);
 }
 
@@ -857,8 +857,8 @@ if (start_bat_inspection_req==1) {
 			} else if (vout_sample_ready==1) {
 				vout_sample_req=0;
 				sprintf(DUB,"Vout sample ready request met"); umsg(pr_btln, DUB);
-				gercek_baslangic_fark=ABS(baslangic_voltaj_ms - VRECT_per_avg_roll_sc); // voltaj kaydırma işlemi gerçekleştiriliyor.
-				hedef_gercek_fark=ABS(V_targ_con_sy - VRECT_per_avg_roll_sc);	// tutulan voltaj ile hedef ve gerçek voltaj arası farklar izleniyor.
+				gercek_baslangic_fark=ABS(baslangic_voltaj_ms - VRECT_pas.a64); // voltaj kaydırma işlemi gerçekleştiriliyor.
+				hedef_gercek_fark=ABS(V_targ_con_sy - VRECT_pas.a64);	// tutulan voltaj ile hedef ve gerçek voltaj arası farklar izleniyor.
 				hedef_baslangic_fark=ABS(V_targ_con_sy - baslangic_voltaj_ms);
 //////////////////////////////////////////////////////////////////////////////////////////////
 				if (batt_inspection_direction==-1) {
@@ -930,17 +930,17 @@ if (start_bat_inspection_req==1) {
 }
 
 // BATT CURRENT MONITOR
-if (fabs(IBAT_per_avg_roll2_sc) > batt_current_detect_threshold) {
+if (fabs(IBAT_pas.a16) > IBAT_exists_threshold) {
 	batt_current_detected_Acc_cnt++;
 	if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
 		batt_current_detected=1;
-//		sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_per_avg_sc); umsg(pr_btln, DUB);
+//		sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_pas); umsg(pr_btln, DUB);
 		if (batt_line_broken==1) {
 			batt_line_OK_fn();
 			sprintf(DUB,"Batt line OK. batt curr det whil batt_line_brokn=1. Dir was %d", batt_inspection_direction); umsg(pr_btln, DUB);
 		}
 	}
-} else if (fabs(IBAT_per_avg_roll2_sc) <= batt_current_detect_threshold) {
+} else if (fabs(IBAT_pas.a16) <= IBAT_exists_threshold) {
 	batt_current_zero_Acc_cnt++;
 	if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
 		batt_current_detected=0;
@@ -957,15 +957,15 @@ if (fabs(IBAT_per_avg_roll2_sc) > batt_current_detect_threshold) {
 
 void inline extern BATT_CURRENT_MONITOR_fn(void) {
 
-	if (fabs(IBAT_per_avg_roll2_sc) > batt_current_detect_threshold) {
+	if (fabs(IBAT_pas.a16) > IBAT_exists_threshold) {
 		batt_current_detected_Acc_cnt++;
 		batt_current_zero_Acc_cnt=0;
 		if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
 			batt_current_detected=1;
 			batt_current_detected_Acc_cnt=0;
-			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_per_avg_sc); umsg(pr_btln, DUB);
+			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_pas.a1); umsg(pr_btln, DUB);
 		}
-	} else if (fabs(IBAT_per_avg_roll2_sc) <= batt_current_detect_threshold) {
+	} else if (fabs(IBAT_pas.a16) <= IBAT_exists_threshold) {
 		batt_current_zero_Acc_cnt++;
 		batt_current_detected_Acc_cnt=0;
 		if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
@@ -1001,7 +1001,7 @@ Vbat_flt=EpD[DEV_NOM_VOUT][0].V1*0.1;
 VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
-batt_current_detect_threshold=EpD[DEV_NOM_IOUT][0].V1*0.005;
+IBAT_exists_threshold=EpD[DEV_NOM_IOUT][0].V1*0.005;
 VRECT_VBAT_dev_threshold=EpD[DEV_NOM_VOUT][0].V1*0.01;
 }
 

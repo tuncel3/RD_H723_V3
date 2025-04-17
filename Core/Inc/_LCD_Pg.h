@@ -22,14 +22,14 @@ inline extern void DROPPER_pg_disp(void) {
 inline extern void CALIBRATION_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon");
 	char L[32]; static uint8_t lnhg=11;
-    sprintf(L, "VR%7.2f", VRECT_per_avg_roll_sc); 		GLCD_PrintString(0, 1*lnhg, L);
-    sprintf(L, "VL%7.2f", VLOAD_per_avg_roll_sc); 		GLCD_PrintString(0, 2*lnhg, L);
-    sprintf(L, "VB%7.2f", VBAT_per_avg_roll_sc); 		GLCD_PrintString(0, 3*lnhg, L);
-    sprintf(L, "IR%7.2f", IRECT_per_avg_roll_sc); 		GLCD_PrintString(0, 4*lnhg, L);
-    sprintf(L, "IB%7.2f", IBAT_per_avg_roll_sc); 		GLCD_PrintString(0, 5*lnhg, L);
-    sprintf(L, "CR%7.2f", VAC_R_rms_roll_per_avg); 		GLCD_PrintString(64, 1*lnhg, L);
-    sprintf(L, "CS%7.2f", VAC_S_rms_roll_per_avg); 		GLCD_PrintString(64, 2*lnhg, L);
-    sprintf(L, "CT%7.2f", VAC_T_rms_roll_per_avg); 		GLCD_PrintString(64, 3*lnhg, L);
+    sprintf(L, "VR%7.2f", VRECT_pas.a64); 		GLCD_PrintString(0, 1*lnhg, L);
+    sprintf(L, "VL%7.2f", VLOAD_pas.a64); 		GLCD_PrintString(0, 2*lnhg, L);
+    sprintf(L, "VB%7.2f", VBAT_pas.a64); 		GLCD_PrintString(0, 3*lnhg, L);
+    sprintf(L, "IR%7.2f", IRECT_pas.a64); 		GLCD_PrintString(0, 4*lnhg, L);
+    sprintf(L, "IB%7.2f", IBAT_pas.a64); 		GLCD_PrintString(0, 5*lnhg, L);
+    sprintf(L, "CR%7.2f", VAC_R_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 1*lnhg, L);
+    sprintf(L, "CS%7.2f", VAC_S_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 2*lnhg, L);
+    sprintf(L, "CT%7.2f", VAC_T_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 3*lnhg, L);
 
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
 
@@ -117,10 +117,10 @@ inline extern void HOME_PAGE_pg_disp(void) {
 	if (HOME_PAGE_pg_sel==1) {
 		char L[32]; char R[32]; char M[32];
 //		sprintf(M, "NORMAL"); 					GLCD_PrintString(0, 0, M);
-		sprintf(L, "VL%6.1f V", VLOAD_per_avg_sc); 			GLCD_PrintString(0, 9+1+1, L);
-		sprintf(L, "IT%6.1f A", IRECT_per_avg_sc); 			GLCD_PrintString(0, 18+1+1, L);
-		sprintf(L, "VB%6.1f V", VBAT_per_avg_sc); 				GLCD_PrintString(0, 27+3+1, L);
-		sprintf(L, "IB%6.1f A", IBAT_per_avg_sc); 			GLCD_PrintString(0, 36+3+1, L);
+		sprintf(L, "VL%6.1f V", VLOAD_pas.a16); 			GLCD_PrintString(0, 9+1+1, L);
+		sprintf(L, "IT%6.1f A", IRECT_pas.a16); 			GLCD_PrintString(0, 18+1+1, L);
+		sprintf(L, "VB%6.1f V", VBAT_pas.a16); 				GLCD_PrintString(0, 27+3+1, L);
+		sprintf(L, "IB%6.1f A", IBAT_pas.a16); 			GLCD_PrintString(0, 36+3+1, L);
 		if (VDCK_side==1) {
 		sprintf(L, "K+%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
 		}
@@ -128,12 +128,12 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		sprintf(L, "K-%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
 		}
 
-		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg);	GLCD_PrintString(76, 9, R);
-		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg);	GLCD_PrintString(76, 18, R);
-		sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg);	GLCD_PrintString(76, 27, R);
-		sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg);						GLCD_PrintString(76, 27+3+8, R);
-		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg);						GLCD_PrintString(76, 36+3+8, R);
-		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg);						GLCD_PrintString(76, 45+3+8, R);
+		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
+		sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 27, R);
+		sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);						GLCD_PrintString(76, 27+3+8, R);
+		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);						GLCD_PrintString(76, 36+3+8, R);
+		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);						GLCD_PrintString(76, 45+3+8, R);
 
 		uint32_t x0 = 65; uint32_t y0 = 9;
 		uint32_t x1 = 65; uint32_t y1 = 63;
@@ -193,12 +193,12 @@ inline extern void HOME_PAGE_pg_disp(void) {
 	}
 	else if (HOME_PAGE_pg_sel==2) {
 		char b[8][32];
-		sprintf(b[0], "%5.1f >-D->%5.1f V", VRECT_smp_sc, VLOAD_per_avg_sc);
-		sprintf(b[1], "%5.1f   |  %5.1f A", IRECT_per_avg_sc, ILOAD_per_sc);
+		sprintf(b[0], "%5.1f >-D->%5.1f V", VRECT_pas.a16, VLOAD_pas.a16);
+		sprintf(b[1], "%5.1f   |  %5.1f A", IRECT_pas.a16, ILOAD_pas.a16);
 		sprintf(b[2], "        | ");
 		sprintf(b[3], "    BAT");
-		sprintf(b[4], "  %5.1f V", VBAT_per_avg_sc);
-		sprintf(b[5], "  %5.1f A", IBAT_per_avg_sc);
+		sprintf(b[4], "  %5.1f V", VBAT_pas.a16);
+		sprintf(b[5], "  %5.1f A", IBAT_pas.a16);
 		char L[32];
 		if (VDCK_side==1) {
 		sprintf(L, "K+%5.1f%%", VDCK_perc); 		GLCD_PrintString(4, 45+3+4+1, L);

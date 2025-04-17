@@ -44,7 +44,7 @@ uint8_t req_reset_db = 0;
 #define ZCRENDELY 475
 float VRECT_smp_sc = 0.0f;
 float VLOAD_smp_sc = 0.0f;
-float VLOAD_per_avg_sc = 0.0f;
+//float VLOAD_pas = 0.0f;
 float VDCKP = 0.0f;
 float VDCKN = 0.0f;
 float VOUT_max_float = 55.2f;
@@ -95,12 +95,10 @@ uint32_t VLOAD_DC_LOW_LIM_Acc_per = 200;
 uint32_t VLOAD_DC_LOW_LIM_ret_Acc_cnt = 0;
 uint32_t VLOAD_DC_LOW_LIM_ret_Acc_per = 20;
 float IRECT_smp_sc = 0.0f;
-float IRECT_per_avg_sc = 0.0f;
 float ILOAD_per_sc = 0.0f;
 //float IRECT_f = 0.0f;
 float VBAT_smp_sc = 0.0f;
 float IBAT_smp_sc = 0.0f;
-float IBAT_per_avg_sc = 0.0f;
 //float IBAT_f = 0.0f;
 float VBAT_f = 0.0f;
 float cs_vtarg_vi = 0;
@@ -159,13 +157,37 @@ float IRECT_zero = 32784;
 //uint32_t IRECT_zero_req_ok = 1;
 //uint32_t IRECT_zero_ok_cnt = 0;
 
+//float IBAT_pas = 0.0f;
+//float ILOAD_pas = 0.0f;
+typedef struct {
+    float a128; // 128-length rolling average
+    float a64; // 64-length rolling average
+    float a16; // 16-length rolling average
+    float a1; // 1-length rolling average
+} RollingAverage;
+
+// Declare a variable for IBAT_per_avg_roll_sc
+RollingAverage VRECT_pas; // pas period average scaled
+RollingAverage VLOAD_pas;
+RollingAverage IBAT_pas;
+RollingAverage ILOAD_pas;
+RollingAverage IRECT_pas;
+RollingAverage VBAT_pas;
+RollingAverage VAC_R_rms_roll_per_avg;
+RollingAverage VAC_S_rms_roll_per_avg;
+RollingAverage VAC_T_rms_roll_per_avg;
+RollingAverage IAC_R_rms_roll_per_avg;
+RollingAverage IAC_S_rms_roll_per_avg;
+RollingAverage IAC_T_rms_roll_per_avg;
+
 float IBAT_sum_sc = 0;
+float ILOAD_sum_sc = 0;
 float IBAT_avg = 0;
 float IBAT_lim = 15;
-float IBAT_per_avg_roll_sc = 0;
-float IBAT_per_avg_roll2_sc = 0;
-float IRECT_per_avg_roll_sc = 0;
+//float IBAT_per_avg_roll_sc = 0;
+//float IBAT_per_avg_roll2_sc = 0;
 uint32_t IBAT_smp_count = 0;
+uint32_t ILOAD_smp_count = 0;
 uint32_t IBAT_samp_end = 0;
 float IBAT_zero = 32768;
 //uint32_t IBAT_zero_req = 0;
@@ -175,7 +197,7 @@ float IBAT_zero = 32768;
 //uint32_t IBAT_zero_ok_cnt = 0;
 
 float VBAT_sum_sc = 0;
-float VBAT_per_avg_sc = 0;
+//float VBAT_pas = 0;
 float VBAT_lim = 15;
 uint32_t VBAT_smp_count = 0;
 uint32_t VBAT_samp_end = 0;
@@ -191,7 +213,7 @@ float VAC_S_zero = 32700;
 float VAC_T_zero = 32770;
 float VDCKP_per_avg = 0;
 float VDCKN_per_avg = 0;
-float VRECT_per_avg_sc = 0;
+//float VRECT_pas = 0;
 float VRECT_per_avg = 0;
 float VDCKP_per_avg_roll = 0;
 float VDCKN_per_avg_roll = 0;
@@ -207,17 +229,6 @@ float VACT_smp_sc = 0;
 float VAC_R_rms_sc = 0;
 float VAC_S_rms_sc = 0;
 float VAC_T_rms_sc = 0;
-float VAC_R_rms_roll_per_avg = 0;
-float VAC_S_rms_roll_per_avg = 0;
-float VAC_T_rms_roll_per_avg = 0;
-float IAC_R_rms_roll_per_avg = 0;
-float IAC_S_rms_roll_per_avg = 0;
-float IAC_T_rms_roll_per_avg = 0;
-float VRECT_per_avg_roll_sc = 0;
-float VRECT_per_avg_roll2_sc = 0;
-float VBAT_per_avg_roll_sc = 0;
-float VBAT_per_avg_roll2_sc = 0;
-float VLOAD_per_avg_roll_sc = 0;
 float VRECT_per_avg_roll = 0;
 float VRECT_per_avg_roll_half = 0;
 float VDCKP_avg2_s = 0;
@@ -292,7 +303,7 @@ typedef enum {
 } MenuPage;
 
 MenuPage currentPage = HOME_PAGE_pg;
-uint8_t HOME_PAGE_pg_sel = 1;
+uint8_t HOME_PAGE_pg_sel = 2;
 
 uint8_t fault_codes_reset_req = 0;
 uint8_t device_reset_req = 0;
@@ -1172,7 +1183,7 @@ float blm_sample_buffer[3][150] = {
 };
 uint16_t blm_sample_index = 0;
 
-float batt_current_detect_threshold=0.2f;
+float IBAT_exists_threshold=0.2f;
 float VRECT_VBAT_dev_threshold=0.2f;
 float VRECT_per_avg_sc_old=0;
 float VBAT_per_avg_sc_old=0;
@@ -1184,6 +1195,7 @@ float VBAT_old_diff=0;
 float V_targ_con_sy_old_diff=0;
 //uint8_t blm_balance_detected=0;
 uint8_t blm_balance_accepted=0;
+uint32_t blm_current_detected_cnt=0;
 float blm_balance_voltage=0;
 float blm_balance_voltage_low_1=0;
 float blm_balance_voltage_low_2=0;
@@ -1203,7 +1215,10 @@ uint8_t gercV_yuks_contsV_fl=0;
 uint8_t gercV_contsV_fark_dusuk_fl=0;
 uint8_t gercV_dusuk_balncV_step1_fl=0;
 
+uint8_t blm_req_monitor_balance=0;
 uint8_t blm_req_voltage_reduce=0;
+uint8_t blm_voltage_reducing_cnt=0;
+uint8_t blm_voltage_increasing_cnt=0;
 uint8_t blm_req_return_voltage_to_normal=0;
 uint8_t blm_return_voltage_to_normal_completed=1;
 
