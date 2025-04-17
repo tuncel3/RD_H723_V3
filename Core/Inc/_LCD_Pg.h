@@ -22,9 +22,9 @@ inline extern void DROPPER_pg_disp(void) {
 inline extern void CALIBRATION_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon");
 	char L[32]; static uint8_t lnhg=11;
-    sprintf(L, "VR%7.2f", VRECT_per_avg_roll_sc); 		GLCD_PrintString(0, 1*lnhg, L);
-    sprintf(L, "VL%7.2f", VLOAD_per_avg_roll_sc); 		GLCD_PrintString(0, 2*lnhg, L);
-    sprintf(L, "VB%7.2f", VBAT_per_avg_roll_sc); 		GLCD_PrintString(0, 3*lnhg, L);
+    sprintf(L, "VR%7.2f", VRECT_per_avg_roll64_sc); 		GLCD_PrintString(0, 1*lnhg, L);
+    sprintf(L, "VL%7.2f", VLOAD_per_avg_roll64_sc); 		GLCD_PrintString(0, 2*lnhg, L);
+    sprintf(L, "VB%7.2f", VBAT_per_avg_roll64_sc); 		GLCD_PrintString(0, 3*lnhg, L);
     sprintf(L, "IR%7.2f", IRECT_per_avg_roll_sc); 		GLCD_PrintString(0, 4*lnhg, L);
     sprintf(L, "IB%7.2f", IBAT_per_avg_roll_sc); 		GLCD_PrintString(0, 5*lnhg, L);
     sprintf(L, "CR%7.2f", VAC_R_rms_roll_per_avg); 		GLCD_PrintString(64, 1*lnhg, L);
@@ -193,12 +193,12 @@ inline extern void HOME_PAGE_pg_disp(void) {
 	}
 	else if (HOME_PAGE_pg_sel==2) {
 		char b[8][32];
-		sprintf(b[0], "%5.1f >-D->%5.1f V", VRECT_smp_sc, VLOAD_per_avg_sc);
+		sprintf(b[0], "%5.1f >-D->%5.1f V", VRECT_per_avg_roll16_sc, VLOAD_per_avg_sc);
 		sprintf(b[1], "%5.1f   |  %5.1f A", IRECT_per_avg_sc, ILOAD_per_sc);
 		sprintf(b[2], "        | ");
 		sprintf(b[3], "    BAT");
-		sprintf(b[4], "  %5.1f V", VBAT_per_avg_sc);
-		sprintf(b[5], "  %5.1f A", IBAT_per_avg_sc);
+		sprintf(b[4], "  %5.1f V", VBAT_per_avg_roll16_sc);
+		sprintf(b[5], "  %5.1f A", IBAT_per_avg_roll16_sc);
 		char L[32];
 		if (VDCK_side==1) {
 		sprintf(L, "K+%5.1f%%", VDCK_perc); 		GLCD_PrintString(4, 45+3+4+1, L);
