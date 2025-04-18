@@ -849,7 +849,7 @@ if (start_bat_inspection_req==1) {
 	check_gercek_voltaj_stable_ms=0; // voltaj stabilite izlemesi durdurulabilir.
 	if (ms_50_cnt-insp_loop_delay_h >= insp_loop_delay_per) {
 		insp_loop_delay_h=ms_50_cnt;
-		if (batt_current_detected==0) { // batarya voltajı varsa direk batarya hattı sağlam denebilir. inspection devam etmemeli.
+		if (batt_current_detected==0) { // batarya akımı varsa direk batarya hattı sağlam denebilir. inspection devam etmemeli.
 			if (vout_sample_ready==0) { // inspection başlama voltajını tutma işlmi tamam mı.
 				sprintf(DUB,"Vout sample not ready, request sample"); umsg(pr_btln, DUB);
 				vout_sample_req=1;
@@ -930,7 +930,7 @@ if (start_bat_inspection_req==1) {
 }
 
 // BATT CURRENT MONITOR
-if (fabs(IBAT_pas.a16) > IBAT_exists_threshold) {
+if (fabs(IBAT_pas.a16) > IBAT_yok_thres) {
 	batt_current_detected_Acc_cnt++;
 	if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
 		batt_current_detected=1;
@@ -940,7 +940,7 @@ if (fabs(IBAT_pas.a16) > IBAT_exists_threshold) {
 			sprintf(DUB,"Batt line OK. batt curr det whil batt_line_brokn=1. Dir was %d", batt_inspection_direction); umsg(pr_btln, DUB);
 		}
 	}
-} else if (fabs(IBAT_pas.a16) <= IBAT_exists_threshold) {
+} else if (fabs(IBAT_pas.a16) <= IBAT_yok_thres) {
 	batt_current_zero_Acc_cnt++;
 	if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
 		batt_current_detected=0;
@@ -957,7 +957,7 @@ if (fabs(IBAT_pas.a16) > IBAT_exists_threshold) {
 
 void inline extern BATT_CURRENT_MONITOR_fn(void) {
 
-	if (fabs(IBAT_pas.a16) > IBAT_exists_threshold) {
+	if (fabs(IBAT_pas.a16) > IBAT_yok_thres) {
 		batt_current_detected_Acc_cnt++;
 		batt_current_zero_Acc_cnt=0;
 		if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
@@ -965,7 +965,7 @@ void inline extern BATT_CURRENT_MONITOR_fn(void) {
 			batt_current_detected_Acc_cnt=0;
 			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_pas.a1); umsg(pr_btln, DUB);
 		}
-	} else if (fabs(IBAT_pas.a16) <= IBAT_exists_threshold) {
+	} else if (fabs(IBAT_pas.a16) <= IBAT_yok_thres) {
 		batt_current_zero_Acc_cnt++;
 		batt_current_detected_Acc_cnt=0;
 		if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
@@ -1001,8 +1001,8 @@ Vbat_flt=EpD[DEV_NOM_VOUT][0].V1*0.1;
 VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
-IBAT_exists_threshold=EpD[DEV_NOM_IOUT][0].V1*0.005;
-VRECT_VBAT_dev_threshold=EpD[DEV_NOM_VOUT][0].V1*0.01;
+IBAT_yok_thres=EpD[DEV_NOM_IOUT][0].V1*0.005;
+V_dev_threshold=EpD[DEV_NOM_VOUT][0].V1*0.015;
 }
 
 void inline extern update_VDC_high_low_lim_fc(void) {

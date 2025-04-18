@@ -56,7 +56,6 @@ void DMA1_Stream1_IRQHandler(void) {
 
 		IRECT_sum_sc=IRECT_sum_sc+IRECT_smp_sc; IRECT_smp_count++;
 		IBAT_sum_sc=IBAT_sum_sc+IBAT_smp_sc; IBAT_smp_count++;
-//		ILOAD_sum_sc=IRECT_sum_sc-IBAT_sum_sc;
 		VBAT_sum_sc=VBAT_sum_sc+VBAT_smp_sc; VBAT_smp_count++;
 		VDCKP_sum=VDCKP_sum+DCKP_smp; VDCKP_smp_count++;
 		VDCKN_sum=VDCKN_sum+DCKN_smp; VDCKN_smp_count++;
@@ -115,15 +114,12 @@ void DMA1_Stream1_IRQHandler(void) {
 
 		    blm_sample_index = (blm_sample_index + 1) % 150;
 			VRECT_per_avg_sc_old=blm_sample_buffer[0][blm_sample_index];						// BLM
-			VBAT_per_avg_sc_old=blm_sample_buffer[1][blm_sample_index];							// BLM
-			V_targ_con_sy_old=blm_sample_buffer[2][blm_sample_index];							// BLM
-			blm_sample_buffer[0][blm_sample_index]=VRECT_pas.a16;							// BLM
-			blm_sample_buffer[1][blm_sample_index]=VBAT_pas.a16;								// BLM
-			blm_sample_buffer[2][blm_sample_index]=V_targ_con_sy;								// BLM
+			IBAT_per_avg_sc_old=blm_sample_buffer[1][blm_sample_index];							// BLM
+			blm_sample_buffer[0][blm_sample_index]=VRECT_pas.a64;								// BLM
+			blm_sample_buffer[1][blm_sample_index]=IBAT_pas.a64;								// BLM
 
-			VRECT_old_diff=fabs((VRECT_pas.a16/VRECT_per_avg_sc_old-1)*100);
-			VBAT_old_diff=fabs((VBAT_pas.a16/VBAT_per_avg_sc_old-1)*100);
-			V_targ_con_sy_old_diff=ABS((V_targ_con_sy/V_targ_con_sy_old-1)*100);
+			VRECT_old_diff=fabs((VRECT_pas.a64/VRECT_per_avg_sc_old-1)*100);
+			IBAT_old_diff=fabs((IBAT_pas.a64/IBAT_per_avg_sc_old-1)*100);
 
 		}
 

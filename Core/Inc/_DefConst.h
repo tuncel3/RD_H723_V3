@@ -180,6 +180,8 @@ RollingAverage IAC_R_rms_roll_per_avg;
 RollingAverage IAC_S_rms_roll_per_avg;
 RollingAverage IAC_T_rms_roll_per_avg;
 
+float blm_smp_buff_sum_ = 0;
+
 float IBAT_sum_sc = 0;
 float ILOAD_sum_sc = 0;
 float IBAT_avg = 0;
@@ -1177,21 +1179,18 @@ int V_targ_change_per=0;
 
 
 // Circular buffer
-float blm_sample_buffer[3][150] = {
-		{0,0,0},
-		{0,0,0}
-};
+float blm_sample_buffer[2][150] = {0};
 uint16_t blm_sample_index = 0;
 
 float IBAT_exists_threshold=0.2f;
 float VRECT_VBAT_dev_threshold=0.2f;
 float VRECT_per_avg_sc_old=0;
-float VBAT_per_avg_sc_old=0;
+float IBAT_per_avg_sc_old=0;
 float V_targ_con_sy_old=0;
 float IBAT_per_avg_roll_sc_old=0;
 
 float VRECT_old_diff=0;
-float VBAT_old_diff=0;
+float IBAT_old_diff=0;
 float V_targ_con_sy_old_diff=0;
 //uint8_t blm_balance_detected=0;
 uint8_t blm_balance_accepted=0;
@@ -1217,13 +1216,14 @@ uint8_t gercV_dusuk_balncV_step1_fl=0;
 
 uint8_t blm_req_monitor_balance=0;
 uint8_t blm_req_voltage_reduce=0;
+uint8_t blm_req_rect_cur_lim_reduce=0;
 uint8_t blm_voltage_reducing_cnt=0;
 uint8_t blm_voltage_increasing_cnt=0;
 uint8_t blm_req_return_voltage_to_normal=0;
 uint8_t blm_return_voltage_to_normal_completed=1;
 
 
-float blm_voltage_change_mult=0.0005;
+float blm_vi_change_mult=0.0005;
 //#define V_targ_con_sy < blm_balance_voltage_low_2 vtarg_reduced_step2_fl
 //#define V_targ_con_sy >= blm_balance_voltage_low_1 vtarg_reduced_step2_fl
 //#define VRECT_per_avg_roll2_sc > V_targ_con_sy*1.03 gercV_yuks_contsV_fl

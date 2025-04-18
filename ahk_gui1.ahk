@@ -6,7 +6,7 @@ SetDefaultMouseSpeed, 0
 global clickedX := 0
 global clickedY := 0
 global targetWindow := ""
-global defaultVars := ["blm_balance_accepted", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce"]
+;global defaultVars := ["blm_balance_accepted", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce"]
 
 
 
@@ -24,8 +24,8 @@ StartGUI() {
     Gui, Add, ListView, vDegiskenListesi x10 y+10 w600 h500, Variable Name
 
     ; 🔽 DEFAULT LİSTEYİ YÜKLE
-    for each, var in defaultVars
-        LV_Add("", var)
+    ;for each, var in defaultVars
+    ;    LV_Add("", var)
 
     Gui, Show,, Live Expression Otomat
 }
@@ -63,10 +63,10 @@ MainGuiKoordinatAl:
 
         y := clickedY + (index - 1) * 18
         Click, %clickedX%, %y%, 1
-        Sleep, 20
+        Sleep, 100
         SendInput, %var%
         SendInput, {Enter}
-        Sleep, 200
+        Sleep, 250
     }
 
 

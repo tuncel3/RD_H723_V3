@@ -780,8 +780,9 @@ if (batt_current_detected && !blm_batt_connected) {
 		blm_cancel_op_return_normal(); blm_current_detected_cnt++;
 }
 
+
 if (blm_req_monitor_balance) {
-if (VRECT_old_diff < VRECT_VBAT_dev_threshold && IBAT_pas.a16 < IBAT_exists_threshold && !blm_balance_accepted) {
+if (VRECT_old_diff < V_dev_threshold && IBAT_pas.a16 < IBAT_yok_thres && fabs(VRECT_pas.a16-V_targ_con_sy) < V_dev_threshold && !blm_balance_accepted) {
 	blm_balance_accept_cnt++;											// IN ACCEPT RANGE
 	if (blm_balance_accept_cnt >= blm_balance_accept_per) {
 		blm_balance_accept_cnt=0;
@@ -790,7 +791,7 @@ if (VRECT_old_diff < VRECT_VBAT_dev_threshold && IBAT_pas.a16 < IBAT_exists_thre
 		blm_balance_voltage_low_1=blm_balance_voltage*0.98;
 		blm_balance_voltage_low_2=blm_balance_voltage*0.96;
 	}
-} else if (fabs(VRECT_pas.a16 - blm_balance_voltage) > VRECT_VBAT_dev_threshold && blm_balance_accepted) {
+} else if (fabs(VRECT_pas.a16 - blm_balance_voltage) > V_dev_threshold && blm_balance_accepted) {
 	blm_balance_accept_cnt=0;
 	blm_balance_accepted=0;												// VOLTAGE MOVED, CANCEL BALANCE ACCEPT
 	sprintf(DUB,"  blm_balance_accept canceled"); prfm(DUB);
@@ -800,22 +801,28 @@ if (VRECT_old_diff < VRECT_VBAT_dev_threshold && IBAT_pas.a16 < IBAT_exists_thre
 }
 
 
-if (blm_req_voltage_reduce && !blm_batt_connected) {
-	blm_req_monitor_balance=0;
-	if (V_targ_con_sy > blm_balance_voltage_low_2) {
-		V_targ_con_sy=V_targ_con_sy*(1-blm_voltage_change_mult);
-		blm_balance_accepted=0;
-		blm_voltage_reducing_cnt++; 									// REDUCING VOLTAGE HERE
-		blm_return_voltage_to_normal_completed=0;
-	}
-	if (V_targ_con_sy <= blm_balance_voltage_low_2 && !blm_req_wait_at_low_lim_fl) {
-		blm_req_wait_at_low_lim_fl=1;
-		blm_req_voltage_reduce=0; 										// REDUCING VOLTAGE COMPLETED
-		sprintf(DUB,"vtarg_reduced_to low lim step2"); prfm(DUB);
-	}
-} else {
-	blm_cancel_op_return_normal();
-}
+//if (!is_state_active(RECTIFIER_CURRENT_LIMIT_FC)) {
+//	if (blm_req_voltage_reduce && !blm_batt_connected) {
+//		blm_req_monitor_balance=0;
+//		if (V_targ_con_sy > blm_balance_voltage_low_2) {
+//			V_targ_con_sy=V_targ_con_sy*(1-blm_vi_change_mult);
+//			blm_balance_accepted=0;
+//			blm_voltage_reducing_cnt++; 									// REDUCING VOLTAGE HERE
+//			blm_return_voltage_to_normal_completed=0;
+//		}
+//		if (V_targ_con_sy <= blm_balance_voltage_low_2 && !blm_req_wait_at_low_lim_fl) {
+//			blm_req_wait_at_low_lim_fl=1;
+//			blm_req_voltage_reduce=0; 										// REDUCING VOLTAGE COMPLETED
+//			sprintf(DUB,"vtarg_reduced_to low lim step2"); prfm(DUB);
+//		}
+//	}
+//} else if (is_state_active(RECTIFIER_CURRENT_LIMIT_FC) && V_targ_con_sy <= blm_balance_voltage_low_2 && fabs(VRECT_pas.a16-V_targ_con_sy) >= V_dev_threshold && !blm_req_rect_cur_lim_reduce) {
+//	blm_req_rect_cur_lim_reduce;										// v targ düşürülüyor,
+//	blm_rect_cur_lim_reduce_1=IRECT_pas.a16*0.98;
+//	blm_rect_cur_lim_reduce_2=IRECT_pas.a16*0.96;
+//} else if (blm_req_rect_cur_lim_reduce && ) {
+//	EpD[IRECT_LIM_RT_][0].V1=EpD[IRECT_LIM_RT_][0].V1*(1-blm_vi_change_mult);
+//}
 
 
 	if (blm_req_wait_at_low_lim_fl) {
@@ -832,7 +839,7 @@ if (blm_req_voltage_reduce && !blm_batt_connected) {
 
 	if (blm_req_return_voltage_to_normal) {
 		if (V_targ_con_sy < Current_charge_voltage) {
-			V_targ_con_sy=V_targ_con_sy*(1+blm_voltage_change_mult);
+			V_targ_con_sy=V_targ_con_sy*(1+blm_vi_change_mult);
 			blm_voltage_increasing_cnt++;								// RETURNING VOLTAGE TO NORMAL HERE;
 		}
 		if (V_targ_con_sy >= Current_charge_voltage && !blm_return_voltage_to_normal_completed) {
@@ -856,104 +863,9 @@ if (blm_req_voltage_reduce && !blm_batt_connected) {
 
 
 
-
-
-//şu haliyle volt reduce yap deyince durumu izle. sorun burda. redrs akım sınırı var. v targ yukarda kalıyor.
-//voltaj aşağıya kaydırılmalı. balance voltaj 47 mi olarak belirleniyor ekranda 44 45 yazarken.
-
-
-
-
-//	if (V_targ_con_sy) {
-//
-//	}
-
-
-
-
-
-
-//	if (blm_req_voltage_reduce && blm_batt_connected && !blm_req_return_voltage_to_normal) {	// Batt broken olduğuna göre voltage change request iptal et.
-//		blm_req_voltage_reduce=0;
-//		blm_req_return_voltage_to_normal=1;
-//	}
-
-	if (blm_balance_accepted && blm_batt_check_timer_cnt >= blm_batt_check_per && !blm_req_voltage_reduce) {
-//		blm_req_voltage_reduce=1;
-	}
-
-//		if (vtarg_reduced_step2_fl && V_targ_con_sy < Current_charge_voltage && !V_targ_con_sy_returned_fl && change_v_targ_cnt >= change_v_targ_per) {
-//			change_v_targ_cnt=0;
-////			V_targ_con_sy=V_targ_con_sy*1.005;
-//			if (V_targ_con_sy >= Current_charge_voltage && !V_targ_con_sy_returned_fl) {
-//				V_targ_con_sy=Current_charge_voltage;
-//				V_targ_con_sy_returned_fl=1;
-//			}
-//		}
-
-
-
-//		if (V_targ_con_sy < blm_balance_voltage_low_2 && !vtarg_reduced_step2_fl) {
-//			vtarg_reduced_step2_fl=1;
-//			sprintf(DUB,"vtarg_reduced_fl 1"); prfm_rep(DUB);
-//		} else if (V_targ_con_sy >= blm_balance_voltage_low_1 && vtarg_reduced_step2_fl) {
-//			vtarg_reduced_step2_fl=0;
-//			sprintf(DUB,"vtarg_reduced_fl 0"); prfm_rep(DUB);
-//		}
-//
-//		if (VRECT_per_avg_roll2_sc > V_targ_con_sy*1.03 && !gercV_yuks_contsV_fl) {
-//			gercV_yuks_contsV_fl=1;
-//			sprintf(DUB,"gercV_yuks_contsV"); prfm_rep(DUB);
-//		} else if (VRECT_per_avg_roll2_sc <= V_targ_con_sy*1.03 && gercV_yuks_contsV_fl) {
-//			vtarg_reduced_step2_fl=0;
-//			sprintf(DUB,"vtarg_reduced_fl 0"); prfm_rep(DUB);
-//		}
-
-
-//			if (fabs(VRECT_per_avg_roll2_sc-V_targ_con_sy) < V_targ_con_sy*0.02 && !gercV_contsV_fark_dusuk_fl) {
-//				gercV_contsV_fark_dusuk_fl=1;
-//				sprintf(DUB,"gercV_yuks_contsV"); prfm_rep(DUB);
-//			} else { gercV_contsV_fark_dusuk_fl=0;	}
-//			if (VRECT_per_avg_roll2_sc < blm_balance_voltage_low_1 && !gercV_dusuk_balncV_step1_fl) {
-//				gercV_dusuk_balncV_step1_fl=1;
-//				sprintf(DUB,"gercV_dusuk_balncV_step1_fl"); prfm_rep(DUB);
-//			} else { gercV_dusuk_balncV_step1_fl=0;	}
-//
-//			if (vtarg_reduced_step2_fl && gercV_yuks_contsV_fl) {
-//				sprintf(DUB,"combination 1"); prfm_rep(DUB);
-//			}
-//			if (vtarg_reduced_step2_fl && gercV_contsV_fark_dusuk_fl && gercV_dusuk_balncV_step1_fl) {
-//				sprintf(DUB,"combination 2"); prfm_rep(DUB);
-//			}
-
-
 //			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old, V_targ_con_sy_old); prfm(DUB);
 //			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_pas, VBAT_pas, IBAT_per_avg_roll_sc, V_targ_con_sy); prfm(DUB);
 //			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, 0.0f, V_targ_con_sy_old_diff); prfm(DUB);
-
-
-
-
-
-//if (var1==1 && !blm_balance_detected) {
-//	if (V_targ_con_sy >= 45 && V_targ_change_dir==-1) {
-//		V_targ_con_sy-=0.05;
-//			if (V_targ_con_sy <= 45) {
-//				V_targ_change_dir=1;
-//			}
-//	} else if (V_targ_con_sy <= 50 && V_targ_change_dir==1) {
-//		V_targ_con_sy+=0.05;
-//			if (V_targ_con_sy >= 50) {
-//				V_targ_change_dir=-1;
-//			}
-//	}
-//} else if (var1==0) {
-//	V_targ_con_sy = 47;
-//}
-
-
-
-
 
 
 
