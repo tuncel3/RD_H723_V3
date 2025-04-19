@@ -1178,27 +1178,9 @@ int V_targ_change_cnt=0;
 int V_targ_change_per=0;
 
 
-// Circular buffer
-float blm_sample_buffer[2][150] = {0};
-uint16_t blm_sample_index = 0;
 
-float IBAT_exists_threshold=0.2f;
-float VRECT_VBAT_dev_threshold=0.2f;
-float VRECT_per_avg_sc_old=0;
-float IBAT_per_avg_sc_old=0;
-float V_targ_con_sy_old=0;
-float IBAT_per_avg_roll_sc_old=0;
-
-float VRECT_old_diff=0;
-float IBAT_old_diff=0;
-float V_targ_con_sy_old_diff=0;
-//uint8_t blm_balance_detected=0;
 uint8_t blm_balance_accepted=0;
 uint32_t blm_current_detected_cnt=0;
-float blm_balance_voltage=0;
-float blm_balance_voltage_low_1=0;
-float blm_balance_voltage_low_2=0;
-uint8_t blm_balance_voltage_set=0;
 uint32_t blm_balance_accept_cnt=0;
 uint32_t blm_balance_accept_per=60;
 uint32_t change_v_targ_cnt=0;
@@ -1214,19 +1196,40 @@ uint8_t gercV_yuks_contsV_fl=0;
 uint8_t gercV_contsV_fark_dusuk_fl=0;
 uint8_t gercV_dusuk_balncV_step1_fl=0;
 
-uint8_t blm_req_monitor_balance=0;
+uint8_t blm_req_monitor_stability=0;
 uint8_t blm_req_voltage_reduce=0;
 uint8_t blm_req_rect_cur_lim_reduce=0;
-uint8_t blm_voltage_reducing_cnt=0;
-uint8_t blm_voltage_increasing_cnt=0;
+uint32_t blm_reducing_vtarg_cnt=0;
+uint32_t blm_voltage_increasing_cnt=0;
 uint8_t blm_req_return_voltage_to_normal=0;
 uint8_t blm_return_voltage_to_normal_completed=1;
 
 
-float blm_vi_change_mult=0.0005;
-//#define V_targ_con_sy < blm_balance_voltage_low_2 vtarg_reduced_step2_fl
-//#define V_targ_con_sy >= blm_balance_voltage_low_1 vtarg_reduced_step2_fl
-//#define VRECT_per_avg_roll2_sc > V_targ_con_sy*1.03 gercV_yuks_contsV_fl
+
+float blm_V_step_05perc=0.2f;
+float blm_I_step_05perc=0.2f;
+float v_max_stb=0;
+float v_min_stb=0;
+float i_max_stb=0;
+float i_min_stb=0;
+float blm_stable_v_vrect=0;
+
+uint32_t vrect_stable_cnt = 0;
+uint8_t  vrect_stable     = 0;
+uint32_t ibat_stable_cnt = 0;
+uint8_t  ibat_stable     = 0;
+uint8_t  blm_can_start_inspection = 0;
+uint8_t  blm_reducing_vtarg_completed = 0;
+uint8_t  blm_req_up_down_vtarg_limits = 0;
+uint8_t  vtarg_VRECT_diff_high = 0;
+uint8_t  blm_reducing_vtarg = 0;
+
+volatile uint8_t batt_connect_test_start    = 0;
+volatile uint8_t batt_connected      = 0;
+volatile uint8_t batt_inspecting     = 0;
+volatile float blm_down_vtarg_limit_1   = 0.0f;
+volatile float blm_down_vtarg_limit_2   = 0.0f;
+float blm_vi_change_mult = 0.0003f;
 
 
 

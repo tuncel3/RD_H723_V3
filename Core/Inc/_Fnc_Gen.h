@@ -930,7 +930,7 @@ if (start_bat_inspection_req==1) {
 }
 
 // BATT CURRENT MONITOR
-if (fabs(IBAT_pas.a16) > IBAT_yok_thres) {
+if (fabs(IBAT_pas.a16) > blm_I_step_05perc) {
 	batt_current_detected_Acc_cnt++;
 	if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
 		batt_current_detected=1;
@@ -940,7 +940,7 @@ if (fabs(IBAT_pas.a16) > IBAT_yok_thres) {
 			sprintf(DUB,"Batt line OK. batt curr det whil batt_line_brokn=1. Dir was %d", batt_inspection_direction); umsg(pr_btln, DUB);
 		}
 	}
-} else if (fabs(IBAT_pas.a16) <= IBAT_yok_thres) {
+} else if (fabs(IBAT_pas.a16) <= blm_I_step_05perc) {
 	batt_current_zero_Acc_cnt++;
 	if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
 		batt_current_detected=0;
@@ -957,7 +957,7 @@ if (fabs(IBAT_pas.a16) > IBAT_yok_thres) {
 
 void inline extern BATT_CURRENT_MONITOR_fn(void) {
 
-	if (fabs(IBAT_pas.a16) > IBAT_yok_thres) {
+	if (fabs(IBAT_pas.a16) > blm_I_step_05perc) {
 		batt_current_detected_Acc_cnt++;
 		batt_current_zero_Acc_cnt=0;
 		if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
@@ -965,7 +965,7 @@ void inline extern BATT_CURRENT_MONITOR_fn(void) {
 			batt_current_detected_Acc_cnt=0;
 			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_pas.a1); umsg(pr_btln, DUB);
 		}
-	} else if (fabs(IBAT_pas.a16) <= IBAT_yok_thres) {
+	} else if (fabs(IBAT_pas.a16) <= blm_I_step_05perc) {
 		batt_current_zero_Acc_cnt++;
 		batt_current_detected_Acc_cnt=0;
 		if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
@@ -1001,8 +1001,8 @@ Vbat_flt=EpD[DEV_NOM_VOUT][0].V1*0.1;
 VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
-IBAT_yok_thres=EpD[DEV_NOM_IOUT][0].V1*0.005;
-V_dev_threshold=EpD[DEV_NOM_VOUT][0].V1*0.015;
+blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
+blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
 }
 
 void inline extern update_VDC_high_low_lim_fc(void) {
@@ -1334,16 +1334,58 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 void inline extern blm_cancel_op_return_normal(void);
 
 void inline extern blm_cancel_op_return_normal(void) {
-	blm_balance_accepted=0;
-	blm_batt_check_timer_cnt=0;
-
-	if (!blm_return_voltage_to_normal_completed && V_targ_con_sy < Current_charge_voltage &&
-			(blm_req_voltage_reduce || blm_req_wait_at_low_lim_fl)) {
-		blm_req_voltage_reduce=0;
-		blm_req_wait_at_low_lim_fl=0;
-		blm_req_return_voltage_to_normal=1;
-	}
+//	blm_balance_accepted=0;
+//	blm_batt_check_timer_cnt=0;
+//
+//	if (!blm_return_voltage_to_normal_completed && V_targ_con_sy < Current_charge_voltage &&
+//			(blm_req_voltage_reduce || blm_req_wait_at_low_lim_fl)) {
+//		blm_req_voltage_reduce=0;
+//		blm_req_wait_at_low_lim_fl=0;
+//		blm_req_return_voltage_to_normal=1;
+//	}
 
 
 }
+
+void stability_vrect_fc(void) {
+		if (VRECT_pas.a16 > v_max_stb) {
+			v_max_stb = VRECT_pas.a16 + blm_V_step_05perc*3;
+			v_min_stb = VRECT_pas.a16 - blm_V_step_05perc*3;
+			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0;
+		} else if (VRECT_pas.a16 < v_min_stb) {
+			v_max_stb = VRECT_pas.a16 + blm_V_step_05perc*3;
+			v_min_stb = VRECT_pas.a16 - blm_V_step_05perc*3;
+			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0;
+		} else if (vrect_stable_cnt < 150) {
+			vrect_stable_cnt++;
+		}
+		vrect_stable = (vrect_stable_cnt >= 150);
+}
+void stability_ibat_fc(void) {
+    if (IBAT_pas.a16 > i_max_stb) {
+        i_max_stb = IBAT_pas.a16 + blm_I_step_05perc;
+        i_min_stb = IBAT_pas.a16 - blm_I_step_05perc;
+        ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
+    } else if (IBAT_pas.a16 < i_min_stb) {
+        i_max_stb = IBAT_pas.a16 + blm_I_step_05perc;
+        i_min_stb = IBAT_pas.a16 - blm_I_step_05perc;
+        ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
+    } else if (ibat_stable_cnt < 150) {
+        ibat_stable_cnt++;
+    }
+    ibat_stable = 		    (ibat_stable_cnt >= 150);
+    batt_current_detected = (ibat_stable) && (IBAT_pas.a16 > blm_I_step_05perc || IBAT_pas.a16 < -blm_I_step_05perc); // bat akımı stabil ve yok thresholdu dışında. yani var.
+}
+
+void blm_set_up_down_vtarg_limits(void) {
+	blm_stable_v_vrect=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
+	blm_down_vtarg_limit_1=blm_stable_v_vrect-blm_V_step_05perc*4;
+	blm_down_vtarg_limit_2=blm_stable_v_vrect-blm_V_step_05perc*8;
+}
+
+
+
+
+
+
 

@@ -110,16 +110,8 @@ void DMA1_Stream1_IRQHandler(void) {
 			VRECT_sum=0;
 			VRECT_pas.a64=VRECT_pas.a64*63.0/64.0+VRECT_pas.a1/64.0;
 			VRECT_pas.a16=VRECT_pas.a16*15.0/16.0+VRECT_pas.a1/16.0;
-			VRECT_per_avg_roll=VRECT_per_avg_roll*63.0/64.0+VRECT_per_avg/64.0;
 
-		    blm_sample_index = (blm_sample_index + 1) % 150;
-			VRECT_per_avg_sc_old=blm_sample_buffer[0][blm_sample_index];						// BLM
-			IBAT_per_avg_sc_old=blm_sample_buffer[1][blm_sample_index];							// BLM
-			blm_sample_buffer[0][blm_sample_index]=VRECT_pas.a64;								// BLM
-			blm_sample_buffer[1][blm_sample_index]=IBAT_pas.a64;								// BLM
 
-			VRECT_old_diff=fabs((VRECT_pas.a64/VRECT_per_avg_sc_old-1)*100);
-			IBAT_old_diff=fabs((IBAT_pas.a64/IBAT_per_avg_sc_old-1)*100);
 
 		}
 
