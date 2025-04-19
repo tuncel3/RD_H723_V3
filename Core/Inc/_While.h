@@ -56,7 +56,6 @@ if (device_start_up_delay_completed==1) {
 	if (thy_drv_en==0 && thy_drv_en_req ==1 && line_sgn_stable && thy_stop_fault_hold_bits==0) {
 		sf_sta_req_cnt++;
 		if (sf_sta_req_cnt >= 20) {
-//			V_targ_con_sy=5;
 			set_V_targ_con_sy(5);
 			thy_drv_en=1;
 			apply_state_changes_f(STOP_FC, 0);
@@ -783,57 +782,68 @@ if (batt_current_detected && !blm_batt_connected) {
 // BURAYA KADAR Kİ KISIM TAMAM
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if (vrect_stable && !batt_current_detected && !blm_can_start_inspection) {
-	blm_can_start_inspection=1;										// CAN START INSPECTION
+if (vrect_stable && !batt_current_detected && !blm_req_up_down_vtarg_limits) {
 	blm_req_up_down_vtarg_limits=1;									// REQUEST UP DOWN VTARG LIMITS
 }
-if (blm_req_up_down_vtarg_limits) {
-	blm_req_up_down_vtarg_limits=0;
+if (blm_req_up_down_vtarg_limits && !blm_set_up_down_vtarg_limits_completed) {
 	blm_set_up_down_vtarg_limits();									// SET UP DOWN VTARG LIMITS
-	blm_req_voltage_reduce=1;										// request reduce VTARG
+	blm_set_up_down_vtarg_limits_completed=1;						// SET UP DOWN VTARG LIMITS COMPLETED
+	blm_req_reduce_vtarg=1;										// REQUEST REDUCE VTARG
 }
 
-if (blm_req_voltage_reduce) {
+if (blm_req_reduce_vtarg) {
 	if (V_targ_con_sy > blm_down_vtarg_limit_2) {
-		V_targ_con_sy=V_targ_con_sy*(1-blm_vi_change_mult);
+		set_V_targ_con_sy(V_targ_con_sy*(1-blm_vi_change_mult));
 		blm_reducing_vtarg_cnt++;		 							// REDUCING VTARG HERE
-		blm_reducing_vtarg=1;
+		blm_reducing_vtarg=1;	//💌💌💌
 	} else {blm_reducing_vtarg=0;}
 	if (V_targ_con_sy <= blm_down_vtarg_limit_2) {
-		blm_req_voltage_reduce=0;
-		blm_reducing_vtarg_completed=1; 								// REDUCING VTARG COMPLETED
+		blm_req_reduce_vtarg=0;
+		blm_reducing_vtarg=0;	//💌💌💌
+		blm_reducing_vtarg_completed=1; 							// REDUCING VTARG COMPLETED
 	}
 }
 
 if (blm_reducing_vtarg_completed) {
 	blm_wait_at_low_lim_cnt++;
-	if (blm_wait_at_low_lim_cnt >= blm_wait_at_low_lim_per && !blm_req_return_voltage_to_normal) {
+	if (blm_wait_at_low_lim_cnt >= blm_wait_at_low_lim_per && !blm_wait_at_low_lim_completed) {
 		blm_req_return_voltage_to_normal=1; 						// REQ RETURN TO NORMAL VTARG LEVEL
-		blm_req_wait_at_low_lim_fl=0;
+		blm_reducing_vtarg_completed=0;
 		blm_wait_at_low_lim_cnt=0;
+		blm_wait_at_low_lim_completed=1;
 	}
 } else {
 	blm_wait_at_low_lim_cnt=0;
 }
 
+if (blm_req_return_voltage_to_normal) {
+	if (V_targ_con_sy < Current_charge_voltage) {
+		set_V_targ_con_sy(V_targ_con_sy*(1+blm_vi_change_mult));
+		blm_increasing_vtarg_back_cnt++;							// RETURNING VOLTAGE TO NORMAL HERE;
+		blm_increasing_vtarg_back=1;	//❤❤❤
+	} else {blm_increasing_vtarg_back=0;}
+	if (V_targ_con_sy >= Current_charge_voltage && !blm_return_voltage_to_normal_completed) {
+		blm_req_return_voltage_to_normal=0;
+		blm_increasing_vtarg_back=0;	//❤❤❤
+		blm_return_voltage_to_normal_completed=1;					// RETURNING VOLTAGE TO NORMAL COMPLETED
+		blm_req_return_state_to_normal=1;
+	}
+}
+
+if (blm_req_return_state_to_normal) {
+	blm_req_return_state_to_normal=0;
+	set_V_targ_con_sy(Current_charge_voltage);
+}
+
+flagları live expressinos a ekle ve ekrar çalıştır.
+şu anki haliyle voltaj indirip çıkarıyor.
+
+
+
+
 if (blm_reducing_vtarg || blm_reducing_vtarg_completed) {			// REDUCING VTARG OR REDUCING VTARG COMPLETED
 	vtarg_VRECT_diff_high=fabs(V_targ_con_sy-VRECT_pas.a16) > blm_V_step_05perc*3;
 }
-//
-//if (blm_req_return_voltage_to_normal) {
-//	if (V_targ_con_sy < Current_charge_voltage) {
-//		V_targ_con_sy=V_targ_con_sy*(1+blm_vi_change_mult);
-//		blm_voltage_increasing_cnt++;								// RETURNING VOLTAGE TO NORMAL HERE;
-//	}
-//	if (V_targ_con_sy >= Current_charge_voltage && !blm_return_voltage_to_normal_completed) {
-//		actions_after_charge_mode_change(9);
-//		blm_req_return_voltage_to_normal=0;
-//		blm_return_voltage_to_normal_completed=1;					// RETURNING VOLTAGE TO NORMAL COMPLETED
-//		blm_req_monitor_balance=1;
-//		sprintf(DUB,"returned vtarg to normal"); prfm(DUB);
-//	}
-//}
-
 
 
 //	    sprintf(DUB,"vs %d %d %d %d %d", vrect_stable_lv1, vrect_stable_lv1_cnt, vrect_stable_lv2_cnt, vrect_stable_lv3_cnt, vrect_stable); prfm(DUB);

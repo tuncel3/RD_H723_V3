@@ -1338,8 +1338,8 @@ void inline extern blm_cancel_op_return_normal(void) {
 //	blm_batt_check_timer_cnt=0;
 //
 //	if (!blm_return_voltage_to_normal_completed && V_targ_con_sy < Current_charge_voltage &&
-//			(blm_req_voltage_reduce || blm_req_wait_at_low_lim_fl)) {
-//		blm_req_voltage_reduce=0;
+//			(blm_req_reduce_vtarg || blm_req_wait_at_low_lim_fl)) {
+//		blm_req_reduce_vtarg=0;
 //		blm_req_wait_at_low_lim_fl=0;
 //		blm_req_return_voltage_to_normal=1;
 //	}

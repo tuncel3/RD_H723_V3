@@ -1,4 +1,5 @@
 req_reset_db
+Current_charge_voltage
 V_targ_con_sy
 VRECT_pas.a64
 IBAT_pas.a64
@@ -7,7 +8,7 @@ blm_down_vtarg_limit_1
 blm_down_vtarg_limit_2
 aaa
 vtarg_VRECT_diff_high
-blm_req_voltage_reduce
+blm_req_reduce_vtarg
 blm_reducing_vtarg
 blm_reducing_vtarg_cnt
 blm_reducing_vtarg_completed
@@ -18,13 +19,6 @@ vrect_stable
 ibat_stable
 batt_current_detected
 blm_can_start_inspection
-aaa
-v_max_stb
-v_min_stb
-i_max_stb
-i_min_stb
-blm_V_step_05perc
-blm_I_step_05perc
 
 
 

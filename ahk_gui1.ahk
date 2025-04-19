@@ -6,7 +6,7 @@ SetDefaultMouseSpeed, 0
 global clickedX := 0
 global clickedY := 0
 global targetWindow := ""
-;global defaultVars := ["blm_balance_accepted", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", "blm_req_voltage_reduce"]
+;global defaultVars := ["blm_balance_accepted", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", blm_req_reduce_vtarge", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", blm_req_reduce_vtarge", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", blm_req_reduce_vtarge", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", blm_req_reduce_vtarge", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", blm_req_reduce_vtarge", "blm_current_detected_cnt", "blm_req_monitor_balance", "blm_balance_accept_cnt", blm_req_reduce_vtarge"]
 
 
 

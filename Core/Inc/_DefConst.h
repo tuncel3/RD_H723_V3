@@ -1197,12 +1197,11 @@ uint8_t gercV_contsV_fark_dusuk_fl=0;
 uint8_t gercV_dusuk_balncV_step1_fl=0;
 
 uint8_t blm_req_monitor_stability=0;
-uint8_t blm_req_voltage_reduce=0;
+uint8_t blm_req_reduce_vtarg=0;
 uint8_t blm_req_rect_cur_lim_reduce=0;
-uint32_t blm_reducing_vtarg_cnt=0;
 uint32_t blm_voltage_increasing_cnt=0;
 uint8_t blm_req_return_voltage_to_normal=0;
-uint8_t blm_return_voltage_to_normal_completed=1;
+uint8_t blm_return_voltage_to_normal_completed=0;
 
 
 
@@ -1221,8 +1220,14 @@ uint8_t  ibat_stable     = 0;
 uint8_t  blm_can_start_inspection = 0;
 uint8_t  blm_reducing_vtarg_completed = 0;
 uint8_t  blm_req_up_down_vtarg_limits = 0;
+uint8_t  blm_set_up_down_vtarg_limits_completed = 0;
+uint8_t  blm_wait_at_low_lim_completed = 0;
+uint8_t  blm_req_return_state_to_normal = 0;
 uint8_t  vtarg_VRECT_diff_high = 0;
 uint8_t  blm_reducing_vtarg = 0;
+uint32_t  blm_reducing_vtarg_cnt = 0;
+uint8_t  blm_increasing_vtarg_back = 0;
+uint32_t  blm_increasing_vtarg_back_cnt = 0;
 
 volatile uint8_t batt_connect_test_start    = 0;
 volatile uint8_t batt_connected      = 0;

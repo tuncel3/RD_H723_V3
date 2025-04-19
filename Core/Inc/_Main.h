@@ -14,6 +14,7 @@ SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 
 actions_after_charge_mode_change(5); // set charge mode values
 get_max_min_lims_from_DEV_NOM_VOUT();
+update_VDC_high_low_lim_fc();
 delay_1ms(100);
 
 GLCD_Init();
