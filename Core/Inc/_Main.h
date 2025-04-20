@@ -136,17 +136,11 @@ generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kad
 
 //LED_7_Data |= FLOAT_CHARGE_LED;
 
-// akü hattı kopuk için eklemeler gerekiyor. mcb yardımcı kontağını kullan. akım sınırlaması durumunda akü hattı kopuk
-// belirleme sistemi voltajı düşüremiyor ve akü hattı var diyor. bunu akü bağlı değilken ve mcb yardımcı kontak
-// okuma yapmadığım zamanda gördüm.
-// akü arızası. akü voltajı
-// ayarlanan akım ve gerilim değerleri arıza kodu olarak kaydedilecek.
-// button release disables buttons for some ms
+// blm sisteminde SW_BATT_OFF diye başlayan yerden itibaren op phase sistemine entegre etmek gerekiyor.
+// akü hattı kopuk kontrol sıklığı bat kopuk iken daha hızlı olmalı. bat var iken daha seyrek olabilir.
+// butona basar basmaz tepki olmuyor. bunu hızlandırmak lazım. butonu bırakınca kısa süreliğine butonu disable etmek lazım.
 // data kayıt için adrese ihtiyaç yok
-// adc offset sıfırlama seçeneği
-// şebeke off yazması lazım bir faz bile gitse
 // arız kodu listesi son arıza numarasını 1 yap öyle sırala
-// açma kapama sistemi nasıl olsun
 // activate device seçeneği koy ki açılışta çalışmasın. voltaj ayarları yapıldıktan sonra cihaz aktif edilsin.
 // arıza tekrarladıkça geri dönme süresini uzatma algoritması
 // arıza durumunda start led kapanmıyor.

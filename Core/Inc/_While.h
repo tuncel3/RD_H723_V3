@@ -252,11 +252,11 @@ if (VBAT_pas.a1 < -10 && EpD[SET_BATT_REV_DET][0].V1==1 && !is_state_active(BATT
 if (sf_sta_req_ok==1) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
-if (thy_drv_en==1 && bat_inspection_allowed==1 && EpD[SET_BATT_DISC_DET][0].V1==1 && VBAT_pas.a1 > 10 && !is_state_active(BATT_FUSE_OFF_FC) && !is_state_active(BATT_REVERSE_FC)) {
-	aku_hatti_kopuk_fc_inl();
-} else if (start_bat_inspection_req==1) {
-	end_batt_inspect_return_to_normal(6);
-}
+//if (thy_drv_en==1 && bat_inspection_allowed==1 && EpD[SET_BATT_DISC_DET][0].V1==1 && VBAT_pas.a1 > 10 && !is_state_active(BATT_FUSE_OFF_FC) && !is_state_active(BATT_REVERSE_FC)) {
+//	aku_hatti_kopuk_fc_inl();
+//} else if (start_bat_inspection_req==1) {
+//	end_batt_inspect_return_to_normal(6);
+//}
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -759,185 +759,108 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+	if (sf_sta_req_ok==1) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	stability_vrect_fc();	// vrect_stable 1 0 yapıyor
-	stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor
-
+stability_vrect_fc();	// vrect_stable 1 0 yapıyor
+stability_irect_fc();	// irect_stable 1 0 yapıyor
+stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor
 
 if (SW_BATT_OFF && blm_batt_connected) {
 	blm_batt_connected=0;													// BATT SWITCH OFF
 	blm_cancel_op_return_normal();
 	sprintf(DUB,"SW off"); prfm(DUB);
-} else if (VBAT_pas.a16 <= Vbat_flt && blm_batt_connected) {
+} else if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && blm_batt_connected) {
 	blm_batt_connected=0;													// V BATT LOW
 	blm_cancel_op_return_normal();
 	sprintf(DUB,"Vbat too low"); prfm(DUB);
-}
-if (batt_current_detected && !blm_batt_connected) {
+} else if (batt_current_detected && !blm_batt_connected) {
 	blm_batt_connected=1;													// CURRENT DETECTED
 	blm_cancel_op_return_normal();
 	batt_current_detected_cnt++;
-}
-// BURAYA KADAR Kİ KISIM TAMAM
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// vtarg ı aşağı çekiyor, bekliyor ve tekrar eski haline getiriyor.
-// FFFF_blm_reduce_return_op_completed // işlemin tamamlandığı anlaşılacak. 0 ise işlem devam ediyor.
-// vrect stable ve batt akımı yok ise başlatmak için
-// AAAA_blm_req_up_down_vtarg_limits -> set // işlem başlatılıyor
-if (vrect_stable && !batt_current_detected && AAAA_blm_req_up_down_vtarg_limits) {
-	blm_set_up_down_vtarg_limits();										// SET UP DOWN VTARG LIMITS
-	AAAA_blm_req_up_down_vtarg_limits=0;
-	BBBB_blm_req_reduce_vtarg=1;										// REQUEST REDUCE VTARG
-	blm_collect_corr_samples =1;
-}
-if (BBBB_blm_req_reduce_vtarg) {
-	if (V_targ_con_sy > blm_down_vtarg_limit_2) {
-		set_V_targ_con_sy(V_targ_con_sy*(1-blm_vi_change_mult));		// REDUCING VTARG HERE
-		blm_reducing_vtarg_cnt++;
-		blm_reducing_vtarg=1;
-	} else {blm_reducing_vtarg=0;}
-	if (V_targ_con_sy <= blm_down_vtarg_limit_2) {
-		BBBB_blm_req_reduce_vtarg=0;
-		blm_reducing_vtarg=0;
-		CCCC_blm_reducing_vtarg_completed=1; 							// REDUCING VTARG COMPLETED
-	}
-}
-if (CCCC_blm_reducing_vtarg_completed) {
-	blm_wait_at_low_lim_cnt++;											// WAIT AFTER REDUCING VTARG
-	if (blm_wait_at_low_lim_cnt >= blm_wait_at_low_lim_per && !blm_wait_at_low_lim_completed) {
-		DDDD_blm_req_return_voltage_to_normal=1; 						// REQ RETURN TO NORMAL VTARG LEVEL
-		CCCC_blm_reducing_vtarg_completed=0;							// Reduced and waited.
-		blm_wait_at_low_lim_cnt=0;
-		blm_wait_at_low_lim_completed=1;
-	}
-} else {blm_wait_at_low_lim_cnt=0;}
-
-if (DDDD_blm_req_return_voltage_to_normal) {
-	if (V_targ_con_sy < Current_charge_voltage) {
-		set_V_targ_con_sy(V_targ_con_sy*(1+blm_vi_change_mult));
-		blm_increasing_vtarg_back_cnt++;							// RETURNING VOLTAGE TO NORMAL HERE;
-		blm_increasing_vtarg_back=1;	//❤❤❤
-	} else {blm_increasing_vtarg_back=0;}
-	if (V_targ_con_sy >= Current_charge_voltage) {
-		DDDD_blm_req_return_voltage_to_normal=0;
-		blm_increasing_vtarg_back=0;	//❤❤❤
-		FFFF_blm_reduce_return_op_completed=1;					// RETURNING VOLTAGE TO NORMAL COMPLETED
-		FFFF_blm_req_increase_vtarg=1;
-		blm_wait_at_low_lim_completed=0;
-	}
-}
-if (FFFF_blm_req_increase_vtarg) {
-	if (V_targ_con_sy < blm_up_vtarg_limit_2) {
-		set_V_targ_con_sy(V_targ_con_sy*(1+blm_vi_change_mult));		// INCREASING VTARG HERE
-		blm_increasing_vtarg_cnt++;
-		blm_increasing_vtarg=1;
-	} else {blm_increasing_vtarg=0;}
-	if (V_targ_con_sy >= blm_up_vtarg_limit_2) {
-		FFFF_blm_req_increase_vtarg=0;
-		blm_increasing_vtarg=0;
-		GGGG_blm_increasing_vtarg_completed=1; 							// INCREASING VTARG COMPLETED
-	}
-}
-if (GGGG_blm_increasing_vtarg_completed) {
-	blm_wait_at_high_lim_cnt++;											// WAIT AFTER REDUCING VTARG
-	if (blm_wait_at_high_lim_cnt >= blm_wait_at_high_lim_per && !blm_wait_at_high_lim_completed) {
-		HHHH_blm_req_return_voltage_to_normal=1; 						// REQ RETURN TO NORMAL VTARG LEVEL
-		GGGG_blm_increasing_vtarg_completed=0;							// Reduced and waited.
-		blm_wait_at_high_lim_cnt=0;
-		blm_wait_at_high_lim_completed=1;
-	}
-} else {blm_wait_at_high_lim_cnt=0;}
-
-if (HHHH_blm_req_return_voltage_to_normal) {
-	if (V_targ_con_sy > Current_charge_voltage) {
-		set_V_targ_con_sy(V_targ_con_sy*(1-blm_vi_change_mult));
-		blm_decreasing_vtarg_back_cnt++;							// RETURNING VOLTAGE TO NORMAL HERE;
-		blm_decreasing_vtarg_back=1;	//❤❤❤
-	} else {blm_decreasing_vtarg_back=0;}
-	if (V_targ_con_sy <= Current_charge_voltage) {
-		HHHH_blm_req_return_voltage_to_normal=0;
-		blm_decreasing_vtarg_back=0;	//❤❤❤
-		IIII_blm_increase_return_op_completed=1;					// RETURNING VOLTAGE TO NORMAL COMPLETED
-		blm_wait_at_high_lim_completed=0;
-		JJJJ_blm_req_return_state_to_normal=1;
-		blm_collect_corr_samples =0;
-		blm_corr=calculate_pearson_corr();
-	}
-}
-if (blm_collect_corr_samples && corr_buf_index < CORR_BUF_SIZE) {
-    vrect_buf[corr_buf_index] = VRECT_pas.a64;
-    ibat_buf[corr_buf_index] = IBAT_pas.a64;
-    corr_buf_index++;
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-if (JJJJ_blm_req_return_state_to_normal) {
-	JJJJ_blm_req_return_state_to_normal=0;
-	set_V_targ_con_sy(Current_charge_voltage);
+} else if (!irect_stable) {
+	blm_cancel_op_return_normal();
+} else if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_allowed && blm_op_phase==0) {
+	blm_op_phase=1;
 }
 
-//if (blm_reducing_vtarg || CCCC_blm_reducing_vtarg_completed) {			// reducing vtarg or reducing vtarg completed and waiting
-//	if (VRECT_pas.a64-V_targ_con_sy > blm_V_step_05percx3 && !batt_current_detected) {
-//		vtarg_VRECT_diff_high_while_reduce=1;	// vtarg düşürürken vrect vtarg dan büyük ve bat akımı yok. bat bağlı değil
-//		if (!blm_batt_connected) {
-//			blm_batt_connected=1;
-//		}
-//	}
-//} else {vtarg_VRECT_diff_high_while_reduce=0;}
-//if (VRECT_pas.a64-V_targ_con_sy > blm_V_step_05percx3 && !blm_batt_connected) {
-//	vtarg_VRECT_diff_high_without_touch=1;	// normal halinde vrect vtarg dan büyük ve bat akımı yok. bat bağlı
-//	vtarg_VRECT_diff_high_without_touch_cnt++;
-//	if (vtarg_VRECT_diff_high_without_touch_cnt >= vtarg_VRECT_diff_high_without_touch_per) {
-//		if (!blm_batt_connected) {
-//			blm_batt_connected=1;
-//		}
-//	}
-//} else {vtarg_VRECT_diff_high_without_touch_cnt=0; vtarg_VRECT_diff_high_without_touch=0;}
+//if (thy_drv_en && sf_sta_req_ok && blm_allowed && EpD[SET_BATT_DISC_DET][0].V1==1) {
+//	aku_hatti_kopuk_fc_inl();
+//} else if (start_bat_inspection_req==1) {
+//	end_batt_inspect_return_to_normal(6);
+//}
+
+if (blm_op_phase == 1) { // switch tamam, vbat var, ibat yok. corr başlatma sayımını artır
+	blm_corr_req_cnt++;
+    if (blm_corr_req_cnt >= blm_corr_req_per) {
+        blm_op_phase = 2;
+        blm_corr_req_cnt = 0;
+    }
+} else if (vrect_stable && blm_op_phase == 2) { // vrect stable değilse başlama. sakin durumda iken yap.
+	blm_corr_req=1;
+	blm_corr_req_cnt = 0;
+	blm_op_phase=3;
+} else if (blm_corr_req && blm_op_phase == 3) { // Başlatma
+	blm_corr_req = 0;
+	blm_collect_corr_samples = 1;
+	blm_corr_buf_index = 0;
+	blm_set_up_down_vtarg_limits();
+	blm_op_phase = 4;
+} else if (blm_op_phase == 4) { // Vtarg’ı düşür
+    if (V_targ_con_sy > blm_vtarg_move_dn_targ && V_targ_con_sy > blm_vtarg_move_dn_min) {
+        set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
+    } else {
+        corr_delay_cnt = 0;
+        blm_op_phase = 5;
+    }
+} else if (blm_op_phase == 5) { // Bekle
+    corr_delay_cnt++;
+    if (corr_delay_cnt >= vtarg_wait_at_lim_cnt) {
+        blm_op_phase = 6;
+    }
+} else if (blm_op_phase == 6) { // Vtarg’ı yükselt
+    if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_max) {
+        set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
+    } else {
+        corr_delay_cnt = 0;
+        blm_op_phase = 7;
+    }
+} else if (blm_op_phase == 7) { // Bekle
+    corr_delay_cnt++;
+    if (corr_delay_cnt >= vtarg_wait_at_lim_cnt) {
+        blm_op_phase = 8;
+    }
+} else if (blm_op_phase == 8) { // Vtarg’ı tekrar düşür
+    if (V_targ_con_sy > Current_charge_voltage) {
+        set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
+    } else {
+        set_V_targ_con_sy(Current_charge_voltage);
+        corr_delay_cnt = 0;
+        blm_op_phase = 9;
+    }
+} else if (blm_op_phase == 9) { // Bekle
+    corr_delay_cnt++;
+    if (corr_delay_cnt >= vtarg_wait_at_lim_cnt) {
+        blm_collect_corr_samples = 0;
+        blm_corr = calculate_pearson_corr();
+        blm_op_phase = 0;
+        if (blm_corr >= 0.9) {
+        	blm_batt_connected=1;
+        } else {
+        	blm_batt_connected=0;
+        }
+    }
+}
+
+if (blm_collect_corr_samples && blm_corr_buf_index < CORR_BUF_SIZE) {
+    vrect_buf[blm_corr_buf_index] = VRECT_pas.a64;
+    ibat_buf[blm_corr_buf_index] = IBAT_pas.a64;
+    blm_corr_buf_index++;
+}
+
+//phase anına göre durum incelemesi yaparak karar verilecek.
 
 
-
-
-
-
-//	    sprintf(DUB,"vs %d %d %d %d %d", vrect_stable_lv1, vrect_stable_lv1_cnt, vrect_stable_lv2_cnt, vrect_stable_lv3_cnt, vrect_stable); prfm(DUB);
-//	    sprintf(DUB,"mx %f", v_max); prfm(DUB);
-//	    sprintf(DUB,"vn %f", VRECT_pas.a16); prfm(DUB);
-//	    sprintf(DUB,"mn %f", v_min); prfm(DUB);
-
-
-
-//
-//    sprintf(DUB, "vs %d %d",
-//            vrect_stable_cnt,
-//            vrect_stable);
-//    prfm(DUB);
-//    sprintf(DUB, "mx %f", v_max); prfm(DUB);
-//    sprintf(DUB, "vn %f", VRECT_pas.a16); prfm(DUB);
-//    sprintf(DUB, "mn %f", v_min); prfm(DUB);
-
-
-
-
-
-
-
-
-//			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_per_avg_sc_old, VBAT_per_avg_sc_old, IBAT_per_avg_roll_sc_old, V_targ_con_sy_old); prfm(DUB);
-//			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_pas, VBAT_pas, IBAT_per_avg_roll_sc, V_targ_con_sy); prfm(DUB);
-//			sprintf(DUB,"bb1 %.2f %.2f %.2f %.2f", VRECT_old_diff, VBAT_old_diff, 0.0f, V_targ_con_sy_old_diff); prfm(DUB);
-
-
-
-
-
-
-
-
-
-
-
+	} // if (sf_sta_req_ok==1) {
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 

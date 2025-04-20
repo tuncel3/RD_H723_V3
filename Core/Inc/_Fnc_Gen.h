@@ -12,6 +12,8 @@ void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 void inline extern toggle_batt_inspection_direction(uint8_t num);
 static inline uint8_t is_state_active(State_Codes state_code);
+void inline extern actions_after_charge_voltage_change();
+void inline extern blm_cancel_op_return_normal(void);
 
 void compress_REL_OUT_order_to_parts(void);
 void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void);
@@ -803,160 +805,13 @@ void inline extern toggle_batt_inspection_direction(uint8_t num) {
 
 void inline extern aku_hatti_kopuk_fc_inl(void) {
 
-// VOUT STABILITY
-if (ms_50_cnt-gercek_voltaj_smp_ms_timer_h >= gercek_voltaj_smp_ms_timer_per && check_gercek_voltaj_stable_ms==1) {
-	gercek_voltaj_diff_from_sec_ms=ABS(gercek_voltaj_smp_ms-VRECT_pas.a64);
-	if (gercek_voltaj_diff_from_sec_ms <= 0.1) { // önceki sample ile aralarıdaki fark düşünce. stabil olduğu varsayılıyor.
-		gercek_voltaj_stable_ms_Acc_cnt++;
-//		sprintf(DUB,"diff < set val"); umsg(pr_btln, DUB);
-		if (gercek_voltaj_stable_ms_Acc_cnt >= 10) {
-			gercek_voltaj_stable_ms_Acc_cnt=0;
-			gercek_voltaj_stable_ms=1;
-		}
-	} else {
-		gercek_voltaj_stable_ms_Acc_cnt=0;
-		gercek_voltaj_stable_ms=0;
-//		sprintf(DUB,"diff > set val"); umsg(pr_btln, DUB);
-	}
-	gercek_voltaj_smp_ms_timer_h=ms_50_cnt;
-	gercek_voltaj_smp_ms=VRECT_pas.a64; // önceki sample
-}
+} // void inline extern aku_hatti_kopuk_fc_inl(void) {
 
-// ÇIKIŞ VOLTAJI TUT
-if (gercek_voltaj_stable_ms==1 && vout_sample_req==1 && vout_sample_ready==0) {
-	vout_sample_req=0; // voltaj stabil ise ve istek varsa o anki voltaj değeri tututluyor.
-	vout_sample_ready=1;
-	baslangic_voltaj_ms=VRECT_pas.a64; // ismi baslangıc voltajı. yani inspection baslangıc voltajı.
-	sprintf(DUB,"Vout sample taken"); umsg(pr_btln, DUB);
-}
-
-// BATTERY INSPECTION START TRIGGER
-bat_inspection_req_timer_cnt++;
-if (batt_current_detected==0 && bat_inspection_req_timer_cnt >= bat_inspection_req_timer_per) {
-	bat_inspection_req_timer_cnt=0;
-	start_bat_inspection_req=1; // zaman ayarlı inspection trigger. manuel de başlatılabilir.
-	Batt_inspect_min=Current_charge_voltage*0.98;
-	Batt_inspect_max=Current_charge_voltage*1.02;
-	bat_inspection_req_timer_per=500;
-} else if (batt_current_detected == 1 && bat_inspection_req_timer_cnt >= 100) {
-	bat_inspection_req_timer_cnt = 0;
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// BATTERY INSPECTION n013
-if (start_bat_inspection_req==1) {
-	bat_inspection_canceled=0;
-	check_gercek_voltaj_stable_ms=0; // voltaj stabilite izlemesi durdurulabilir.
-	if (ms_50_cnt-insp_loop_delay_h >= insp_loop_delay_per) {
-		insp_loop_delay_h=ms_50_cnt;
-		if (batt_current_detected==0) { // batarya akımı varsa direk batarya hattı sağlam denebilir. inspection devam etmemeli.
-			if (vout_sample_ready==0) { // inspection başlama voltajını tutma işlmi tamam mı.
-				sprintf(DUB,"Vout sample not ready, request sample"); umsg(pr_btln, DUB);
-				vout_sample_req=1;
-				check_gercek_voltaj_stable_ms=1; // voltaj tutma işlemi gerçekleşmesi için voltaj stabilite testinin tamamlanması lazım.
-			} else if (vout_sample_ready==1) {
-				vout_sample_req=0;
-				sprintf(DUB,"Vout sample ready request met"); umsg(pr_btln, DUB);
-				gercek_baslangic_fark=ABS(baslangic_voltaj_ms - VRECT_pas.a64); // voltaj kaydırma işlemi gerçekleştiriliyor.
-				hedef_gercek_fark=ABS(V_targ_con_sy - VRECT_pas.a64);	// tutulan voltaj ile hedef ve gerçek voltaj arası farklar izleniyor.
-				hedef_baslangic_fark=ABS(V_targ_con_sy - baslangic_voltaj_ms);
-//////////////////////////////////////////////////////////////////////////////////////////////
-				if (batt_inspection_direction==-1) {
-					if (gercek_baslangic_fark >= 0.5 && hedef_gercek_fark < 0.5 && hedef_baslangic_fark >= 0.5 && batt_line_broken==0) {
-						batt_line_broken_fn();
-						toggle_batt_inspection_direction(1);
-						sprintf(DUB,"Batt line broken when dir was -1"); umsg(pr_btln, DUB);
-					} else if (gercek_baslangic_fark <= 0.6 && hedef_gercek_fark > 0.6 && hedef_baslangic_fark >= 1) {
-						batt_line_OK_fn();
-						sprintf(DUB,"Batt line OK by cannot reduce vout. End of inspection"); umsg(pr_btln, DUB);
-						toggle_batt_inspection_direction(6);
-					} else {
-						bat_inspection_unknow_state_cnt++;
-						sprintf(DUB,"unknown state when dir was -1 %lu", bat_inspection_unknow_state_cnt); umsg(pr_btln, DUB);
-						if (bat_inspection_unknow_state_cnt >= 20) {
-							bat_inspection_unknow_state_cnt=0;
-							sprintf(DUB,"Cancel batt insp when dir was -1, bc; too much unknown state"); umsg(pr_btln, DUB);
-							end_batt_inspect_return_to_normal(1);
-							toggle_batt_inspection_direction(2);
-						}
-					}
-					if (V_targ_con_sy >= Batt_inspect_min+0.4 && bat_inspection_canceled==0) {
-						set_V_targ_con_sy(V_targ_con_sy-0.3);
-						sprintf(DUB,"reduce V"); umsg(pr_btln, DUB);
-					}
-					if (V_targ_con_sy < Batt_inspect_min+0.2) {
-						min_v_reached_no_result_cnt++;
-						sprintf(DUB,"min V reached and no result %lu", min_v_reached_no_result_cnt); umsg(pr_btln, DUB); // no result yet, but waiting for voltages to settle. there can be results in a few moments.
-						if (min_v_reached_no_result_cnt >= 10) {
-							min_v_reached_no_result_cnt=0;
-							sprintf(DUB,"Cancel batt inspection, bc; min V reached"); umsg(pr_btln, DUB);
-							bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast restart inspection
-							end_batt_inspect_return_to_normal(2);
-							toggle_batt_inspection_direction(3);
-						}
-					}
-				}
-//////////////////////////////////////////////////////////////////////////////////////////////
-				else if (batt_inspection_direction==1) {
-					if (hedef_baslangic_fark >= 0.5 && gercek_baslangic_fark >= 0.5 && hedef_gercek_fark < 0.5 && batt_line_broken==0) {
-						batt_line_broken_fn();
-						toggle_batt_inspection_direction(4);
-						sprintf(DUB,"Batt line broken when dir was 1"); umsg(pr_btln, DUB);
-					} else {
-						bat_inspection_unknow_state_cnt++;
-						sprintf(DUB,"unknown state when dir was +1 %lu", bat_inspection_unknow_state_cnt); umsg(pr_btln, DUB);
-						if (bat_inspection_unknow_state_cnt >= 20) {
-							bat_inspection_unknow_state_cnt=0;
-							sprintf(DUB,"Cancel batt insp when dir was +1, bc; too much unknown state"); umsg(pr_btln, DUB);
-							end_batt_inspect_return_to_normal(3);
-							toggle_batt_inspection_direction(5);
-						}
-					}
-					if (V_targ_con_sy <= Batt_inspect_max-0.4 && bat_inspection_canceled==0) {
-						set_V_targ_con_sy(V_targ_con_sy+0.3);
-						sprintf(DUB,"increase V"); umsg(pr_btln, DUB);
-					}
-				}
-//////////////////////////////////////////////////////////////////////////////////////////////
-			}
-		} else {
-			batt_line_OK_fn();
-			sprintf(DUB,"Batt line OK by current detection. End of inspection"); umsg(pr_btln, DUB);
-		}
-	}
-} else if (start_bat_inspection_req==0 && bat_inspection_canceled==0) {
-	end_batt_inspect_return_to_normal(4);
-	sprintf(DUB,"Cancel batt inspection, bc; start_bat_inspection_req=0"); umsg(pr_btln, DUB);
-}
-
-// BATT CURRENT MONITOR
-if (fabs(IBAT_pas.a16) > blm_I_step_05perc) {
-	batt_current_detected_Acc_cnt++;
-	if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
-		batt_current_detected=1;
-//		sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_pas); umsg(pr_btln, DUB);
-		if (batt_line_broken==1) {
-			batt_line_OK_fn();
-			sprintf(DUB,"Batt line OK. batt curr det whil batt_line_brokn=1. Dir was %d", batt_inspection_direction); umsg(pr_btln, DUB);
-		}
-	}
-} else if (fabs(IBAT_pas.a16) <= blm_I_step_05perc) {
-	batt_current_zero_Acc_cnt++;
-	if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
-		batt_current_detected=0;
-//		sprintf(DUB,"batt_current_detected 0"); umsg(pr_btln, DUB);
-	}
-} else {
-	batt_current_zero_Acc_cnt = 0;
-	batt_current_detected_Acc_cnt = 0;
-}
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} // void inline extern aku_hatti_kopuk_fc_inl(void) {
 
 void inline extern BATT_CURRENT_MONITOR_fn(void) {
-
 	if (fabs(IBAT_pas.a16) > blm_I_step_05perc) {
 		batt_current_detected_Acc_cnt++;
 		batt_current_zero_Acc_cnt=0;
@@ -1002,6 +857,7 @@ VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
 blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
+blm_I_step_05percx2=blm_I_step_05percx2*2;
 blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
 blm_V_step_05percx3=blm_V_step_05perc*3;
 }
@@ -1021,6 +877,18 @@ void inline extern set_V_targ_con_sy(float set_val) {
 	update_VDC_high_low_lim_fc();
 }
 
+void inline extern actions_after_charge_voltage_change() {
+	if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
+		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
+		set_V_targ_con_sy(Current_charge_voltage);
+	} else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
+		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
+		set_V_targ_con_sy(Current_charge_voltage);
+	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
+		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
+		set_V_targ_con_sy(Current_charge_voltage);
+	}
+}
 // does required changes after a charge mode chage
 void inline extern actions_after_charge_mode_change(uint8_t num) {
 	if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
@@ -1332,27 +1200,20 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
     return numerator / denominator;
 }
 
-void inline extern blm_cancel_op_return_normal(void);
 
 void inline extern blm_cancel_op_return_normal(void) {
-//	blm_balance_accepted=0;
-//	blm_batt_check_timer_cnt=0;
-//
-//	if (!FFFF_blm_return_voltage_to_normal_completed && V_targ_con_sy < Current_charge_voltage &&
-//			(blm_req_reduce_vtarg || blm_req_wait_at_low_lim_fl)) {
-//		blm_req_reduce_vtarg=0;
-//		blm_req_wait_at_low_lim_fl=0;
-//		DDDD_blm_req_return_voltage_to_normal=1;
-//	}
-
-
+	blm_corr_req=0;
+	blm_op_phase=0;
+	blm_collect_corr_samples=0;
+	blm_corr_buf_index = 0;
+	set_V_targ_con_sy(Current_charge_voltage);
 }
 
 void stability_vrect_fc(void) {
 		if (VRECT_pas.a16 > v_max_stb) {
 			v_max_stb = VRECT_pas.a16 + blm_V_step_05percx3;
 			v_min_stb = VRECT_pas.a16 - blm_V_step_05percx3;
-			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0;
+			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0; // koşul sağlanmıyorsa sayacı 4 geri çek.
 		} else if (VRECT_pas.a16 < v_min_stb) {
 			v_max_stb = VRECT_pas.a16 + blm_V_step_05percx3;
 			v_min_stb = VRECT_pas.a16 - blm_V_step_05percx3;
@@ -1362,45 +1223,58 @@ void stability_vrect_fc(void) {
 		}
 		vrect_stable = (vrect_stable_cnt >= 150);
 }
+void stability_irect_fc(void) {
+		if (IRECT_pas.a16 > i_rec_max_stb) {
+			i_rec_max_stb = IRECT_pas.a16 + blm_I_step_05perc;
+			i_rec_min_stb = IRECT_pas.a16 - blm_I_step_05perc;
+			irect_stable_cnt = (irect_stable_cnt > 4) ? irect_stable_cnt - 4 : 0;
+		} else if (IRECT_pas.a16 < i_rec_min_stb) {
+			i_rec_max_stb = IRECT_pas.a16 + blm_I_step_05perc;
+			i_rec_min_stb = IRECT_pas.a16 - blm_I_step_05perc;
+			irect_stable_cnt = (irect_stable_cnt > 4) ? irect_stable_cnt - 4 : 0;
+		} else if (irect_stable_cnt < 150) {
+			irect_stable_cnt++;
+		}
+		irect_stable = (irect_stable_cnt >= 150);
+}
 void stability_ibat_fc(void) {
-    if (IBAT_pas.a16 > i_max_stb) {
-        i_max_stb = IBAT_pas.a16 + blm_I_step_05perc;
-        i_min_stb = IBAT_pas.a16 - blm_I_step_05perc;
+    if (IBAT_pas.a16 > i_bat_max_stb) {
+        i_bat_max_stb = IBAT_pas.a16 + blm_I_step_05perc;
+        i_bat_min_stb = IBAT_pas.a16 - blm_I_step_05perc;
         ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
-    } else if (IBAT_pas.a16 < i_min_stb) {
-        i_max_stb = IBAT_pas.a16 + blm_I_step_05perc;
-        i_min_stb = IBAT_pas.a16 - blm_I_step_05perc;
+    } else if (IBAT_pas.a16 < i_bat_min_stb) {
+        i_bat_max_stb = IBAT_pas.a16 + blm_I_step_05perc;
+        i_bat_min_stb = IBAT_pas.a16 - blm_I_step_05perc;
         ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
     } else if (ibat_stable_cnt < 150) {
         ibat_stable_cnt++;
     }
     ibat_stable = 		    (ibat_stable_cnt >= 150);
-    batt_current_detected = (ibat_stable) && (IBAT_pas.a16 > blm_I_step_05perc || IBAT_pas.a16 < -blm_I_step_05perc); // bat akımı stabil ve yok thresholdu dışında. yani var.
+    batt_current_detected = (ibat_stable) && fabs(IBAT_pas.a16 > blm_I_step_05percx2); // bat akımı stabil ve yok thresholdu dışında. yani var.
 }
 
 void blm_set_up_down_vtarg_limits(void) {
 	blm_stable_v_vrect=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
-	blm_up_vtarg_limit_2=blm_stable_v_vrect+blm_V_step_05perc*8;
-	blm_up_vtarg_limit_2=blm_stable_v_vrect+blm_V_step_05perc*8;
-	blm_up_vtarg_limit_1=blm_stable_v_vrect+blm_V_step_05perc*4;
-	blm_down_vtarg_limit_1=blm_stable_v_vrect-blm_V_step_05perc*4;
-	blm_down_vtarg_limit_2=blm_stable_v_vrect-blm_V_step_05perc*8;
+	blm_vtarg_move_up_targ=blm_stable_v_vrect+blm_V_step_05perc*3;
+	blm_vtarg_move_dn_targ=blm_stable_v_vrect-blm_V_step_05perc*3;
+	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
+	blm_vtarg_move_dn_min=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_ADD][0].V1/100)-0.01);
 }
 
 
 float calculate_pearson_corr(void);
 float calculate_pearson_corr(void)
 {
-    if (corr_buf_index < 2) {
+    if (blm_corr_buf_index < 2) {
         // En az 2 örnek olmalı
-        return 0.0f;
+        return 99;
     }
 
     float sum_v = 0.0f, sum_i = 0.0f;
     float sum_v2 = 0.0f, sum_i2 = 0.0f;
     float sum_vi = 0.0f;
 
-    for (uint16_t i = 0; i < corr_buf_index; i++) {
+    for (uint16_t i = 0; i < blm_corr_buf_index; i++) {
         float v = vrect_buf[i];
         float ib = ibat_buf[i];
 
@@ -1411,15 +1285,15 @@ float calculate_pearson_corr(void)
         sum_vi += v * ib;
     }
 
-    float mean_v = sum_v / corr_buf_index;
-    float mean_i = sum_i / corr_buf_index;
+    float mean_v = sum_v / blm_corr_buf_index;
+    float mean_i = sum_i / blm_corr_buf_index;
 
-    float var_v = sum_v2 - corr_buf_index * mean_v * mean_v;
-    float var_i = sum_i2 - corr_buf_index * mean_i * mean_i;
-    float cov_vi = sum_vi - corr_buf_index * mean_v * mean_i;
+    float var_v = sum_v2 - blm_corr_buf_index * mean_v * mean_v;
+    float var_i = sum_i2 - blm_corr_buf_index * mean_i * mean_i;
+    float cov_vi = sum_vi - blm_corr_buf_index * mean_v * mean_i;
 
     if (var_v <= 0.0f || var_i <= 0.0f)
-        return 0.0f; // sabit sinyal varsa korelasyon anlamsız
+        return 55; // sabit sinyal varsa korelasyon anlamsız
 
     float corr = cov_vi / sqrtf(var_v * var_i);
 
@@ -1427,10 +1301,39 @@ float calculate_pearson_corr(void)
     if (corr > 1.0f) corr = 1.0f;
     else if (corr < -1.0f) corr = -1.0f;
 
-    corr_buf_index=0;
+    blm_corr_buf_index=0;
     return corr;
 }
 
+//float calculate_pearson_corr(void)
+//{
+//    float sum_x = 0.0f, sum_y = 0.0f;
+//    float sum_x2 = 0.0f, sum_y2 = 0.0f;
+//    float sum_xy = 0.0f;
+//    float r = 0.0f;
+//
+//    for (uint16_t i = 0; i < CORR_BUF_SIZE; i++) {
+//        float x = vrect_buf[i];
+//        float y = ibat_buf[i];
+//
+//        sum_x += x;
+//        sum_y += y;
+//        sum_x2 += x * x;
+//        sum_y2 += y * y;
+//        sum_xy += x * y;
+//    }
+//
+//    float n = (float)CORR_BUF_SIZE;
+//    float denominator = sqrtf((n * sum_x2 - sum_x * sum_x) * (n * sum_y2 - sum_y * sum_y));
+//
+//    if (denominator != 0.0f) {
+//        r = (n * sum_xy - sum_x * sum_y) / denominator;
+//    } else {
+//        r = 0.0f;
+//    }
+//
+//    return r;
+//}
 
 
 

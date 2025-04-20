@@ -72,12 +72,14 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_BOOST_TIME) {
 else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==VBAT_FLOAT) {
 	EpD[VBAT_FLOAT][0].V1=EpD[VBAT_FLOAT][1].V1;
 	Rec_Dat_to_EEp_f(VBAT_FLOAT);
-	actions_after_charge_mode_change(1);
+	actions_after_charge_voltage_change();
+	blm_cancel_op_return_normal();
 }
 else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==VBAT_BOOST) {
 	EpD[VBAT_BOOST][0].V1=EpD[VBAT_BOOST][1].V1;
 	Rec_Dat_to_EEp_f(VBAT_BOOST);
-	actions_after_charge_mode_change(2);
+	actions_after_charge_voltage_change();
+	blm_cancel_op_return_normal();
 }
 else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_FLOAT) {
 	EpD[SET_IBAT_FLOAT][0].V1=EpD[SET_IBAT_FLOAT][1].V1;

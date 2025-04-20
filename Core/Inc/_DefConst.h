@@ -1194,12 +1194,15 @@ uint32_t blm_voltage_increasing_cnt=0;
 
 
 float blm_V_step_05perc=0.2f;
-float blm_V_step_05percx3=0.2f;
+float blm_I_step_05percx2=0.4f;
 float blm_I_step_05perc=0.2f;
+float blm_V_step_05percx3=0.6f;
 float v_max_stb=0;
 float v_min_stb=0;
-float i_max_stb=0;
-float i_min_stb=0;
+float i_rec_max_stb=0;
+float i_rec_min_stb=0;
+float i_bat_max_stb=0;
+float i_bat_min_stb=0;
 float blm_stable_v_vrect=0;
 
 uint8_t  blm_batt_connected = 0;
@@ -1214,6 +1217,8 @@ uint8_t  FFFF_blm_reduce_return_op_completed = 0;
 uint32_t  batt_current_detected_cnt = 0;
 uint32_t vrect_stable_cnt = 0;
 uint8_t  vrect_stable     = 0;
+uint32_t irect_stable_cnt = 0;
+uint8_t  irect_stable     = 0;
 uint32_t ibat_stable_cnt = 0;
 uint8_t  ibat_stable     = 0;
 uint8_t  blm_can_start_inspection = 0;
@@ -1231,11 +1236,10 @@ uint32_t  blm_increasing_vtarg_back_cnt = 0;
 volatile uint8_t batt_connect_test_start    = 0;
 volatile uint8_t batt_connected      = 0;
 volatile uint8_t batt_inspecting     = 0;
-volatile float blm_up_vtarg_limit_1   = 0.0f;
-volatile float blm_up_vtarg_limit_2   = 0.0f;
-volatile float blm_down_vtarg_limit_1   = 0.0f;
-volatile float blm_down_vtarg_limit_2   = 0.0f;
-float blm_vi_change_mult = 0.001f;
+volatile float blm_vtarg_move_up_targ   = 0.0f;
+volatile float blm_vtarg_move_dn_targ   = 0.0f;
+volatile float blm_vtarg_move_up_max   = 0.0f;
+volatile float blm_vtarg_move_dn_min   = 0.0f;
 
 uint8_t  FFFF_blm_req_increase_vtarg           = 0;
 uint8_t  GGGG_blm_increasing_vtarg_completed   = 0;
@@ -1250,12 +1254,20 @@ uint8_t  blm_wait_at_high_lim_completed        = 0;
 uint32_t blm_wait_at_high_lim_cnt              = 0;
 uint32_t blm_wait_at_high_lim_per              = 4;
 
-
-#define CORR_BUF_SIZE 1000
+#define CORR_BUF_SIZE 500
 float vrect_buf[CORR_BUF_SIZE];
 float ibat_buf[CORR_BUF_SIZE];
-uint16_t corr_buf_index = 0;
-uint8_t blm_collect_corr_samples = 0;
-float blm_corr=0;
+uint16_t blm_corr_buf_index = 0;
 
+uint8_t blm_allowed = 0;
+uint32_t blm_corr_req_cnt = 0;
+uint32_t blm_corr_req_per = 40;
+int blm_op_phase = 0;
+uint8_t corr_delay_cnt = 0;
+uint8_t blm_corr_req = 0;        // Live Expressions’dan 1 yapınca başlar
+uint8_t blm_collect_corr_samples = 0;
+uint8_t vtarg_wait_at_lim_cnt = 4;
+float blm_vi_change_mult = 0.0005f;
+float blm_corr = 0.0f;
+uint32_t blm_batt_connected_0_cnt = 0;
 
