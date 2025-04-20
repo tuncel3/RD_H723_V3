@@ -1380,12 +1380,56 @@ void stability_ibat_fc(void) {
 
 void blm_set_up_down_vtarg_limits(void) {
 	blm_stable_v_vrect=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
+	blm_up_vtarg_limit_2=blm_stable_v_vrect+blm_V_step_05perc*8;
+	blm_up_vtarg_limit_2=blm_stable_v_vrect+blm_V_step_05perc*8;
+	blm_up_vtarg_limit_1=blm_stable_v_vrect+blm_V_step_05perc*4;
 	blm_down_vtarg_limit_1=blm_stable_v_vrect-blm_V_step_05perc*4;
-	blm_down_vtarg_limit_2=blm_stable_v_vrect-blm_V_step_05perc*12;
+	blm_down_vtarg_limit_2=blm_stable_v_vrect-blm_V_step_05perc*8;
 }
 
 
+float calculate_pearson_corr(void);
+float calculate_pearson_corr(void)
+{
+    if (corr_buf_index < 2) {
+        // En az 2 örnek olmalı
+        return 0.0f;
+    }
 
+    float sum_v = 0.0f, sum_i = 0.0f;
+    float sum_v2 = 0.0f, sum_i2 = 0.0f;
+    float sum_vi = 0.0f;
+
+    for (uint16_t i = 0; i < corr_buf_index; i++) {
+        float v = vrect_buf[i];
+        float ib = ibat_buf[i];
+
+        sum_v += v;
+        sum_i += ib;
+        sum_v2 += v * v;
+        sum_i2 += ib * ib;
+        sum_vi += v * ib;
+    }
+
+    float mean_v = sum_v / corr_buf_index;
+    float mean_i = sum_i / corr_buf_index;
+
+    float var_v = sum_v2 - corr_buf_index * mean_v * mean_v;
+    float var_i = sum_i2 - corr_buf_index * mean_i * mean_i;
+    float cov_vi = sum_vi - corr_buf_index * mean_v * mean_i;
+
+    if (var_v <= 0.0f || var_i <= 0.0f)
+        return 0.0f; // sabit sinyal varsa korelasyon anlamsız
+
+    float corr = cov_vi / sqrtf(var_v * var_i);
+
+    // -1.0 ile 1.0 aralığını güvenceye al
+    if (corr > 1.0f) corr = 1.0f;
+    else if (corr < -1.0f) corr = -1.0f;
+
+    corr_buf_index=0;
+    return corr;
+}
 
 
 

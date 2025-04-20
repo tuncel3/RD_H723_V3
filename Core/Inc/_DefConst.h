@@ -1179,7 +1179,7 @@ uint32_t change_v_targ_per=20;
 uint32_t blm_batt_check_timer_cnt=0;
 uint32_t blm_batt_check_per=20;
 uint32_t blm_wait_at_low_lim_cnt=0;
-uint32_t blm_wait_at_low_lim_per=40;
+uint32_t blm_wait_at_low_lim_per=4;
 
 uint8_t V_targ_con_sy_returned_fl=0;
 uint8_t blm_req_wait_at_low_lim_fl=0;
@@ -1231,10 +1231,31 @@ uint32_t  blm_increasing_vtarg_back_cnt = 0;
 volatile uint8_t batt_connect_test_start    = 0;
 volatile uint8_t batt_connected      = 0;
 volatile uint8_t batt_inspecting     = 0;
+volatile float blm_up_vtarg_limit_1   = 0.0f;
+volatile float blm_up_vtarg_limit_2   = 0.0f;
 volatile float blm_down_vtarg_limit_1   = 0.0f;
 volatile float blm_down_vtarg_limit_2   = 0.0f;
-float blm_vi_change_mult = 0.0003f;
+float blm_vi_change_mult = 0.001f;
+
+uint8_t  FFFF_blm_req_increase_vtarg           = 0;
+uint8_t  GGGG_blm_increasing_vtarg_completed   = 0;
+uint8_t  HHHH_blm_req_return_voltage_to_normal = 0;
+uint8_t  IIII_blm_increase_return_op_completed = 0;
+uint8_t  JJJJ_blm_req_return_state_to_normal   = 0;
+uint8_t  blm_increasing_vtarg                  = 0;
+uint32_t blm_increasing_vtarg_cnt              = 0;
+uint8_t  blm_decreasing_vtarg_back             = 0;
+uint32_t blm_decreasing_vtarg_back_cnt         = 0;
+uint8_t  blm_wait_at_high_lim_completed        = 0;
+uint32_t blm_wait_at_high_lim_cnt              = 0;
+uint32_t blm_wait_at_high_lim_per              = 4;
 
 
+#define CORR_BUF_SIZE 1000
+float vrect_buf[CORR_BUF_SIZE];
+float ibat_buf[CORR_BUF_SIZE];
+uint16_t corr_buf_index = 0;
+uint8_t blm_collect_corr_samples = 0;
+float blm_corr=0;
 
 
