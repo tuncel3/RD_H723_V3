@@ -1003,6 +1003,7 @@ VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
 blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
 blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
+blm_V_step_05percx3=blm_V_step_05perc*3;
 }
 
 void inline extern update_VDC_high_low_lim_fc(void) {
@@ -1337,11 +1338,11 @@ void inline extern blm_cancel_op_return_normal(void) {
 //	blm_balance_accepted=0;
 //	blm_batt_check_timer_cnt=0;
 //
-//	if (!blm_return_voltage_to_normal_completed && V_targ_con_sy < Current_charge_voltage &&
+//	if (!FFFF_blm_return_voltage_to_normal_completed && V_targ_con_sy < Current_charge_voltage &&
 //			(blm_req_reduce_vtarg || blm_req_wait_at_low_lim_fl)) {
 //		blm_req_reduce_vtarg=0;
 //		blm_req_wait_at_low_lim_fl=0;
-//		blm_req_return_voltage_to_normal=1;
+//		DDDD_blm_req_return_voltage_to_normal=1;
 //	}
 
 
@@ -1349,12 +1350,12 @@ void inline extern blm_cancel_op_return_normal(void) {
 
 void stability_vrect_fc(void) {
 		if (VRECT_pas.a16 > v_max_stb) {
-			v_max_stb = VRECT_pas.a16 + blm_V_step_05perc*3;
-			v_min_stb = VRECT_pas.a16 - blm_V_step_05perc*3;
+			v_max_stb = VRECT_pas.a16 + blm_V_step_05percx3;
+			v_min_stb = VRECT_pas.a16 - blm_V_step_05percx3;
 			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0;
 		} else if (VRECT_pas.a16 < v_min_stb) {
-			v_max_stb = VRECT_pas.a16 + blm_V_step_05perc*3;
-			v_min_stb = VRECT_pas.a16 - blm_V_step_05perc*3;
+			v_max_stb = VRECT_pas.a16 + blm_V_step_05percx3;
+			v_min_stb = VRECT_pas.a16 - blm_V_step_05percx3;
 			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0;
 		} else if (vrect_stable_cnt < 150) {
 			vrect_stable_cnt++;
@@ -1380,7 +1381,7 @@ void stability_ibat_fc(void) {
 void blm_set_up_down_vtarg_limits(void) {
 	blm_stable_v_vrect=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
 	blm_down_vtarg_limit_1=blm_stable_v_vrect-blm_V_step_05perc*4;
-	blm_down_vtarg_limit_2=blm_stable_v_vrect-blm_V_step_05perc*8;
+	blm_down_vtarg_limit_2=blm_stable_v_vrect-blm_V_step_05perc*12;
 }
 
 

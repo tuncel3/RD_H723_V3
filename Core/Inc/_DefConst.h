@@ -1170,15 +1170,6 @@ int dropper_test_var_1 = 0;
 
 
 
-uint8_t blm_batt_connected=0;
-uint32_t sync_diff_det_cnt=0;
-uint32_t sync_diff_det_per=40;
-int V_targ_change_dir=-1;
-int V_targ_change_cnt=0;
-int V_targ_change_per=0;
-
-
-
 uint8_t blm_balance_accepted=0;
 uint32_t blm_current_detected_cnt=0;
 uint32_t blm_balance_accept_cnt=0;
@@ -1197,15 +1188,13 @@ uint8_t gercV_contsV_fark_dusuk_fl=0;
 uint8_t gercV_dusuk_balncV_step1_fl=0;
 
 uint8_t blm_req_monitor_stability=0;
-uint8_t blm_req_reduce_vtarg=0;
 uint8_t blm_req_rect_cur_lim_reduce=0;
 uint32_t blm_voltage_increasing_cnt=0;
-uint8_t blm_req_return_voltage_to_normal=0;
-uint8_t blm_return_voltage_to_normal_completed=0;
 
 
 
 float blm_V_step_05perc=0.2f;
+float blm_V_step_05percx3=0.2f;
 float blm_I_step_05perc=0.2f;
 float v_max_stb=0;
 float v_min_stb=0;
@@ -1213,17 +1202,27 @@ float i_max_stb=0;
 float i_min_stb=0;
 float blm_stable_v_vrect=0;
 
+uint8_t  blm_batt_connected = 0;
+uint8_t  blm_cop = 0;
+uint8_t  AAAA_blm_req_up_down_vtarg_limits = 0;
+uint8_t BBBB_blm_req_reduce_vtarg=0;
+uint8_t  CCCC_blm_reducing_vtarg_completed = 0;
+uint8_t DDDD_blm_req_return_voltage_to_normal=0;
+uint8_t  EEEE_blm_req_return_state_to_normal = 0;
+uint8_t  FFFF_blm_reduce_return_op_completed = 0;
+
+uint32_t  batt_current_detected_cnt = 0;
 uint32_t vrect_stable_cnt = 0;
 uint8_t  vrect_stable     = 0;
 uint32_t ibat_stable_cnt = 0;
 uint8_t  ibat_stable     = 0;
 uint8_t  blm_can_start_inspection = 0;
-uint8_t  blm_reducing_vtarg_completed = 0;
-uint8_t  blm_req_up_down_vtarg_limits = 0;
 uint8_t  blm_set_up_down_vtarg_limits_completed = 0;
 uint8_t  blm_wait_at_low_lim_completed = 0;
-uint8_t  blm_req_return_state_to_normal = 0;
-uint8_t  vtarg_VRECT_diff_high = 0;
+uint8_t  vtarg_VRECT_diff_high_while_reduce = 0;
+uint8_t  vtarg_VRECT_diff_high_without_touch = 0;
+uint8_t  vtarg_VRECT_diff_high_without_touch_cnt = 0;
+uint8_t  vtarg_VRECT_diff_high_without_touch_per = 20;
 uint8_t  blm_reducing_vtarg = 0;
 uint32_t  blm_reducing_vtarg_cnt = 0;
 uint8_t  blm_increasing_vtarg_back = 0;

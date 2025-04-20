@@ -1,4 +1,5 @@
 req_reset_db
+blm_batt_connected
 Current_charge_voltage
 V_targ_con_sy
 VRECT_pas.a64
@@ -6,29 +7,26 @@ IBAT_pas.a64
 blm_stable_v_vrect
 blm_down_vtarg_limit_1
 blm_down_vtarg_limit_2
-aaa
-vtarg_VRECT_diff_high
-blm_req_reduce_vtarg
-blm_reducing_vtarg
-blm_reducing_vtarg_cnt
-blm_reducing_vtarg_completed
-aaa
-blm_req_up_down_vtarg_limits
-blm_batt_connected
 vrect_stable
 ibat_stable
-batt_current_detected
-blm_can_start_inspection
-
-
-
-
-
-
-
-
-
-
+aaa
+AAAA_blm_req_up_down_vtarg_limits
+BBBB_blm_req_reduce_vtarg
+blm_reducing_vtarg_cnt
+CCCC_blm_reducing_vtarg_completed
+blm_wait_at_low_lim_cnt
+DDDD_blm_req_return_voltage_to_normal
+blm_wait_at_low_lim_cnt
+blm_wait_at_low_lim_completed
+blm_increasing_vtarg_back_cnt
+blm_increasing_vtarg_back
+FFFF_blm_return_voltage_to_normal_completed
+EEEE_blm_req_return_state_to_normal
+aaa
+vtarg_VRECT_diff_high
+vtarg_VRECT_diff_high_while_reduce
+vtarg_VRECT_diff_high_without_touch
+blm_batt_connected
 
 
 

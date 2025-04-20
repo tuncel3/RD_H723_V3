@@ -63,10 +63,10 @@ MainGuiKoordinatAl:
 
         y := clickedY + (index - 1) * 18
         Click, %clickedX%, %y%, 1
-        Sleep, 100
+        Sleep, 20
         SendInput, %var%
         SendInput, {Enter}
-        Sleep, 250
+        Sleep, 20
     }
 
 
