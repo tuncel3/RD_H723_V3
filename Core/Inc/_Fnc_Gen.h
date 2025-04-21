@@ -754,52 +754,6 @@ void processShiftRegister_Relay_Board_16(uint32_t data) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
-
-void inline extern reset_batt_inspection_procedure_state_vars(void) {
-
-	start_bat_inspection_req=0;
-		gercek_voltaj_stable_ms=0;
-	gercek_voltaj_stable_ms_Acc_cnt=0;
-		check_gercek_voltaj_stable_ms=1;
-	vout_sample_ready=0;
-		bat_inspection_unknow_state_cnt=0;
-	bat_inspection_canceled=1;
-	set_V_targ_con_sy(Current_charge_voltage);
-}
-
-void inline extern end_batt_inspect_return_to_normal(uint8_t num) {
-
-		actions_after_charge_mode_change(10+num);
-		reset_batt_inspection_procedure_state_vars();
-
-}
-void inline extern batt_line_broken_fn(void) {
-
-		actions_after_charge_mode_change(3);
-		reset_batt_inspection_procedure_state_vars();
-
-			batt_line_broken=1;
-			apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
-
-}
-void inline extern batt_line_OK_fn(void) {
-
-		actions_after_charge_mode_change(4);
-		reset_batt_inspection_procedure_state_vars();
-
-			batt_line_broken=0;
-			apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-}
-void inline extern toggle_batt_inspection_direction(uint8_t num) {
-
-	if (batt_inspection_direction==1) {
-		batt_inspection_direction=-1;
-		sprintf(DUB," Toggled direction dir is %d num %d", batt_inspection_direction, num); umsg(pr_btln, DUB);
-	} else {
-		batt_inspection_direction=1;
-		sprintf(DUB," Toggled direction dir is %d num %d", batt_inspection_direction, num); umsg(pr_btln, DUB);
-	}
-}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////

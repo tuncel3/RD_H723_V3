@@ -735,6 +735,9 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// TEMP READ ////////////////////////////////////////////////////////////////////////////////////////////////////
 if (sfsta_op_phase == S_SFSTA_REQ_OK) { // soft start tamamlanmış. tristör devreden çıkaran yerler bu değişkeni de değiştiriyor.
 	//böylece tristörler kapatıldığında blm ye girilmiyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -744,20 +747,23 @@ stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
-if (SW_BATT_OFF && blm_batt_connected) {
+if (SW_BATT_OFF && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 	blm_batt_connected=0;													// BATT SWITCH OFF
+	apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 	blm_cancel_op_return_normal();
 	sprintf(DUB,"blm SW off"); prfm(DUB);
 }
-if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && blm_batt_connected) {
+if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 	blm_batt_connected=0;													// V BATT LOW
+	apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 	blm_cancel_op_return_normal();
 	sprintf(DUB,"blm Vbat too low"); prfm(DUB);
 }
-if (batt_current_detected && !blm_batt_connected) {
+if (batt_current_detected && !blm_batt_connected && is_state_active(BATT_LINE_BROKEN_FC)) {
 	blm_batt_current_detected_cnt++;
 	if (blm_batt_current_detected_cnt >= 10) {	// 500ms sonra current detected durumunu kabul et.
-		blm_batt_connected=1;													// CURRENT DETECTED
+		blm_batt_connected=1;
+		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);						// CURRENT DETECTED
 		blm_cancel_op_return_normal();
 		blm_batt_current_detected_cnt=0;
 	}
@@ -823,8 +829,10 @@ if (blm_op_phase == B_OP_START_REQ && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_s
         blm_op_phase = B_COUNT_DELY_INSP;
         if (blm_corr >= 0.9) {
         	blm_batt_connected=1;
+        	apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
         } else {
         	blm_batt_connected=0;
+        	apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
         }
     }
 } else if (blm_op_phase == B_COUNT_DELY_INSP) {
