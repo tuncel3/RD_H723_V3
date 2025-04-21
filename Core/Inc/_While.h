@@ -748,22 +748,19 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 	if (SW_BATT_OFF && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
-		blm_batt_connected=0;													// BATT SWITCH OFF
-		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
+		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
 		blm_cancel_op_return_normal();
 		sprintf(DUB,"blm SW off"); prfm(DUB);
 	}
-	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
-		blm_batt_connected=0;													// V BATT LOW
-		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
+	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC)) {
+		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
 		blm_cancel_op_return_normal();
 		sprintf(DUB,"blm Vbat too low"); prfm(DUB);
 	}
-	if (batt_current_detected && !blm_batt_connected && is_state_active(BATT_LINE_BROKEN_FC)) {
+	if (batt_current_detected && is_state_active(BATT_LINE_BROKEN_FC)) {
 		blm_batt_current_detected_cnt++;
 		if (blm_batt_current_detected_cnt >= 10) {	// 500ms sonra current detected durumunu kabul et.
-			blm_batt_connected=1;
-			apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);						// CURRENT DETECTED
+			apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);									// CURRENT DETECTED
 			blm_cancel_op_return_normal();
 			blm_batt_current_detected_cnt=0;
 		}
@@ -826,11 +823,9 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_enable_collect_samples = 0;
 			blm_corr = calculate_blm_op();
 			blm_op_phase = B_COUNT_DELY_INSP;
-			if (blm_corr >= 0.9) {
-				blm_batt_connected=1;
+			if (blm_corr >= 0.9 && is_state_active(BATT_LINE_BROKEN_FC)) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-			} else if (!is_state_active(DROPPER1_BYP_FC)) {
-				blm_batt_connected=0;
+			} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 			}
 		}
