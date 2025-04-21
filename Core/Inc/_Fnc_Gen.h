@@ -10,7 +10,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
 void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
-void inline extern toggle_batt_inspection_direction(uint8_t num);
 static inline uint8_t is_state_active(State_Codes state_code);
 void inline extern actions_after_charge_voltage_change();
 void inline extern blm_cancel_op_return_normal(void);
