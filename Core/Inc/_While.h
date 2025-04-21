@@ -759,13 +759,8 @@ if (SW_BATT_OFF && blm_batt_connected) {
 	blm_op_phase=B_OP_START_REQ;
 }
 
-if (blm_allowed && EpD[SET_BATT_DISC_DET][0].V1==1) {
-//	aku_hatti_kopuk_fc_inl();
-//} else if (start_bat_inspection_req==1) {
-//	end_batt_inspect_return_to_normal(6);
-}
-// switch tamam, vbat var, ibat yok. corr başlatma sayımını artır
-if (blm_allowed && vrect_stable && blm_op_phase == B_OP_START_REQ) {
+//  && EpD[SET_BATT_DISC_DET][0].V1==1
+if (blm_op_phase == B_OP_START_REQ && blm_allowed && vrect_stable) {
 	blm_corr_req=1;
 	blm_corr_op_delay_cnt = 0;
 	blm_op_phase=B_VRECT_STABLE;
