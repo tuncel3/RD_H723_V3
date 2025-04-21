@@ -829,7 +829,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			if (blm_corr >= 0.9) {
 				blm_batt_connected=1;
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-			} else if (blm_batt_connected==1) {
+			} else if (!is_state_active(DROPPER1_BYP_FC)) {
 				blm_batt_connected=0;
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 			}
