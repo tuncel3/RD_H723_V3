@@ -157,10 +157,10 @@ inline extern void HOME_PAGE_pg_disp(void) {
 			sprintf(M, "BAŞLANGIÇ"); GLCD_PrintString(0, 0, M);
 		} else {
 
-			if (batt_line_broken==1) {
-				if (batt_switch_status==0) {
+			if (is_state_active(BATT_LINE_BROKEN_FC)) {
+				if (SW_BATT_OFF) {
 					sprintf(M, "AKÜ ANAHTAR OFF"); 		GLCD_PrintString(0, 0, M);
-				} else if (batt_switch_status==1) {
+				} else if (!SW_BATT_OFF) {
 					sprintf(M, "AKÜ HATTI KOPUK"); 		GLCD_PrintString(0, 0, M);
 				}
 			}
