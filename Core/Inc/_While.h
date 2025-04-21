@@ -735,11 +735,12 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	if (sfsta_op_phase == S_SFSTA_REQ_OK) { // soft start tamamlanmış. tristör devreden çıkaran yerler bu değişkeni de değiştiriyor. böylece tristörler kapatıldığında blm ye girilmiyor.
+if (sfsta_op_phase == S_SFSTA_REQ_OK) { // soft start tamamlanmış. tristör devreden çıkaran yerler bu değişkeni de değiştiriyor.
+	//böylece tristörler kapatıldığında blm ye girilmiyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 stability_vrect_fc();	// vrect_stable 1 0 yapıyor
 stability_irect_fc();	// irect_stable 1 0 yapıyor
-stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor
+stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
@@ -754,19 +755,19 @@ if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && blm_batt_connected) {
 	sprintf(DUB,"blm Vbat too low"); prfm(DUB);
 }
 if (batt_current_detected && !blm_batt_connected) {
-	blm_batt_connected=1;													// CURRENT DETECTED
-	blm_cancel_op_return_normal();
 	blm_batt_current_detected_cnt++;
-	if (blm_batt_current_detected_cnt >= 10) {
-		blm_op_phase=B_BATT_CURR_DETCTD;
+	if (blm_batt_current_detected_cnt >= 10) {	// 500ms sonra current detected durumunu kabul et.
+		blm_batt_connected=1;													// CURRENT DETECTED
+		blm_cancel_op_return_normal();
 		blm_batt_current_detected_cnt=0;
 	}
-}
+} else {blm_batt_current_detected_cnt=0;}
 if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 	blm_cancel_op_return_normal();
 }
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// blm başlatılmasını engelleyen durumlar yoksa devam et.
 if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_allowed && blm_op_phase==0) {
 	blm_op_phase=B_OP_START_REQ;
 }
