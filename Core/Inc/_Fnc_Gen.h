@@ -1257,12 +1257,12 @@ void blm_set_up_down_vtarg_limits(void) {
 }
 
 
-float calculate_pearson_corr(void);
-float calculate_pearson_corr(void)
+float calculate_blm_op(void);
+float calculate_blm_op(void)
 {
     if (blm_corr_buf_index < 2) {
         // En az 2 örnek olmalı
-        return 99;
+        return -1;
     }
 
     float sum_v = 0.0f, sum_i = 0.0f;
@@ -1288,47 +1288,15 @@ float calculate_pearson_corr(void)
     float cov_vi = sum_vi - blm_corr_buf_index * mean_v * mean_i;
 
     if (var_v <= 0.0f || var_i <= 0.0f)
-        return 55; // sabit sinyal varsa korelasyon anlamsız
+        return -2;
 
     float corr = cov_vi / sqrtf(var_v * var_i);
 
-    // -1.0 ile 1.0 aralığını güvenceye al
     if (corr > 1.0f) corr = 1.0f;
     else if (corr < -1.0f) corr = -1.0f;
 
     blm_corr_buf_index=0;
     return corr;
 }
-
-//float calculate_pearson_corr(void)
-//{
-//    float sum_x = 0.0f, sum_y = 0.0f;
-//    float sum_x2 = 0.0f, sum_y2 = 0.0f;
-//    float sum_xy = 0.0f;
-//    float r = 0.0f;
-//
-//    for (uint16_t i = 0; i < CORR_BUF_SIZE; i++) {
-//        float x = vrect_buf[i];
-//        float y = ibat_buf[i];
-//
-//        sum_x += x;
-//        sum_y += y;
-//        sum_x2 += x * x;
-//        sum_y2 += y * y;
-//        sum_xy += x * y;
-//    }
-//
-//    float n = (float)CORR_BUF_SIZE;
-//    float denominator = sqrtf((n * sum_x2 - sum_x * sum_x) * (n * sum_y2 - sum_y * sum_y));
-//
-//    if (denominator != 0.0f) {
-//        r = (n * sum_xy - sum_x * sum_y) / denominator;
-//    } else {
-//        r = 0.0f;
-//    }
-//
-//    return r;
-//}
-
 
 

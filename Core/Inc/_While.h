@@ -762,7 +762,7 @@ if (batt_current_detected && !blm_batt_connected) {
 		blm_batt_current_detected_cnt=0;
 	}
 }
-if (!irect_stable) {
+if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 	blm_cancel_op_return_normal();
 }
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
@@ -816,7 +816,7 @@ if (blm_op_phase == B_OP_START_REQ && blm_allowed && vrect_stable) {
     corr_delay_cnt++;
     if (corr_delay_cnt >= vtarg_wait_at_lim_cnt) {
         blm_collect_corr_samples = 0;
-        blm_corr = calculate_pearson_corr();
+        blm_corr = calculate_blm_op();
         blm_op_phase = B_COUNT_DELY_INSP;
         if (blm_corr >= 0.9) {
         	blm_batt_connected=1;
