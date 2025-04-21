@@ -756,7 +756,7 @@ if (SW_BATT_OFF && blm_batt_connected) {
 } else if (!irect_stable) {
 	blm_cancel_op_return_normal();
 } else if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_allowed && blm_op_phase==0) {
-	blm_op_phase=B_VRECT_STABLE;
+	blm_op_phase=B_OP_START_REQ;
 }
 
 //if (sfsta_op_phase == S_SFSTA_REQ_OK && blm_allowed && EpD[SET_BATT_DISC_DET][0].V1==1) {
@@ -765,11 +765,11 @@ if (SW_BATT_OFF && blm_batt_connected) {
 //	end_batt_inspect_return_to_normal(6);
 //}
 // switch tamam, vbat var, ibat yok. corr başlatma sayımını artır
-if (vrect_stable && blm_op_phase == B_VRECT_STABLE) { // vrect stable değilse başlama. sakin durumda iken yap.
+if (vrect_stable && blm_op_phase == B_OP_START_REQ) {
 	blm_corr_req=1;
 	blm_corr_op_delay_cnt = 0;
-	blm_op_phase=3;
-} else if (blm_corr_req && blm_op_phase == 3) { // Başlatma
+	blm_op_phase=B_VRECT_STABLE;
+} else if (blm_corr_req && blm_op_phase == B_VRECT_STABLE) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
 	blm_corr_req = 0;
 	blm_collect_corr_samples = 1;
 	blm_corr_buf_index = 0;
