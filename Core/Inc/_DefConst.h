@@ -1281,7 +1281,6 @@ typedef enum {
 
 int blm_op_phase = 0;
 typedef enum {
-	B_NONE,
 	B_OP_START_REQ,
 	B_VRECT_STABLE,
 	B_COUNT_DELY_INSP
