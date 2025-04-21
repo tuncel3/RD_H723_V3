@@ -741,11 +741,12 @@ stability_vrect_fc();	// vrect_stable 1 0 yapıyor
 stability_irect_fc();	// irect_stable 1 0 yapıyor
 stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// WHAT STOPS AND RESETS BATT LINE MONITORING
 if (SW_BATT_OFF && blm_batt_connected) {
 	blm_batt_connected=0;													// BATT SWITCH OFF
 	blm_cancel_op_return_normal();
 	sprintf(DUB,"blm SW off"); prfm(DUB);
-	blm_op_phase=B_NONE;
 }
 if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && blm_batt_connected) {
 	blm_batt_connected=0;													// V BATT LOW
@@ -764,6 +765,8 @@ if (batt_current_detected && !blm_batt_connected) {
 if (!irect_stable) {
 	blm_cancel_op_return_normal();
 }
+/// WHAT STOPS AND RESETS BATT LINE MONITORING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_allowed && blm_op_phase==0) {
 	blm_op_phase=B_OP_START_REQ;
 }
