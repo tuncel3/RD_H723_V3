@@ -744,18 +744,27 @@ stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor
 if (SW_BATT_OFF && blm_batt_connected) {
 	blm_batt_connected=0;													// BATT SWITCH OFF
 	blm_cancel_op_return_normal();
-	sprintf(DUB,"SW off"); prfm(DUB);
-} else if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && blm_batt_connected) {
+	sprintf(DUB,"blm SW off"); prfm(DUB);
+	blm_op_phase=B_NONE;
+}
+if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && blm_batt_connected) {
 	blm_batt_connected=0;													// V BATT LOW
 	blm_cancel_op_return_normal();
-	sprintf(DUB,"Vbat too low"); prfm(DUB);
-} else if (batt_current_detected && !blm_batt_connected) {
+	sprintf(DUB,"blm Vbat too low"); prfm(DUB);
+}
+if (batt_current_detected && !blm_batt_connected) {
 	blm_batt_connected=1;													// CURRENT DETECTED
 	blm_cancel_op_return_normal();
-	batt_current_detected_cnt++;
-} else if (!irect_stable) {
+	blm_batt_current_detected_cnt++;
+	if (blm_batt_current_detected_cnt >= 10) {
+		blm_op_phase=B_BATT_CURR_DETCTD;
+		blm_batt_current_detected_cnt=0;
+	}
+}
+if (!irect_stable) {
 	blm_cancel_op_return_normal();
-} else if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_allowed && blm_op_phase==0) {
+}
+if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_allowed && blm_op_phase==0) {
 	blm_op_phase=B_OP_START_REQ;
 }
 

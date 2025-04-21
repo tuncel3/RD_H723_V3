@@ -1210,7 +1210,7 @@ uint8_t DDDD_blm_req_return_voltage_to_normal=0;
 uint8_t  EEEE_blm_req_return_state_to_normal = 0;
 uint8_t  FFFF_blm_reduce_return_op_completed = 0;
 
-uint32_t  batt_current_detected_cnt = 0;
+uint32_t blm_batt_current_detected_cnt = 0;
 uint32_t vrect_stable_cnt = 0;
 uint8_t  vrect_stable     = 0;
 uint32_t irect_stable_cnt = 0;
@@ -1281,6 +1281,7 @@ typedef enum {
 
 int blm_op_phase = 0;
 typedef enum {
+	B_NONE,
 	B_OP_START_REQ,
 	B_VRECT_STABLE,
 	B_COUNT_DELY_INSP
