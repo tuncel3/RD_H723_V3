@@ -735,7 +735,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	if (sfsta_op_phase == S_SFSTA_REQ_OK) {
+	if (sfsta_op_phase == S_SFSTA_REQ_OK) { // soft start tamamlanmış. tristör devreden çıkaran yerler bu değişkeni de değiştiriyor. böylece tristörler kapatıldığında blm ye girilmiyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 stability_vrect_fc();	// vrect_stable 1 0 yapıyor
 stability_irect_fc();	// irect_stable 1 0 yapıyor
@@ -761,11 +761,9 @@ if (SW_BATT_OFF && blm_batt_connected) {
 
 //  && EpD[SET_BATT_DISC_DET][0].V1==1
 if (blm_op_phase == B_OP_START_REQ && blm_allowed && vrect_stable) {
-	blm_corr_req=1;
 	blm_corr_op_delay_cnt = 0;
 	blm_op_phase=B_VRECT_STABLE;
-} else if (blm_corr_req && blm_op_phase == B_VRECT_STABLE) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
-	blm_corr_req = 0;
+} else if (blm_op_phase == B_VRECT_STABLE) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
 	blm_collect_corr_samples = 1;
 	blm_corr_buf_index = 0;
 	blm_set_up_down_vtarg_limits();
