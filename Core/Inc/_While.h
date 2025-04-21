@@ -768,12 +768,14 @@ if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya n
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // blm başlatılmasını engelleyen durumlar yoksa devam et.
-if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_allowed && blm_op_phase==0) {
+// Switch off ise inspection yapmanın anlamı yok. zaten kopuk.
+// bat voltajı çok düşükse zaten inspection a gerek yok direk bat bağlı değil denebilir.
+// bat akımı varsa zaten bat bağlı demek oluyor, inspection a gerek yok.
+if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==0) {
 	blm_op_phase=B_OP_START_REQ;
 }
 
-//  && EpD[SET_BATT_DISC_DET][0].V1==1
-if (blm_op_phase == B_OP_START_REQ && blm_allowed && vrect_stable) {
+if (blm_op_phase == B_OP_START_REQ && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_stable) {
 	blm_corr_op_delay_cnt = 0;
 	blm_op_phase=B_VRECT_STABLE;
 } else if (blm_op_phase == B_VRECT_STABLE) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.

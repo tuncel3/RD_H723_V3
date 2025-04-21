@@ -1255,7 +1255,7 @@ float vrect_buf[CORR_BUF_SIZE];
 float ibat_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
 
-uint8_t blm_allowed = 0;
+//uint8_t blm_allowed = 0;
 uint32_t blm_corr_op_delay_cnt = 0;
 uint32_t blm_corr_op_delay_per = 40;
 uint8_t corr_delay_cnt = 0;
