@@ -1151,7 +1151,7 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 void inline extern blm_cancel_op_return_normal(void) {
 	blm_corr_req=0;
 	blm_op_phase=B_COUNT_DELY_INSP;
-	blm_corr_op_delay_cnt=0;
+	blm_corr_op_start_delay_cnt=0;
 	blm_collect_corr_samples=0;
 	blm_corr_buf_index = 0;
 	set_V_targ_con_sy(Current_charge_voltage);

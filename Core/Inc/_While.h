@@ -781,7 +781,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_op_phase=B_OP_START_REQ;
 	}
 	if (blm_op_phase == B_OP_START_REQ && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_stable) {
-		blm_corr_op_delay_cnt = 0;
+		blm_corr_op_start_delay_cnt = 0;
 		blm_op_phase=B_VRECT_STABLE;
 	} else if (blm_op_phase == B_VRECT_STABLE) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
 		blm_collect_corr_samples = 1;
@@ -792,24 +792,24 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		if (V_targ_con_sy > blm_vtarg_move_dn_targ && V_targ_con_sy > blm_vtarg_move_dn_min) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
-			corr_delay_cnt = 0;
+			blm_corr_phase_switch_delay_cnt = 0;
 			blm_op_phase = 5;
 		}
 	} else if (blm_op_phase == 5) { // Bekle
-		corr_delay_cnt++;
-		if (corr_delay_cnt >= vtarg_wait_at_lim_cnt) {
+		blm_corr_phase_switch_delay_cnt++;
+		if (blm_corr_phase_switch_delay_cnt >= blm_corr_phase_switch_delay_per) {
 			blm_op_phase = 6;
 		}
 	} else if (blm_op_phase == 6) { // Vtarg’ı yükselt
 		if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_max) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
 		} else {
-			corr_delay_cnt = 0;
+			blm_corr_phase_switch_delay_cnt = 0;
 			blm_op_phase = 7;
 		}
 	} else if (blm_op_phase == 7) { // Bekle
-		corr_delay_cnt++;
-		if (corr_delay_cnt >= vtarg_wait_at_lim_cnt) {
+		blm_corr_phase_switch_delay_cnt++;
+		if (blm_corr_phase_switch_delay_cnt >= blm_corr_phase_switch_delay_per) {
 			blm_op_phase = 8;
 		}
 	} else if (blm_op_phase == 8) { // Vtarg’ı tekrar düşür
@@ -817,12 +817,12 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
 			set_V_targ_con_sy(Current_charge_voltage);
-			corr_delay_cnt = 0;
+			blm_corr_phase_switch_delay_cnt = 0;
 			blm_op_phase = 9;
 		}
 	} else if (blm_op_phase == 9) { // Bekle
-		corr_delay_cnt++;
-		if (corr_delay_cnt >= vtarg_wait_at_lim_cnt) {
+		blm_corr_phase_switch_delay_cnt++;
+		if (blm_corr_phase_switch_delay_cnt >= blm_corr_phase_switch_delay_per) {
 			blm_collect_corr_samples = 0;
 			blm_corr = calculate_blm_op();
 			blm_op_phase = B_COUNT_DELY_INSP;
@@ -835,10 +835,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			}
 		}
 	} else if (blm_op_phase == B_COUNT_DELY_INSP) {
-		blm_corr_op_delay_cnt++;
-		if (blm_corr_op_delay_cnt >= blm_corr_op_delay_per) {
+		blm_corr_op_start_delay_cnt++;
+		if (blm_corr_op_start_delay_cnt >= blm_corr_op_delay_per) {
 			blm_op_phase = 0;
-			blm_corr_op_delay_cnt = 0;
+			blm_corr_op_start_delay_cnt = 0;
 		}
 	}
 	if (blm_collect_corr_samples && blm_corr_buf_index < CORR_BUF_SIZE) {
