@@ -54,25 +54,23 @@ void DMA1_Stream1_IRQHandler(void) {
 
 		short_circ_monitor_f();
 
-		IRECT_sum_sc=IRECT_sum_sc+IRECT_smp_sc; IRECT_smp_count++;
-		IBAT_sum_sc=IBAT_sum_sc+IBAT_smp_sc; IBAT_smp_count++;
-		VBAT_sum_sc=VBAT_sum_sc+VBAT_smp_sc; VBAT_smp_count++;
-		VDCKP_sum=VDCKP_sum+DCKP_smp; VDCKP_smp_count++;
-		VDCKN_sum=VDCKN_sum+DCKN_smp; VDCKN_smp_count++;
-		VLOAD_sum_sc=VLOAD_sum_sc+VLOAD_smp_sc; VLOAD_smp_count++;
+		IRECT_sum_sc=IRECT_sum_sc+IRECT_smp_sc;
+		IBAT_sum_sc=IBAT_sum_sc+IBAT_smp_sc;
+		VBAT_sum_sc=VBAT_sum_sc+VBAT_smp_sc;
+		VDCKP_sum=VDCKP_sum+DCKP_smp;
+		VDCKN_sum=VDCKN_sum+DCKN_smp;
+		VLOAD_sum_sc=VLOAD_sum_sc+VLOAD_smp_sc;
 		VRECT_sum_sc=VRECT_sum_sc+VRECT_smp_sc;
-		VRECT_sum=VRECT_sum+VRECT_smp; VRECT_smp_count++;
+		ADC_smp_count++;
 
 		if (EXTI_Zero_crossing == 1) {
 			EXTI_Zero_crossing = 0;
-			IRECT_pas.a1=IRECT_sum_sc/IRECT_smp_count;
-			IRECT_smp_count=0;
+			IRECT_pas.a1=IRECT_sum_sc/ADC_smp_count;
 			IRECT_sum_sc=0;
 			IRECT_pas.a64=IRECT_pas.a64*63.0/64.0+IRECT_pas.a1/64.0;
 			IRECT_pas.a16=IRECT_pas.a16*15.0/16.0+IRECT_pas.a1/16.0;
 
-			IBAT_pas.a1=IBAT_sum_sc/IBAT_smp_count;
-			IBAT_smp_count=0;
+			IBAT_pas.a1=IBAT_sum_sc/ADC_smp_count;
 			IBAT_sum_sc=0;
 			IBAT_pas.a64=IBAT_pas.a64*63.0/64.0+IBAT_pas.a1/64.0;
 			IBAT_pas.a16=IBAT_pas.a16*15.0/16.0+IBAT_pas.a1/16.0;
@@ -80,64 +78,52 @@ void DMA1_Stream1_IRQHandler(void) {
 			ILOAD_pas.a64=IRECT_pas.a64-IBAT_pas.a64;
 			ILOAD_pas.a16=IRECT_pas.a16-IBAT_pas.a16;
 
-			VBAT_pas.a1=VBAT_sum_sc/VBAT_smp_count;
-			VBAT_smp_count=0;
+			VBAT_pas.a1=VBAT_sum_sc/ADC_smp_count;
 			VBAT_sum_sc=0;
 			VBAT_pas.a64=VBAT_pas.a64*63.0/64.0+VBAT_pas.a1/64.0;
 			VBAT_pas.a16=VBAT_pas.a16*15.0/16.0+VBAT_pas.a1/16.0;
 
-			VDCKP_samp_end = 0;
-			VDCKP_per_avg=VDCKP_sum/VDCKP_smp_count;
-			VDCKP_smp_count=0;
+			VDCKP_per_avg=VDCKP_sum/ADC_smp_count;
 			VDCKP_sum=0;
 			VDCKP_per_avg_roll=VDCKP_per_avg_roll*127.0/128.0+VDCKP_per_avg/128.0;
 
-			VDCKN_per_avg=VDCKN_sum/VDCKN_smp_count;
-			VDCKN_smp_count=0;
+			VDCKN_per_avg=VDCKN_sum/ADC_smp_count;
 			VDCKN_sum=0;
 			VDCKN_per_avg_roll=VDCKN_per_avg_roll*127.0/128.0+VDCKN_per_avg/128.0;
 
-			VLOAD_pas.a1=VLOAD_sum_sc/VLOAD_smp_count;
-			VLOAD_smp_count=0;
+			VLOAD_pas.a1=VLOAD_sum_sc/ADC_smp_count;
 			VLOAD_sum_sc=0;
 			VLOAD_pas.a64=VLOAD_pas.a64*63.0/64.0+VLOAD_pas.a1/64.0;
 			VLOAD_pas.a16=VLOAD_pas.a16*15.0/16.0+VLOAD_pas.a1/16.0;
 
-			VRECT_pas.a1=VRECT_sum_sc/VRECT_smp_count;
-			VRECT_per_avg=VRECT_sum/VRECT_smp_count;
-			VRECT_smp_count=0;
+			VRECT_pas.a1=VRECT_sum_sc/ADC_smp_count;
 			VRECT_sum_sc=0;
-			VRECT_sum=0;
 			VRECT_pas.a64=VRECT_pas.a64*63.0/64.0+VRECT_pas.a1/64.0;
 			VRECT_pas.a16=VRECT_pas.a16*15.0/16.0+VRECT_pas.a1/16.0;
-
+			ADC_smp_count=0;
 
 
 		}
 
-		VDCKP_per_avg_roll_perc=VDCKP_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_per_avg_roll;
-		VDCKN_per_avg_roll_perc=VDCKN_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_per_avg_roll;
+		VDCKP_per_avg_roll_perc=VDCKP_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_pas.a64; // VDCKP nin VRECT e oranlanmış hali.
+		VDCKN_per_avg_roll_perc=VDCKN_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_pas.a64;
 
-		VDCKP_per_avg_roll_scaled=VDCKP_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_pas.a64;
-		VDCKN_per_avg_roll_scaled=VDCKN_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_pas.a64;
-
-		VRECT_per_avg_roll_half=VRECT_per_avg_roll/2;
+		VRECT_pas64_half=VRECT_pas.a64/2;
 
 		if (VDCKP_per_avg_roll_perc >= VDCKN_per_avg_roll_perc) {
-			VDCK_raw = VDCKP_per_avg_roll_perc-VRECT_per_avg_roll_half;
-			VDCK_perc=VDCK_raw/VRECT_per_avg_roll_half*100;
+			VDCK_raw = VDCKP_per_avg_roll_perc-VRECT_pas64_half;
+			VDCK_perc=VDCK_raw/VRECT_pas64_half*100;
 			VDCKP_perc=VDCK_perc;
 			VDCKN_perc=0;
 			VDCK_side=1;
 		} else if (VDCKP_per_avg_roll_perc < VDCKN_per_avg_roll_perc) {
-			VDCK_raw = VDCKN_per_avg_roll_perc-VRECT_per_avg_roll_half;
-			VDCK_perc=VDCK_raw/VRECT_per_avg_roll_half*100;
+			VDCK_raw = VDCKN_per_avg_roll_perc-VRECT_pas64_half;
+			VDCK_perc=VDCK_raw/VRECT_pas64_half*100;
 			VDCKP_perc=0;
 			VDCKN_perc=VDCK_perc;
 			VDCK_side=-1;
 		}
 			VDCK_sc=VDCK_raw*0.00122055;
-
 
 			VACR_smp_sc=(VACR_smp-32768+EpD[SET_ACR_OFFS_CAL][0].V1)*EpD[SET_ACR_CAL][0].V1;
 			VACS_smp_sc=(VACS_smp-32768+EpD[SET_ACS_OFFS_CAL][0].V1)*EpD[SET_ACS_CAL][0].V1;
@@ -148,7 +134,7 @@ void DMA1_Stream1_IRQHandler(void) {
 			VACT_sum_of_sqr_sc=VACT_sum_of_sqr_sc+(VACT_smp_sc*VACT_smp_sc);VACT_smp_count++;
 
 			if(VAC_R_samp_end==1){
-				VAC_R_samp_end=0; VAC_R_samp_end2=1;
+				VAC_R_samp_end=0;
 				VAC_R_rms_sc=sqrt(VACR_sum_of_sqr_sc/VACR_smp_count);
 				VACR_smp_count=0;
 				VACR_sum_of_sqr_sc=0;

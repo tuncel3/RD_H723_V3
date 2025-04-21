@@ -15,6 +15,7 @@ static inline uint8_t is_state_active(State_Codes state_code);
 void inline extern actions_after_charge_voltage_change();
 void inline extern blm_cancel_op_return_normal(void);
 
+
 void compress_REL_OUT_order_to_parts(void);
 void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void);
 void generate_rel_ord_tb_from_REL_OUT_order_vector_fc(void);
@@ -897,31 +898,27 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		set_V_targ_con_sy(Current_charge_voltage);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
 		LED_7_Data |= FLOAT_CHARGE_LED;
-		switch_to_auto_mode_completed=0; // auto moddan başka bir moda geçildi.
+		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		if (num!=12 && num!=13)	{	// batt inspection numbers
-			sprintf(DUB,"FLOAT charge mode %d", num); prfm(DUB);
-		}
+		sprintf(DUB,"FLOAT charge mode %d", num); prfm(DUB);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
-		switch_to_auto_mode_completed=0; // auto moddan başka bir moda geçildi.
+		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		if (num!=12 && num!=13)	{	// batt inspection numbers
-			sprintf(DUB,"BOOST charge mode %d", num); prfm(DUB);
-		}
+		sprintf(DUB,"BOOST charge mode %d", num); prfm(DUB);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
-		switch_to_auto_mode_completed=0; // auto moddan başka bir moda geçildi.
+		switch_to_auto_mode_completed=0;
 		if (timed_mode_actions_do_once==0) {
 			timed_mode_actions_do_once=1; // timed a geçiş yapıldığında bir kez uygulanacak. tekrar uygulanabilmesi için başka moda geçilmesi lazım.
 			timed_mode_time_ended=0; // timed mod sayacı sıfırla. sayaç sonunda float a geçilecek
@@ -946,8 +943,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC); } // activate general fault LED if associated
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) {  // stop thy drv if fault requires
         	thy_drv_en=0;
-			sf_sta_req=0;
-			sf_sta_req_ok=0;
+        	sfsta_op_phase = S_SFSTA_NONE;
             thy_stop_fault_hold_bits |= fault_bit;
         	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
@@ -961,8 +957,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 
 		if (!!(state_list[state_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(state_code); }
-		sprintf(DUB,"     state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
-
     } else {
         if (state_list[state_code].code < 16) {
         	LED_16_Data &= ~fault_bit; }  // deactivate LED if resetting a fault with LED requirement
@@ -976,8 +970,8 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
-		sprintf(DUB,"          state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
     }
+		sprintf(DUB,"     state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// OUT RELAY ACTIVATE DEACTIVATE ////////////////////////////////////////////////////////////////////////////////
@@ -1203,7 +1197,8 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 
 void inline extern blm_cancel_op_return_normal(void) {
 	blm_corr_req=0;
-	blm_op_phase=0;
+	blm_op_phase=B_COUNT_DELY_INSP;
+	blm_corr_op_delay_cnt=0;
 	blm_collect_corr_samples=0;
 	blm_corr_buf_index = 0;
 	set_V_targ_con_sy(Current_charge_voltage);

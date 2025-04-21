@@ -18,11 +18,10 @@ volatile uint32_t adc_buffer[NUM_CHANNELS];
 
 #define MAX_PID_OUTPUT 10000.0f
 #define MIN_PID_OUTPUT 0.0f
-uint32_t sf_sta_req=0;
+//uint32_t sf_sta_req=0;
 uint32_t sf_sta_req_cnt=0;
-uint32_t sf_sta_req_ok=0;
+//uint32_t sf_sta_req_ok=0;
 uint32_t sfst_1_t_hold=0;
-uint32_t sfst_1_step=5;
 double sfst_1_step_perc=0.005;
 double sfst_1_step_perc_inc=0.005;
 double vtarg_float_s_down=0.01;
@@ -135,7 +134,7 @@ uint8_t Mode_CC = 1;
 uint8_t thy_drv_en=0;
 uint16_t thy_drv_en_cnt=0;
 uint8_t thy_drv_en_req = 1;
-uint8_t user_wants_thy_drv = 1;
+uint8_t user_wants_allows_thy_drv = 1;
 uint8_t batt_switch_on = 1; // debug
 uint8_t batt_switch_status = 1;
 uint8_t load_switch_status = 0;
@@ -148,7 +147,7 @@ uint32_t EXTI_Zero_crossing = 0;
 float IRECT_sum_sc = 0;
 float IRECT_avg_sc = 0;
 float IRECT_lim = 15;
-uint32_t IRECT_smp_count = 0;
+uint32_t ADC_smp_count = 0;
 uint32_t IRECT_samp_end = 0;
 float IRECT_zero = 32784;
 //uint32_t IRECT_zero_req = 0;
@@ -231,32 +230,30 @@ float VACT_smp_sc = 0;
 float VAC_R_rms_sc = 0;
 float VAC_S_rms_sc = 0;
 float VAC_T_rms_sc = 0;
-float VRECT_per_avg_roll = 0;
-float VRECT_per_avg_roll_half = 0;
+float VRECT_pas64_half = 0;
 float VDCKP_avg2_s = 0;
 float VDCKN_avg2_s = 0;
-uint32_t VDCKP_smp_count = 0;
-uint32_t VDCKN_smp_count = 0;
-uint32_t VAC_R_smp_count = 0;
-uint32_t VAC_S_smp_count = 0;
-uint32_t VAC_T_smp_count = 0;
-uint32_t VRECT_smp_count = 0;
-uint32_t VLOAD_smp_count = 0;
-uint32_t VDCKP_samp_end = 0;
-uint32_t VDCKN_samp_end = 0;
+//uint32_t VDCKP_smp_count = 0;
+//uint32_t VDCKN_smp_count = 0;
+//uint32_t VAC_R_smp_count = 0;
+//uint32_t VAC_S_smp_count = 0;
+//uint32_t VAC_T_smp_count = 0;
+//uint32_t VRECT_smp_count = 0;
+//uint32_t VLOAD_smp_count = 0;
+//uint32_t VDCKP_samp_end = 0;
+//uint32_t VDCKN_samp_end = 0;
 uint32_t VAC_R_samp_end = 0;
-uint32_t VAC_R_samp_end2 = 0;
 uint32_t VAC_S_samp_end = 0;
 uint32_t VAC_T_samp_end = 0;
-uint32_t VRECT_samp_end = 0;
-uint32_t VLOAD_samp_end = 0;
+//uint32_t VRECT_samp_end = 0;
+//uint32_t VLOAD_samp_end = 0;
 float VDCKP_sum = 0;
 float VDCKN_sum = 0;
 float VLOAD_sum_sc = 0;
 float VRECT_sum_sc = 0;
-uint32_t VRECT_sum = 0;
-uint32_t VDCKP_per_avg_roll_perc = 0;
-uint32_t VDCKN_per_avg_roll_perc = 0;
+float VRECT_sum = 0;
+float VDCKP_per_avg_roll_perc = 0;
+float VDCKN_per_avg_roll_perc = 0;
 float VDCKP_per_avg_roll_scaled = 0;
 float VDCKN_per_avg_roll_scaled = 0;
 float VDCK_sc = 0;
@@ -688,7 +685,6 @@ float hedef_baslangic_fark = 0;
 float hedef_gercek_fark = 0;
 float gercek_baslangic_fark = 0;
 float cont_sys_vbatt_diff = 0;
-uint32_t ms_50_cnt = 0;
 uint32_t baslangic_gercek_fark_cok = 0;
 uint32_t hedef_gercek_fark_az = 0;
 uint32_t start_bat_inspection_req = 0;
@@ -1260,9 +1256,8 @@ float ibat_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
 
 uint8_t blm_allowed = 0;
-uint32_t blm_corr_req_cnt = 0;
-uint32_t blm_corr_req_per = 40;
-int blm_op_phase = 0;
+uint32_t blm_corr_op_delay_cnt = 0;
+uint32_t blm_corr_op_delay_per = 40;
 uint8_t corr_delay_cnt = 0;
 uint8_t blm_corr_req = 0;        // Live Expressions’dan 1 yapınca başlar
 uint8_t blm_collect_corr_samples = 0;
@@ -1271,3 +1266,21 @@ float blm_vi_change_mult = 0.0005f;
 float blm_corr = 0.0f;
 uint32_t blm_batt_connected_0_cnt = 0;
 
+int sfsta_op_phase = 0;
+typedef enum {
+	S_SFSTA_NONE,
+	S_SFSTA_REQ,
+	S_SFSTA_REQ_OK
+}SFTSTA_STATE;
+
+int sta_op_phase = 0;
+typedef enum {
+	S_STARTUP_DELAY_CNT,
+	S_STARTUP_DELAY_OK
+}STARUP_STATE;
+
+int blm_op_phase = 0;
+typedef enum {
+	B_VRECT_STABLE,
+	B_COUNT_DELY_INSP
+}BLM_STATE;

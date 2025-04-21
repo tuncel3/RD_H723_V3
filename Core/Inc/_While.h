@@ -1,73 +1,57 @@
-
-
-
 // soft start
-if (sf_sta_req && line_sgn_stable && sf_sta_req_ok==0 && ms_tick_cnt-sfst_1_t_hold >= sfst_1_step && thy_stop_fault_hold_bits==0) {
+if (ms_tick_cnt-sfst_1_t_hold >= 5) { // soft start step. 5ms
 	sfst_1_t_hold=ms_tick_cnt;
 
-	if (V_targ_con_sy <= Current_charge_voltage && (IRECT_pas.a1 < EpD[IRECT_LIM_RT_][0].V1*1.01 || IBAT_pas.a1 < I_batt_targ_con_sy*1.01)) {
-		set_V_targ_con_sy(V_targ_con_sy*1.003);
-		if (V_targ_con_sy >= Current_charge_voltage) {
-			set_V_targ_con_sy(V_targ_con_sy);
-			sf_sta_req=0;
-			sf_sta_req_ok=1;
+	if (sfsta_op_phase == S_SFSTA_REQ && line_sgn_stable && thy_stop_fault_hold_bits==0) {
+		if (V_targ_con_sy <= Current_charge_voltage) {
+			set_V_targ_con_sy(V_targ_con_sy*1.003);
+		}
+		else if (V_targ_con_sy > Current_charge_voltage) {
+			set_V_targ_con_sy(Current_charge_voltage);
+			sfsta_op_phase=S_SFSTA_REQ_OK;
 			actions_after_charge_mode_change(6);
 			sprintf(DUB,"Soft start request ok"); prfm(DUB);
 		}
-		else if (V_targ_con_sy < VRECT_smp_sc-4) {		// vout zaten yüksekse direk hedefi oraya yaklaştırarak başla
+		if (V_targ_con_sy < VRECT_smp_sc-4) {		// vout zaten yüksekse direk hedefi oraya yaklaştırarak başla
 			set_V_targ_con_sy(VRECT_smp_sc-4);
-			sprintf(DUB,"sfst V_targ_con_sy=VRECT_smp_sc-4;"); prfm(DUB);
+			sprintf(DUB,"Sfst OK V_targ_con_sy < VRECT_smp_sc-4;"); prfm(DUB);
 		}
-		else if (V_targ_con_sy >= Current_charge_voltage && V_targ_con_sy >= VRECT_smp_sc) {	// hedef zaten vout üzerinde. hedefi vout yap.
-			set_V_targ_con_sy(VRECT_smp_sc);
-			sprintf(DUB,"sfst V_targ_con_sy=VRECT_smp_sc;"); prfm(DUB);
-		}
-	}
-	else if (V_targ_con_sy > Current_charge_voltage && Current_charge_voltage >= EpD[DEV_NOM_VOUT][0].V1) {
-		set_V_targ_con_sy(Current_charge_voltage);
-		sf_sta_req=0;
-		sf_sta_req_ok=1;
-		actions_after_charge_mode_change(7);
-		sprintf(DUB,"Sft strt req ok aft V_targ_con_sy > Curr_chrg_voltg"); prfm(DUB);
-	}
-	else if (sfst_1_unexpected_state==0) {
-		sfst_1_unexpected_state=1;
-		set_V_targ_con_sy(Current_charge_voltage);
-		sf_sta_req=0;
-		sf_sta_req_ok=1;
-		sprintf(DUB,"Soft start request ok after unexpected state"); prfm(DUB);
-	}
-	if (sf_sta_req_ok==1) {
-		set_V_targ_con_sy(Current_charge_voltage);
 	}
 }
 
-// delayed soft start trigger
-if (ms_tick_cnt-while_delay50_h >= 50) {
+if (ms_tick_cnt-while_delay50_h >= 50) {	// 50ms loop. using ms counter.
 	while_delay50_h=ms_tick_cnt;
-	ms_50_cnt++;
 
+if (sta_op_phase == S_STARTUP_DELAY_CNT) {	// delay bekleme state'i.
 	device_start_up_delay_completed_cnt++;
-if (device_start_up_delay_completed_cnt >= 40 && device_start_up_delay_completed==0) {
-	device_start_up_delay_completed=1;
+	if (device_start_up_delay_completed_cnt >= 40 && device_start_up_delay_completed==0) {
+		device_start_up_delay_completed=1;
+		sta_op_phase=S_STARTUP_DELAY_OK;	// start up delay ok.
+	}
 }
-
-if (device_start_up_delay_completed==1) {
+// thy_drv_en_req set etmek başlatma işlemi yapmak için yeterli.
+if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 	if (thy_drv_en==0 && thy_drv_en_req ==1 && line_sgn_stable && thy_stop_fault_hold_bits==0) {
 		sf_sta_req_cnt++;
-		if (sf_sta_req_cnt >= 20) {
+		if (sf_sta_req_cnt >= 20) {		// delayed soft start trigger
 			set_V_targ_con_sy(5);
-			thy_drv_en=1;
 			apply_state_changes_f(STOP_FC, 0);
 			apply_state_changes_f(START_FC, 1);
-			sf_sta_req=1;
-			sf_sta_req_ok=0;
+			thy_drv_en=1;
+			sfsta_op_phase=S_SFSTA_REQ;
 			thy_drv_en_req=0;
 			sfst_1_unexpected_state=0;
 			sf_sta_req_cnt=0;
 			sprintf(DUB,"Soft start request"); prfm(DUB);
 		}
 	}
+
+// Arıza durumundan çıkınca veya sistem uygunsa doğrultucuyu başlat
+// burda düzenleme gerekebilir. hangi arızadan ne kadar süre sonra tekrar başlatılacak belirlemek lazım.
+if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
+	thy_drv_en_req = 1; // bu durumda thy drv en req gönder.
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -181,14 +165,6 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// Arıza durumundan çıkınca veya sistem uygunsa doğrultucuyu başlat
-if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_thy_drv==1) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
-	thy_drv_en_req = 1; // bu durumda thy drv en req gönder.
-	if (start_bat_inspection_req==1) { // devam etmekte olan bir batt inspection varsa iptal et. Bu istisnai bir durum. Düşük olasılıklı çakışma durumu.
-		end_batt_inspect_return_to_normal(5);
-	}
-}
-
 
 SW_LINE_OFF=!isInSet_(SW_LINE_P);
 SW_BATT_OFF=!isInSet_(SW_BATT_P);
@@ -249,7 +225,7 @@ if (VBAT_pas.a1 < -10 && EpD[SET_BATT_REV_DET][0].V1==1 && !is_state_active(BATT
 ////// BATT REVERSE MONITORING //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if (sf_sta_req_ok==1) {
+if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
 //if (thy_drv_en==1 && bat_inspection_allowed==1 && EpD[SET_BATT_DISC_DET][0].V1==1 && VBAT_pas.a1 > 10 && !is_state_active(BATT_FUSE_OFF_FC) && !is_state_active(BATT_REVERSE_FC)) {
@@ -263,7 +239,7 @@ if (sf_sta_req_ok==1) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// DCK FAULT MON ////////////////////////////////////////////////////////////////////////////////////////////////
-// && sf_sta_req_ok==0 && batt_line_broken==1
+
 DCK_mon_start_cnt++;
 if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 	DCK_mon_start_cnt=DCK_mon_start_per; // start delay passed.
@@ -406,7 +382,7 @@ if (VLOAD_pas.a1 >= VLOAD_DC_LOW_LIM_ret && is_state_active(LOAD_DC_LW_FC)) {
 ////// V LOAD DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} // if (sf_sta_req_ok) {
+} // if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 
 // AC VOLTAGE MONITORING >>>>>>>>>>>>>>>>>>>
 // RRRRRRRRRRRRRRRRRRR
@@ -634,9 +610,9 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 			battery_current_limit_Acc_cnt=0;
 			battery_current_limit_return_Acc_cnt=0;
 		}
-}	// if (device_start_up_delay_completed==1) {
 // CURRENT LIMIT STATES <<<<<<<<<<<<<<<<<<<<<<
 
+}	// if (sta_op_phase==S_STARTUP_DELAY_OK) {
 
 // FREQUENCY (50ms loop)
 	frq_r_updn_avg_m=275e6 / (float) per_r_updn_avg_m;
@@ -759,7 +735,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	if (sf_sta_req_ok==1) {
+	if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 stability_vrect_fc();	// vrect_stable 1 0 yapıyor
 stability_irect_fc();	// irect_stable 1 0 yapıyor
@@ -780,24 +756,18 @@ if (SW_BATT_OFF && blm_batt_connected) {
 } else if (!irect_stable) {
 	blm_cancel_op_return_normal();
 } else if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_allowed && blm_op_phase==0) {
-	blm_op_phase=1;
+	blm_op_phase=B_VRECT_STABLE;
 }
 
-//if (thy_drv_en && sf_sta_req_ok && blm_allowed && EpD[SET_BATT_DISC_DET][0].V1==1) {
+//if (sfsta_op_phase == S_SFSTA_REQ_OK && blm_allowed && EpD[SET_BATT_DISC_DET][0].V1==1) {
 //	aku_hatti_kopuk_fc_inl();
 //} else if (start_bat_inspection_req==1) {
 //	end_batt_inspect_return_to_normal(6);
 //}
-
-if (blm_op_phase == 1) { // switch tamam, vbat var, ibat yok. corr başlatma sayımını artır
-	blm_corr_req_cnt++;
-    if (blm_corr_req_cnt >= blm_corr_req_per) {
-        blm_op_phase = 2;
-        blm_corr_req_cnt = 0;
-    }
-} else if (vrect_stable && blm_op_phase == 2) { // vrect stable değilse başlama. sakin durumda iken yap.
+// switch tamam, vbat var, ibat yok. corr başlatma sayımını artır
+if (vrect_stable && blm_op_phase == B_VRECT_STABLE) { // vrect stable değilse başlama. sakin durumda iken yap.
 	blm_corr_req=1;
-	blm_corr_req_cnt = 0;
+	blm_corr_op_delay_cnt = 0;
 	blm_op_phase=3;
 } else if (blm_corr_req && blm_op_phase == 3) { // Başlatma
 	blm_corr_req = 0;
@@ -842,12 +812,18 @@ if (blm_op_phase == 1) { // switch tamam, vbat var, ibat yok. corr başlatma say
     if (corr_delay_cnt >= vtarg_wait_at_lim_cnt) {
         blm_collect_corr_samples = 0;
         blm_corr = calculate_pearson_corr();
-        blm_op_phase = 0;
+        blm_op_phase = B_COUNT_DELY_INSP;
         if (blm_corr >= 0.9) {
         	blm_batt_connected=1;
         } else {
         	blm_batt_connected=0;
         }
+    }
+} else if (blm_op_phase == B_COUNT_DELY_INSP) {
+	blm_corr_op_delay_cnt++;
+    if (blm_corr_op_delay_cnt >= blm_corr_op_delay_per) {
+        blm_op_phase = 0;
+        blm_corr_op_delay_cnt = 0;
     }
 }
 
@@ -860,7 +836,7 @@ if (blm_collect_corr_samples && blm_corr_buf_index < CORR_BUF_SIZE) {
 //phase anına göre durum incelemesi yaparak karar verilecek.
 
 
-	} // if (sf_sta_req_ok==1) {
+	} // if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 

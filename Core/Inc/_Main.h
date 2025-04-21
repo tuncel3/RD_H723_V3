@@ -92,7 +92,6 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 
 en_uart_msg_group(pr_btln);  // Enable uart messages for batt line inspection
 //disb_uart_msg_group(pr_btln);
-bat_inspection_req_timer_h=ms_50_cnt-bat_inspection_req_timer_per; // fast restart inspection
 
 
 //REL_OUT_order_chng_f(17, BATTERY_FAULT_FC_REL);

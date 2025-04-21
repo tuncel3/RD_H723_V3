@@ -165,19 +165,19 @@ inline extern void HOME_PAGE_pg_disp(void) {
 				}
 			}
 			else if (thy_drv_en==1) {
-				if (sf_sta_req==1 && !rectifier_current_limit_accepted && !battery_current_limit_accepted) {
+				if (sfsta_op_phase == S_SFSTA_REQ && !rectifier_current_limit_accepted && !battery_current_limit_accepted) {
 					sprintf(M, "SOFT START"); 		GLCD_PrintString(0, 0, M);
-				} else if (sf_sta_req==0 || rectifier_current_limit_accepted || battery_current_limit_accepted) {
+				} else if (sfsta_op_phase == S_SFSTA_REQ_OK || rectifier_current_limit_accepted || battery_current_limit_accepted) {
 					sprintf(M, "DOĞRLT AKTİF"); 			GLCD_PrintString(0, 0, M);
 				}
 			}
 			else if (thy_drv_en==0) {
 				if (thy_drv_en_req == 1) {
-					if (sf_sta_req==0) {
+					if (sfsta_op_phase == S_SFSTA_NONE) {
 						sprintf(M, "AKTİF EDİLECEK"); // sf_sta_req_cnt++ sayacının sayıldığı anda bu yazıyı yazdır.
 						GLCD_PrintString(0, 0, M);
 					}
-					else if (sf_sta_req == 1) {
+					else if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 						sprintf(M, "SOFT START");
 						GLCD_PrintString(0, 0, M);
 					}
