@@ -1253,4 +1253,7 @@ float calculate_blm_op(void)
     return corr;
 }
 
+int is_float_equal(float a, float b) {
+    return fabs(a - b) < 0.0001f;
+}
 
