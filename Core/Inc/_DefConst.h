@@ -1190,9 +1190,10 @@ uint32_t blm_voltage_increasing_cnt=0;
 
 
 float blm_V_step_05perc=0.2f;
-float blm_I_step_05percx2=0.4f;
 float blm_I_step_05perc=0.2f;
-float blm_V_step_05percx3=0.6f;
+float blm_I_step_03perc=0.3f;
+float blm_I_step_05percx2=0.4f;
+float blm_V_step_15perc=0.6f;
 float v_max_stb=0;
 float v_min_stb=0;
 float i_rec_max_stb=0;

@@ -789,9 +789,10 @@ VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
 blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
-blm_I_step_05percx2=blm_I_step_05perc*2;
+blm_I_step_075perc=EpD[DEV_NOM_IOUT][0].V1*0.0075;
+blm_I_step_10perc=blm_I_step_05perc*2;
 blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
-blm_V_step_05percx3=blm_V_step_05perc*3;
+blm_V_step_15perc=blm_V_step_05perc*3;
 }
 
 void inline extern update_VDC_high_low_lim_fc(void) {
@@ -1137,12 +1138,12 @@ void inline extern blm_cancel_op_return_normal(void) {
 
 void stability_vrect_fc(void) {
 		if (VRECT_pas.a16 > v_max_stb) {
-			v_max_stb = VRECT_pas.a16 + blm_V_step_05percx3;
-			v_min_stb = VRECT_pas.a16 - blm_V_step_05percx3;
+			v_max_stb = VRECT_pas.a16 + blm_V_step_15perc;
+			v_min_stb = VRECT_pas.a16 - blm_V_step_15perc;
 			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0; // koşul sağlanmıyorsa sayacı 4 geri çek.
 		} else if (VRECT_pas.a16 < v_min_stb) {
-			v_max_stb = VRECT_pas.a16 + blm_V_step_05percx3;
-			v_min_stb = VRECT_pas.a16 - blm_V_step_05percx3;
+			v_max_stb = VRECT_pas.a16 + blm_V_step_15perc;
+			v_min_stb = VRECT_pas.a16 - blm_V_step_15perc;
 			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0;
 		} else if (vrect_stable_cnt < 150) {
 			vrect_stable_cnt++;
@@ -1177,7 +1178,11 @@ void stability_ibat_fc(void) {
     }
     ibat_stable = 		    (ibat_stable_cnt >= 150);
     batt_current_detected = (ibat_stable) && fabs(IBAT_pas.a16) > blm_I_step_05percx2; // bat akımı stabil ve yok thresholdu dışında. yani var.
+    if (fabs(IBAT_pas.a16) > blm_I_step_05percx2) {
+
+    }
 }
+
 
 void blm_set_up_down_vtarg_limits(void) {
 	blm_stable_v_vrect=VRECT_pas.a64;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
