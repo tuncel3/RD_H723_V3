@@ -656,7 +656,6 @@ uint32_t take_vout_sample_for_batt_insp = 1;
 uint32_t repeating_string_sent = 0;
 uint32_t while_cnt_string_sent = 0;
 uint32_t device_start_up_delay_completed = 0;
-//uint32_t batt_current_detected = 0;
 //uint32_t vout_sample_ready = 0;
 //uint32_t batt_inspection_not_needed_disp = 0;
 //uint32_t batt_current_detected_disp = 0;
@@ -1255,6 +1254,7 @@ float vrect_buf[CORR_BUF_SIZE];
 float ibat_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
 
+uint32_t batt_current_detected = 0;
 //uint8_t blm_allowed = 0;
 uint32_t blm_corr_op_start_delay_cnt = 0;
 uint32_t blm_corr_op_delay_per = 40;
@@ -1282,6 +1282,7 @@ typedef enum {
 typedef enum {
 	B_START_CONDITIONS,
 	B_OP_START_REQ,
+	B_VRECT_STABLE,
 	B_REDUCE_VTARG,
 	B_WAIT_REDUCED,
 	B_INCREASE_VTARG,
