@@ -751,19 +751,24 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_cancel_op_return_normal();
 		sprintf(DUB,"blm Vbat too low. batt broken set"); umsg(blm_u, DUB);
 	}
-	if (fabs(IBAT_pas.a16) > blm_I_step_075perc && !batt_current_detected && is_state_active(BATT_LINE_BROKEN_FC)) {
+	if (fabs(IBAT_pas.a16) > blm_I_step_075perc) {
 		batt_current_detected_cnt++;
 		if (batt_current_detected_cnt >= batt_current_detected_per) {
 			batt_current_detected_cnt=0;
-			batt_current_detected=1;
-		} else {
+			batt_current_detected=1;														// CURRENT DETECTED
+		} else { batt_current_detected_cnt=0; }
+	}
+	if (fabs(IBAT_pas.a16) <= blm_I_step_075perc) {
+		batt_current_detected_cnt--;
+		if (batt_current_detected_cnt <= -batt_current_detected_per) {
 			batt_current_detected_cnt=0;
-		}
+			batt_current_detected=0;														// CURRENT DETECTED CANCELED
+		} else { batt_current_detected_cnt=0; }
 	}
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 		blm_discard_corr_restart_normal();
 	}
-/// WHAT STOPS AND RESETS BATT LINE MONITORING
+/// WHAT STOPS AND RESETS BATT LINE MONITORING  && is_state_active(BATT_LINE_BROKEN_FC)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // blm başlatılmasını engelleyen durumlar yoksa devam et.
 // Switch off ise inspection yapmanın anlamı yok. zaten kopuk.

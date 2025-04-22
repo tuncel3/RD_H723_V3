@@ -719,7 +719,7 @@ uint32_t VDCK_pos_fc = 0;
 uint32_t VDCK_neg_fc = 0;
 uint32_t Eeprom_fc = 0;
 uint32_t batt_reverse_Acc_cnt = 0;
-uint32_t batt_current_detected_Acc_cnt = 0;
+//uint32_t batt_current_detected_Acc_cnt = 0;
 uint32_t batt_not_connected_Acc_cnt = 0;
 uint32_t batt_current_zero_Acc_cnt = 0;
 uint32_t batt_reverse_Acc_per = 20;
@@ -1256,7 +1256,7 @@ float ibat_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
 
 uint32_t batt_current_detected = 0;
-uint32_t batt_current_detected_cnt = 0;
+int batt_current_detected_cnt = 0;
 uint32_t batt_current_detected_per = 10;
 uint32_t blm_corr_op_start_delay_cnt = 0;
 uint32_t blm_corr_op_start_delay_per = 50;
