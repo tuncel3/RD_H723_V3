@@ -4,6 +4,7 @@ Current_charge_voltage
 V_targ_con_sy
 VRECT_pas.a64
 IBAT_pas.a64
+IRECT_pas.a64
 batt_current_detected
 blm_stable_v_vrect
 aaa
@@ -14,16 +15,12 @@ blm_op_phase
 aaa
 blm_corr_buf_index
 blm_corr
-blm_corr_req
+discard_corr_result
 blm_phase_switch_delay_per
 blm_enable_collect_samplesblm_corr_op_start_delay_perr
 batt_current_detected
 blm_corr_op_start_delay_cnt
 blm_allowed
-blm_vtarg_move_dn_min
-blm_vtarg_move_dn_targ
-blm_vtarg_move_up_targ
-blm_vtarg_move_up_max
 batt_current_detected_cnt
 
 
