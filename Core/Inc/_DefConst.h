@@ -1125,7 +1125,7 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_SCER  		0x20  // Sector Erase
 #define CMD_BKER  		0xD8  // Block Erase
 #define CMD_CHER  		0xC7  // Chip Erase
-int var1=0;
+//int var1=0;
 //int var2=0;
 //int var3=0;
 //char var4[]="ü";
