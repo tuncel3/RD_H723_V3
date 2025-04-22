@@ -1256,7 +1256,8 @@ float ibat_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
 
 uint32_t batt_current_detected = 0;
-int batt_current_detected_cnt = 0;
+uint32_t batt_curr_P_detected_cnt = 0;
+uint32_t batt_curr_N_detected_cnt = 0;
 uint32_t batt_current_detected_per = 50;
 uint32_t blm_corr_op_start_delay_cnt = 0;
 uint32_t blm_corr_op_start_delay_per = 50;
