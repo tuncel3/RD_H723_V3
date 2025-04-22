@@ -1280,8 +1280,8 @@ typedef enum {
 }STARUP_STATE;
 
 int blm_op_phase = 0;
-typedef enum {
-	B_OP_START_REQ,
-	B_VRECT_STABLE,
-	B_COUNT_DELY_INSP
-}BLM_STATE;
+//typedef enum {
+//	B_OP_START_REQ,
+//	B_VRECT_STABLE,
+//	B_COUNT_DELY_INSP
+//}BLM_STATE;
