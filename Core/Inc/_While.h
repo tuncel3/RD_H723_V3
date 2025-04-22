@@ -173,22 +173,16 @@ SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MCCB MONITORING //////////////////////////////////////////////////////////////////////////////////////////////
 ////// LINE FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
-if (SW_LINE_OFF && !is_state_active(LINE_FUSE_OFF_FC)) {
-	apply_state_changes_f(LINE_FUSE_OFF_FC, 1);
-} else if (!SW_LINE_OFF && is_state_active(LINE_FUSE_OFF_FC)) {
-	apply_state_changes_f(LINE_FUSE_OFF_FC, 0);
+if (is_state_active(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
+	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
 }
 ////// BATT FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
-if (SW_BATT_OFF && !is_state_active(BATT_FUSE_OFF_FC)) {
-	apply_state_changes_f(BATT_FUSE_OFF_FC, 1);
-} else if (!SW_BATT_OFF && is_state_active(BATT_FUSE_OFF_FC)) {
-	apply_state_changes_f(BATT_FUSE_OFF_FC, 0);
+if (is_state_active(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
+	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
 }
 ////// LOAD FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
-if (SW_LOAD_OFF && !is_state_active(LOAD_FUSE_OFF_FC)) {
-	apply_state_changes_f(LOAD_FUSE_OFF_FC, 1);
-} else if (!SW_LOAD_OFF && is_state_active(LOAD_FUSE_OFF_FC)) {
-	apply_state_changes_f(LOAD_FUSE_OFF_FC, 0);
+if (is_state_active(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
+	apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
 }
 ////// MCCB MONITORING //////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
