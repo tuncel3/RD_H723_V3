@@ -835,7 +835,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		}
 	} else if (blm_op_phase == 9) {
 		blm_corr_op_start_delay_cnt++;
-		if (blm_corr_op_start_delay_cnt >= blm_corr_op_delay_per) {
+		if (blm_corr_op_start_delay_cnt >= blm_corr_op_start_delay_per) {
 			blm_op_phase = 0;
 			blm_corr_op_start_delay_cnt = 0;
 		}

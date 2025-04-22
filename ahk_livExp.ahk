@@ -16,8 +16,7 @@ blm_corr_buf_index
 blm_corr
 blm_corr_req
 blm_phase_switch_delay_per
-blm_enable_collect_samples
-blm_corr_op_delay_per
+blm_enable_collect_samplesblm_corr_op_start_delay_perr
 batt_current_detected
 blm_corr_op_start_delay_cnt
 blm_allowed
