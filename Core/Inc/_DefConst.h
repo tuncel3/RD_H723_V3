@@ -1257,7 +1257,7 @@ uint16_t blm_corr_buf_index = 0;
 
 uint32_t batt_current_detected = 0;
 int batt_current_detected_cnt = 0;
-uint32_t batt_current_detected_per = 10;
+uint32_t batt_current_detected_per = 50;
 uint32_t blm_corr_op_start_delay_cnt = 0;
 uint32_t blm_corr_op_start_delay_per = 50;
 uint8_t blm_phase_switch_delay_cnt = 0;
