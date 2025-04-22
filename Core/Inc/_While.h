@@ -769,6 +769,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 // Switch off ise inspection yapmanın anlamı yok. zaten kopuk.
 // bat voltajı çok düşükse zaten inspection a gerek yok direk bat bağlı değil denebilir.
 // bat akımı varsa zaten bat bağlı demek oluyor, inspection a gerek yok.
+// irect stable a1 yani bir örneklik periyot ortalaması
 	if (blm_op_phase == 100) {
 		if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
 			set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
