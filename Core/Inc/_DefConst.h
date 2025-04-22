@@ -1291,4 +1291,4 @@ typedef enum {
 	B_WAIT_REDUCED_2,
 	B_COUNT_DELY_INSP
 }BLM_STATE;
-BLM_STATE blm_op_phase = 0;
+uint8_t blm_op_phase = 0;
