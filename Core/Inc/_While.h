@@ -778,7 +778,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==0) {
 		blm_op_phase=1;
 	}
-	if (blm_op_phase == 1 && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_stable) { sprintf(DUB,"vrect stable. "); prfm(DUB);
+	if (blm_op_phase == 1 && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_stable) {
+		sprintf(DUB,"vrect stable. "); prfm(DUB);
 		blm_op_phase=2;
 	} else if (blm_op_phase == 2) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
 		blm_enable_collect_samples = 1;
@@ -832,6 +833,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 				sprintf(DUB,"corr low. batt broken."); prfm(DUB);
+			} else  {
+				sprintf(DUB,"corr low. batt broken already detected. no action"); prfm(DUB);
 			}
 		}
 	} else if (blm_op_phase == 9) {
