@@ -790,9 +790,9 @@ VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
 blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
 blm_I_step_075perc=EpD[DEV_NOM_IOUT][0].V1*0.0075;
-blm_I_step_10perc=blm_I_step_05perc*2;
+blm_I_step_10perc=EpD[DEV_NOM_IOUT][0].V1*0.010;
 blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
-blm_V_step_15perc=blm_V_step_05perc*3;
+blm_V_step_15perc=EpD[DEV_NOM_VOUT][0].V1*0.015;
 }
 
 void inline extern update_VDC_high_low_lim_fc(void) {
