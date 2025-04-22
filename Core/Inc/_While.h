@@ -749,21 +749,20 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 	if (SW_BATT_OFF && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
-		sprintf(DUB,"blm broken 3"); prfm(DUB);
 		blm_cancel_op_return_normal();
-		sprintf(DUB,"blm SW off"); prfm(DUB);
+		sprintf(DUB,"blm SW off. batt broken set"); prfm(DUB);
 	}
 	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC)) {
-		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
-		sprintf(DUB,"blm broken 2"); prfm(DUB);										// VBAT LOW
+		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
 		blm_cancel_op_return_normal();
-		sprintf(DUB,"blm Vbat too low"); prfm(DUB);
+		sprintf(DUB,"blm Vbat too low. batt broken set"); prfm(DUB);
 	}
 	if (batt_current_detected && is_state_active(BATT_LINE_BROKEN_FC)) {
 		blm_batt_current_detected_cnt++;
 		if (blm_batt_current_detected_cnt >= 10) {	// 500ms sonra current detected durumunu kabul et.
 			apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);									// CURRENT DETECTED
 			blm_cancel_op_return_normal();
+			sprintf(DUB,"current detected. batt line connected"); prfm(DUB);
 			blm_batt_current_detected_cnt=0;
 		}
 	} else {blm_batt_current_detected_cnt=0;}
