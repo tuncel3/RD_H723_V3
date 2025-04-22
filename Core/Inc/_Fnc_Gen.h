@@ -865,7 +865,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 	uint32_t REL8_bit = (1U << (state_code-29));
     if (set) {
         if (state_list[state_code].code < 16) {
-        	LED_16_Data |= fault_bit; }  // activate LED if required
+        	LED_16_Data |= fault_bit; }  // activate LED if required. örnek: state_code STOP_FC ise stop ledini yakıyor burası.
         if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
         	LED_7_Data |= led7_bit; }  // activate LED 7 if required
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
@@ -876,7 +876,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
             thy_stop_fault_hold_bits |= fault_bit;
-//        	LED_16_Data |= (1U << STOP_FC);
+        	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
         if (state_code == START_FC) {
         	change_rel_vals_in_tables_f(START_STOP_REL, 1);
