@@ -751,14 +751,14 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_cancel_op_return_normal();
 		sprintf(DUB,"blm Vbat too low. batt broken set"); umsg(blm_u, DUB);
 	}
-	if (fabs(IBAT_pas.a16) > blm_I_step_075perc) {
+	if (ABS(IBAT_pas.a16) > blm_I_step_075perc) {
 		batt_current_detected_cnt++;
 		if (batt_current_detected_cnt >= batt_current_detected_per) {
 			batt_current_detected_cnt=0;
 			batt_current_detected=1;														// CURRENT DETECTED
 		} else { batt_current_detected_cnt=0; }
 	}
-	if (fabs(IBAT_pas.a16) <= blm_I_step_075perc) {
+	if (ABS(IBAT_pas.a16) <= blm_I_step_075perc) {
 		batt_current_detected_cnt--;
 		if (batt_current_detected_cnt <= -batt_current_detected_per) {
 			batt_current_detected_cnt=0;
