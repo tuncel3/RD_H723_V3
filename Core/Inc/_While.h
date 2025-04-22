@@ -841,6 +841,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		if (blm_corr_op_start_delay_cnt >= blm_corr_op_start_delay_per) {
 			blm_op_phase = 0;
 			blm_corr_op_start_delay_cnt = 0;
+			discard_corr_result = 0;
 		}
 	}
 	if (blm_enable_collect_samples && blm_corr_buf_index < CORR_BUF_SIZE) {
