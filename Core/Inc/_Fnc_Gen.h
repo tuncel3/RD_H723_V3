@@ -789,7 +789,7 @@ VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
 blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
-blm_I_step_05percx2=blm_I_step_05percx2*2;
+blm_I_step_05percx2=blm_I_step_05perc*2;
 blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
 blm_V_step_05percx3=blm_V_step_05perc*3;
 }
