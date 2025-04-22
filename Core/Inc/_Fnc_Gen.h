@@ -1142,16 +1142,6 @@ void inline extern blm_discard_corr_restart_normal(void) {
 	blm_restart_after_return = 1;
 }
 
-void inline extern blm_slow_return_to_charge_voltage(void) {
-	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
-	} else {
-		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-
-	}
-}
 
 
 void stability_vrect_fc(void) {
