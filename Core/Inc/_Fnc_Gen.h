@@ -1128,20 +1128,18 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 
 
 void inline extern blm_cancel_op_return_normal(void) {
-	blm_corr_req = 0;
 	blm_op_phase = 0;
 	blm_corr_op_start_delay_cnt = 0;
 	blm_enable_collect_samples = 0;
 	blm_corr_buf_index = 0;
 //	blm_returning_to_charge_voltage = 1; // yeni flag
 }
-void inline extern blm_discard_op_restart_normal(void) {
-	blm_corr_req = 0;
-	blm_op_phase = 100; // geçici "geri dönme" fazı (BLM restart return phase)
+void inline extern blm_discard_corr_restart_normal(void) {
+	blm_op_phase = 100;
 	blm_corr_op_start_delay_cnt = 0;
 	blm_enable_collect_samples = 0;
 	blm_corr_buf_index = 0;
-	blm_restart_after_return = 1; // bu yeni dönüşten sonra örnekleme başlasın
+	blm_restart_after_return = 1;
 }
 
 void inline extern blm_slow_return_to_charge_voltage(void) {
@@ -1151,6 +1149,7 @@ void inline extern blm_slow_return_to_charge_voltage(void) {
 		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
 	} else {
 		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
+
 	}
 }
 

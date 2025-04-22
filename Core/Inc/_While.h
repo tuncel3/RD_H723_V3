@@ -760,10 +760,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_batt_current_detected_cnt=0;
 		}
 	} else {blm_batt_current_detected_cnt=0;}
-	if (!irect_stable && blm_corr_buf_index > 0) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
-		discard_corr_result=1;
-	} else if (blm_corr_buf_index == 0 && discard_corr_result==1) {
-		discard_corr_result=0;
+	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
+		blm_discard_corr_restart_normal();
 	}
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -774,7 +772,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	if (blm_op_phase == 100) {
 		blm_slow_return_to_charge_voltage();
 
-		if (V_targ_con_sy == Current_charge_voltage) {
+		if (V_targ_con_sy <= Current_charge_voltage*1.0001 && V_targ_con_sy >= Current_charge_voltage/1.0001) {
 			if (blm_restart_after_return) {
 				blm_op_phase = 0; // direkt ölçüm başlat
 				blm_restart_after_return = 0;
@@ -845,7 +843,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				}
 			} else {
 				sprintf(DUB,"discard_corr_result %f", blm_corr); umsg(blm_u, DUB);
-				blm_discard_op_restart_normal(); // işte buraya!
 			}
 			blm_op_phase = 9;
 		}
