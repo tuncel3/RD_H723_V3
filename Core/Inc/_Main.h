@@ -48,7 +48,7 @@ SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
 if (is_state_active(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
 	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
 }
-if (is_state_active(BATT_FUSE_OFF_FC) != SW_LINE_OFF) {
+if (is_state_active(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
 	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
 }
 if (is_state_active(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
