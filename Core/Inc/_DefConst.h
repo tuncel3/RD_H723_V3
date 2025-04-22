@@ -1257,6 +1257,7 @@ uint16_t blm_corr_buf_index = 0;
 
 uint32_t batt_current_detected = 0;
 uint32_t batt_curr_detected_cnt = 0;
+uint32_t batt_curr_not_detected_cnt = 0;
 //uint32_t batt_curr_P_detected_cnt = 0;
 //uint32_t batt_curr_N_detected_cnt = 0;
 uint32_t batt_current_detected_per = 50;
