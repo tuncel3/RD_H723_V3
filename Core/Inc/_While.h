@@ -760,9 +760,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_batt_current_detected_cnt=0;
 		}
 	} else {blm_batt_current_detected_cnt=0;}
-	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
-//		blm_cancel_op_return_normal();
+	if (!irect_stable && blm_corr_buf_index > 0) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 		discard_corr_result=1;
+	} else if (blm_corr_buf_index == 0 && discard_corr_result==1) {
+		discard_corr_result=0;
 	}
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
