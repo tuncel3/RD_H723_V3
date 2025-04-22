@@ -1163,7 +1163,7 @@ void stability_irect_fc(void) {
 			i_rec_max_stb = IRECT_pas.a16 + blm_I_step_075perc;
 			i_rec_min_stb = IRECT_pas.a16 - blm_I_step_075perc;
 			irect_stable_cnt = (irect_stable_cnt > 4) ? irect_stable_cnt - 4 : 0;
-		} else if (IRECT_pas.a64 < i_rec_min_stb) {
+		} else if (IRECT_pas.a16 < i_rec_min_stb) {
 			i_rec_max_stb = IRECT_pas.a16 + blm_I_step_075perc;
 			i_rec_min_stb = IRECT_pas.a16 - blm_I_step_075perc;
 			irect_stable_cnt = (irect_stable_cnt > 4) ? irect_stable_cnt - 4 : 0;
