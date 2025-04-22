@@ -771,6 +771,17 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 // Switch off ise inspection yapmanın anlamı yok. zaten kopuk.
 // bat voltajı çok düşükse zaten inspection a gerek yok direk bat bağlı değil denebilir.
 // bat akımı varsa zaten bat bağlı demek oluyor, inspection a gerek yok.
+	if (blm_op_phase == 100) {
+		blm_slow_return_to_charge_voltage();
+
+		if (V_targ_con_sy == Current_charge_voltage) {
+			if (blm_restart_after_return) {
+				blm_op_phase = 0; // direkt ölçüm başlat
+				blm_restart_after_return = 0;
+				sprintf(DUB, "Vtarg returned. Restarting BLM operation."); umsg(blm_u, DUB);
+			}
+		}
+	}
 	if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==0) {
 		blm_op_phase=1;
 	}
