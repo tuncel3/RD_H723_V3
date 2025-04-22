@@ -765,6 +765,28 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void inline extern BATT_CURRENT_MONITOR_fn(void) {
+	if (fabs(IBAT_pas.a16) > blm_I_step_05perc) {
+		batt_current_detected_Acc_cnt++;
+		batt_current_zero_Acc_cnt=0;
+		if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
+			batt_current_detected=1;
+			batt_current_detected_Acc_cnt=0;
+			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_pas.a1); umsg(pr_btln, DUB);
+		}
+	} else if (fabs(IBAT_pas.a16) <= blm_I_step_05perc) {
+		batt_current_zero_Acc_cnt++;
+		batt_current_detected_Acc_cnt=0;
+		if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
+			batt_current_detected=0;
+			batt_current_zero_Acc_cnt=0;
+			sprintf(DUB,"batt_current_detected 0"); umsg(pr_btln, DUB);
+		}
+	} else {
+		batt_current_zero_Acc_cnt = 0;
+		batt_current_detected_Acc_cnt = 0;
+	}
+}
 void inline extern get_max_min_lims_from_DEV_NOM_VOUT(void) { // n012
 Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
 Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
@@ -789,7 +811,7 @@ VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
 blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
-blm_I_step_05percx2=blm_I_step_05perc*2;
+blm_I_step_05percx2=blm_I_step_05percx2*2;
 blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
 blm_V_step_05percx3=blm_V_step_05perc*3;
 }
@@ -865,7 +887,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 	uint32_t REL8_bit = (1U << (state_code-29));
     if (set) {
         if (state_list[state_code].code < 16) {
-        	LED_16_Data |= fault_bit; }  // activate LED if required. örnek: state_code STOP_FC ise stop ledini yakıyor burası.
+        	LED_16_Data |= fault_bit; }  // activate LED if required
         if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
         	LED_7_Data |= led7_bit; }  // activate LED 7 if required
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
@@ -1176,31 +1198,7 @@ void stability_ibat_fc(void) {
         ibat_stable_cnt++;
     }
     ibat_stable = 		    (ibat_stable_cnt >= 150);
-    batt_current_detected = (ibat_stable) && fabs(IBAT_pas.a16) > blm_I_step_05percx2; // bat akımı stabil ve yok thresholdu dışında. yani var.
-}
-
-
-void inline extern BATT_CURRENT_MONITOR_fn(void) {
-	if (fabs(IBAT_pas.a16) > blm_I_step_05perc) {
-		batt_current_detected_Acc_cnt++;
-		batt_current_zero_Acc_cnt=0;
-		if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
-			batt_current_detected=1;
-			batt_current_detected_Acc_cnt=0;
-			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_pas.a1); umsg(pr_btln, DUB);
-		}
-	} else if (fabs(IBAT_pas.a16) <= blm_I_step_05perc) {
-		batt_current_zero_Acc_cnt++;
-		batt_current_detected_Acc_cnt=0;
-		if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
-			batt_current_detected=0;
-			batt_current_zero_Acc_cnt=0;
-			sprintf(DUB,"batt_current_detected 0"); umsg(pr_btln, DUB);
-		}
-	} else {
-		batt_current_zero_Acc_cnt = 0;
-		batt_current_detected_Acc_cnt = 0;
-	}
+    batt_current_detected = (ibat_stable) && fabs(IBAT_pas.a16 > blm_I_step_05percx2); // bat akımı stabil ve yok thresholdu dışında. yani var.
 }
 
 void blm_set_up_down_vtarg_limits(void) {

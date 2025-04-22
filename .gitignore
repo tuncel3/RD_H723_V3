@@ -6,5 +6,6 @@
 *.map
 *.list
 *.log
+*.bat
 
 /Debug/

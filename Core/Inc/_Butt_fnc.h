@@ -2,7 +2,7 @@
 #include "_benter.h"
 
 void bleft_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel >= 1) {
+    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
     	if (thy_drv_en==0 && user_wants_allows_thy_drv==0) {
     		user_wants_allows_thy_drv=1;
     		thy_drv_en_req=1;
@@ -182,11 +182,10 @@ void bleft_fnc(void) {
 }
 
 void bright_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel >= 1) {
+    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
     	if (thy_drv_en == 1 && user_wants_allows_thy_drv==1) {
     		thy_drv_en=0;
     		user_wants_allows_thy_drv=0;
-        	sfsta_op_phase = S_SFSTA_NONE;
     		apply_state_changes_f(STOP_FC, 1);
     		apply_state_changes_f(START_FC, 0);
     		sprintf(DUB,"User req STOP rectf"); prfm(DUB);

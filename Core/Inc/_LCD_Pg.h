@@ -160,8 +160,6 @@ inline extern void HOME_PAGE_pg_disp(void) {
 			if (is_state_active(BATT_LINE_BROKEN_FC)) {
 				if (SW_BATT_OFF) {
 					sprintf(M, "AKÜ ANAHTAR OFF"); 		GLCD_PrintString(0, 0, M);
-				} else if (is_state_active(BATT_REVERSE_FC)) {
-					sprintf(M, "AKÜ BAĞLNT TERS"); 		GLCD_PrintString(0, 0, M);
 				} else if (!SW_BATT_OFF) {
 					sprintf(M, "AKÜ HATTI KOPUK"); 		GLCD_PrintString(0, 0, M);
 				}

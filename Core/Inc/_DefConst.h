@@ -656,9 +656,10 @@ uint32_t take_vout_sample_for_batt_insp = 1;
 uint32_t repeating_string_sent = 0;
 uint32_t while_cnt_string_sent = 0;
 uint32_t device_start_up_delay_completed = 0;
-//uint32_t vout_sample_ready = 0;
-//uint32_t batt_inspection_not_needed_disp = 0;
-//uint32_t batt_current_detected_disp = 0;
+uint32_t batt_current_detected = 0;
+uint32_t vout_sample_ready = 0;
+uint32_t batt_inspection_not_needed_disp = 0;
+uint32_t batt_current_detected_disp = 0;
 uint32_t cannot_go_to_target_v = 0;
 uint32_t vbatt_vout_diff = 0;
 uint32_t min_v_reached_no_result = 0;
@@ -1189,8 +1190,8 @@ uint32_t blm_voltage_increasing_cnt=0;
 
 
 float blm_V_step_05perc=0.2f;
-float blm_I_step_05perc=0.2f;
 float blm_I_step_05percx2=0.4f;
+float blm_I_step_05perc=0.2f;
 float blm_V_step_05percx3=0.6f;
 float v_max_stb=0;
 float v_min_stb=0;
@@ -1254,14 +1255,13 @@ float vrect_buf[CORR_BUF_SIZE];
 float ibat_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
 
-uint32_t batt_current_detected = 0;
 //uint8_t blm_allowed = 0;
 uint32_t blm_corr_op_start_delay_cnt = 0;
 uint32_t blm_corr_op_delay_per = 40;
 uint8_t blm_phase_switch_delay_cnt = 0;
 uint8_t blm_corr_req = 0;        // Live Expressions’dan 1 yapınca başlar
 uint8_t blm_enable_collect_samples = 0;
-uint8_t blm_phase_switch_delay_per = 20;
+uint8_t blm_phase_switch_delay_per = 4;
 float blm_vi_change_mult = 0.0005f;
 float blm_corr = 0.0f;
 uint32_t blm_batt_connected_0_cnt = 0;
@@ -1279,16 +1279,9 @@ typedef enum {
 	S_STARTUP_DELAY_OK
 }STARUP_STATE;
 
+int blm_op_phase = 0;
 typedef enum {
-	B_START_CONDITIONS,
 	B_OP_START_REQ,
 	B_VRECT_STABLE,
-	B_REDUCE_VTARG,
-	B_WAIT_REDUCED,
-	B_INCREASE_VTARG,
-	B_WAIT_INCREASED,
-	B_REDUCE_VTARG_2,
-	B_WAIT_REDUCED_2,
 	B_COUNT_DELY_INSP
 }BLM_STATE;
-uint8_t blm_op_phase = 0;

@@ -1,5 +1,5 @@
 req_reset_db
-!!(state_list[BATT_LINE_BROKEN_FC].action & (1U << ACTIVE_enum))
+blm_batt_connected
 Current_charge_voltage
 V_targ_con_sy
 VRECT_pas.a64
