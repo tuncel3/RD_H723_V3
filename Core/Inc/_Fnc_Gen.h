@@ -876,7 +876,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
             thy_stop_fault_hold_bits |= fault_bit;
-        	LED_16_Data |= (1U << STOP_FC);
+//        	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
         if (state_code == START_FC) {
         	change_rel_vals_in_tables_f(START_STOP_REL, 1);
