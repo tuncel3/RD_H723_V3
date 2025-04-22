@@ -824,8 +824,9 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
 			blm_enable_collect_samples = 0;
 			blm_corr = calculate_blm_op();
+				sprintf(DUB,"blm_corr %f", blm_corr); prfm(DUB);
 			blm_op_phase = 10;
-			if (blm_corr >= 0.9 && is_state_active(BATT_LINE_BROKEN_FC)) {
+			if (blm_corr >= 0.9) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 			} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
