@@ -765,28 +765,6 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void inline extern BATT_CURRENT_MONITOR_fn(void) {
-	if (fabs(IBAT_pas.a16) > blm_I_step_05perc) {
-		batt_current_detected_Acc_cnt++;
-		batt_current_zero_Acc_cnt=0;
-		if (batt_current_detected_Acc_cnt >= batt_current_detected_Acc_per && batt_current_detected==0) {
-			batt_current_detected=1;
-			batt_current_detected_Acc_cnt=0;
-			sprintf(DUB,"batt_current_detected 1 curr %5.2f", IBAT_pas.a1); umsg(pr_btln, DUB);
-		}
-	} else if (fabs(IBAT_pas.a16) <= blm_I_step_05perc) {
-		batt_current_zero_Acc_cnt++;
-		batt_current_detected_Acc_cnt=0;
-		if (batt_current_zero_Acc_cnt >= batt_current_zero_Acc_per && batt_current_detected==1) {
-			batt_current_detected=0;
-			batt_current_zero_Acc_cnt=0;
-			sprintf(DUB,"batt_current_detected 0"); umsg(pr_btln, DUB);
-		}
-	} else {
-		batt_current_zero_Acc_cnt = 0;
-		batt_current_detected_Acc_cnt = 0;
-	}
-}
 void inline extern get_max_min_lims_from_DEV_NOM_VOUT(void) { // n012
 Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
 Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı

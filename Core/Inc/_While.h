@@ -749,20 +749,20 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 	if (SW_BATT_OFF && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
-		blm_cancel_op_return_normal();
-		sprintf(DUB,"blm SW off. batt broken set"); prfm(DUB);
+		blm_cancel_op_return_normal(); // şarj voltajı değiştiğinde de cancl op fonksiyonu çalışıyor.
+		sprintf(DUB,"blm SW off. batt broken set"); umsg(blm_u, DUB);
 	}
 	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
 		blm_cancel_op_return_normal();
-		sprintf(DUB,"blm Vbat too low. batt broken set"); prfm(DUB);
+		sprintf(DUB,"blm Vbat too low. batt broken set"); umsg(blm_u, DUB);
 	}
 	if (batt_current_detected && is_state_active(BATT_LINE_BROKEN_FC)) {
 		blm_batt_current_detected_cnt++;
 		if (blm_batt_current_detected_cnt >= 10) {	// 500ms sonra current detected durumunu kabul et.
 			apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);									// CURRENT DETECTED
 			blm_cancel_op_return_normal();
-			sprintf(DUB,"current detected. batt line connected"); prfm(DUB);
+			sprintf(DUB,"current detected. batt line connected"); umsg(blm_u, DUB);
 			blm_batt_current_detected_cnt=0;
 		}
 	} else {blm_batt_current_detected_cnt=0;}
@@ -779,13 +779,13 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_op_phase=1;
 	}
 	if (blm_op_phase == 1 && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_stable) {
-		sprintf(DUB,"vrect stable. "); prfm(DUB);
+		sprintf(DUB,"vrect stable. "); umsg(blm_u, DUB);
 		blm_op_phase=2;
 	} else if (blm_op_phase == 2) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
 		blm_enable_collect_samples = 1;
 		blm_corr_buf_index = 0;
 		blm_set_up_down_vtarg_limits();
-		sprintf(DUB,"start changing voltage"); prfm(DUB);
+		sprintf(DUB,"start changing voltage"); umsg(blm_u, DUB);
 		blm_op_phase = 3;
 	} else if (blm_op_phase == 3) { // Vtarg’ı düşür
 		if (V_targ_con_sy > blm_vtarg_move_dn_targ && V_targ_con_sy > blm_vtarg_move_dn_min) {
@@ -825,16 +825,16 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_enable_collect_samples = 0;
 			blm_corr = calculate_blm_op();
 			blm_corr_op_start_delay_cnt = 0;
-				sprintf(DUB,"blm_corr %f", blm_corr); prfm(DUB);
+				sprintf(DUB,"blm_corr %f", blm_corr); umsg(blm_u, DUB);
 			blm_op_phase = 9;
 			if (blm_corr >= 0.9) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-				sprintf(DUB,"corr good. batt connected."); prfm(DUB);
+				sprintf(DUB,"corr good. batt connected."); umsg(blm_u, DUB);
 			} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
-				sprintf(DUB,"corr low. batt broken."); prfm(DUB);
+				sprintf(DUB,"corr low. batt broken.") umsg(blm_u, DUB);
 			} else  {
-				sprintf(DUB,"corr low. batt broken already detected. no action"); prfm(DUB);
+				sprintf(DUB,"corr low. batt broken already detected. no action"); umsg(blm_u, DUB);
 			}
 		}
 	} else if (blm_op_phase == 9) {

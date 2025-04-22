@@ -149,7 +149,7 @@ char DUB[64]={0};
 char UXPUB[54]={0};
 
 #define ubl1_    (1 << 0)  // Bit 0	general message
-#define pr_btln    (1 << 1)  // Bit 1 uart message batt line
+#define blm_u    (1 << 1)  // Bit 1 uart message batt line
 #define MSG_GROUP_INFO     (1 << 2)  // Bit 2
 #define MSG_GROUP_BATTERY  (1 << 3)  // Bit 3
 #define MSG_GROUP_FAULTS   (1 << 4)  // Bit 4

@@ -90,7 +90,7 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 
 
 
-en_uart_msg_group(pr_btln);  // Enable uart messages for batt line inspection
+en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection
 //disb_uart_msg_group(pr_btln);
 
 
