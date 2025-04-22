@@ -749,11 +749,13 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 	if (SW_BATT_OFF && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
+		sprintf(DUB,"blm broken 3"); prfm(DUB);
 		blm_cancel_op_return_normal();
 		sprintf(DUB,"blm SW off"); prfm(DUB);
 	}
 	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC)) {
-		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
+		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
+		sprintf(DUB,"blm broken 2"); prfm(DUB);										// VBAT LOW
 		blm_cancel_op_return_normal();
 		sprintf(DUB,"blm Vbat too low"); prfm(DUB);
 	}
@@ -827,6 +829,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 			} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
+				sprintf(DUB,"blm broken 1"); prfm(DUB);
 			}
 		}
 	} else if (blm_op_phase == B_COUNT_DELY_INSP) {
