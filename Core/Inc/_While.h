@@ -786,46 +786,46 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_enable_collect_samples = 1;
 		blm_corr_buf_index = 0;
 		blm_set_up_down_vtarg_limits();
-		blm_op_phase = 4;
-	} else if (blm_op_phase == 4) { // Vtarg’ı düşür
+		blm_op_phase = 3;
+	} else if (blm_op_phase == 3) { // Vtarg’ı düşür
 		if (V_targ_con_sy > blm_vtarg_move_dn_targ && V_targ_con_sy > blm_vtarg_move_dn_min) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
-			blm_op_phase = 5;
+			blm_op_phase = 4;
 		}
-	} else if (blm_op_phase == 5) { // Bekle
+	} else if (blm_op_phase == 4) { // Bekle
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
-			blm_op_phase = 6;
+			blm_op_phase = 5;
 		}
-	} else if (blm_op_phase == 6) { // Vtarg’ı yükselt
+	} else if (blm_op_phase == 5) { // Vtarg’ı yükselt
 		if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_max) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
-			blm_op_phase = 7;
+			blm_op_phase = 6;
 		}
-	} else if (blm_op_phase == 7) { // Bekle
+	} else if (blm_op_phase == 6) { // Bekle
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
-			blm_op_phase = 8;
+			blm_op_phase = 7;
 		}
-	} else if (blm_op_phase == 8) { // Vtarg’ı tekrar düşür
+	} else if (blm_op_phase == 7) { // Vtarg’ı tekrar düşür
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
 			set_V_targ_con_sy(Current_charge_voltage);
 			blm_phase_switch_delay_cnt = 0;
-			blm_op_phase = 9;
+			blm_op_phase = 8;
 		}
-	} else if (blm_op_phase == 9) { // Bekle
+	} else if (blm_op_phase == 8) { // Bekle
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
 			blm_enable_collect_samples = 0;
 			blm_corr = calculate_blm_op();
 				sprintf(DUB,"blm_corr %f", blm_corr); prfm(DUB);
-			blm_op_phase = 10;
+			blm_op_phase = 9;
 			if (blm_corr >= 0.9) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 			} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
@@ -833,7 +833,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				sprintf(DUB,"blm broken 1"); prfm(DUB);
 			}
 		}
-	} else if (blm_op_phase == 10) {
+	} else if (blm_op_phase == 9) {
 		blm_corr_op_start_delay_cnt++;
 		if (blm_corr_op_start_delay_cnt >= blm_corr_op_delay_per) {
 			blm_op_phase = 0;
