@@ -1173,12 +1173,12 @@ void stability_vrect_fc(void) {
 }
 void stability_irect_fc(void) {
 		if (IRECT_pas.a16 > i_rec_max_stb) {
-			i_rec_max_stb = IRECT_pas.a16 + blm_I_step_05perc;
-			i_rec_min_stb = IRECT_pas.a16 - blm_I_step_05perc;
+			i_rec_max_stb = IRECT_pas.a64 + blm_I_step_05perc;
+			i_rec_min_stb = IRECT_pas.a64 - blm_I_step_05perc;
 			irect_stable_cnt = (irect_stable_cnt > 4) ? irect_stable_cnt - 4 : 0;
-		} else if (IRECT_pas.a16 < i_rec_min_stb) {
-			i_rec_max_stb = IRECT_pas.a16 + blm_I_step_05perc;
-			i_rec_min_stb = IRECT_pas.a16 - blm_I_step_05perc;
+		} else if (IRECT_pas.a64 < i_rec_min_stb) {
+			i_rec_max_stb = IRECT_pas.a64 + blm_I_step_05perc;
+			i_rec_min_stb = IRECT_pas.a64 - blm_I_step_05perc;
 			irect_stable_cnt = (irect_stable_cnt > 4) ? irect_stable_cnt - 4 : 0;
 		} else if (irect_stable_cnt < 150) {
 			irect_stable_cnt++;
