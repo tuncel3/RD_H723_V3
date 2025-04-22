@@ -860,8 +860,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		}
 	}
 	if (blm_enable_collect_samples && blm_corr_buf_index < CORR_BUF_SIZE) {
-		vrect_buf[blm_corr_buf_index] = VRECT_pas.a64;
-		ibat_buf[blm_corr_buf_index] = IBAT_pas.a64;
+		vrect_buf[blm_corr_buf_index] = VRECT_pas.a16;
+		ibat_buf[blm_corr_buf_index] = IBAT_pas.a16;
 		blm_corr_buf_index++;
 	}
 } // if (sfsta_op_phase == S_SFSTA_REQ_OK) {
