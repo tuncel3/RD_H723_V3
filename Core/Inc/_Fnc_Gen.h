@@ -811,7 +811,7 @@ VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
 VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
 
 blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
-blm_I_step_05percx2=blm_I_step_05percx2*2;
+blm_I_step_05percx2=blm_I_step_05perc*2;
 blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
 blm_V_step_05percx3=blm_V_step_05perc*3;
 }
@@ -1198,7 +1198,7 @@ void stability_ibat_fc(void) {
         ibat_stable_cnt++;
     }
     ibat_stable = 		    (ibat_stable_cnt >= 150);
-    batt_current_detected = (ibat_stable) && fabs(IBAT_pas.a16 > blm_I_step_05percx2); // bat akımı stabil ve yok thresholdu dışında. yani var.
+    batt_current_detected = (ibat_stable) && fabs(IBAT_pas.a16) > blm_I_step_05percx2; // bat akımı stabil ve yok thresholdu dışında. yani var.
 }
 
 void blm_set_up_down_vtarg_limits(void) {

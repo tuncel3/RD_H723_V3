@@ -10,7 +10,7 @@ set datetime=%datetime:~0,4%-%datetime:~4,2%-%datetime:~6,2% %datetime:~8,2%:%da
 set /p user_message="Enter additional commit info (or leave blank): "
 
 :: Combine date, time, and user message
-set commit_message="Auto commit on %datetime% - %user_message%"
+set commit_message="Commit on %datetime% - %user_message%"
 
 echo Adding all changes...
 git add .
