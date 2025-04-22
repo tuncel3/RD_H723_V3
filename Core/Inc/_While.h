@@ -761,7 +761,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		}
 	} else {blm_batt_current_detected_cnt=0;}
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
-		blm_cancel_op_return_normal();
+//		blm_cancel_op_return_normal();
+		discard_corr_result=1;
 	}
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -821,14 +822,18 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_op_start_delay_cnt = 0;
 				sprintf(DUB,"blm_corr %f", blm_corr); umsg(blm_u, DUB);
 			blm_op_phase = 9;
-			if (blm_corr >= 0.9) {
-				apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-				sprintf(DUB,"corr good. batt connected."); umsg(blm_u, DUB);
-			} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
-				apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
-				sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
-			} else  {
-				sprintf(DUB,"corr low. batt broken already detected. no action"); umsg(blm_u, DUB);
+			if (discard_corr_result == 0) {
+				if (blm_corr >= 0.9) {
+					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
+					sprintf(DUB,"corr good. batt connected."); umsg(blm_u, DUB);
+				} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
+					apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
+					sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
+				} else  {
+					sprintf(DUB,"corr low. batt broken already detected. no action"); umsg(blm_u, DUB);
+				}
+			} else {
+				sprintf(DUB,"discard_corr_result %f", blm_corr); umsg(blm_u, DUB);
 			}
 		}
 	} else if (blm_op_phase == 9) {
