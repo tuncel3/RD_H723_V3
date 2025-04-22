@@ -135,7 +135,6 @@ generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kad
 
 //LED_7_Data |= FLOAT_CHARGE_LED;
 
-// bataryadan çalışırken batt line broken dedi. batarya deşarj akımı varken.
 // BİR OLAY OLDUKTAN SONRA BLM erken yap. bir sonraki blm yi daha geç yap. sonrakini biraz daha geç.
 // blm sisteminde SW_BATT_OFF diye başlayan yerden itibaren op phase sistemine entegre etmek gerekiyor.
 // akü hattı kopuk kontrol sıklığı bat kopuk iken daha hızlı olmalı. bat var iken daha seyrek olabilir.

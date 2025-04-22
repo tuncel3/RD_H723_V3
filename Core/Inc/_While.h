@@ -774,7 +774,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 // Switch off ise inspection yapmanın anlamı yok. zaten kopuk.
 // bat voltajı çok düşükse zaten inspection a gerek yok direk bat bağlı değil denebilir.
 // bat akımı varsa zaten bat bağlı demek oluyor, inspection a gerek yok.
-	if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==0) {
+	if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==B_START_CONDITIONS) {
 		blm_op_phase=B_OP_START_REQ;
 	}
 	if (blm_op_phase == B_OP_START_REQ && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_stable) {
@@ -784,40 +784,40 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_enable_collect_samples = 1;
 		blm_corr_buf_index = 0;
 		blm_set_up_down_vtarg_limits();
-		blm_op_phase = 4;
-	} else if (blm_op_phase == 4) { // Vtarg’ı düşür
+		blm_op_phase = B_REDUCE_VTARG;
+	} else if (blm_op_phase == B_REDUCE_VTARG) { // Vtarg’ı düşür
 		if (V_targ_con_sy > blm_vtarg_move_dn_targ && V_targ_con_sy > blm_vtarg_move_dn_min) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
-			blm_op_phase = 5;
+			blm_op_phase = B_WAIT_REDUCED;
 		}
-	} else if (blm_op_phase == 5) { // Bekle
+	} else if (blm_op_phase == B_WAIT_REDUCED) { // Bekle
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
-			blm_op_phase = 6;
+			blm_op_phase = B_INCREASE_VTARG;
 		}
-	} else if (blm_op_phase == 6) { // Vtarg’ı yükselt
+	} else if (blm_op_phase == B_INCREASE_VTARG) { // Vtarg’ı yükselt
 		if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_max) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
-			blm_op_phase = 7;
+			blm_op_phase = B_WAIT_INCREASED;
 		}
-	} else if (blm_op_phase == 7) { // Bekle
+	} else if (blm_op_phase == B_WAIT_INCREASED) { // Bekle
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
-			blm_op_phase = 8;
+			blm_op_phase = B_REDUCE_VTARG_2;
 		}
-	} else if (blm_op_phase == 8) { // Vtarg’ı tekrar düşür
+	} else if (blm_op_phase == B_REDUCE_VTARG_2) { // Vtarg’ı tekrar düşür
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
 			set_V_targ_con_sy(Current_charge_voltage);
 			blm_phase_switch_delay_cnt = 0;
-			blm_op_phase = 9;
+			blm_op_phase = B_WAIT_REDUCED_2;
 		}
-	} else if (blm_op_phase == 9) { // Bekle
+	} else if (blm_op_phase == B_WAIT_REDUCED_2) { // Bekle
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
 			blm_enable_collect_samples = 0;
@@ -832,11 +832,11 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == B_COUNT_DELY_INSP) {
 		blm_corr_op_start_delay_cnt++;
 		if (blm_corr_op_start_delay_cnt >= blm_corr_op_delay_per) {
-			blm_op_phase = 0;
+			blm_op_phase = B_START_CONDITIONS;
 			blm_corr_op_start_delay_cnt = 0;
 		}
 	}
-	if (blm_enable_collect_samples && blm_corr_buf_index < CORR_BUF_SIZE) {
+	if (blm_enable_collect_samples && blm_corr_buf_index < CORR_BUF_SIZE) { // izin olduğu sürece kayıt alıyor.
 		vrect_buf[blm_corr_buf_index] = VRECT_pas.a64;
 		ibat_buf[blm_corr_buf_index] = IBAT_pas.a64;
 		blm_corr_buf_index++;

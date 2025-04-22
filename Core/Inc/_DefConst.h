@@ -656,10 +656,10 @@ uint32_t take_vout_sample_for_batt_insp = 1;
 uint32_t repeating_string_sent = 0;
 uint32_t while_cnt_string_sent = 0;
 uint32_t device_start_up_delay_completed = 0;
-uint32_t batt_current_detected = 0;
-uint32_t vout_sample_ready = 0;
-uint32_t batt_inspection_not_needed_disp = 0;
-uint32_t batt_current_detected_disp = 0;
+//uint32_t batt_current_detected = 0;
+//uint32_t vout_sample_ready = 0;
+//uint32_t batt_inspection_not_needed_disp = 0;
+//uint32_t batt_current_detected_disp = 0;
 uint32_t cannot_go_to_target_v = 0;
 uint32_t vbatt_vout_diff = 0;
 uint32_t min_v_reached_no_result = 0;
@@ -1279,9 +1279,15 @@ typedef enum {
 	S_STARTUP_DELAY_OK
 }STARUP_STATE;
 
-int blm_op_phase = 0;
 typedef enum {
+	B_START_CONDITIONS,
 	B_OP_START_REQ,
-	B_VRECT_STABLE,
+	B_REDUCE_VTARG,
+	B_WAIT_REDUCED,
+	B_INCREASE_VTARG,
+	B_WAIT_INCREASED,
+	B_REDUCE_VTARG_2,
+	B_WAIT_REDUCED_2,
 	B_COUNT_DELY_INSP
 }BLM_STATE;
+BLM_STATE blm_op_phase = 0;
