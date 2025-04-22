@@ -832,7 +832,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				sprintf(DUB,"corr good. batt connected."); umsg(blm_u, DUB);
 			} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
 				apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
-				sprintf(DUB,"corr low. batt broken.") umsg(blm_u, DUB);
+				sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
 			} else  {
 				sprintf(DUB,"corr low. batt broken already detected. no action"); umsg(blm_u, DUB);
 			}
