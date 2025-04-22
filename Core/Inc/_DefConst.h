@@ -1257,12 +1257,12 @@ uint16_t blm_corr_buf_index = 0;
 
 //uint8_t blm_allowed = 0;
 uint32_t blm_corr_op_start_delay_cnt = 0;
-uint32_t blm_corr_op_start_delay_per = 200;
+uint32_t blm_corr_op_start_delay_per = 50;
 uint8_t blm_phase_switch_delay_cnt = 0;
 uint8_t blm_corr_req = 0;        // Live Expressions’dan 1 yapınca başlar
 uint8_t blm_enable_collect_samples = 0;
 uint8_t blm_phase_switch_delay_per = 4;
-float blm_vi_change_mult = 0.0004f;
+float blm_vi_change_mult = 0.001f;
 float blm_corr = 0.0f;
 uint32_t blm_batt_connected_0_cnt = 0;
 
