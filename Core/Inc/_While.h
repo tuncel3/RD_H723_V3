@@ -213,7 +213,6 @@ if (VBAT_pas.a1 < -10 && EpD[SET_BATT_REV_DET][0].V1==1 && !is_state_active(BATT
 	if (batt_reverse_Acc_cnt >= batt_reverse_Acc_per) {
 		batt_reverse_Acc_cnt=0;
 		apply_state_changes_f(BATT_REVERSE_FC, 1);
-		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 	}
 } else if (VBAT_pas.a1 >= -0.5 && is_state_active(BATT_REVERSE_FC)) {
 	batt_reverse_return_Acc_cnt++;
