@@ -1177,8 +1177,8 @@ void stability_ibat_fc(void) {
         ibat_stable_cnt++;
     }
     ibat_stable = 		    (ibat_stable_cnt >= 150);
-    batt_current_detected = (ibat_stable) && fabs(IBAT_pas.a16) > blm_I_step_05percx2; // bat akımı stabil ve yok thresholdu dışında. yani var.
-    if (fabs(IBAT_pas.a16) > blm_I_step_05percx2) {
+    batt_current_detected = (ibat_stable) && fabs(IBAT_pas.a16) > blm_I_step_075perc; // bat akımı stabil ve yok thresholdu dışında. yani var.
+    if (fabs(IBAT_pas.a16) > blm_I_step_075perc) {
 
     }
 }
