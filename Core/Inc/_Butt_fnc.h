@@ -2,7 +2,7 @@
 #include "_benter.h"
 
 void bleft_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
+    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel >= 1) {
     	if (thy_drv_en==0 && user_wants_allows_thy_drv==0) {
     		user_wants_allows_thy_drv=1;
     		thy_drv_en_req=1;
@@ -182,7 +182,7 @@ void bleft_fnc(void) {
 }
 
 void bright_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
+    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel >= 1) {
     	if (thy_drv_en == 1 && user_wants_allows_thy_drv==1) {
     		thy_drv_en=0;
     		user_wants_allows_thy_drv=0;
