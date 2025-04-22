@@ -1193,7 +1193,7 @@ void stability_ibat_fc(void) {
 
 
 void blm_set_up_down_vtarg_limits(void) {
-	blm_stable_v_vrect=VRECT_pas.a64;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
+	blm_stable_v_vrect=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
 	blm_vtarg_move_up_targ=blm_stable_v_vrect+blm_V_step_05perc*3;
 	blm_vtarg_move_dn_targ=blm_stable_v_vrect-blm_V_step_05perc*3;
 	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
