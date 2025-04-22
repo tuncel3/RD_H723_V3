@@ -833,7 +833,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr = calculate_blm_op();
 			blm_corr_op_start_delay_cnt = 0;
 				sprintf(DUB,"blm_corr %f", blm_corr); umsg(blm_u, DUB);
-			blm_op_phase = 9;
 			if (discard_corr_result == 0) {
 				if (blm_corr >= 0.9) {
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
@@ -846,7 +845,9 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				}
 			} else {
 				sprintf(DUB,"discard_corr_result %f", blm_corr); umsg(blm_u, DUB);
+				blm_discard_op_restart_normal(); // işte buraya!
 			}
+			blm_op_phase = 9;
 		}
 	} else if (blm_op_phase == 9) {
 		blm_corr_op_start_delay_cnt++;
