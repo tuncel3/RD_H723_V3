@@ -1202,15 +1202,6 @@ float i_bat_max_stb=0;
 float i_bat_min_stb=0;
 float blm_stable_v_vrect=0;
 
-uint8_t  blm_batt_connected = 0;
-uint8_t  blm_cop = 0;
-uint8_t  AAAA_blm_req_up_down_vtarg_limits = 0;
-uint8_t BBBB_blm_req_reduce_vtarg=0;
-uint8_t  CCCC_blm_reducing_vtarg_completed = 0;
-uint8_t DDDD_blm_req_return_voltage_to_normal=0;
-uint8_t  EEEE_blm_req_return_state_to_normal = 0;
-uint8_t  FFFF_blm_reduce_return_op_completed = 0;
-
 uint32_t vrect_stable_cnt = 0;
 uint8_t  vrect_stable     = 0;
 uint32_t irect_stable_cnt = 0;
@@ -1267,10 +1258,9 @@ uint8_t blm_phase_switch_delay_cnt = 0;
 uint8_t blm_enable_collect_samples = 0;
 uint8_t blm_phase_switch_delay_per = 4;
 float blm_vi_change_mult = 0.005f;
-float blm_corr_p = 0.0f;
-uint32_t blm_batt_connected_0_cnt = 0;
 uint8_t discard_corr_result = 0;
 uint8_t blm_restart_after_return = 0;
+uint8_t blm_batt_connected = 0;
 
 int sfsta_op_phase = 0;
 typedef enum {
@@ -1286,6 +1276,7 @@ typedef enum {
 }STARUP_STATE;
 
 float blm_corr = 1.0f;
+float blm_corr_p = 0.0f;
 #define BLM_CORR_RESULTS_SIZE 10
 float blm_corr_results[BLM_CORR_RESULTS_SIZE] = {1};
 uint8_t blm_corr_results_index = 0;

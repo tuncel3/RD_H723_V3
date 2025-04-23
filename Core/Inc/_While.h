@@ -761,7 +761,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
-	if (SW_BATT_OFF && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
+	if (SW_BATT_OFF && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
 			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			blm_corr_op_start_delay_cnt = 0;
@@ -857,18 +857,18 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
 			blm_enable_collect_samples = 0;
-			blm_corr_p = blm_corr;
-			blm_corr = calculate_blm_op();
-			blm_corr_results[blm_corr_results_index]=blm_corr;
+			blm_corr_p = blm_corr;			// bir önceki corr
+			blm_corr = calculate_blm_op();	// şimdiki corr
+			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
 				sprintf(DUB,"  blm_corr %f", blm_corr); umsg(blm_u, DUB);
 			if (discard_corr_result == 0) {
-				if (blm_corr >= 0.85 && blm_corr_p >= 0.85) {
+				if (blm_corr >= 0.85 && blm_corr_p >= 0.85) { // son ikisi 0.85 üstü ise corr ok
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 					sprintf(DUB,"corr good. 2x0.85 batt connected."); umsg(blm_u, DUB);
-				} else if (blm_corr >= 0.90) {
+				} else if (blm_corr >= 0.90) {	// bir tanesi 0.9 üsü ise corr ok.
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 					sprintf(DUB,"corr good. 0.90 batt connected."); umsg(blm_u, DUB);
-				} else if (blm_corr < 0.75 && blm_corr_p < 0.75 && !is_state_active(BATT_LINE_BROKEN_FC)) {
+				} else if (blm_corr < 0.75 && blm_corr_p < 0.75 && !is_state_active(BATT_LINE_BROKEN_FC)) { // iki kz üst üste 0.75 altı olmuşsa corr yok.
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 					sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
 				} else  {
