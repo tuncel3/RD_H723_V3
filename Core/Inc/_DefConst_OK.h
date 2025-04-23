@@ -109,6 +109,7 @@ uint32_t ms_tick_cnt=0;
 uint32_t delay_1ms_cnt=0;
 uint32_t ButtScanDelay_cnt=0;
 uint32_t while_delay50_h=0;
+uint32_t while_delay10_h=0;
 uint8_t UART1_recv_char=0;
 
 uint32_t bleft_first_pressed = 0;
