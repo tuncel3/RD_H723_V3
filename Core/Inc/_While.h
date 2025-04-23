@@ -207,7 +207,6 @@ if (VBAT_pas.a1 < -10 && EpD[SET_BATT_REV_DET][0].V1==1 && !is_state_active(BATT
 	if (batt_reverse_Acc_cnt >= batt_reverse_Acc_per) {
 		batt_reverse_Acc_cnt=0;
 		apply_state_changes_f(BATT_REVERSE_FC, 1);
-		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 	}
 } else if (VBAT_pas.a1 >= -0.5 && is_state_active(BATT_REVERSE_FC)) {
 	batt_reverse_return_Acc_cnt++;
@@ -894,10 +893,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		ibat_buf[blm_corr_buf_index] = IBAT_pas.a64;
 		blm_corr_buf_index++;
 	}
-	if (blm_req_corr_batt_connected) {
+	if (blm_req_corr_batt_connected == 1) { // corr sonucuna göre batt line broken state uygulaması buraya koyuldu, çünkü başka durumlar da izlenerek sonuç çıkarılmaya çalışılacak. örneğin vtarg düşürüldü ama vrect düşmedi.
 		blm_req_corr_batt_connected=99;
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-	} else {
+	} else if (blm_req_corr_batt_connected == 0) {
 		blm_req_corr_batt_connected=99;
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 	}
