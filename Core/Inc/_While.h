@@ -778,12 +778,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 		blm_discard_corr_restart_normal();
 	}
-
-
-//		batt_curr_detected_cnt=0; }
-	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
+	if (!ibat_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 		blm_discard_corr_restart_normal();
 	}
+
 /// WHAT STOPS AND RESETS BATT LINE MONITORING  && is_state_active(BATT_LINE_BROKEN_FC)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // blm başlatılmasını engelleyen durumlar yoksa devam et.
