@@ -12,7 +12,7 @@ void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 static inline uint8_t is_state_active(State_Codes state_code);
 void inline extern actions_after_charge_voltage_change();
-void inline extern blm_cancel_op_return_to_delay(void);
+//void inline extern blm_cancel_op_return_to_delay(void);
 
 
 void compress_REL_OUT_order_to_parts(void);
@@ -1127,17 +1127,17 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 }
 
 
-void inline extern blm_discard_corr_restart_skip_delay(void) {
-	blm_op_phase = 100;
-	blm_enable_collect_samples = 0;
-	blm_corr_buf_index = 0;
-}
-void inline extern blm_cancel_op_return_to_delay(void) {
+//void inline extern blm_discard_corr_restart_skip_delay(void) {
+//	blm_op_phase = 100;
+//	blm_enable_collect_samples = 0;
+//	blm_corr_buf_index = 0;
+//}
+//void inline extern blm_cancel_op_return_to_delay(void) {
 	blm_op_phase = 101;
 	blm_corr_op_start_delay_cnt = 0;
 	blm_enable_collect_samples = 0;
 	blm_corr_buf_index = 0;
-}
+//}
 
 void inline extern bring_vtarg_back_skip_delay(void) {
 	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
