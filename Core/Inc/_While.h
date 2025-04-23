@@ -865,10 +865,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			if (discard_corr_result == 0) {
 				if (blm_corr >= 0.75) {
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-//					blm_corr_results[blm_corr_results_index]=1;
 					sprintf(DUB,"corr good. batt connected."); umsg(blm_u, DUB);
 				} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
-//					blm_corr_results[blm_corr_results_index]=0;
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 					sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
 				} else  {
