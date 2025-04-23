@@ -763,12 +763,12 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		batt_curr_detected_cnt=0;
 		if (batt_curr_not_detected_cnt >= batt_current_detected_per) {
 			batt_curr_not_detected_cnt=0;
-			batt_current_detected=1;														// CURRENT DETECTED
+			batt_current_detected=0;														// CURRENT DETECTED
 		}
 	}
 
 
-		batt_curr_detected_cnt=0; }
+//		batt_curr_detected_cnt=0; }
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 		blm_discard_corr_restart_normal();
 	}
