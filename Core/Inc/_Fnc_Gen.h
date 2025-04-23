@@ -1196,8 +1196,7 @@ void blm_set_up_down_vtarg_limits(void) {
 
 float calculate_blm_op(void);
 float calculate_blm_op(void) {
-	uint8_t buf_index = blm_corr_buf_index;
-    if (buf_index < 4) {
+    if (blm_corr_buf_index < 4) {
         // En az 2 örnek olmalı
         return -1;
     }
@@ -1206,7 +1205,7 @@ float calculate_blm_op(void) {
     float sum_v2 = 0.0f, sum_i2 = 0.0f;
     float sum_vi = 0.0f;
 
-    for (uint16_t i = 1; i < (buf_index-1); i++) {
+    for (uint16_t i = 1; i < (blm_corr_buf_index-1); i++) {
         float v = vrect_buf[i];
         float ib = ibat_buf[i];
 
@@ -1217,12 +1216,12 @@ float calculate_blm_op(void) {
         sum_vi += v * ib;
     }
 
-    float mean_v = sum_v / (buf_index-2);
-    float mean_i = sum_i / (buf_index-2);
+    float mean_v = sum_v / (blm_corr_buf_index-2);
+    float mean_i = sum_i / (blm_corr_buf_index-2);
 
-    float var_v = sum_v2 - (buf_index-2) * mean_v * mean_v;
-    float var_i = sum_i2 - (buf_index-2) * mean_i * mean_i;
-    float cov_vi = sum_vi - (buf_index-2) * mean_v * mean_i;
+    float var_v = sum_v2 - (blm_corr_buf_index-2) * mean_v * mean_v;
+    float var_i = sum_i2 - (blm_corr_buf_index-2) * mean_i * mean_i;
+    float cov_vi = sum_vi - (blm_corr_buf_index-2) * mean_v * mean_i;
 
     if (var_v <= 0.0f || var_i <= 0.0f)
         return -2;
