@@ -763,7 +763,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 	if (SW_BATT_OFF && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
-			blm_op_phase = 101;									// bring_vtarg_back_goto_delay
+			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
@@ -771,7 +771,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	}
 	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
-			blm_op_phase = 101;									// bring_vtarg_back_goto_delay
+			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
@@ -779,19 +779,19 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	}
 	if (batt_current_detected && is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);									// CURRENT DETECTED
-			blm_op_phase = 101;									// bring_vtarg_back_goto_delay
+			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
 		sprintf(DUB,"current detected. batt line connected"); umsg(blm_u, DUB);
 	}
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
-			blm_op_phase = 100;
+			blm_op_phase = B_SKIP_DELAY_RESTART;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
 	}
 	if (!ibat_stable) {		// ibat akımının stabil olması. bataryanın iç yapısının stabil olduğu anlamına geliyor. yüklemeden yeni çıktığında iç yapısı stabil olmuyor ve voltaj ile akım corr olmuyor.
-			blm_op_phase = 100;
+			blm_op_phase = B_SKIP_DELAY_RESTART;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
 	}
@@ -806,7 +806,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	if (blm_op_phase == B_SKIP_DELAY_RESTART) {
 		bring_vtarg_back_skip_delay();
 	}
-	if (blm_op_phase == B_GOTO_DELAY) {
+	if (blm_op_phase == B_RESTRT_AFTR_DELAY) {
 		bring_vtarg_back_goto_delay();	// iptal edilen optan sonra buraya geliniyor.
 	}
 	if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==0) {

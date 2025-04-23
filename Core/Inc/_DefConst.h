@@ -1292,7 +1292,7 @@ uint8_t blm_corr_results_index = 0;
 
 typedef enum {
 	B_SKIP_DELAY_RESTART=100,
-	B_GOTO_DELAY=101
+	B_RESTRT_AFTR_DELAY=101
 }BLM_STATE;
 BLM_STATE blm_op_phase = 0;
 
