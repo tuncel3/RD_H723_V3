@@ -774,7 +774,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);									// CURRENT DETECTED
 		blm_cancel_op_return_normal();
 		sprintf(DUB,"current detected. batt line connected"); umsg(blm_u, DUB);
-		blm_batt_current_detected_cnt=0;
 	}
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 		blm_discard_corr_restart_normal();
