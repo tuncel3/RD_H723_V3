@@ -1285,7 +1285,15 @@ typedef enum {
 	S_STARTUP_DELAY_OK
 }STARUP_STATE;
 
-int blm_op_phase = 0;
 #define BLM_CORR_RESULTS_SIZE 10
 float blm_corr_results[BLM_CORR_RESULTS_SIZE] = {0};
 uint8_t blm_corr_results_index = 0;
+
+
+typedef enum {
+	B_SKIP_DELAY_RESTART=100,
+	B_GOTO_DELAY=101
+}BLM_STATE;
+BLM_STATE blm_op_phase = 0;
+
+

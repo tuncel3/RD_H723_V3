@@ -803,10 +803,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 // bat voltajı çok düşükse zaten inspection a gerek yok direk bat bağlı değil denebilir.
 // bat akımı varsa zaten bat bağlı demek oluyor, inspection a gerek yok.
 // irect stable a1 yani bir örneklik periyot ortalaması
-	if (blm_op_phase == 100) {
+	if (blm_op_phase == B_SKIP_DELAY_RESTART) {
 		bring_vtarg_back_skip_delay();
 	}
-	if (blm_op_phase == 101) {
+	if (blm_op_phase == B_GOTO_DELAY) {
 		bring_vtarg_back_goto_delay();	// iptal edilen optan sonra buraya geliniyor.
 	}
 	if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==0) {
@@ -863,7 +863,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_op_start_delay_cnt = 0;
 				sprintf(DUB,"blm_corr %f", blm_corr); umsg(blm_u, DUB);
 			if (discard_corr_result == 0) {
-				if (blm_corr >= 0.9) {
+				if (blm_corr >= 0.75) {
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 //					blm_corr_results[blm_corr_results_index]=1;
 					sprintf(DUB,"corr good. batt connected."); umsg(blm_u, DUB);
