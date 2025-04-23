@@ -857,12 +857,12 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_per) {
 			blm_enable_collect_samples = 0;
+			blm_corr_p = blm_corr;
 			blm_corr = calculate_blm_op();
 			blm_corr_results[blm_corr_results_index]=blm_corr;
-			blm_corr_op_start_delay_cnt = 0;
 				sprintf(DUB,"blm_corr %f", blm_corr); umsg(blm_u, DUB);
 			if (discard_corr_result == 0) {
-				if (blm_corr >= 0.75) {
+				if (blm_corr >= 0.75 && blm_corr_p >= 0.75) {
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 					sprintf(DUB,"corr good. batt connected."); umsg(blm_u, DUB);
 				} else if (!is_state_active(BATT_LINE_BROKEN_FC)) {
@@ -875,6 +875,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				sprintf(DUB,"discard_corr_result %f", blm_corr); umsg(blm_u, DUB);
 			}
 			blm_corr_results_index=(blm_corr_results_index+1) % BLM_CORR_RESULTS_SIZE;
+			blm_corr_op_start_delay_cnt = 0;
 			blm_op_phase = 9;
 		}
 	} else if (blm_op_phase == 9) {

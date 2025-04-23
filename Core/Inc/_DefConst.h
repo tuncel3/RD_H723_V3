@@ -1268,6 +1268,7 @@ uint8_t blm_enable_collect_samples = 0;
 uint8_t blm_phase_switch_delay_per = 4;
 float blm_vi_change_mult = 0.005f;
 float blm_corr = 0.0f;
+float blm_corr_p = 0.0f;
 uint32_t blm_batt_connected_0_cnt = 0;
 uint8_t discard_corr_result = 0;
 uint8_t blm_restart_after_return = 0;
@@ -1288,6 +1289,7 @@ typedef enum {
 #define BLM_CORR_RESULTS_SIZE 10
 float blm_corr_results[BLM_CORR_RESULTS_SIZE] = {0};
 uint8_t blm_corr_results_index = 0;
+uint8_t blm_corr_results_index_prev = 0;
 
 
 typedef enum {
