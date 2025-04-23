@@ -158,6 +158,21 @@ void DMA1_Stream1_IRQHandler(void) {
 			}
     }
 
+    if (fabs(IBAT_pas.a16) >= blm_I_step_075perc && !batt_current_detected) {
+    	batt_curr_detected_cnt++;
+    	batt_curr_not_detected_cnt=0;
+    	if (batt_curr_detected_cnt >= batt_current_detected_per) {
+    		batt_curr_detected_cnt=0;
+    		batt_current_detected=1;														// CURRENT DETECTED
+    	}
+    } else if (fabs(IBAT_pas.a16) < blm_I_step_075perc && batt_current_detected) {
+    	batt_curr_not_detected_cnt++;
+    	batt_curr_detected_cnt=0;
+    	if (batt_curr_not_detected_cnt >= batt_current_detected_per) {
+    		batt_curr_not_detected_cnt=0;
+    		batt_current_detected=0;														// CURRENT NOT DETECTED
+    	}
+    }
 
 }
 
