@@ -1250,7 +1250,7 @@ uint8_t  blm_wait_at_high_lim_completed        = 0;
 uint32_t blm_wait_at_high_lim_cnt              = 0;
 uint32_t blm_wait_at_high_lim_per              = 4;
 
-#define CORR_BUF_SIZE 2000
+#define CORR_BUF_SIZE 1000
 float vrect_buf[CORR_BUF_SIZE];
 float ibat_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
@@ -1260,13 +1260,13 @@ uint32_t batt_curr_detected_cnt = 0;
 uint32_t batt_curr_not_detected_cnt = 0;
 //uint32_t batt_curr_P_detected_cnt = 0;
 //uint32_t batt_curr_N_detected_cnt = 0;
-uint32_t batt_current_detected_per = 250;
+uint32_t batt_current_detected_per = 50;
 uint32_t blm_corr_op_start_delay_cnt = 0;
-uint32_t blm_corr_op_start_delay_per = 250;
+uint32_t blm_corr_op_start_delay_per = 50;
 uint8_t blm_phase_switch_delay_cnt = 0;
 uint8_t blm_enable_collect_samples = 0;
-uint8_t blm_phase_switch_delay_per = 20;
-float blm_vi_change_mult = 0.0003f;
+uint8_t blm_phase_switch_delay_per = 4;
+float blm_vi_change_mult = 0.005f;
 float blm_corr = 0.0f;
 uint32_t blm_batt_connected_0_cnt = 0;
 uint8_t discard_corr_result = 0;
