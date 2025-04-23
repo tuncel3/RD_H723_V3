@@ -860,16 +860,19 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_p = blm_corr;
 			blm_corr = calculate_blm_op();
 			blm_corr_results[blm_corr_results_index]=blm_corr;
-				sprintf(DUB,"blm_corr %f", blm_corr); umsg(blm_u, DUB);
+				sprintf(DUB,"  blm_corr %f", blm_corr); umsg(blm_u, DUB);
 			if (discard_corr_result == 0) {
-				if (blm_corr >= 0.75 && blm_corr_p >= 0.75) {
+				if (blm_corr >= 0.85 && blm_corr_p >= 0.85) {
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-					sprintf(DUB,"corr good. batt connected."); umsg(blm_u, DUB);
+					sprintf(DUB,"corr good. 2x0.85 batt connected."); umsg(blm_u, DUB);
+				} else if (blm_corr >= 0.90) {
+					apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
+					sprintf(DUB,"corr good. 0.90 batt connected."); umsg(blm_u, DUB);
 				} else if (blm_corr < 0.75 && blm_corr_p < 0.75 && !is_state_active(BATT_LINE_BROKEN_FC)) {
 					apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 					sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
 				} else  {
-					sprintf(DUB,"corr low. batt broken already detected. no action"); umsg(blm_u, DUB);
+					sprintf(DUB,"corr results no decision. no action"); umsg(blm_u, DUB);
 				}
 			} else {
 				sprintf(DUB,"discard_corr_result %f", blm_corr); umsg(blm_u, DUB);
