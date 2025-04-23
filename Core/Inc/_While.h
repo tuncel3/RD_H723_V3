@@ -861,13 +861,16 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
 				sprintf(DUB,"  blm_corr %f", blm_corr); umsg(blm_u, DUB);
 			if (discard_corr_result == 0) {
-				if (blm_corr >= 0.85 && blm_corr_p >= 0.85) { // son ikisi 0.85 üstü ise corr ok
-					blm_req_corr_batt_connected=1;
-					sprintf(DUB,"corr good. 2x0.85 batt connected."); umsg(blm_u, DUB);
-				} else if (blm_corr >= 0.90) {	// bir tanesi 0.9 üsü ise corr ok.
+				if (blm_corr >= 0.90) {	// bir tanesi 0.9 üsü ise corr ok.
 					blm_req_corr_batt_connected=1;
 					sprintf(DUB,"corr good. 0.90 batt connected."); umsg(blm_u, DUB);
+				} else if (blm_corr >= 0.85 && blm_corr_p >= 0.85) { // son ikisi 0.85 üstü ise corr ok
+					blm_req_corr_batt_connected=1;
+					sprintf(DUB,"corr good. 2x0.85 batt connected."); umsg(blm_u, DUB);
 				} else if (blm_corr < 0.75 && blm_corr_p < 0.75 && !is_state_active(BATT_LINE_BROKEN_FC)) { // iki kez üst üste 0.75 altı olmuşsa corr yok.
+					blm_req_corr_batt_connected=0;
+					sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
+				} else if (blm_corr < 0.25 && !is_state_active(BATT_LINE_BROKEN_FC)) { // 0.25 altı olmuşsa corr yok.
 					blm_req_corr_batt_connected=0;
 					sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
 				} else  {
