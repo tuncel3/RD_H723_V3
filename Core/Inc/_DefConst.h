@@ -1250,7 +1250,7 @@ uint8_t  blm_wait_at_high_lim_completed        = 0;
 uint32_t blm_wait_at_high_lim_cnt              = 0;
 uint32_t blm_wait_at_high_lim_per              = 4;
 
-#define CORR_BUF_SIZE 1000
+#define CORR_BUF_SIZE 2000
 float vrect_buf[CORR_BUF_SIZE];
 float ibat_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
