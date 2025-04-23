@@ -1270,7 +1270,7 @@ float blm_vi_change_mult = 0.001f;
 float blm_corr = 0.0f;
 uint32_t blm_batt_connected_0_cnt = 0;
 uint8_t discard_corr_result = 0;
-//uint8_t blm_returning_to_charge_voltage = 0;
+uint8_t blm_returning_to_charge_voltşage = 0;
 uint8_t blm_restart_after_return = 0;
 
 int sfsta_op_phase = 0;
@@ -1287,8 +1287,6 @@ typedef enum {
 }STARUP_STATE;
 
 int blm_op_phase = 0;
-//typedef enum {
-//	B_OP_START_REQ,
-//	B_VRECT_STABLE,
-//	B_COUNT_DELY_INSP
-//}BLM_STATE;
+#define BLM_CORR_RESULTS_SIZE 3
+uint8_t blm_corr_results[BLM_CORR_RESULTS_SIZE] = {0};
+uint8_t blm_corr_results_index = 0;
