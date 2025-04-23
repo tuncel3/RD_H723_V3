@@ -1132,14 +1132,11 @@ void inline extern blm_cancel_op_return_normal(void) {
 	blm_corr_op_start_delay_cnt = 0;
 	blm_enable_collect_samples = 0;
 	blm_corr_buf_index = 0;
-//	blm_returning_to_charge_voltage = 1; // yeni flag
 }
 void inline extern blm_discard_corr_restart_normal(void) {
 	blm_op_phase = 100;
-	blm_corr_op_start_delay_cnt = 0;
 	blm_enable_collect_samples = 0;
 	blm_corr_buf_index = 0;
-	blm_restart_after_return = 1;
 }
 
 
