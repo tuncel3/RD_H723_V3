@@ -732,6 +732,23 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// BATT LINE MONITORING /////////////////////////////////////////////////////////////////////////////////////////
+
+if (fabs(IBAT_pas.a16) >= blm_I_step_075perc) {
+	batt_curr_detected_cnt++;
+	batt_curr_not_detected_cnt=0;
+	if (batt_curr_detected_cnt >= batt_current_detected_per) {
+		batt_curr_detected_cnt=0;
+		batt_current_detected=1;														// CURRENT DETECTED
+	}
+} else if (fabs(IBAT_pas.a16) < blm_I_step_075perc) {
+	batt_curr_not_detected_cnt++;
+	batt_curr_detected_cnt=0;
+	if (batt_curr_not_detected_cnt >= batt_current_detected_per) {
+		batt_curr_not_detected_cnt=0;
+		batt_current_detected=0;														// CURRENT DETECTED
+	}
+}
+
 if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 // soft start tamamlanmış. tristör devreden çıkaran yerler bu değişkeni de değiştiriyor.
 // böylece tristörler kapatıldığında blm ye girilmiyor.
@@ -750,21 +767,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
 		blm_cancel_op_return_normal();
 		sprintf(DUB,"blm Vbat too low. batt broken set"); umsg(blm_u, DUB);
-	}
-	if (fabs(IBAT_pas.a16 >= blm_I_step_075perc)) {
-		batt_curr_detected_cnt++;
-		batt_curr_not_detected_cnt=0;
-		if (batt_curr_detected_cnt >= batt_current_detected_per) {
-			batt_curr_detected_cnt=0;
-			batt_current_detected=1;														// CURRENT DETECTED
-		}
-	} else if (fabs(IBAT_pas.a16 < blm_I_step_075perc)) {
-		batt_curr_not_detected_cnt++;
-		batt_curr_detected_cnt=0;
-		if (batt_curr_not_detected_cnt >= batt_current_detected_per) {
-			batt_curr_not_detected_cnt=0;
-			batt_current_detected=0;														// CURRENT DETECTED
-		}
 	}
 
 
