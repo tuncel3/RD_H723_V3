@@ -1287,5 +1287,5 @@ typedef enum {
 
 int blm_op_phase = 0;
 #define BLM_CORR_RESULTS_SIZE 10
-uint8_t blm_corr_results[BLM_CORR_RESULTS_SIZE] = {0};
+float blm_corr_results[BLM_CORR_RESULTS_SIZE] = {0};
 uint8_t blm_corr_results_index = 0;
