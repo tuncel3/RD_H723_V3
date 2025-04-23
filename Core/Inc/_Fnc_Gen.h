@@ -1205,7 +1205,7 @@ float calculate_blm_op(void) {
     float sum_v2 = 0.0f, sum_i2 = 0.0f;
     float sum_vi = 0.0f;
 
-    for (uint16_t i = 1; i < blm_corr_buf_index; i++) {
+    for (uint16_t i = 0; i < blm_corr_buf_index; i++) {
         float v = vrect_buf[i];
         float ib = ibat_buf[i];
 
