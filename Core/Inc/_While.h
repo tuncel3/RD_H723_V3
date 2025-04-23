@@ -113,7 +113,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		LED_7_Data |= FLOAT_CHARGE_LED;
 		sprintf(DUB,"switch_to_auto_mode_completed"); prfm(DUB);
 	}
-	else if (ver a.a1 > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
+	else if (IBAT_pas.a1 > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
 		float_of_auto_mode_active=0;
 		boost_of_auto_mode_active=1;
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
