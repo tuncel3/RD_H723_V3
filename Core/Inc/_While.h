@@ -113,7 +113,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		LED_7_Data |= FLOAT_CHARGE_LED;
 		sprintf(DUB,"switch_to_auto_mode_completed"); prfm(DUB);
 	}
-	else if (IBAT_pas.a1 > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
+	else if (ver a.a1 > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
 		float_of_auto_mode_active=0;
 		boost_of_auto_mode_active=1;
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
@@ -732,14 +732,14 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// BATT LINE MONITORING /////////////////////////////////////////////////////////////////////////////////////////
-if (fabs(IBAT_pas.a16) >= blm_I_step_075perc && !batt_current_detected) {
+if (fabs(IBAT_pas.a64) >= blm_I_step_075perc && !batt_current_detected) {
 	batt_curr_detected_cnt++;
 	batt_curr_not_detected_cnt=0;
 	if (batt_curr_detected_cnt >= batt_current_detected_per) {
 		batt_curr_detected_cnt=0;
 		batt_current_detected=1;														// CURRENT DETECTED
 	}
-} else if (fabs(IBAT_pas.a16) < blm_I_step_075perc && batt_current_detected) {
+} else if (fabs(IBAT_pas.a64) < blm_I_step_075perc && batt_current_detected) {
 	batt_curr_not_detected_cnt++;
 	batt_curr_detected_cnt=0;
 	if (batt_curr_not_detected_cnt >= batt_current_detected_per) {
@@ -878,8 +878,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		}
 	}
 	if (blm_enable_collect_samples && blm_corr_buf_index < CORR_BUF_SIZE) {
-		vrect_buf[blm_corr_buf_index] = VRECT_pas.a16;
-		ibat_buf[blm_corr_buf_index] = IBAT_pas.a16;
+		vrect_buf[blm_corr_buf_index] = VRECT_pas.a64;
+		ibat_buf[blm_corr_buf_index] = IBAT_pas.a64;
 		blm_corr_buf_index++;
 	}
 } // if (sfsta_op_phase == S_SFSTA_REQ_OK) {
