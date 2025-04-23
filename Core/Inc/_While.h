@@ -762,24 +762,28 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 	if (SW_BATT_OFF && blm_batt_connected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
-		blm_cancel_op_return_normal(); // şarj voltajı değiştiğinde de cancl op fonksiyonu çalışıyor.
+			blm_op_phase = 100; 					// şarj voltajı değiştiğinde de cancl op fonksiyonu çalışıyor.
+			blm_enable_collect_samples = 0;
+			blm_corr_buf_index = 0;
 		sprintf(DUB,"blm SW off. batt broken set"); umsg(blm_u, DUB);
 	}
 	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
-		blm_cancel_op_return_normal();
+			blm_op_phase = 100;
+			blm_enable_collect_samples = 0;
+			blm_corr_buf_index = 0;
 		sprintf(DUB,"blm Vbat too low. batt broken set"); umsg(blm_u, DUB);
 	}
 	if (batt_current_detected && is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);									// CURRENT DETECTED
-		blm_cancel_op_return_normal();
+		blm_cancel_op_return_to_delay();
 		sprintf(DUB,"current detected. batt line connected"); umsg(blm_u, DUB);
 	}
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
-		blm_discard_corr_restart_normal();
+		blm_discard_corr_restart_skip_delay();
 	}
 	if (!ibat_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
-		blm_discard_corr_restart_normal();
+		blm_discard_corr_restart_skip_delay();
 	}
 
 /// WHAT STOPS AND RESETS BATT LINE MONITORING  && is_state_active(BATT_LINE_BROKEN_FC)
@@ -790,14 +794,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 // bat akımı varsa zaten bat bağlı demek oluyor, inspection a gerek yok.
 // irect stable a1 yani bir örneklik periyot ortalaması
 	if (blm_op_phase == 100) {
-		if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
-			set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-		} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
-			set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
-		} else {
-			set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-			blm_op_phase = 0;
-		}
+		bring_vtarg_back_skip_delay();
+	}
+	if (blm_op_phase == 101) {
+		bring_vtarg_back_goto_delay();	// iptal edilen optan sonra buraya geliniyor.
 	}
 	if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==0) {
 		blm_op_phase=1;
