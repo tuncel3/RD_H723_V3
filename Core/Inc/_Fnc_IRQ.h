@@ -172,6 +172,9 @@ void DMA1_Stream1_IRQHandler(void) {
     		batt_curr_not_detected_cnt=0;
     		batt_current_detected=0;														// CURRENT NOT DETECTED
     	}
+    } else {
+		batt_curr_detected_cnt=0;
+		batt_curr_not_detected_cnt=0;
     }
 
 }
