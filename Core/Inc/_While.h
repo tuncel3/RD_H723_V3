@@ -319,28 +319,28 @@ if (VRECT_pas.a1 >= vrect_dc_low_lim_ret && is_state_active(RECT_DC_LW_FC)) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// V LOAD DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
-if (VLOAD_pas.a1 > VLOAD_DC_HIGH_LIM && !is_state_active(LOAD_DC_HG_FC)) {
-	VLOAD_DC_HIGH_LIM_Acc_cnt++;
-	VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
-	if (VLOAD_DC_HIGH_LIM_Acc_cnt >= VLOAD_DC_HIGH_LIM_Acc_per) {
-		VLOAD_DC_HIGH_LIM_Acc_cnt=0;
-		apply_state_changes_f(LOAD_DC_HG_FC, 1);
-		sprintf(DUB,"LOAD DC High"); prfm(DUB);
-	}
-} else {
-	VLOAD_DC_HIGH_LIM_Acc_cnt=0;
-}
-if (VLOAD_pas.a1 <= VLOAD_DC_HIGH_LIM_ret && is_state_active(LOAD_DC_HG_FC)) {
-	VLOAD_DC_HIGH_LIM_ret_Acc_cnt++;
-	VLOAD_DC_HIGH_LIM_Acc_cnt=0;
-	if (VLOAD_DC_HIGH_LIM_ret_Acc_cnt >= VLOAD_DC_HIGH_LIM_ret_Acc_per) {
-		VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
-		apply_state_changes_f(LOAD_DC_HG_FC, 0);
-		sprintf(DUB,"LOAD DC High Return"); prfm(DUB);
-	}
-} else {
-	VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
-}
+//if (VLOAD_pas.a1 > VLOAD_DC_HIGH_LIM && !is_state_active(LOAD_DC_HG_FC)) {
+//	VLOAD_DC_HIGH_LIM_Acc_cnt++;
+//	VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
+//	if (VLOAD_DC_HIGH_LIM_Acc_cnt >= VLOAD_DC_HIGH_LIM_Acc_per) {
+//		VLOAD_DC_HIGH_LIM_Acc_cnt=0;
+//		apply_state_changes_f(LOAD_DC_HG_FC, 1);
+//		sprintf(DUB,"LOAD DC High"); prfm(DUB);
+//	}
+//} else {
+//	VLOAD_DC_HIGH_LIM_Acc_cnt=0;
+//}
+//if (VLOAD_pas.a1 <= VLOAD_DC_HIGH_LIM_ret && is_state_active(LOAD_DC_HG_FC)) {
+//	VLOAD_DC_HIGH_LIM_ret_Acc_cnt++;
+//	VLOAD_DC_HIGH_LIM_Acc_cnt=0;
+//	if (VLOAD_DC_HIGH_LIM_ret_Acc_cnt >= VLOAD_DC_HIGH_LIM_ret_Acc_per) {
+//		VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
+//		apply_state_changes_f(LOAD_DC_HG_FC, 0);
+//		sprintf(DUB,"LOAD DC High Return"); prfm(DUB);
+//	}
+//} else {
+//	VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
+//}
 if (VLOAD_pas.a1 < VLOAD_DC_LOW_LIM && !is_state_active(LOAD_DC_LW_FC)) {
 	VLOAD_DC_LOW_LIM_Acc_cnt++;
 	VLOAD_DC_LOW_LIM_ret_Acc_cnt=0;
