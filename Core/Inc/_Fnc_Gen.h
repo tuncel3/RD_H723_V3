@@ -5,7 +5,7 @@ inline void delayA_1ms(uint32_t ms);
 inline void delayA_1us(uint32_t us);
 inline void delayA_100ns(uint32_t us);
 void printFaultCodes(void);
-void inline extern set_variables_from_EEP_fc(void);
+void inline extern set_variables_from_EEP_fc(uint8_t scope);
 void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
 void inline extern update_VDC_high_low_lim_fc(void);

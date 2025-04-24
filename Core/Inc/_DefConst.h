@@ -597,12 +597,6 @@ uint32_t cal_sel_edit_mode=0;
 uint8_t rectf_active_at_startup_req_right = 0;
 
 typedef enum {
-	dropper_limits,
-	S_STARTUP_DELAY_OK
-}set_variables_from_EEP;
-set_variables_from_EEP sta_op_phase = 0;
-
-typedef enum {
     SCOPE_NONE                    = 0x00,
     SCOPE_DROPPER_LIMITS_FROM_EEP= 0x01,
     SCOPE_CURRENT_LIMITS_FROM_EEP= 0x02,
