@@ -760,7 +760,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
-		sprintf(DUB,"blm SW off. batt broken set"); umsg(blm_u, DUB);
+		PRF_GEN("blm SW off. batt broken set");
 	}
 	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
@@ -768,7 +768,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
-		sprintf(DUB,"blm Vbat too low. batt broken set"); umsg(blm_u, DUB);
+		PRF_GEN("blm Vbat too low. batt broken set");
 	}
 	if (batt_current_detected && is_state_active(BATT_LINE_BROKEN_FC)) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);									// CURRENT DETECTED
@@ -776,7 +776,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
-		sprintf(DUB,"current detected. batt line connected"); umsg(blm_u, DUB);
+		PRF_GEN("current detected. batt line connected");
 	}
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 			blm_op_phase = B_SKIP_DELAY_RESTART;
@@ -806,13 +806,13 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_op_phase=1;
 	}
 	if (blm_op_phase == 1 && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_stable) {
-		sprintf(DUB,"vrect stable. "); umsg(blm_u, DUB);
+		PRF_GEN("vrect stable. ");
 		blm_op_phase=2;
 	} else if (blm_op_phase == 2) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
 		blm_enable_collect_samples = 1;
 		blm_corr_buf_index = 0;
 		blm_set_up_down_vtarg_limits();
-		sprintf(DUB,"start changing voltage"); umsg(blm_u, DUB);
+		PRF_GEN("start changing voltage");
 		blm_op_phase = 3;
 	} else if (blm_op_phase == 3) { // Vtarg’ı düşür
 		if (V_targ_con_sy > blm_vtarg_move_dn_targ && V_targ_con_sy > blm_vtarg_move_dn_min) {
@@ -853,25 +853,25 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_p = blm_corr;			// bir önceki corr
 			blm_corr = calculate_blm_op();	// şimdiki corr
 			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
-				sprintf(DUB,"  blm_corr %f", blm_corr); umsg(blm_u, DUB);
+				PRF_GEN("  blm_corr %f", blm_corr);
 			if (discard_corr_result == 0) {
 				if (blm_corr >= 0.90) {	// bir tanesi 0.9 üstü ise corr ok.
 					blm_req_corr_batt_connected=1;
-					sprintf(DUB,"corr good. 0.90 batt connected."); umsg(blm_u, DUB);
+					PRF_GEN("corr good. 0.90 batt connected.");
 				} else if (blm_corr >= 0.85 && blm_corr_p >= 0.85) { // son ikisi 0.85 üstü ise corr ok
 					blm_req_corr_batt_connected=1;
-					sprintf(DUB,"corr good. 2x0.85 batt connected."); umsg(blm_u, DUB);
+					PRF_GEN("corr good. 2x0.85 batt connected.");
 				} else if (blm_corr < 0.75 && blm_corr_p < 0.75 && !is_state_active(BATT_LINE_BROKEN_FC)) { // iki kez üst üste 0.75 altı olmuşsa corr yok.
 					blm_req_corr_batt_connected=0;
-					sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
+					PRF_GEN("corr low. batt broken.");
 				} else if (blm_corr < 0.25 && !is_state_active(BATT_LINE_BROKEN_FC)) { // 0.25 altı olmuşsa corr yok.
 					blm_req_corr_batt_connected=0;
-					sprintf(DUB,"corr low. batt broken."); umsg(blm_u, DUB);
+					PRF_GEN("corr low. batt broken.");
 				} else  {
-					sprintf(DUB,"corr results no decision. no action"); umsg(blm_u, DUB);
+					PRF_GEN("corr results no decision. no action");
 				}
 			} else {
-				sprintf(DUB,"discard_corr_result %f", blm_corr); umsg(blm_u, DUB);
+				PRF_GEN("discard_corr_result %f", blm_corr);
 			}
 			blm_corr_results_index=(blm_corr_results_index+1) % BLM_CORR_RESULTS_SIZE;
 			blm_corr_op_start_delay_cnt = 0;
