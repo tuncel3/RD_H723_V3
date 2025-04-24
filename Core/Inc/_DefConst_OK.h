@@ -147,7 +147,6 @@ uint8_t buffer_tail = 0;  // Read pointer
 uint8_t dma_busy = 0;     // DMA busy flag
 
 char DUB[128]={0};
-char UXPUB[54]={0};
 
 #define ubl1_    (1 << 0)  // Bit 0	general message
 #define blm_u    (1 << 1)  // Bit 1 uart message batt line
