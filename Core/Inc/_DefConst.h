@@ -449,8 +449,8 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} }, //
     { {DC_KAC_POS, 20.0}, {DC_KAC_POS, 20.0} }, // DC kaçak pozitif
     { {DC_KAC_NEG, 20.0}, {DC_KAC_NEG, 20.0} }, // DC kaçak negatif
-    { {RECT_SHORT, 20.0}, {RECT_SHORT, 20.0} }, // RECT short Amp
-    { {BATT_SHORT, 20.0}, {BATT_SHORT, 20.0} }, // BATT short Amp
+    { {RECT_SHORT, 50.0}, {RECT_SHORT, 50.0} }, // RECT short Amp
+    { {BATT_SHORT, 50.0}, {BATT_SHORT, 50.0} }, // BATT short Amp
     { {REL_OUT_1, 657440.0}, {REL_OUT_1, 657440.0} },
     { {REL_OUT_2, 235701.0}, {REL_OUT_2, 235701.0} },
     { {REL_OUT_3, 370984.0}, {REL_OUT_3, 370984.0} },

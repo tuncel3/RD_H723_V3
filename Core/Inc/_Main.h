@@ -152,7 +152,6 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 // butona basar basmaz tepki olmuyor. bunu hızlandırmak lazım. butonu bırakınca kısa süreliğine butonu disable etmek lazım.
 // data kayıt için adrese ihtiyaç yok
 // arız kodu listesi son arıza numarasını 1 yap öyle sırala
-// activate device seçeneği koy ki açılışta çalışmasın. voltaj ayarları yapıldıktan sonra cihaz aktif edilsin.
 // arıza tekrarladıkça geri dönme süresini uzatma algoritması
 // arıza durumunda start led kapanmıyor.
 // EpD değerleri 0 olmalı. cihaz kurulumunda belirlenmeli.
