@@ -809,7 +809,6 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
 
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
-//	update_VDC_high_low_lim_fc();
 	set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
 }
 
