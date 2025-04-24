@@ -3,7 +3,7 @@
 //////// DEBUG SYSTEM CONTROL //////////////////////////////////////////////////////////////
 // Debug log kontrolü: DEBUG_MODE == 1 ise runtime flag ile kontrol edilir
 // DEBUG_MODE == 0 yapılırsa, PRF_GEN ve PRF_BLM tamamen iptal olur
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 
 volatile uint8_t dbg_gen = 1;
 volatile uint8_t dbg_blm = 0;

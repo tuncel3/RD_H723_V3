@@ -1,5 +1,4 @@
 volatile void prfm(char *string);
-void extern umsg(uint32_t msg_group, char *string);
 void delay_1ms(uint32_t num1);
 inline void delayA_1ms(uint32_t ms);
 inline void delayA_1us(uint32_t us);
@@ -133,38 +132,6 @@ void extern prfm(char *string)
     // Start DMA transmission if not busy
     if (!dma_busy)
     {
-        dma_busy = 1;
-        size_t string_length = strlen(dma_uart_buffer[buffer_tail]);
-        LL_DMA_SetDataLength(DMA1, LL_DMA_STREAM_0, string_length);
-        LL_DMA_ConfigAddresses(DMA1, LL_DMA_STREAM_0,
-                               (uint32_t)dma_uart_buffer[buffer_tail],
-                               LL_USART_DMA_GetRegAddr(UART5, LL_USART_DMA_REG_DATA_TRANSMIT),
-                               LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
-//        set_(UART1_DE);
-        LL_DMA_EnableStream(DMA1, LL_DMA_STREAM_0);
-    }
-}
-
-void extern umsg(uint32_t msg_group, char *string)
-{
-    // Check if the message group is enabled
-    if (!(enabled_message_groups & msg_group)) {
-        return; // Skip printing if the group is disabled
-    }
-
-    // Copy string to DMA buffer safely
-    snprintf(dma_uart_buffer[buffer_head], MAX_STRING_LENGTH, "%s\n\r", string);
-
-    // Move buffer head
-    buffer_head = (buffer_head + 1) % BUFFER_SIZE;
-
-    // Check for buffer overflow
-    if (buffer_head == buffer_tail) {
-        buffer_tail = (buffer_tail + 1) % BUFFER_SIZE; // Discard oldest data
-    }
-
-    // Start DMA transmission if not busy
-    if (!dma_busy) {
         dma_busy = 1;
         size_t string_length = strlen(dma_uart_buffer[buffer_tail]);
         LL_DMA_SetDataLength(DMA1, LL_DMA_STREAM_0, string_length);
