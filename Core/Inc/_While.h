@@ -298,7 +298,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 		}
 
 
-		if (VLOAD_pas.a1 <= Vdc_drop_out_max && is_state_active(LOAD_DC_HG_FC)) {
+		if (VLOAD_pas.a1+dropper_test_var_1 <= Vdc_drop_out_max && is_state_active(LOAD_DC_HG_FC)) {
 			VLOAD_DC_HIGH_LIM_ret_Acc_cnt++;
 			VLOAD_DC_HIGH_LIM_Acc_cnt=0;
 			if (VLOAD_DC_HIGH_LIM_ret_Acc_cnt >= VLOAD_DC_HIGH_LIM_ret_Acc_per) {
@@ -310,7 +310,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
 		}
 
-		if (VLOAD_pas.a1 >= Vdc_drop_out_min && is_state_active(LOAD_DC_LW_FC)) {
+		if (VLOAD_pas.a1+dropper_test_var_1 >= Vdc_drop_out_min && is_state_active(LOAD_DC_LW_FC)) {
 			VLOAD_DC_LOW_LIM_ret_Acc_cnt++;
 			VLOAD_DC_LOW_LIM_Acc_cnt=0;
 			if (VLOAD_DC_LOW_LIM_ret_Acc_cnt >= VLOAD_DC_LOW_LIM_ret_Acc_per) {
