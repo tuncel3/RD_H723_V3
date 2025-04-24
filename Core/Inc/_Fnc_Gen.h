@@ -807,12 +807,6 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     }
 }
 
-//void inline extern update_VDC_high_low_lim_fc(void) {
-//	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
-//	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
-//	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
-//	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
-//}
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
 //	update_VDC_high_low_lim_fc();

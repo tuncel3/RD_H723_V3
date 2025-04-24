@@ -8,7 +8,7 @@ prfm("\033[2J");
 set_(CS_M95P32);
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
-write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
+//write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
 SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();
 
