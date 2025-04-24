@@ -277,7 +277,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				&& !is_state_active(LOAD_DC_HG_FC)) {
 			vload_dc_high_lim_Acc_cnt++;
 			vload_dc_high_lim_ret_Acc_cnt=0;
-			if (vload_dc_high_lim_Acc_cnt >= VLOAD_DC_HIGH_LIM_Acc_per) {
+			if (vload_dc_high_lim_Acc_cnt >= vload_dc_high_lim_Acc_per) {
 				vload_dc_high_lim_Acc_cnt=0;
 				apply_state_changes_f(LOAD_DC_HG_FC, 1);
 				sprintf(DUB,"LOAD DC High"); prfm(DUB);
