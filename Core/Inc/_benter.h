@@ -292,8 +292,11 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VLOAD_DC_LOW_LIM_ADD) {
 			currentPage = DEVICE_RESET_pg;
 		}
 		if (selected_MANAGEMENT == 2) {
+			currentPage = RECTF_ACTIVE_AT_STARTUP_pg;
+		}
+		if (selected_MANAGEMENT == 3) {
 			currentPage = CALIBRATION_pg;
-			bat_inspection_allowed=0;
+			EpD[SET_BATT_DISC_DET][0].V1=0;
 		}
     }
     else if (currentPage == CALIBRATION_pg) {
