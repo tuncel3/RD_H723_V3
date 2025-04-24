@@ -602,6 +602,15 @@ typedef enum {
 }set_variables_from_EEP;
 set_variables_from_EEP sta_op_phase = 0;
 
+typedef enum {
+    SCOPE_NONE                    = 0x00,
+    SCOPE_DROPPER_LIMITS_FROM_EEP= 0x01,
+    SCOPE_CURRENT_LIMITS_FROM_EEP= 0x02,
+    SCOPE_VOLTAGE_LIMITS_FROM_EEP= 0x04,
+    SCOPE_BLM_LIMITS_FROM_EEP     = 0x08,
+    SCOPE_VAR_ALL_FROM_EEP       = 0xFF
+} EEP_ScopeFlags;
+
 
 float array_settings_data[NUM_SET_ENUM][2]={{0.0f, 0.0f}};
 uint32_t settings_rec_addr=3145728;

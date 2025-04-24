@@ -13,7 +13,7 @@ SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();
 
 actions_after_charge_mode_change(5); // set charge mode values
-set_variables_from_EEP_fc();
+set_variables_from_EEP_fc(SCOPE_VAR_ALL_FROM_EEP);
 update_VDC_high_low_lim_fc();
 delay_1ms(100);
 

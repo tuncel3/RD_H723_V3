@@ -231,14 +231,12 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_high_lim_add) {
 	EpD[dropp_reg_high_lim_add][0].V1=EpD[dropp_reg_high_lim_add][1].V1;
-	dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+(EpD[dropp_reg_high_lim_add][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
-	dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-(EpD[dropp_reg_low_lim_sub][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
+	set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 	Rec_Dat_to_EEp_f(dropp_reg_high_lim_add);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
 	EpD[dropp_reg_low_lim_sub][0].V1=EpD[dropp_reg_low_lim_sub][1].V1;
-	dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+(EpD[dropp_reg_high_lim_add][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
-	dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-(EpD[dropp_reg_low_lim_sub][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
+	set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 	Rec_Dat_to_EEp_f(dropp_reg_low_lim_sub);
 }
 		}
