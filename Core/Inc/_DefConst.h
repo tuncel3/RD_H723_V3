@@ -597,13 +597,14 @@ uint32_t cal_sel_edit_mode=0;
 uint8_t rectf_active_at_startup_req_right = 0;
 
 typedef enum {
-    SCOPE_NONE                    = 0x00,
-    SCOPE_DROPPER_LIMITS_FROM_EEP = 0x01,
-    SCOPE_CURRENT_LIMITS_FROM_EEP = 0x02,
-    SCOPE_VOLTAGE_LIMITS_FROM_EEP = 0x04,
-    SCOPE_BLM_LIMITS_FROM_EEP     = 0x08,
-    SCOPE_DEV_NOM_VOUT_EEP        = 0x10,
-    SCOPE_VAR_ALL_FROM_EEP        = 0xFF
+    SCOPE_NONE                      = 0x00,
+    SCOPE_DROPPER_LIMITS_FROM_EEP   = 0x01,
+    SCOPE_CURRENT_LIMITS_FROM_EEP   = 0x02,
+    SCOPE_VOLTAGE_LIMITS_FROM_EEP   = 0x04,
+    SCOPE_BLM_LIMITS_FROM_EEP       = 0x08,
+    SCOPE_DEV_NOM_VOUT_EEP          = 0x10,
+	SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP = 0x20,
+    SCOPE_VAR_ALL_FROM_EEP          = 0xFF
 } EEP_ScopeFlags;
 
 

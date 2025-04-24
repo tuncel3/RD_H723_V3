@@ -8,7 +8,7 @@ void printFaultCodes(void);
 void inline extern set_variables_from_EEP_fc(uint8_t scope);
 void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
-void inline extern update_VDC_high_low_lim_fc(void);
+//void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 static inline uint8_t is_state_active(State_Codes state_code);
 void inline extern actions_after_charge_voltage_change();
@@ -799,17 +799,24 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
         VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
     }
+    if (scope == SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP) {
+    	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
+    	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
+    	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
+    	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
+    }
 }
 
-void inline extern update_VDC_high_low_lim_fc(void) {
-	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
-	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
-	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
-	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
-}
+//void inline extern update_VDC_high_low_lim_fc(void) {
+//	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
+//	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
+//	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
+//	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
+//}
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
-	update_VDC_high_low_lim_fc();
+//	update_VDC_high_low_lim_fc();
+	set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
 }
 
 void inline extern actions_after_charge_voltage_change() {
