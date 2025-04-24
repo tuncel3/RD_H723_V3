@@ -166,8 +166,8 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_high_lim_add) {
 	EpD[dropp_reg_high_lim_add][1].V1=EpD[dropp_reg_high_lim_add][0].V1;
 }
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_add) {
-	EpD[dropp_reg_low_lim_add][1].V1=EpD[dropp_reg_low_lim_add][0].V1;
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
+	EpD[dropp_reg_low_lim_sub][1].V1=EpD[dropp_reg_low_lim_sub][0].V1;
 }
 		} else if (!dev_setting_edit_mode) {
 if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==999) {
@@ -234,10 +234,10 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_high_lim_add) {
 	update_VDC_high_low_lim_fc();
 	Rec_Dat_to_EEp_f(dropp_reg_high_lim_add);
 }
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_add) {
-	EpD[dropp_reg_low_lim_add][0].V1=EpD[dropp_reg_low_lim_add][1].V1;
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
+	EpD[dropp_reg_low_lim_sub][0].V1=EpD[dropp_reg_low_lim_sub][1].V1;
 	update_VDC_high_low_lim_fc();
-	Rec_Dat_to_EEp_f(dropp_reg_low_lim_add);
+	Rec_Dat_to_EEp_f(dropp_reg_low_lim_sub);
 }
 		}
     }
