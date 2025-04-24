@@ -778,6 +778,10 @@ Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş
 Vdc_drop_out_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu çıkış gerilimi
 Vdc_drop_out_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // D.A. gerilim regülasyonu çıkış gerilimi
 
+//	VLOAD_DC_HIGH_LIM=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100));
+//	VLOAD_DC_HIGH_LIM_ret=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
+//	VLOAD_DC_LOW_LIM=V_targ_con_sy/(1+(EpD[VLOAD_DC_LOW_LIM_ADD][0].V1/100));
+//	VLOAD_DC_LOW_LIM_ret=V_targ_con_sy/(1+(EpD[VLOAD_DC_LOW_LIM_ADD][0].V1/100)-0.01);
 
 // D.A. çıkış akım ayarı
 Irect_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Toplam çıkış
@@ -801,10 +805,6 @@ void inline extern update_VDC_high_low_lim_fc(void) {
 	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
 	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
 	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
-	VLOAD_DC_HIGH_LIM=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100));
-	VLOAD_DC_HIGH_LIM_ret=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
-	VLOAD_DC_LOW_LIM=V_targ_con_sy/(1+(EpD[VLOAD_DC_LOW_LIM_ADD][0].V1/100));
-	VLOAD_DC_LOW_LIM_ret=V_targ_con_sy/(1+(EpD[VLOAD_DC_LOW_LIM_ADD][0].V1/100)-0.01);
 }
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
