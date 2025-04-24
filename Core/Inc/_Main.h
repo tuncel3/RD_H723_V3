@@ -154,7 +154,6 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 // data kayıt için adrese ihtiyaç yok
 // arız kodu listesi son arıza numarasını 1 yap öyle sırala
 // arıza tekrarladıkça geri dönme süresini uzatma algoritması
-// EpD değerleri 0 olmalı. cihaz kurulumunda belirlenmeli.
 // eeprom okuma başarısız ise arıza durumu gösterilmeli. değerler eepromdan alındığı için.
 // bir anda batarya akımı kesilirse battery inspection hemen başlat.
 //_Fnc_Gen.h uses sprintf(DUB, ...); prfm(DUB); multiple times in functions like batt_line_broken_fn().
