@@ -564,8 +564,8 @@ SETT_type DEVICE_SETT_Items[] = {
 {"K.Devr Bat A", BATT_SHORT, 3},
 {"Doğ VDC Üst L%", VRECT_DC_HIGH_LIM_add, 3},
 {"Doğ VDC Alt L%", VRECT_DC_LOW_LIM_add, 3},
-{"Yük VDC Üst L%", dropp_reg_high_lim_add, 3},
-{"Yük VDC Alt L%", dropp_reg_low_lim_sub, 3}
+{"Dropper Üst L%", dropp_reg_high_lim_add, 3},
+{"Dropper Alt L%", dropp_reg_low_lim_sub, 3}
 };
 #define NUM_DEVICE_SETT_ITEMS (sizeof(DEVICE_SETT_Items) / sizeof(DEVICE_SETT_Items[0]))
 uint8_t selected_DEVICE_SETT = 0;
