@@ -381,9 +381,9 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VLOAD_DC_LOW_LIM_ADD) {
     }
     else if (currentPage == RECTF_ACTIVE_AT_STARTUP_pg) {
     	rectf_active_at_startup_req=1;
-    	if (rectf_active_at_startup_req_right == 1) {
+    	if (rectf_active_at_startup_req_right == 0) {
     		var1=1;
-    	} else if (rectf_active_at_startup_req_right == 0) {
+    	} else if (rectf_active_at_startup_req_right == 1) {
     		var1=0;
     	}
     }
