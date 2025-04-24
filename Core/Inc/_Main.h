@@ -141,9 +141,6 @@ generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kad
 
 //LED_7_Data |= FLOAT_CHARGE_LED;
 
-// son belli bir sayıdaki corr ölçümlerinin %80inin kararına göre karar verilecek.
-// BİR OLAY OLDUKTAN SONRA BLM erken yap. bir sonraki blm yi daha geç yap. sonrakini biraz daha geç.
-// akü hattı kopuk kontrol sıklığı bat kopuk iken daha hızlı olmalı. bat var iken daha seyrek olabilir.
 // butona basar basmaz tepki olmuyor. bunu hızlandırmak lazım. butonu bırakınca kısa süreliğine butonu disable etmek lazım.
 // data kayıt için adrese ihtiyaç yok
 // arız kodu listesi son arıza numarasını 1 yap öyle sırala
