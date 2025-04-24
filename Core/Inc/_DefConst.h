@@ -592,12 +592,7 @@ uint32_t cal_sel_digit=0;
 uint32_t cal_sel_edit_mode=0;
 
 uint8_t rectf_active_at_startup_req = 0;
-//uint8_t device_reset_req = 0;
 uint8_t rectf_active_at_startup_req_right = 0;
-//uint8_t device_reset_req_right = 0;
-//uint8_t fault_codes_reset_qst_accept = 0;
-//uint8_t fault_codes_reset_completed = 0;
-//uint8_t batt_reverse_req_right = 0;
 
 
 

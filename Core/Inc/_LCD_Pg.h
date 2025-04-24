@@ -472,7 +472,7 @@ inline extern void RECTF_ACTIVE_AT_STARTUP_pg_disp(void) {
 			GLCD_Line(x0, y0, x0+4+4*6, y0);
 		} else {
 			x0 = x0+9*6;
-			GLCD_Line(x0, y0, x0+4+5*6, y0);
+			GLCD_Line(x0, y0, x0+4+4*6, y0);
 		}
 	}
 }
