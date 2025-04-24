@@ -977,9 +977,6 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 	uart_debug_cnt();
 
-	if (unexpected_program_state==1) {	// if else koşulları içinde takılma durumu. olmayan koşula gelme durumu.
-		PRINTF_DEBUG("%lu %s\033[A", unexpected_program_state, DUB);
-	}
 //	if (var1==3) {
 //		var1=0;
 //		apply_state_changes_f(TRF_FAN2_REL,1);
