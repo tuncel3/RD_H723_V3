@@ -141,8 +141,10 @@ generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kad
 
 if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 	thy_drv_en_req=1;
+	user_wants_allows_thy_drv=1;
 } else {
 	thy_drv_en_req=0;
+	user_wants_allows_thy_drv=0;
 }
 
 //LED_7_Data |= FLOAT_CHARGE_LED;
