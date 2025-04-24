@@ -1261,7 +1261,7 @@ uint8_t blm_phase_switch_delay_per = 4;
 float blm_vi_change_mult = 0.005f;
 uint8_t discard_corr_result = 0;
 uint8_t blm_restart_after_return = 0;
-uint8_t blm_req_corr_batt_connected = 0;
+uint8_t blm_req_corr_batt_connected = 1;
 //uint8_t blm_batt_connected = 0;
 
 int sfsta_op_phase = 0;
