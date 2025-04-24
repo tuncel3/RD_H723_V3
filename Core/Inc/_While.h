@@ -10,11 +10,11 @@ if (ms_tick_cnt-sfst_1_t_hold >= 5) { // soft start step. 5ms
 			set_V_targ_con_sy(Current_charge_voltage);
 			sfsta_op_phase=S_SFSTA_REQ_OK;
 			actions_after_charge_mode_change(6);
-			PRINTF_DEBUG("Soft start request ok");
+			PRF_GEN("Soft start request ok");
 		}
 		if (V_targ_con_sy < VRECT_smp_sc-4) {		// vout zaten yüksekse direk hedefi oraya yaklaştırarak başla
 			set_V_targ_con_sy(VRECT_smp_sc-4);
-			PRINTF_DEBUG("Sfst OK V_targ_con_sy < VRECT_smp_sc-4;");
+			PRF_GEN("Sfst OK V_targ_con_sy < VRECT_smp_sc-4;");
 		}
 	}
 }
@@ -42,7 +42,7 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 			thy_drv_en_req=0;
 			sfst_1_unexpected_state=0;
 			sf_sta_req_cnt=0;
-			PRINTF_DEBUG("Soft start request");
+			PRF_GEN("Soft start request");
 		}
 	}
 
@@ -50,7 +50,7 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 // burda düzenleme gerekebilir. hangi arızadan ne kadar süre sonra tekrar başlatılacak belirlemek lazım.
 if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
 	thy_drv_en_req = 1; // bu durumda thy drv en req gönder.
-	PRINTF_DEBUG("thy_stop_fault_hold_bits 0. bütün arızalar sıfırlandı. starting rectf");
+	PRF_GEN("thy_stop_fault_hold_bits 0. bütün arızalar sıfırlandı. starting rectf");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +65,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		set_V_targ_con_sy(Current_charge_voltage);
 		LED_7_Data &= !BOOST_CHARGE_LED;
 		LED_7_Data |= FLOAT_CHARGE_LED;
-		PRINTF_DEBUG("switch_to_auto_mode_completed");
+		PRF_GEN("switch_to_auto_mode_completed");
 	}
 	else if (IBAT_pas.a1 > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
 		float_of_auto_mode_active=0;
@@ -75,7 +75,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		set_V_targ_con_sy(Current_charge_voltage);
 		LED_7_Data &= !FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
-		PRINTF_DEBUG("AUTO switch to BOOST %f", IBAT_pas.a1);
+		PRF_GEN("AUTO switch to BOOST %f", IBAT_pas.a1);
 	}
 	else if (IBAT_pas.a1 < EpD[I_LIM_TO_FLOAT][0].V1 && float_of_auto_mode_active==0) {
 		float_of_auto_mode_active=1;
@@ -85,7 +85,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		set_V_targ_con_sy(Current_charge_voltage);
 		LED_7_Data &= !BOOST_CHARGE_LED;
 		LED_7_Data |= FLOAT_CHARGE_LED;
-		PRINTF_DEBUG("AUTO switch to FLOAT %f", IBAT_pas.a1);
+		PRF_GEN("AUTO switch to FLOAT %f", IBAT_pas.a1);
 	}
 }
 ////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
@@ -97,14 +97,14 @@ if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 	if (charge_mode_timed_time_cnt > 0) {
 		charge_mode_timed_time_cnt--;
 		charge_mode_timed_time_sec=charge_mode_timed_time_cnt/20;
-//		PRINTF_DEBUG("TIMED mode selected minutes %f %lu", EpD[SET_BOOST_TIME][0].V1, charge_mode_timed_time_cnt);
+//		PRF_GEN("TIMED mode selected minutes %f %lu", EpD[SET_BOOST_TIME][0].V1, charge_mode_timed_time_cnt);
 	}
 
 	if (charge_mode_timed_time_cnt == 0 && timed_mode_time_ended==0) {
 		timed_mode_time_ended=1;
 		EpD[SET_CHARGE_MODE][0].V1=FLOAT; EpD[SET_CHARGE_MODE][1].V1=FLOAT; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
 		actions_after_charge_mode_change(8);
-		PRINTF_DEBUG("Timer mode count down ended. Switch to FLOAT mode");
+		PRF_GEN("Timer mode count down ended. Switch to FLOAT mode");
 	}
 }
 ////// MANAGE CHARGE MODE TIMED /////////////////////////////////////////////////////////////////////////////////////
@@ -186,28 +186,28 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 		if (VDCK_accept_cnt >= VDCK_accept_per) {
 			VDCK_accept_cnt=0;
 			apply_state_changes_f(DC_LEAK_POSITIVE_FC, 1);
-			PRINTF_DEBUG("DC leak above pos lim");
+			PRF_GEN("DC leak above pos lim");
 		 }
 	} else if (VDCKP_perc < EpD[DC_KAC_POS][0].V1 && is_state_active(DC_LEAK_POSITIVE_FC)) {
 		VDCK_return_cnt++;
 		if (VDCK_return_cnt >= VDCK_return_per) {
 			VDCK_return_cnt=0;
 			apply_state_changes_f(DC_LEAK_POSITIVE_FC, 0);
-			PRINTF_DEBUG("DC leak above pos lim removed");
+			PRF_GEN("DC leak above pos lim removed");
 		}
 	} else if (VDCKN_perc >= EpD[DC_KAC_NEG][0].V1 && !is_state_active(DC_LEAK_NEGATIVE_FC)) {
 		VDCK_accept_cnt++;
 		if (VDCK_accept_cnt >= VDCK_accept_per) {
 			VDCK_accept_cnt=0;
 			apply_state_changes_f(DC_LEAK_NEGATIVE_FC, 1);
-			PRINTF_DEBUG("DC leak below neg lim");
+			PRF_GEN("DC leak below neg lim");
 		}
 	} else if (VDCKN_perc < EpD[DC_KAC_NEG][0].V1 && is_state_active(DC_LEAK_NEGATIVE_FC)) {
 		VDCK_return_cnt++;
 		if (VDCK_return_cnt >= VDCK_return_per) {
 			VDCK_return_cnt=0;
 			apply_state_changes_f(DC_LEAK_NEGATIVE_FC, 0);
-			PRINTF_DEBUG("DC leak below neg lim removed");
+			PRF_GEN("DC leak below neg lim removed");
 		}
 	} else {
 		VDCK_return_cnt=0;
@@ -281,7 +281,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			if (vload_dc_high_lim_Acc_cnt >= vload_dc_high_lim_Acc_per) {
 				vload_dc_high_lim_Acc_cnt=0;
 				apply_state_changes_f(LOAD_DC_HG_FC, 1);
-				PRINTF_DEBUG("LOAD DC High");
+				PRF_GEN("LOAD DC High");
 			}
 		} else { vload_dc_high_lim_Acc_cnt=0; }
 
@@ -291,7 +291,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			if (vload_dc_high_lim_ret_Acc_cnt >= vload_dc_high_lim_ret_Acc_per) {
 				vload_dc_high_lim_ret_Acc_cnt=0;
 				apply_state_changes_f(LOAD_DC_HG_FC, 0);
-				PRINTF_DEBUG("LOAD DC High Return");
+				PRF_GEN("LOAD DC High Return");
 			}
 		} else { vload_dc_high_lim_ret_Acc_cnt=0; }
 
@@ -302,7 +302,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			if (vload_dc_low_lim_Acc_cnt >= VLOAD_DC_LOW_LIM_Acc_per) {
 				vload_dc_low_lim_Acc_cnt=0;
 				apply_state_changes_f(LOAD_DC_LW_FC, 1);
-				PRINTF_DEBUG("LOAD DC Low");
+				PRF_GEN("LOAD DC Low");
 			}
 		} else { vload_dc_low_lim_Acc_cnt=0; }
 
@@ -312,7 +312,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			if (vload_dc_low_lim_ret_Acc_cnt >= vload_dc_low_lim_ret_Acc_per) {
 				vload_dc_low_lim_ret_Acc_cnt=0;
 				apply_state_changes_f(LOAD_DC_LW_FC, 0);
-				PRINTF_DEBUG("LOAD DC Low Return");
+				PRF_GEN("LOAD DC Low Return");
 			}
 		} else { vload_dc_low_lim_ret_Acc_cnt=0; }
 
@@ -328,7 +328,7 @@ if (VRECT_pas.a1 > vrect_dc_high_lim && !is_state_active(RECT_DC_HG_FC)) {
 	if (vrect_dc_high_lim_Acc_cnt >= vrect_dc_high_lim_Acc_per) {
 		vrect_dc_high_lim_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_HG_FC, 1);
-		PRINTF_DEBUG("RECT DC High");
+		PRF_GEN("RECT DC High");
 	}
 } else {
 	vrect_dc_high_lim_Acc_cnt=0;
@@ -339,7 +339,7 @@ if (VRECT_pas.a1 <= vrect_dc_high_lim_ret && is_state_active(RECT_DC_HG_FC)) {
 	if (vrect_dc_high_lim_ret_Acc_cnt >= vrect_dc_high_lim_ret_Acc_per) {
 		vrect_dc_high_lim_ret_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_HG_FC, 0);
-		PRINTF_DEBUG("RECT DC High Return");
+		PRF_GEN("RECT DC High Return");
 	}
 } else {
 	vrect_dc_high_lim_ret_Acc_cnt=0;
@@ -350,7 +350,7 @@ if (VRECT_pas.a1 < vrect_dc_low_lim && !is_state_active(RECT_DC_LW_FC)) {
 	if (vrect_dc_low_lim_Acc_cnt >= vrect_dc_low_lim_Acc_per) {
 		vrect_dc_low_lim_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_LW_FC, 1);
-		PRINTF_DEBUG("RECT DC Low");
+		PRF_GEN("RECT DC Low");
 	}
 } else {
 	vrect_dc_low_lim_Acc_cnt=0;
@@ -361,7 +361,7 @@ if (VRECT_pas.a1 >= vrect_dc_low_lim_ret && is_state_active(RECT_DC_LW_FC)) {
 	if (vrect_dc_low_lim_ret_Acc_cnt >= vrect_dc_low_lim_ret_Acc_per) {
 		vrect_dc_low_lim_ret_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_LW_FC, 0);
-		PRINTF_DEBUG("RECT DC Low Return");
+		PRF_GEN("RECT DC Low Return");
 	}
 } else {
 	vrect_dc_low_lim_ret_Acc_cnt=0;
@@ -522,37 +522,37 @@ if (VAC_T_rms_sc >= VAC_LW_RET_LIM && VAC_T_Lo_fc == 1) {
 // RST RST RST RST RST RST RST
 if ((VAC_R_Off_fc == 0 && VAC_S_Off_fc == 0 && VAC_T_Off_fc == 0) && !is_state_active(VAC_ON_FC)) {
 	apply_state_changes_f(VAC_ON_FC, 1);
-	PRINTF_DEBUG("VAC_ON_FC 1");
+	PRF_GEN("VAC_ON_FC 1");
 }
 if ((VAC_R_Off_fc == 1 && VAC_S_Off_fc == 1 && VAC_T_Off_fc == 1) && is_state_active(VAC_ON_FC)) {
 	apply_state_changes_f(VAC_ON_FC, 0);
-	PRINTF_DEBUG("VAC_ON_FC 0");
+	PRF_GEN("VAC_ON_FC 0");
 }
 if ((VAC_R_Off_fc == 1 || VAC_S_Off_fc == 1 || VAC_T_Off_fc == 1) && !is_state_active(VAC_OFF_FC)) {
 	apply_state_changes_f(VAC_OFF_FC, 1);
-	PRINTF_DEBUG("VAC_OFF_FC 1");
+	PRF_GEN("VAC_OFF_FC 1");
 }
 if ((VAC_R_Off_fc == 0 && VAC_S_Off_fc == 0 && VAC_T_Off_fc == 0) && is_state_active(VAC_OFF_FC)) {
 	apply_state_changes_f(VAC_OFF_FC, 0);
-	PRINTF_DEBUG("VAC_OFF_FC 0");
+	PRF_GEN("VAC_OFF_FC 0");
 }
 if ((VAC_R_Hg_fc == 1 || VAC_S_Hg_fc == 1 || VAC_T_Hg_fc == 1) && !is_state_active(VAC_HG_FC)) {
 	apply_state_changes_f(VAC_HG_FC, 1);	// VAC Hg
-	PRINTF_DEBUG("VAC HG");
+	PRF_GEN("VAC HG");
 }
 if ((VAC_R_Hg_fc == 0 && VAC_S_Hg_fc == 0 && VAC_T_Hg_fc == 0) && is_state_active(VAC_HG_FC)) {
 	apply_state_changes_f(VAC_HG_FC, 0);	// VAC Hg RET
-	PRINTF_DEBUG("VAC HG RETURNED");
+	PRF_GEN("VAC HG RETURNED");
 }
 if ((VAC_R_Lo_fc == 1 || VAC_S_Lo_fc == 1 || VAC_T_Lo_fc == 1) && !is_state_active(VAC_LO_FC)) {
 	apply_state_changes_f(VAC_LO_FC, 1);	// VAC Lo
 	apply_state_changes_f(VAC_ON_FC, 0);
-	PRINTF_DEBUG("VAC LO");
+	PRF_GEN("VAC LO");
 }
 if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_active(VAC_LO_FC)) {
 	apply_state_changes_f(VAC_LO_FC, 0);	// VAC Lo RET
 	apply_state_changes_f(VAC_ON_FC, 1);
-	PRINTF_DEBUG("VAC LO RETURNED");
+	PRF_GEN("VAC LO RETURNED");
 }
 // RST RST RST RST RST RST RST
 // AC VOLTAGE MONITORING <<<<<<<<<<<<<<<<<<<<
@@ -669,7 +669,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 	read_temp_dat_from_rx_buffer_cnt++;
 	if (read_temp_dat_from_rx_buffer_cnt >= 20) {
 		read_temp_dat_from_rx_buffer_cnt=0;
-//		PRINTF_DEBUG("t cnt per %lu %lu", ovtmp_open_cnt, ovtmp_open_per);
+//		PRF_GEN("t cnt per %lu %lu", ovtmp_open_cnt, ovtmp_open_per);
 
 		for (int i = 0; i < 3; i++) { // read rx buffer
 			tmp_dat_C[i] = tmp144_convert_temperature((U10_rxBuf[2*i+3] << 8) | U10_rxBuf[2*i+2]);
