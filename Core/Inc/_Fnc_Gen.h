@@ -222,11 +222,11 @@ void disb_uart_msg_group(uint32_t group)
 
 
 void printBinary(uint8_t num) {
-    sprintf(DUB,"0b"); prfm(DUB);
+    PRINTF_DEBUG("0b");
     for (int i = 7; i >= 0; i--) { // Loop through each bit
-        sprintf(DUB,"%d", (num >> i) & 1); prfm(DUB);
+        PRINTF_DEBUG("%d", (num >> i) & 1);
     }
-    sprintf(DUB,"\n"); prfm(DUB);
+    PRINTF_DEBUG("\n");
 }
 
 
@@ -360,7 +360,7 @@ inline extern void short_circ_monitor_f(void) {
 		if (IRECT_Short_Acc_cnt >= IRECT_Short_Acc_per) {
 			IRECT_Short_Acc_cnt=0;
 			apply_state_changes_f(RECT_SHORT_FC, 1);
-			sprintf(DUB,"DC SH %f", IRECT_smp_sc); prfm(DUB);
+			PRINTF_DEBUG("DC SH %f", IRECT_smp_sc);
 		}
 	} else { IRECT_Short_Acc_per=0; }
 	if (IRECT_smp_sc <= EpD[RECT_SHORT][0].V1 && is_state_active(RECT_SHORT_FC)) {
@@ -377,7 +377,7 @@ inline extern void short_circ_monitor_f(void) {
 		if (IBAT_Short_Acc_cnt >= IBAT_Short_Acc_per) {
 			IBAT_Short_Acc_cnt=0;
 			apply_state_changes_f(BATT_SHORT_FC, 1);
-			sprintf(DUB,"BT SH %f", IBAT_smp_sc); prfm(DUB);
+			PRINTF_DEBUG("BT SH %f", IBAT_smp_sc);
 		}
 	} else { IBAT_Short_Acc_cnt=0; }
 	if (IBAT_smp_sc <= IBAT_Short_Lim && is_state_active(BATT_SHORT_FC)) {
@@ -846,7 +846,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		sprintf(DUB,"BOOST charge mode %d", num); prfm(DUB);
+		PRINTF_DEBUG("BOOST charge mode %d", num);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
@@ -905,7 +905,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         }
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
     }
-		sprintf(DUB,"     state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
+		PRINTF_DEBUG("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// OUT RELAY ACTIVATE DEACTIVATE ////////////////////////////////////////////////////////////////////////////////
@@ -1002,7 +1002,7 @@ int tmp144_init_and_assign(void)
 
 void print_REL_OUT_Table() {
     for (int i = 0; i < 16; i++) {
-		sprintf(DUB,"Order %d %s", rel_ord_tb[i].rel_ord_nm, rel_ord_tb[i].rel_ord_desc); prfm(DUB);
+		PRINTF_DEBUG("Order %d %s", rel_ord_tb[i].rel_ord_nm, rel_ord_tb[i].rel_ord_desc);
 		delay_1ms(10);
     }
 }
