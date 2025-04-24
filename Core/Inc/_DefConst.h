@@ -1,4 +1,4 @@
-//#define DEBUG_MODE  // yorum satırı yaparsan debug kapanır
+#define DEBUG_MODE  // yorum satırı yaparsan debug kapanır
 
 #ifdef DEBUG_MODE
   #define PRINTF_DEBUG(...)  { sprintf(DUB, __VA_ARGS__); prfm(DUB); }

@@ -836,7 +836,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		sprintf(DUB,"FLOAT charge mode %d", num); prfm(DUB);
+		PRINTF_DEBUG("FLOAT charge mode %d", num);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
