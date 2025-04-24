@@ -1,3 +1,12 @@
+#define DEBUG_MODE  // yorum satırı yaparsan debug kapanır
+
+#ifdef DEBUG_MODE
+  #define PRINTF_DEBUG(...)  { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+#else
+  #define PRINTF_DEBUG(...)
+#endif
+
+
 
 #define BUZZ_P GPIOE, LL_GPIO_PIN_1
 #define E1_1 LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1);
