@@ -572,6 +572,7 @@ uint8_t dev_setting_edit_mode = 0;
 const char* MANAGEMENT_Items[] = {
 "Arıza Kaytları Sil",
 "Cihaz Yeniden Başlat",
+"Cihaz Açılışta Aktif",
 "Kalibrasyon"
 };
 #define NUM_MANAGEMENT_ITEMS (sizeof(MANAGEMENT_Items) / sizeof(MANAGEMENT_Items[0]))
