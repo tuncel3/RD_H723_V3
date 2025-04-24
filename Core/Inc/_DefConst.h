@@ -1,27 +1,40 @@
 
+#define DEBUG_MODE 1
 
-#define DEBUG_GENERAL		1	// seçili olan gruplar uart da yazılır
-#define DEBUG_BLM   		1
+//#define DEBUG_GENERAL		1	// seçili olan gruplar uart da yazılır
+//#define DEBUG_BLM   		1
 
-#if DEBUG_GENERAL
-  #define PRF_GEN(...)  { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
-#else
-  #define PRF_GEN(...)
-#endif
-
-#if DEBUG_BLM
-  #define PRF_GEN(...)    { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
-#else
-  #define PRF_GEN(...)
-#endif
+//#if DEBUG_GENERAL
+//  #define PRF_GEN(...)  { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+//#else
+//  #define PRF_GEN(...)
+//#endif
+//
+//#if DEBUG_BLM
+//  #define PRF_GEN(...)    { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+//#else
+//  #define PRF_GEN(...)
+//#endif
 
 volatile uint8_t dbg_gen = 1;
 volatile uint8_t dbg_blm = 0;
 
-#define PRF_GEN(...) if (dbg_gen) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
-#define PRF_BLM(...) if (dbg_blm) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+//#define PRF_GEN(...) if (dbg_gen) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+//#define PRF_BLM(...) if (dbg_blm) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
 
+#if DEBUG_MODE
 
+    // Debug açıkken runtime flag ile kontrol
+    #define PRF_GEN(...)  if (dbg_gen) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+    #define PRF_BLM(...)  if (dbg_blm) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+
+#else
+
+    // Release modda debug'ı tamamen kaldır
+    #define PRF_GEN(...)
+    #define PRF_BLM(...)
+
+#endif
 
 #define BUZZ_P GPIOE, LL_GPIO_PIN_1
 #define E1_1 LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1);
