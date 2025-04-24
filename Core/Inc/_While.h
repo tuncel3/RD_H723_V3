@@ -53,53 +53,6 @@ if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
-
-		if (VLOAD_pas.a1+dropper_test_var_1 > Vdc_drop_out_max && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
-			actvate_drop_cnt++;
-			if (actvate_drop_cnt >= actvate_drop_per) {
-				actvate_drop_cnt=0;
-				EpD[SET_DROPPER_K1][0].V1=1; EpD[SET_DROPPER_K1][1].V1=1; // kullanıcı harici değişim olduğu için bu değişiklik yapılmalı.
-				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1); // dropper ı kayıtlı değere göre değiştir.
-				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1); // burası ledleri değiştiriyor.
-			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 > Vdc_drop_out_max && is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
-			actvate_drop_cnt++;
-			if (actvate_drop_cnt >= actvate_drop_per) {
-				actvate_drop_cnt=0;
-				EpD[SET_DROPPER_K2][0].V1=1; EpD[SET_DROPPER_K2][1].V1=1;
-				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
-			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 < Vdc_drop_out_min && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
-			actvate_drop_cnt++;
-			if (actvate_drop_cnt >= actvate_drop_per) { // ikisi de devredeyse önce 2. dropperi kapat.
-				actvate_drop_cnt=0;
-				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
-				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
-			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 < Vdc_drop_out_min && is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
-			actvate_drop_cnt++;
-			if (actvate_drop_cnt >= actvate_drop_per) { // 2. kapalıysa 1. dropperi kapat.
-				actvate_drop_cnt=0;
-				EpD[SET_DROPPER_K1][0].V1=0; EpD[SET_DROPPER_K1][1].V1=0;
-				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
-				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
-			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 < Vdc_drop_out_min && !is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
-			actvate_drop_cnt++;
-			if (actvate_drop_cnt >= actvate_drop_per) { // 1. kapalıysa 2. dropperi kapat.
-				actvate_drop_cnt=0;
-				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
-				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
-			}
-		}
-
-////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
 if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 	if (switch_to_auto_mode_completed==0) {
@@ -219,15 +172,6 @@ if (VBAT_pas.a1 < -10 && EpD[SET_BATT_REV_DET][0].V1==1 && !is_state_active(BATT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (sfsta_op_phase == S_SFSTA_REQ_OK) {
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
-//if (thy_drv_en==1 && bat_inspection_allowed==1 && EpD[SET_BATT_DISC_DET][0].V1==1 && VBAT_pas.a1 > 10 && !is_state_active(BATT_FUSE_OFF_FC) && !is_state_active(BATT_REVERSE_FC)) {
-//	aku_hatti_kopuk_fc_inl();
-//} else if (start_bat_inspection_req==1) {
-//	end_batt_inspect_return_to_normal(6);
-//}
-////// AKÜ HATTI KOPUK //////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,6 +218,53 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
+
+		if (VLOAD_pas.a1+dropper_test_var_1 > Vdc_drop_out_max && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
+			actvate_drop_cnt++;
+			if (actvate_drop_cnt >= actvate_drop_per) {
+				actvate_drop_cnt=0;
+				EpD[SET_DROPPER_K1][0].V1=1; EpD[SET_DROPPER_K1][1].V1=1; // kullanıcı harici değişim olduğu için bu değişiklik yapılmalı.
+				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1); // dropper ı kayıtlı değere göre değiştir.
+				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1); // burası ledleri değiştiriyor.
+			}
+		} else if (VLOAD_pas.a1+dropper_test_var_1 > Vdc_drop_out_max && is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
+			actvate_drop_cnt++;
+			if (actvate_drop_cnt >= actvate_drop_per) {
+				actvate_drop_cnt=0;
+				EpD[SET_DROPPER_K2][0].V1=1; EpD[SET_DROPPER_K2][1].V1=1;
+				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
+				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+			}
+		} else if (VLOAD_pas.a1+dropper_test_var_1 < Vdc_drop_out_min && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
+			actvate_drop_cnt++;
+			if (actvate_drop_cnt >= actvate_drop_per) { // ikisi de devredeyse önce 2. dropperi kapat.
+				actvate_drop_cnt=0;
+				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
+				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
+				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+			}
+		} else if (VLOAD_pas.a1+dropper_test_var_1 < Vdc_drop_out_min && is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
+			actvate_drop_cnt++;
+			if (actvate_drop_cnt >= actvate_drop_per) { // 2. kapalıysa 1. dropperi kapat.
+				actvate_drop_cnt=0;
+				EpD[SET_DROPPER_K1][0].V1=0; EpD[SET_DROPPER_K1][1].V1=0;
+				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
+				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+			}
+		} else if (VLOAD_pas.a1+dropper_test_var_1 < Vdc_drop_out_min && !is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
+			actvate_drop_cnt++;
+			if (actvate_drop_cnt >= actvate_drop_per) { // 1. kapalıysa 2. dropperi kapat.
+				actvate_drop_cnt=0;
+				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
+				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
+				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+			}
+		}
+
+////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
