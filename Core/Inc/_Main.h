@@ -31,9 +31,9 @@ if (Read_RTC_Osc_Status() == 0) {
     Write_To_Register(2, 0b00000000); // 12/24_n set
     Write_To_Register(RTC_OSCTRIM_REG, 0b00000000 | 5); // write cal val
     Write_To_Register(RTC_RTCC_CONTROL_REG, 0b01000010); // enable square wave output
-    sprintf(DUB,"RTC first time started"); prfm(DUB);
+    PRINTF_DEBUG("RTC first time started");
 } else {
-	sprintf(DUB,"RTC already started"); prfm(DUB);
+	PRINTF_DEBUG("RTC already started");
 }
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
@@ -67,7 +67,7 @@ for (int i = 0; i < NUM_FAULT_RECORD; i++) {	// find first record which is ff
 		flt_disp_index=(flt_array_index_last-5+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
 		flt_disp_index=flt_array_index_last;
 		flt_array_index_found=1;
-		sprintf(DUB,"st ff found eep location %lu", flt_array_index_next); prfm(DUB);
+		PRINTF_DEBUG("st ff found eep location %lu", flt_array_index_next);
 		break;
 	}
 }
@@ -81,7 +81,7 @@ if (flt_array_index_found == 0) { // if not found, find first record which is gr
 			flt_array_index_found=1;
 			flt_array_index_last=(flt_array_index_next-1+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
 			flt_disp_index=(flt_array_index_last-5+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
-			sprintf(DUB,"st n_ff found eep location %lu", flt_array_index_next); prfm(DUB);
+			PRINTF_DEBUG("st n_ff found eep location %lu", flt_array_index_next);
 			break;
 		}
 	}
@@ -113,12 +113,12 @@ delay_1ms(100);
 
 temp_sens_count = tmp144_init_and_assign();
 if (temp_sens_count == 0) {
-	sprintf(DUB,"Temp sensor init failed"); prfm(DUB);
+	PRINTF_DEBUG("Temp sensor init failed");
 	sogut_sensor_exists = 0;
 	trafo_sensor_exists = 0;
 	batt_sensor_exists = 0;
 } else {
-	sprintf(DUB,"Temp sensor init success %d Sensors", temp_sens_count); prfm(DUB);
+	PRINTF_DEBUG("Temp sensor init success %d Sensors", temp_sens_count);
 	if (temp_sens_count == 1) {
 		sogut_sensor_exists = 1;
 		trafo_sensor_exists = 0;
