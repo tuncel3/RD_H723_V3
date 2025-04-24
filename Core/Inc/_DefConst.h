@@ -403,8 +403,8 @@ typedef enum {
 	RECT_ACTV_AT_STARTUP,
 	VRECT_DC_HIGH_LIM_add,
 	VRECT_DC_LOW_LIM_add,
-	VLOAD_DC_HIGH_LIM_ADD,
-	VLOAD_DC_LOW_LIM_ADD,
+	dropp_reg_high_lim_add,
+	dropp_reg_low_lim_add,
     NUM_SET_ENUM            // Keeps track of total settings
 } EEPROM_Setting_ID;
 
@@ -458,8 +458,8 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {RECT_ACTV_AT_STARTUP, 0.0}, {RECT_ACTV_AT_STARTUP, 0.0} },
     { {VRECT_DC_HIGH_LIM_add, 10.0}, {VRECT_DC_HIGH_LIM_add, 10.0} },
     { {VRECT_DC_LOW_LIM_add, 10.0}, {VRECT_DC_LOW_LIM_add, 10.0} },
-    { {VLOAD_DC_HIGH_LIM_ADD, 10.0}, {VLOAD_DC_HIGH_LIM_ADD, 10.0} },
-    { {VLOAD_DC_LOW_LIM_ADD, 10.0}, {VLOAD_DC_LOW_LIM_ADD, 10.0} }
+    { {dropp_reg_high_lim_add, 10.0}, {dropp_reg_high_lim_add, 10.0} },
+    { {dropp_reg_low_lim_add, 10.0}, {dropp_reg_low_lim_add, 10.0} }
 };
 
 const char* Eep_data_Names[] = { // for printing in uart
@@ -511,8 +511,8 @@ const char* Eep_data_Names[] = { // for printing in uart
 	"RECT_ACTV_AT_STARTUP",
 	"VRECT_DC_HIGH_LIM_add",
 	"VRECT_DC_LOW_LIM_add",
-	"VLOAD_DC_HIGH_LIM_ADD",
-	"VLOAD_DC_LOW_LIM_ADD"
+	"dropp_reg_high_lim_add",
+	"dropp_reg_low_lim_add"
 };
 
 typedef struct {
@@ -564,8 +564,8 @@ SETT_type DEVICE_SETT_Items[] = {
 {"K.Devr Bat A", BATT_SHORT, 3},
 {"Doğ VDC Üst L%", VRECT_DC_HIGH_LIM_add, 3},
 {"Doğ VDC Alt L%", VRECT_DC_LOW_LIM_add, 3},
-{"Yük VDC Üst L%", VLOAD_DC_HIGH_LIM_ADD, 3},
-{"Yük VDC Alt L%", VLOAD_DC_LOW_LIM_ADD, 3}
+{"Yük VDC Üst L%", dropp_reg_high_lim_add, 3},
+{"Yük VDC Alt L%", dropp_reg_low_lim_add, 3}
 };
 #define NUM_DEVICE_SETT_ITEMS (sizeof(DEVICE_SETT_Items) / sizeof(DEVICE_SETT_Items[0]))
 uint8_t selected_DEVICE_SETT = 0;
