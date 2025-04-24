@@ -772,6 +772,7 @@ Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar ara
 Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
 
 // D.A. gerilim regülasyonu (dropping diyot)
+// limitler şartnamede anma geriliminin yüzdesi olarak belirtilmiş.
 Vdc_drop_in_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu giriş gerilimi
 Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
 Vdc_drop_out_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu çıkış gerilimi
