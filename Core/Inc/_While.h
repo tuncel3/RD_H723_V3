@@ -48,7 +48,7 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 
 // Arıza durumundan çıkınca veya sistem uygunsa doğrultucuyu başlat
 // burda düzenleme gerekebilir. hangi arızadan ne kadar süre sonra tekrar başlatılacak belirlemek lazım.
-if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
+if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1 && !thy_drv_en_req) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
 	thy_drv_en_req = 1; // bu durumda thy drv en req gönder.
 	PRF_GEN("thy_stop_fault_hold_bits 0. bütün arızalar sıfırlandı. starting rectf");
 }
