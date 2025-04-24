@@ -6,7 +6,7 @@ void bleft_fnc(void) {
     	if (thy_drv_en==0 && user_wants_allows_thy_drv==0) {
     		user_wants_allows_thy_drv=1;
     		thy_drv_en_req=1;
-    		sprintf(DUB,"User req START rectf"); prfm(DUB);
+    		PRINTF_DEBUG("User req START rectf");
     	}
     }
     else if (currentPage == CHARGE_SETT_pg) {
@@ -191,7 +191,7 @@ void bright_fnc(void) {
     		user_wants_allows_thy_drv=0;
     		apply_state_changes_f(STOP_FC, 1);
     		apply_state_changes_f(START_FC, 0);
-    		sprintf(DUB,"User req STOP rectf"); prfm(DUB);
+    		PRINTF_DEBUG("User req STOP rectf");
     	}
     }
     else if (currentPage == CHARGE_SETT_pg) {

@@ -338,10 +338,10 @@ uint8_t Rec_Dat_to_EEp_f(uint32_t setting_code) {
 
     // Step 7: Check if the write was successful
 if (verify_val == setting_val) {
-	sprintf(DUB,"Saved %s write %f read %f", Eep_data_Names[setting_code], setting_val, verify_val); prfm(DUB);
+	PRINTF_DEBUG("Saved %s write %f read %f", Eep_data_Names[setting_code], setting_val, verify_val);
 	return 1;
 } else {
-	sprintf(DUB,"Save Failed %s write %f read %f", Eep_data_Names[setting_code], setting_val, verify_val); prfm(DUB);
+	PRINTF_DEBUG("Save Failed %s write %f read %f", Eep_data_Names[setting_code], setting_val, verify_val);
 	return 0;
 	Eeprom_fc=1;
 }
@@ -413,7 +413,7 @@ void SPI4_EEP_ReadDataSettingsRegion(uint32_t address, uint32_t nm_fault) {
 				EpD[i][0].V1 = float_value;
 				EpD[i][1].V1 = float_value;
 			} else {
-				sprintf(DUB, "\n\n\n\n\nread eeprom data id higher than 1000 %lu %lu %f", read32bit2, EpD[i][0].setting_id, EpD[i][0].V1); prfm(DUB);
+				PRINTF_DEBUG("\n\n\n\n\nread eeprom data id higher than 1000 %lu %lu %f", read32bit2, EpD[i][0].setting_id, EpD[i][0].V1);
 			}
 		}
     set_(CS_M95P32);  // Deactivate chip select
@@ -460,7 +460,7 @@ uint32_t timestamp = array_fault_data[flt_array_index_next][0];
 flt_array_index_last=flt_array_index_next;
 flt_disp_index=(flt_array_index_last-5+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
 flt_array_index_next=(flt_array_index_next+1) % NUM_FAULT_RECORD;
-//sprintf(DUB,"c flt indx next %u flt indx last %u flt_disp_index %u", flt_array_index_next, flt_array_index_last, flt_disp_index); prfm(DUB);
+//PRINTF_DEBUG("c flt indx next %u flt indx last %u flt_disp_index %u", flt_array_index_next, flt_array_index_last, flt_disp_index);
 
     // Step 1: Enable Write
     SPI4_WriteEnable();
@@ -490,7 +490,7 @@ flt_array_index_next=(flt_array_index_next+1) % NUM_FAULT_RECORD;
 
     set_(CS_M95P32);  // End Transmission
 
-    sprintf(DUB,"Saved state_code %lu flt %s", state_code, state_list[state_code].name); prfm(DUB);
+    PRINTF_DEBUG("Saved state_code %lu flt %s", state_code, state_list[state_code].name);
 
     while (SPI4_ReadStatusRegister() & 0x01) {
         delayA_1us(10);
@@ -531,19 +531,19 @@ for (int i = 0; i < NUM_FAULT_RECORD-1; i++) {
 	SPI4_ReadDataFaultRegion(FAULT_RECORD_START_ADDRESS, NUM_FAULT_RECORD);
 	convert_timestamp_to_date_string(array_fault_data[i][0], rtc_timestring, sizeof(rtc_timestring));
     if (array_fault_data[i][1] < NUM_STATE_NAMES) {
-        sprintf(DUB, "%s %s", rtc_timestring, state_list[array_fault_data[i][1]].name); prfm(DUB);
+        PRINTF_DEBUG("%s %s", rtc_timestring, state_list[array_fault_data[i][1]].name);
     } else {
-        sprintf(DUB, "%s Bos Kayit", rtc_timestring); prfm(DUB);
+        PRINTF_DEBUG("%s Bos Kayit", rtc_timestring);
     }
     delay_1ms(1);
 }
-//sprintf(DUB,"c flt indx next %u flt indx last %u flt_disp_index %u", flt_array_index_next, flt_array_index_last, flt_disp_index); prfm(DUB);
+//PRINTF_DEBUG("c flt indx next %u flt indx last %u flt_disp_index %u", flt_array_index_next, flt_array_index_last, flt_disp_index);
 }
 
 void print_Eep_data_f(void) {
 //	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
     for (int i = 0; i < NUM_SET_ENUM; i++) {
-		sprintf(DUB, "s1 %d %s \t%f", i, Eep_data_Names[EpD[i][0].setting_id], EpD[i][0].V1); prfm(DUB);
+		PRINTF_DEBUG("s1 %d %s \t%f", i, Eep_data_Names[EpD[i][0].setting_id], EpD[i][0].V1);
 		delay_1ms(1);
     }
 }
