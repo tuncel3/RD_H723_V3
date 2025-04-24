@@ -153,7 +153,6 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 // data kayıt için adrese ihtiyaç yok
 // arız kodu listesi son arıza numarasını 1 yap öyle sırala
 // arıza tekrarladıkça geri dönme süresini uzatma algoritması
-// arıza durumunda start led kapanmıyor.
 // EpD değerleri 0 olmalı. cihaz kurulumunda belirlenmeli.
 // eeprom okuma başarısız ise arıza durumu gösterilmeli. değerler eepromdan alındığı için.
 // bir anda batarya akımı kesilirse battery inspection hemen başlat.
