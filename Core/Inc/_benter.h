@@ -382,7 +382,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VLOAD_DC_LOW_LIM_ADD) {
     else if (currentPage == RECTF_ACTIVE_AT_STARTUP_pg) {
 //    	rectf_active_at_startup_req=1;
     	if (rectf_active_at_startup_req_right == 0) {
-        	if (EpD[RECT_ACTV_AT_STARTUP][0].V1 == 0) {
+        	if (EpD[RECT_ACTV_AT_STARTUP][0].V1 == 1) {
 				EpD[RECT_ACTV_AT_STARTUP][0].V1=0;
 				EpD[RECT_ACTV_AT_STARTUP][1].V1=0;
 				Rec_Dat_to_EEp_f(RECT_ACTV_AT_STARTUP);
