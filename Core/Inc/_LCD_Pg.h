@@ -463,21 +463,18 @@ inline extern void FAULT_CODES_RESET_pg_disp(void) {
 }
 
 inline extern void RECTF_ACTIVE_AT_STARTUP_pg_disp(void) {
-    GLCD_PrintString(0, 18, ">Cihaz Açılışta Aktif");
+    GLCD_PrintString(0, 18, ">Doğrltc Açlşta Aktif");
 //
-//	if (fault_codes_reset_req) {
-//		GLCD_PrintString(0, 36, "   İptal    Onayla");
-//		uint8_t x0=6+2*6, y0=44;
-//		if (fault_codes_reset_req_right == 0) {
-//			GLCD_Line(x0, y0, x0+4+4*6, y0);
-//		} else {
-//			x0 = x0+9*6;
-//			GLCD_Line(x0, y0, x0+4+5*6, y0);
-//		}
-//		if (fault_codes_reset_completed == 1) {
-//			GLCD_PrintString(0, 48, "   Kayıtlar Silindi");
-//		}
-//	}
+	if (rectf_active_at_startup_req) {
+		GLCD_PrintString(0, 36, "   Aktif    Pasif");
+		uint8_t x0=6+2*6, y0=44;
+		if (rectf_active_at_startup_req_right == 0) {
+			GLCD_Line(x0, y0, x0+4+4*6, y0);
+		} else {
+			x0 = x0+9*6;
+			GLCD_Line(x0, y0, x0+4+5*6, y0);
+		}
+	}
 }
 
 inline extern void DEVICE_RESET_pg_disp(void) {
@@ -492,9 +489,6 @@ inline extern void DEVICE_RESET_pg_disp(void) {
 			x0 = x0+9*6;
 			GLCD_Line(x0, y0, x0+4+5*6, y0);
 		}
-//		if (fault_codes_reset_completed == 1) {
-//			GLCD_PrintString(0, 48, "   Kayıtlar Silindi");
-//		}
 	}
 }
 

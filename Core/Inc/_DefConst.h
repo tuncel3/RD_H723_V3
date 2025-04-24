@@ -293,6 +293,7 @@ typedef enum {
 	DROPPER_pg,
 	RELAY_ORDER_pg,
 	FAULT_CODES_RESET_pg,
+	RECTF_ACTIVE_AT_STARTUP_pg,
 	DEVICE_RESET_pg,
 	CALIBRATION_pg,
 	DATE_TIME_pg,
@@ -572,7 +573,7 @@ uint8_t dev_setting_edit_mode = 0;
 const char* MANAGEMENT_Items[] = {
 "Arıza Kaytları Sil",
 "Cihaz Yeniden Başlat",
-"Doğr Açlş Aktf",
+"Doğrltc Açlşta Aktif",
 "Kalibrasyon"
 };
 #define NUM_MANAGEMENT_ITEMS (sizeof(MANAGEMENT_Items) / sizeof(MANAGEMENT_Items[0]))
@@ -589,6 +590,14 @@ uint32_t cal_sel_item_left=0;
 uint32_t cal_sel_item_right=0;
 uint32_t cal_sel_digit=0;
 uint32_t cal_sel_edit_mode=0;
+
+uint8_t rectf_active_at_startup_req = 0;
+//uint8_t device_reset_req = 0;
+uint8_t rectf_active_at_startup_req_right = 0;
+//uint8_t device_reset_req_right = 0;
+//uint8_t fault_codes_reset_qst_accept = 0;
+//uint8_t fault_codes_reset_completed = 0;
+//uint8_t batt_reverse_req_right = 0;
 
 
 
@@ -1125,7 +1134,7 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_SCER  		0x20  // Sector Erase
 #define CMD_BKER  		0xD8  // Block Erase
 #define CMD_CHER  		0xC7  // Chip Erase
-//int var1=0;
+int var1=0;
 //int var2=0;
 //int var3=0;
 //char var4[]="ü";

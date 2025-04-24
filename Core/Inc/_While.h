@@ -960,6 +960,9 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
         case FAULT_CODES_RESET_pg:
         	FAULT_CODES_RESET_pg_disp();
             break;
+        case RECTF_ACTIVE_AT_STARTUP_pg:
+        	RECTF_ACTIVE_AT_STARTUP_pg_disp();
+            break;
         case DEVICE_RESET_pg:
         	DEVICE_RESET_pg_disp();
             break;

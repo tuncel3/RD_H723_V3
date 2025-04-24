@@ -379,6 +379,14 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VLOAD_DC_LOW_LIM_ADD) {
 				flt_disp_index=(flt_array_index_last-5+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
 		}
     }
+    else if (currentPage == RECTF_ACTIVE_AT_STARTUP_pg) {
+    	rectf_active_at_startup_req=1;
+    	if (rectf_active_at_startup_req_right == 1) {
+    		var1=1;
+    	} else if (rectf_active_at_startup_req_right == 1) {
+    		var1=0;
+    	}
+    }
     else if (currentPage == DEVICE_RESET_pg) {
     	device_reset_req=1;
     	if (device_reset_req_right == 1) {
