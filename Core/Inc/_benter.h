@@ -184,7 +184,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][0].V1=EpD[DEV_NOM_VOUT][1].V1;
-	set_variables_from_EEP_fc();
+	set_variables_from_EEP_fc(SCOPE_DEV_NOM_VOUT_EEP);
 	Rec_Dat_to_EEp_f(DEV_NOM_VOUT);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
