@@ -69,18 +69,18 @@ float VLOAD_smp_offst = 0.0f;
 float VRECT_smp_offst = 0.0f;
 
 
-float VRECT_DC_HIGH_LIM = 0.0f;
-float VRECT_DC_HIGH_LIM_ret = 0.0f;
-uint32_t VRECT_DC_HIGH_LIM_Acc_cnt = 0;
-uint32_t VRECT_DC_HIGH_LIM_Acc_per = 200;
-uint32_t VRECT_DC_HIGH_LIM_ret_Acc_cnt = 0;
-uint32_t VRECT_DC_HIGH_LIM_ret_Acc_per = 20;
-float VRECT_DC_LOW_LIM = 0.0f;
-float VRECT_DC_LOW_LIM_ret = 0.0f;
-uint32_t VRECT_DC_LOW_LIM_Acc_cnt = 0;
-uint32_t VRECT_DC_LOW_LIM_Acc_per = 200;
-uint32_t VRECT_DC_LOW_LIM_ret_Acc_cnt = 0;
-uint32_t VRECT_DC_LOW_LIM_ret_Acc_per = 20;
+float vrect_dc_high_lim = 0.0f;
+float vrect_dc_high_lim_ret = 0.0f;
+uint32_t vrect_dc_high_lim_Acc_cnt = 0;
+uint32_t vrect_dc_high_lim_Acc_per = 200;
+uint32_t vrect_dc_high_lim_ret_Acc_cnt = 0;
+uint32_t vrect_dc_high_lim_ret_Acc_per = 20;
+float vrect_dc_low_lim = 0.0f;
+float vrect_dc_low_lim_ret = 0.0f;
+uint32_t vrect_dc_low_lim_Acc_cnt = 0;
+uint32_t vrect_dc_low_lim_Acc_per = 200;
+uint32_t vrect_dc_low_lim_ret_Acc_cnt = 0;
+uint32_t vrect_dc_low_lim_ret_Acc_per = 20;
 float VLOAD_DC_HIGH_LIM = 0.0f;
 float VLOAD_DC_HIGH_LIM_ret = 0.0f;
 uint32_t VLOAD_DC_HIGH_LIM_Acc_cnt = 0;
@@ -401,8 +401,8 @@ typedef enum {
 	REL_OUT_3,
 	REL_OUT_4,
 	RECT_ACTV_AT_STARTUP,
-	VRECT_DC_HIGH_LIM_ADD,
-	VRECT_DC_LOW_LIM_ADD,
+	VRECT_DC_HIGH_LIM_add,
+	VRECT_DC_LOW_LIM_add,
 	VLOAD_DC_HIGH_LIM_ADD,
 	VLOAD_DC_LOW_LIM_ADD,
     NUM_SET_ENUM            // Keeps track of total settings
@@ -456,8 +456,8 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {REL_OUT_3, 370984.0}, {REL_OUT_3, 370984.0} },
     { {REL_OUT_4, 506284.0}, {REL_OUT_4, 506284.0} },
     { {RECT_ACTV_AT_STARTUP, 0.0}, {RECT_ACTV_AT_STARTUP, 0.0} },
-    { {VRECT_DC_HIGH_LIM_ADD, 10.0}, {VRECT_DC_HIGH_LIM_ADD, 10.0} },
-    { {VRECT_DC_LOW_LIM_ADD, 10.0}, {VRECT_DC_LOW_LIM_ADD, 10.0} },
+    { {VRECT_DC_HIGH_LIM_add, 10.0}, {VRECT_DC_HIGH_LIM_add, 10.0} },
+    { {VRECT_DC_LOW_LIM_add, 10.0}, {VRECT_DC_LOW_LIM_add, 10.0} },
     { {VLOAD_DC_HIGH_LIM_ADD, 10.0}, {VLOAD_DC_HIGH_LIM_ADD, 10.0} },
     { {VLOAD_DC_LOW_LIM_ADD, 10.0}, {VLOAD_DC_LOW_LIM_ADD, 10.0} }
 };
@@ -509,8 +509,8 @@ const char* Eep_data_Names[] = { // for printing in uart
 	"REL_OUT_3",
 	"REL_OUT_4",
 	"RECT_ACTV_AT_STARTUP",
-	"VRECT_DC_HIGH_LIM_ADD",
-	"VRECT_DC_LOW_LIM_ADD",
+	"VRECT_DC_HIGH_LIM_add",
+	"VRECT_DC_LOW_LIM_add",
 	"VLOAD_DC_HIGH_LIM_ADD",
 	"VLOAD_DC_LOW_LIM_ADD"
 };
@@ -562,8 +562,8 @@ SETT_type DEVICE_SETT_Items[] = {
 {"DC Kaçak -% L", DC_KAC_NEG, 3},
 {"K.Devr Doğr A", RECT_SHORT, 3},
 {"K.Devr Bat A", BATT_SHORT, 3},
-{"Doğ VDC Üst L%", VRECT_DC_HIGH_LIM_ADD, 3},
-{"Doğ VDC Alt L%", VRECT_DC_LOW_LIM_ADD, 3},
+{"Doğ VDC Üst L%", VRECT_DC_HIGH_LIM_add, 3},
+{"Doğ VDC Alt L%", VRECT_DC_LOW_LIM_add, 3},
 {"Yük VDC Üst L%", VLOAD_DC_HIGH_LIM_ADD, 3},
 {"Yük VDC Alt L%", VLOAD_DC_LOW_LIM_ADD, 3}
 };

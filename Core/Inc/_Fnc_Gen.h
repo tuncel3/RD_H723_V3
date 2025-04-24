@@ -797,10 +797,10 @@ blm_V_step_15perc=EpD[DEV_NOM_VOUT][0].V1*0.015;
 }
 
 void inline extern update_VDC_high_low_lim_fc(void) {
-	VRECT_DC_HIGH_LIM=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100));
-	VRECT_DC_HIGH_LIM_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
-	VRECT_DC_LOW_LIM=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_ADD][0].V1/100));
-	VRECT_DC_LOW_LIM_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_ADD][0].V1/100)-0.01);
+	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
+	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
+	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
+	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
 	VLOAD_DC_HIGH_LIM=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100));
 	VLOAD_DC_HIGH_LIM_ret=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
 	VLOAD_DC_LOW_LIM=V_targ_con_sy/(1+(EpD[VLOAD_DC_LOW_LIM_ADD][0].V1/100));
@@ -1211,8 +1211,8 @@ void blm_set_up_down_vtarg_limits(void) {
 	blm_stable_v_vrect=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
 	blm_vtarg_move_up_targ=blm_stable_v_vrect+blm_V_step_05perc*5;
 	blm_vtarg_move_dn_targ=blm_stable_v_vrect-blm_V_step_05perc*5;
-	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
-	blm_vtarg_move_dn_min=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_ADD][0].V1/100)-0.01);
+	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
+	blm_vtarg_move_dn_min=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
 }
 
 

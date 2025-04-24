@@ -269,49 +269,49 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// V RECT DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
-if (VRECT_pas.a1 > VRECT_DC_HIGH_LIM && !is_state_active(RECT_DC_HG_FC)) {
-	VRECT_DC_HIGH_LIM_Acc_cnt++;
-	VRECT_DC_HIGH_LIM_ret_Acc_cnt=0;
-	if (VRECT_DC_HIGH_LIM_Acc_cnt >= VRECT_DC_HIGH_LIM_Acc_per) {
-		VRECT_DC_HIGH_LIM_Acc_cnt=0;
+if (VRECT_pas.a1 > vrect_dc_high_lim && !is_state_active(RECT_DC_HG_FC)) {
+	vrect_dc_high_lim_Acc_cnt++;
+	vrect_dc_high_lim_ret_Acc_cnt=0;
+	if (vrect_dc_high_lim_Acc_cnt >= vrect_dc_high_lim_Acc_per) {
+		vrect_dc_high_lim_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_HG_FC, 1);
 		sprintf(DUB,"RECT DC High"); prfm(DUB);
 	}
 } else {
-	VRECT_DC_HIGH_LIM_Acc_cnt=0;
+	vrect_dc_high_lim_Acc_cnt=0;
 }
-if (VRECT_pas.a1 <= VRECT_DC_HIGH_LIM_ret && is_state_active(RECT_DC_HG_FC)) {
-	VRECT_DC_HIGH_LIM_ret_Acc_cnt++;
-	VRECT_DC_HIGH_LIM_Acc_cnt=0;
-	if (VRECT_DC_HIGH_LIM_ret_Acc_cnt >= VRECT_DC_HIGH_LIM_ret_Acc_per) {
-		VRECT_DC_HIGH_LIM_ret_Acc_cnt=0;
+if (VRECT_pas.a1 <= vrect_dc_high_lim_ret && is_state_active(RECT_DC_HG_FC)) {
+	vrect_dc_high_lim_ret_Acc_cnt++;
+	vrect_dc_high_lim_Acc_cnt=0;
+	if (vrect_dc_high_lim_ret_Acc_cnt >= vrect_dc_high_lim_ret_Acc_per) {
+		vrect_dc_high_lim_ret_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_HG_FC, 0);
 		sprintf(DUB,"RECT DC High Return"); prfm(DUB);
 	}
 } else {
-	VRECT_DC_HIGH_LIM_ret_Acc_cnt=0;
+	vrect_dc_high_lim_ret_Acc_cnt=0;
 }
-if (VRECT_pas.a1 < VRECT_DC_LOW_LIM && !is_state_active(RECT_DC_LW_FC)) {
-	VRECT_DC_LOW_LIM_Acc_cnt++;
-	VRECT_DC_LOW_LIM_ret_Acc_cnt=0;
-	if (VRECT_DC_LOW_LIM_Acc_cnt >= VRECT_DC_LOW_LIM_Acc_per) {
-		VRECT_DC_LOW_LIM_Acc_cnt=0;
+if (VRECT_pas.a1 < vrect_dc_low_lim && !is_state_active(RECT_DC_LW_FC)) {
+	vrect_dc_low_lim_Acc_cnt++;
+	vrect_dc_low_lim_ret_Acc_cnt=0;
+	if (vrect_dc_low_lim_Acc_cnt >= vrect_dc_low_lim_Acc_per) {
+		vrect_dc_low_lim_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_LW_FC, 1);
 		sprintf(DUB,"RECT DC Low"); prfm(DUB);
 	}
 } else {
-	VRECT_DC_LOW_LIM_Acc_cnt=0;
+	vrect_dc_low_lim_Acc_cnt=0;
 }
-if (VRECT_pas.a1 >= VRECT_DC_LOW_LIM_ret && is_state_active(RECT_DC_LW_FC)) {
-	VRECT_DC_LOW_LIM_ret_Acc_cnt++;
-	VRECT_DC_LOW_LIM_Acc_cnt=0;
-	if (VRECT_DC_LOW_LIM_ret_Acc_cnt >= VRECT_DC_LOW_LIM_ret_Acc_per) {
-		VRECT_DC_LOW_LIM_ret_Acc_cnt=0;
+if (VRECT_pas.a1 >= vrect_dc_low_lim_ret && is_state_active(RECT_DC_LW_FC)) {
+	vrect_dc_low_lim_ret_Acc_cnt++;
+	vrect_dc_low_lim_Acc_cnt=0;
+	if (vrect_dc_low_lim_ret_Acc_cnt >= vrect_dc_low_lim_ret_Acc_per) {
+		vrect_dc_low_lim_ret_Acc_cnt=0;
 		apply_state_changes_f(RECT_DC_LW_FC, 0);
 		sprintf(DUB,"RECT DC Low Return"); prfm(DUB);
 	}
 } else {
-	VRECT_DC_LOW_LIM_ret_Acc_cnt=0;
+	vrect_dc_low_lim_ret_Acc_cnt=0;
 }
 ////// V RECT DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
