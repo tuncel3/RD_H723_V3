@@ -155,7 +155,7 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 // arız kodu listesi son arıza numarasını 1 yap öyle sırala
 // arıza tekrarladıkça geri dönme süresini uzatma algoritması
 // eeprom okuma başarısız ise arıza durumu gösterilmeli. değerler eepromdan alındığı için.
-// bir anda batarya akımı kesilirse battery inspection hemen başlat.
+// 3 - bir anda batarya akımı kesilirse battery inspection hemen başlat.
 //_Fnc_Gen.h uses sprintf(DUB, ...); prfm(DUB); multiple times in functions like batt_line_broken_fn().
 //This could slow down execution due to frequent memory operations.
 //Possible Fix: Use predefined format strings or snprintf() with fixed buffer sizes.
