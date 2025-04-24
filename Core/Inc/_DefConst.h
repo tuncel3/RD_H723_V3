@@ -1,21 +1,19 @@
 
 
-//#define DEBUG_GENERAL		1	// seçili olan gruplar uart da yazılır
-//#define DEBUG_BLM   		1
-//#define UART_DEBUG_FAULT	0
-//#define UART_DEBUG_TEMP		0
-//
-//#if DEBUG_GENERAL
-//  #define PRF_GEN(...)  { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
-//#else
-//  #define PRF_GEN(...)
-//#endif
-//
-//#if DEBUG_BLM
-//  #define PRF_GEN(...)    { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
-//#else
-//  #define PRF_GEN(...)
-//#endif
+#define DEBUG_GENERAL		1	// seçili olan gruplar uart da yazılır
+#define DEBUG_BLM   		1
+
+#if DEBUG_GENERAL
+  #define PRF_GEN(...)  { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+#else
+  #define PRF_GEN(...)
+#endif
+
+#if DEBUG_BLM
+  #define PRF_GEN(...)    { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+#else
+  #define PRF_GEN(...)
+#endif
 
 volatile uint8_t dbg_gen = 1;
 volatile uint8_t dbg_blm = 0;
