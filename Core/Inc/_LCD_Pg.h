@@ -462,8 +462,8 @@ inline extern void FAULT_CODES_RESET_pg_disp(void) {
 	}
 }
 
-//inline extern void DEVICE_ACTIVE_AT_STARTUP_pg_disp(void) {
-//    GLCD_PrintString(0, 18, ">Cihaz Açılışta Aktif");
+inline extern void RECTF_ACTIVE_AT_STARTUP_pg_disp(void) {
+    GLCD_PrintString(0, 18, ">Cihaz Açılışta Aktif");
 //
 //	if (fault_codes_reset_req) {
 //		GLCD_PrintString(0, 36, "   İptal    Onayla");
@@ -478,7 +478,7 @@ inline extern void FAULT_CODES_RESET_pg_disp(void) {
 //			GLCD_PrintString(0, 48, "   Kayıtlar Silindi");
 //		}
 //	}
-//}
+}
 
 inline extern void DEVICE_RESET_pg_disp(void) {
     GLCD_PrintString(0, 27, ">Cihaz Yeniden Başlat");
