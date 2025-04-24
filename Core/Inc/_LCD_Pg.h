@@ -463,7 +463,7 @@ inline extern void FAULT_CODES_RESET_pg_disp(void) {
 }
 
 inline extern void RECTF_ACTIVE_AT_STARTUP_pg_disp(void) {
-    GLCD_PrintString(0, 18, ">Doğrltc Açlşta Aktif");
+//    GLCD_PrintString(0, 18, ">Doğrltc Açlşta Aktif");
 //
 	if (rectf_active_at_startup_req) {
 		GLCD_PrintString(0, 36, "   Pasif    Aktif");

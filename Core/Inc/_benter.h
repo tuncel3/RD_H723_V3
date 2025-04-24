@@ -387,12 +387,14 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VLOAD_DC_LOW_LIM_ADD) {
     		EpD[RECT_ACTV_AT_STARTUP][0].V1=0;
     		EpD[RECT_ACTV_AT_STARTUP][1].V1=0;
 			Rec_Dat_to_EEp_f(RECT_ACTV_AT_STARTUP);
+	        currentPage = MANAGEMENT_pg;
     	} else if (rectf_active_at_startup_req_right == 1) {
 //    		thy_drv_en_req=1;
 //    		user_wants_allows_thy_drv=1;
     		EpD[RECT_ACTV_AT_STARTUP][0].V1=1;
     		EpD[RECT_ACTV_AT_STARTUP][1].V1=1;
 			Rec_Dat_to_EEp_f(RECT_ACTV_AT_STARTUP);
+	        currentPage = MANAGEMENT_pg;
     	}
     }
     else if (currentPage == DEVICE_RESET_pg) {
