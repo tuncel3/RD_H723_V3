@@ -775,8 +775,8 @@ Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aral
 // limitler şartnamede anma geriliminin yüzdesi olarak belirtilmiş.
 //Vdc_drop_in_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu giriş gerilimi
 //Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
-dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-Vdc_drop_out_min_ayar_perc); // D.A. gerilim regülasyonu çıkış gerilimi
-dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+Vdc_drop_out_max_ayar_perc); // D.A. gerilim regülasyonu çıkış gerilimi
+dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-dropp_reg_low_lim_sub); // D.A. gerilim regülasyonu çıkış gerilimi
+dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+dropp_reg_high_lim_add); // D.A. gerilim regülasyonu çıkış gerilimi
 
 	VLOAD_DC_HIGH_LIM=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100));
 	VLOAD_DC_HIGH_LIM_ret=V_targ_con_sy*(1+(EpD[VLOAD_DC_HIGH_LIM_ADD][0].V1/100)-0.01);
