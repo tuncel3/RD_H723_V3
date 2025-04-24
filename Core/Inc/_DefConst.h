@@ -1,6 +1,6 @@
 
 
-#define DEBUG_GENERAL		1	// seçili olan
+#define DEBUG_GENERAL		1	// seçili olan gruplar uart da yazılır
 #define DEBUG_BLM   		1
 #define UART_DEBUG_FAULT	0
 #define UART_DEBUG_TEMP		0
