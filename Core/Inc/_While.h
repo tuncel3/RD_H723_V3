@@ -273,10 +273,10 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// V LOAD DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
-//	dropper high limit VLOAD_DC_HIGH_LIM olarak kabul ediliyor
+//	dropper high limit vload_dc_high_lim olarak kabul ediliyor
 		if (VLOAD_pas.a1+dropper_test_var_1 > dropp_reg_high_lim && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)
 				&& !is_state_active(LOAD_DC_HG_FC)) {
-			vload_dc_high_lim_Acc_cnt++;
+			vload_dc_high_lim_Acc_cnt++; // dropper kademeleri devreye alınmasına rağmen limitin üzerine çıkmış
 			vload_dc_high_lim_ret_Acc_cnt=0;
 			if (vload_dc_high_lim_Acc_cnt >= vload_dc_high_lim_Acc_per) {
 				vload_dc_high_lim_Acc_cnt=0;
@@ -297,7 +297,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 
 		if (VLOAD_pas.a1+dropper_test_var_1 < dropp_reg_low_lim && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)
 				&& !is_state_active(LOAD_DC_LW_FC)) {
-			vload_dc_low_lim_Acc_cnt++;
+			vload_dc_low_lim_Acc_cnt++; // dropper kademeleri devrede olmamasına rağmen limitin altına inilmiş
 			vload_dc_low_lim_ret_Acc_cnt=0;
 			if (vload_dc_low_lim_Acc_cnt >= VLOAD_DC_LOW_LIM_Acc_per) {
 				vload_dc_low_lim_Acc_cnt=0;
