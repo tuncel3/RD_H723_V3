@@ -465,7 +465,7 @@ inline extern void FAULT_CODES_RESET_pg_disp(void) {
 inline extern void RECTF_ACTIVE_AT_STARTUP_pg_disp(void) {
 //    GLCD_PrintString(0, 18, ">Doğrltc Açlşta Aktif");
 //
-	if (rectf_active_at_startup_req) {
+//	if (rectf_active_at_startup_req) {
 		GLCD_PrintString(0, 36, "   Pasif    Aktif");
 		uint8_t x0=6+2*6, y0=44;
 		if (rectf_active_at_startup_req_right == 0) {
@@ -476,7 +476,7 @@ inline extern void RECTF_ACTIVE_AT_STARTUP_pg_disp(void) {
 		    GLCD_PrintString(0, 18, ">Doğrltc Açlşta Aktif");
 			GLCD_Line(x0, y0, x0+4+4*6, y0);
 		}
-	}
+//	}
 }
 
 inline extern void DEVICE_RESET_pg_disp(void) {

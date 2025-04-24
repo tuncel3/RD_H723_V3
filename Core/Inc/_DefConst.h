@@ -594,7 +594,7 @@ uint32_t cal_sel_item_right=0;
 uint32_t cal_sel_digit=0;
 uint32_t cal_sel_edit_mode=0;
 
-uint8_t rectf_active_at_startup_req = 0;
+//uint8_t rectf_active_at_startup_req = 0;
 uint8_t rectf_active_at_startup_req_right = 0;
 
 
