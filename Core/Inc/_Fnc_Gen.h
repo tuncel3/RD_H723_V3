@@ -766,75 +766,40 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
-Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
-Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
-Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar aralığı
-Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
-
-// D.A. gerilim regülasyonu (dropping diyot)
-// limitler şartnamede anma geriliminin yüzdesi olarak belirtilmiş.
-//if (scope==dropper_limits) {
-//Vdc_drop_in_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu giriş gerilimi
-//Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
-dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+(EpD[dropp_reg_high_lim_add][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
-dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-(EpD[dropp_reg_low_lim_sub][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
-//}
-
-// D.A. çıkış akım ayarı
-Irect_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Toplam çıkış
-Irect_min=EpD[DEV_NOM_IOUT][0].V1*0.01; // Toplam çıkış
-Ibat_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Akümülatör çıkış // release_chg -> EpD[DEV_NOM_IOUT][0].V1*1.0;
-Ibat_min=EpD[DEV_NOM_IOUT][0].V1*0.1; // Akümülatör çıkış // release_chg -> EpD[DEV_NOM_IOUT][0].V1*0.1;
-Vbat_flt=EpD[DEV_NOM_VOUT][0].V1*0.1;
-
-VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
-VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
-
-blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
-blm_I_step_075perc=EpD[DEV_NOM_IOUT][0].V1*0.0075;
-blm_I_step_10perc=EpD[DEV_NOM_IOUT][0].V1*0.010;
-blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
-blm_V_step_15perc=EpD[DEV_NOM_VOUT][0].V1*0.015;
-}
-
-void inline extern set_variables_from_EEP_fc(uint8_t scope) {
-
     if (scope & SCOPE_VOLTAGE_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
-        Vdc_float_min  = EpD[DEV_NOM_VOUT][0].V1 * 0.9;
-        Vdc_float_max  = EpD[DEV_NOM_VOUT][0].V1 * 1.15;
-        Vdc_boost_min  = EpD[DEV_NOM_VOUT][0].V1 * 1.15;
-        Vdc_boost_max  = EpD[DEV_NOM_VOUT][0].V1 * 1.3;
+    	Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
+    	Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
+    	Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar aralığı
+    	Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
     }
-
     if (scope & SCOPE_DROPPER_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+    	// D.A. gerilim regülasyonu (dropping diyot)
+    	// limitler şartnamede anma geriliminin yüzdesi olarak belirtilmiş.
+    	//if (scope==dropper_limits) {
+    	//Vdc_drop_in_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu giriş gerilimi
+    	//Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
         dropp_reg_high_lim = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[dropp_reg_high_lim_add][0].V1 / 100));
         dropp_reg_low_lim  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[dropp_reg_low_lim_sub][0].V1 / 100));
     }
-
     if (scope & SCOPE_CURRENT_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
         Irect_max = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
         Irect_min = EpD[DEV_NOM_IOUT][0].V1 * 0.01;
         Ibat_max  = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
         Ibat_min  = EpD[DEV_NOM_IOUT][0].V1 * 0.1;
     }
-
     if (scope & SCOPE_BLM_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
-        Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
-
         blm_I_step_05perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.005;
         blm_I_step_075perc = EpD[DEV_NOM_IOUT][0].V1 * 0.0075;
         blm_I_step_10perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.010;
-
         blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
         blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;
     }
-
     if (scope == SCOPE_VAR_ALL_FROM_EEP) {
-        VAC_Hg_Lim = VAC_Nom * (1 + 0.1);
-        VAC_Lo_Lim = VAC_Nom * (1 - 0.12);
+        Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
+        VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
+        VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
     }
 }
-
 
 void inline extern update_VDC_high_low_lim_fc(void) {
 	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
