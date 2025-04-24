@@ -150,11 +150,10 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 
 //LED_7_Data |= FLOAT_CHARGE_LED;
 
-// butona basar basmaz tepki olmuyor. bunu hızlandırmak lazım. butonu bırakınca kısa süreliğine butonu disable etmek lazım.
-// data kayıt için adrese ihtiyaç yok
-// arız kodu listesi son arıza numarasını 1 yap öyle sırala
-// arıza tekrarladıkça geri dönme süresini uzatma algoritması
-// eeprom okuma başarısız ise arıza durumu gösterilmeli. değerler eepromdan alındığı için.
+// 3 - butona basar basmaz tepki olmuyor. bunu hızlandırmak lazım. butonu bırakınca kısa süreliğine butonu disable etmek lazım.
+// 1 - data kayıt için adrese ihtiyaç yok
+// 6 - arıza tekrarladıkça geri dönme süresini uzatma algoritması
+// 4 - eeprom okuma başarısız ise arıza durumu gösterilmeli.
 // 3 - bir anda batarya akımı kesilirse battery inspection hemen başlat.
 //_Fnc_Gen.h uses sprintf(DUB, ...); prfm(DUB); multiple times in functions like batt_line_broken_fn().
 //This could slow down execution due to frequent memory operations.
