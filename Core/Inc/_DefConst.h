@@ -458,7 +458,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {RECT_ACTV_AT_STARTUP, 0.0}, {RECT_ACTV_AT_STARTUP, 0.0} },
     { {VRECT_DC_HIGH_LIM_add, 10.0}, {VRECT_DC_HIGH_LIM_add, 10.0} },
     { {VRECT_DC_LOW_LIM_add, 10.0}, {VRECT_DC_LOW_LIM_add, 10.0} },
-    { {dropp_reg_high_lim_add, 10.0}, {dropp_reg_high_lim_add, 10.0} },
+    { {dropp_reg_high_lim_add, 15.0}, {dropp_reg_high_lim_add, 15.0} },
     { {dropp_reg_low_lim_sub, 10.0}, {dropp_reg_low_lim_sub, 10.0} }
 };
 
