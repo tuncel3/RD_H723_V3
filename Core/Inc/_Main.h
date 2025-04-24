@@ -139,7 +139,7 @@ generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış d
 generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
 
 
-if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1;) {
+if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 	thy_drv_en_req=1;
 } else {
 	thy_drv_en_req=0;

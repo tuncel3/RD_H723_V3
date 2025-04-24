@@ -1185,6 +1185,9 @@ void besc_fnc(void) {
         	currentPage = MANAGEMENT_pg;
         }
     }
+    else if (currentPage == RECTF_ACTIVE_AT_STARTUP_pg) {
+        currentPage = MANAGEMENT_pg;
+    }
     else if (currentPage == DEVICE_RESET_pg) {
         currentPage = MANAGEMENT_pg;
     }
