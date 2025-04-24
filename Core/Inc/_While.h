@@ -242,7 +242,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K1][0].V1=1; EpD[SET_DROPPER_K1][1].V1=1;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K1][0].V1);
-				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
 			}
 		} else if (VLOAD_pas.a1+dropper_test_var_1 < Vdc_drop_out_min && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
 			actvate_drop_cnt++;
