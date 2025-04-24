@@ -50,6 +50,7 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 // burda düzenleme gerekebilir. hangi arızadan ne kadar süre sonra tekrar başlatılacak belirlemek lazım.
 if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
 	thy_drv_en_req = 1; // bu durumda thy drv en req gönder.
+	sprintf(DUB,"thy_stop_fault_hold_bits 0. bütün arızalar sıfırlandı. starting rectf"); prfm(DUB);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
