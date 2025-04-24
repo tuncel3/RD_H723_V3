@@ -284,36 +284,36 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			}
 		} else { vload_dc_high_lim_Acc_cnt=0; }
 
+		if (VLOAD_pas.a1+dropper_test_var_1 <= Vdc_drop_out_max && is_state_active(LOAD_DC_HG_FC)) {
+			vload_dc_high_lim_ret_Acc_cnt++;
+			vload_dc_high_lim_Acc_cnt=0;
+			if (vload_dc_high_lim_ret_Acc_cnt >= vload_dc_high_lim_ret_Acc_per) {
+				vload_dc_high_lim_ret_Acc_cnt=0;
+				apply_state_changes_f(LOAD_DC_HG_FC, 0);
+				sprintf(DUB,"LOAD DC High Return"); prfm(DUB);
+			}
+		} else { vload_dc_high_lim_ret_Acc_cnt=0; }
+
 		if (VLOAD_pas.a1+dropper_test_var_1 < Vdc_drop_out_min && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)
 				&& !is_state_active(LOAD_DC_LW_FC)) {
 			vload_dc_low_lim_Acc_cnt++;
 			vload_dc_low_lim_ret_Acc_cnt=0;
-			if (vload_dc_low_lim_Acc_cnt >= vload_dc_low_lim_Acc_per) {
+			if (vload_dc_low_lim_Acc_cnt >= VLOAD_DC_LOW_LIM_Acc_per) {
 				vload_dc_low_lim_Acc_cnt=0;
 				apply_state_changes_f(LOAD_DC_LW_FC, 1);
 				sprintf(DUB,"LOAD DC Low"); prfm(DUB);
 			}
-		} else { VLOAD_DC_LOW_LIM_Acc_cnt=0; }
-
-		if (VLOAD_pas.a1+dropper_test_var_1 <= Vdc_drop_out_max && is_state_active(LOAD_DC_HG_FC)) {
-			VLOAD_DC_HIGH_LIM_ret_Acc_cnt++;
-			VLOAD_DC_HIGH_LIM_Acc_cnt=0;
-			if (VLOAD_DC_HIGH_LIM_ret_Acc_cnt >= VLOAD_DC_HIGH_LIM_ret_Acc_per) {
-				VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0;
-				apply_state_changes_f(LOAD_DC_HG_FC, 0);
-				sprintf(DUB,"LOAD DC High Return"); prfm(DUB);
-			}
-		} else {VLOAD_DC_HIGH_LIM_ret_Acc_cnt=0; }
+		} else { vload_dc_low_lim_Acc_cnt=0; }
 
 		if (VLOAD_pas.a1+dropper_test_var_1 >= Vdc_drop_out_min && is_state_active(LOAD_DC_LW_FC)) {
-			VLOAD_DC_LOW_LIM_ret_Acc_cnt++;
-			VLOAD_DC_LOW_LIM_Acc_cnt=0;
-			if (VLOAD_DC_LOW_LIM_ret_Acc_cnt >= VLOAD_DC_LOW_LIM_ret_Acc_per) {
-				VLOAD_DC_LOW_LIM_ret_Acc_cnt=0;
+			vload_dc_low_lim_ret_Acc_cnt++;
+			vload_dc_low_lim_Acc_cnt=0;
+			if (vload_dc_low_lim_ret_Acc_cnt >= vload_dc_low_lim_ret_Acc_per) {
+				vload_dc_low_lim_ret_Acc_cnt=0;
 				apply_state_changes_f(LOAD_DC_LW_FC, 0);
 				sprintf(DUB,"LOAD DC Low Return"); prfm(DUB);
 			}
-		} else { VLOAD_DC_LOW_LIM_ret_Acc_cnt=0; }
+		} else { vload_dc_low_lim_ret_Acc_cnt=0; }
 
 ////// V LOAD DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
