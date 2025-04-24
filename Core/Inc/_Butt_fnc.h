@@ -171,6 +171,9 @@ void bleft_fnc(void) {
 			fault_codes_reset_req_right = 0;
 		}
     }
+    else if (currentPage == RECTF_ACTIVE_AT_STARTUP_pg) {
+    	rectf_active_at_startup_req_right^=1;
+    }
     else if (currentPage == DEVICE_RESET_pg && device_reset_req == 1) {
 		if (device_reset_req_right == 0) {
 			device_reset_req_right = 1;
