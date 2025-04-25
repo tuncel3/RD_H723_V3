@@ -140,6 +140,9 @@ generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış d
 generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// cihaz ilk açılışta doğrultucuyu direk devreye alacak mı.
+// eğer çıkış voltaj değeri ayarlanmamışsa açılışta recrifieri direk devreye almak tehlikeli olabilir.
 if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 	thy_drv_en_req=1;
 	user_wants_allows_thy_drv=1;
@@ -147,21 +150,15 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 	thy_drv_en_req=0;
 	user_wants_allows_thy_drv=0;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//LED_7_Data |= FLOAT_CHARGE_LED;
+
 
 // 3 - butona basar basmaz tepki olmuyor. bunu hızlandırmak lazım. butonu bırakınca kısa süreliğine butonu disable etmek lazım.
 // 1 - data kayıt için adrese ihtiyaç yok
 // 6 - arıza tekrarladıkça geri dönme süresini uzatma algoritması
 // 4 - eeprom okuma başarısız ise arıza durumu gösterilmeli.
 // 3 - bir anda batarya akımı kesilirse battery inspection hemen başlat.
-//_Fnc_Gen.h uses sprintf(DUB, ...); prfm(DUB); multiple times in functions like batt_line_broken_fn().
-//This could slow down execution due to frequent memory operations.
-//Possible Fix: Use predefined format strings or snprintf() with fixed buffer sizes.
-//akü hattı kopuk araştırmasını nominal voltajın 1 volt üzeri ve altına yavaş yavaş dolaşarak yapsın.
-// araştırma başlangıç voltajı sabit değilse. ona göre algoritma oluşturmak gerekiyor. mesela artış sürecinde ise.
-// voltajdaki değişime rağmen batarya akımında değişim olmaması bir gösterge.
-// voltajı düşürrmeye çalışırken düşürememe de bir gösterge, çünkü batarya bağlıdır ve voltajı belli bir seviyede tutmaktadır.
 // batarya devreye alındığında DC short hatası oluyor. DC short hatası olmadan batarya devreye alınmalı.
 // bunu yapmak için kısa devre akımındaki değişime bakılabilir. aşağı yönlü bir değişim varsa bunu batarya devreye alma olarak algıla.
 // eeprom kaydetemden önce oku. aynı değer varsa yazma.
@@ -169,23 +166,7 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 // böyle bir durumda yanlış dck oluşmaması için çıkış voltajı nominal voltajın %20 altında ve çıkış, doğrultucu ve
 // batarya akımı yoksa dck yüzdesini önemseme
 // rectifier kapalı iken, akü şalter devre dışı iken kaçak voltaj arızası oluşması engellenmeli.
-// NOTE_FOR_CODE_PART notu olan satırlaın olduğu bölümlerde inceleme ve geliştirme gerekiyor olaiblir.
-
-
-//release_chg yazan satırları bulup değişiklikleri eski haline getirmek gerekiyor.
-
 //short circuit detection için. short circuit akımındaki değişime bakılabilir.
-//		if (thy_drv_en==1 && IRECT_smp_sc > EpD[RECT_SHORT][0].V1 && IRECT_smp_sc_num <= 10) {
-//			IRECT_Short_Vector[IRECT_smp_sc_num]=adc_ch4;
-//			if (IRECT_smp_sc_num==1 && IRECT_Short_Vector[1]*1.05 < IRECT_Short_Vector[0]) {
-//
-//			}
-//			IRECT_smp_sc_num++;
-//
-//		}
-//		else {
-//			IRECT_smp_sc_num=0;
-//		}
 
 
 
