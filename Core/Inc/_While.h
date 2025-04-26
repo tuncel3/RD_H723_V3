@@ -778,7 +778,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_buf_index = 0;
 		PRF_GEN("current detected. batt line connected");
 	}
-	if (EpD[SET_BATT_DISC_DET][0].V1==1 && is_state_active(BATT_LINE_BROKEN_FC)) {	// batt line broken fault durumu var. kullanıcı batt kontrlü devreden çıkarıyor.
+	if (EpD[SET_BATT_DISC_DET][0].V1==0 && is_state_active(BATT_LINE_BROKEN_FC)) {	// batt line broken fault durumu var. kullanıcı batt kontrlü devreden çıkarıyor.
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 		blm_op_phase = B_RESTRT_AFTR_DELAY;										// bring_vtarg_back_goto_delay
 		blm_corr_op_start_delay_cnt = 0;
