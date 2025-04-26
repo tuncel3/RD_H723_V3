@@ -790,11 +790,12 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_op_phase = B_SKIP_DELAY_RESTART;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
+			PRF_GEN("blm !irect_stable");
 	}
 	if (!ibat_stable) {		// ibat akımının stabil olması. bataryanın iç yapısının stabil olduğu anlamına geliyor. yüklemeden yeni çıktığında iç yapısı stabil olmuyor ve voltaj ile akım corr olmuyor.
 			blm_op_phase = B_SKIP_DELAY_RESTART;
 			blm_enable_collect_samples = 0;
-			blm_corr_buf_index = 0;
+			PRF_GEN("blm !ibat_stable");
 	}
 
 /// WHAT STOPS AND RESETS BATT LINE MONITORING  && is_state_active(BATT_LINE_BROKEN_FC)
