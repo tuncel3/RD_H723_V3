@@ -786,7 +786,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_corr_buf_index = 0;
 		PRF_GEN("user disabled batt mon");
 	}
-
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 			blm_op_phase = B_SKIP_DELAY_RESTART;
 			blm_enable_collect_samples = 0;
