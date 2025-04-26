@@ -1188,7 +1188,7 @@ float calculate_blm_op(void);
 float calculate_blm_op2(void);
 float calculate_blm_op(void) {
     if (blm_corr_buf_index < 2) {
-        // En az 2 örnek olmalı
+    	discard_corr_result=1;
         return -1;
     }
 
@@ -1216,7 +1216,8 @@ float calculate_blm_op(void) {
 
     if (var_v <= 0.0f || var_i <= 0.0f) {
     	PRF_BLM("  blm_corr %d %f %f %f %f %f %f %d %d", blm_corr_buf_index, mean_v, mean_i, sum_v2, sum_i2, var_v, var_i, var_v <= 0.0f, var_i <= 0.0f);
-        return -2;
+    	discard_corr_result=1;
+		return -2;
     }
     float corr = cov_vi / sqrtf(var_v * var_i);
 
