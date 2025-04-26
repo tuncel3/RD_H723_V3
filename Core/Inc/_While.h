@@ -786,13 +786,13 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_corr_buf_index = 0;
 		PRF_GEN("user disabled batt mon");
 	}
-	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
+	if (!irect_stable && blm_op_phase != B_SKIP_DELAY_RESTART) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 			blm_op_phase = B_SKIP_DELAY_RESTART;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
 			PRF_GEN("blm !irect_stable");
 	}
-	if (!ibat_stable) {		// ibat akımının stabil olması. bataryanın iç yapısının stabil olduğu anlamına geliyor. yüklemeden yeni çıktığında iç yapısı stabil olmuyor ve voltaj ile akım corr olmuyor.
+	if (!ibat_stable && blm_op_phase != B_SKIP_DELAY_RESTART) {		// ibat akımının stabil olması. bataryanın iç yapısının stabil olduğu anlamına geliyor. yüklemeden yeni çıktığında iç yapısı stabil olmuyor ve voltaj ile akım corr olmuyor.
 			blm_op_phase = B_SKIP_DELAY_RESTART;
 			blm_enable_collect_samples = 0;
 			PRF_GEN("blm !ibat_stable");
