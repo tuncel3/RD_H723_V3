@@ -836,7 +836,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_op_phase = 5;
 		}
 	} else if (blm_op_phase == 5) { // Vtarg’ı yükselt
-		if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_max) {
+		if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_targ) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
