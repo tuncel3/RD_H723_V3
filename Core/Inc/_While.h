@@ -876,7 +876,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 					blm_req_corr_batt_connected=0;
 					PRF_GEN("corr low. batt broken.");
 				} else  {
-					PRF_GEN("corr results no decision. no action");
+					PRF_GEN("corr results requires no action this time.");
 				}
 			} else {
 				PRF_GEN("discard_corr_result %f", blm_corr);
