@@ -405,7 +405,7 @@ if (VAC_R_rms_sc >= VAC_0_RET_LIM && VAC_R_Off_fc == 1) {
 	}
 } else {VAC_R_0_Ret_Acc_cnt=0;}
 
-if (VAC_R_rms_sc >= VAC_HG_RET_LIM && VAC_R_Hg_fc == 1) {
+if (VAC_R_rms_sc <= VAC_HG_RET_LIM && VAC_R_Hg_fc == 1) {
 	VAC_R_Hg_Ret_Acc_cnt++; // S HIGH RET
 	if (VAC_R_Hg_Ret_Acc_cnt >= VAC_R_Hg_Ret_Acc_per) {
 		VAC_R_Hg_Ret_Acc_cnt=0;
@@ -454,7 +454,7 @@ if (VAC_S_rms_sc >= VAC_0_RET_LIM && VAC_S_Off_fc == 1) {
 	}
 } else {VAC_S_0_Ret_Acc_cnt=0;}
 
-if (VAC_S_rms_sc >= VAC_HG_RET_LIM && VAC_S_Hg_fc == 1) {
+if (VAC_S_rms_sc <= VAC_HG_RET_LIM && VAC_S_Hg_fc == 1) {
 	VAC_S_Hg_Ret_Acc_cnt++; // S HIGH RET
 	if (VAC_S_Hg_Ret_Acc_cnt >= VAC_S_Hg_Ret_Acc_per) {
 		VAC_S_Hg_Ret_Acc_cnt=0;
@@ -503,7 +503,7 @@ if (VAC_T_rms_sc >= VAC_0_RET_LIM && VAC_T_Off_fc == 1) {
 	}
 } else {VAC_T_0_Ret_Acc_cnt=0;}
 
-if (VAC_T_rms_sc >= VAC_HG_RET_LIM && VAC_T_Hg_fc == 1) {
+if (VAC_T_rms_sc <= VAC_HG_RET_LIM && VAC_T_Hg_fc == 1) {
 	VAC_T_Hg_Ret_Acc_cnt++; // S HIGH RET
 	if (VAC_T_Hg_Ret_Acc_cnt >= VAC_T_Hg_Ret_Acc_per) {
 		VAC_T_Hg_Ret_Acc_cnt=0;
