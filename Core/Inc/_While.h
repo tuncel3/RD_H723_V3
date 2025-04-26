@@ -754,7 +754,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
-	if (SW_BATT_OFF && !is_state_active(BATT_LINE_BROKEN_FC)) {
+	if (SW_BATT_OFF && !is_state_active(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
 			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			blm_corr_op_start_delay_cnt = 0;
@@ -762,7 +762,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_buf_index = 0;
 		PRF_GEN("blm SW off. batt broken set");
 	}
-	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC)) {
+	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
 			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			blm_corr_op_start_delay_cnt = 0;
@@ -778,6 +778,15 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_buf_index = 0;
 		PRF_GEN("current detected. batt line connected");
 	}
+	if (EpD[SET_BATT_DISC_DET][0].V1==1 && is_state_active(BATT_LINE_BROKEN_FC)) {	// batt line broken fault durumu var. kullanıcı batt kontrlü devreden çıkarıyor.
+		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
+		blm_op_phase = B_RESTRT_AFTR_DELAY;										// bring_vtarg_back_goto_delay
+		blm_corr_op_start_delay_cnt = 0;
+		blm_enable_collect_samples = 0;
+		blm_corr_buf_index = 0;
+		PRF_GEN("user disabled batt mon");
+	}
+
 	if (!irect_stable) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
 			blm_op_phase = B_SKIP_DELAY_RESTART;
 			blm_enable_collect_samples = 0;
