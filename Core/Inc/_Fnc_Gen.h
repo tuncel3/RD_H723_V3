@@ -1214,7 +1214,7 @@ float calculate_blm_op(void) {
     float cov_vi = sum_vi - blm_corr_buf_index * mean_v * mean_i;
 
     if (var_v <= 0.0f || var_i <= 0.0f) {
-    	PRF_BLM("  blm_corr %d %f %f %f %f %f", blm_corr_buf_index, blm_corr, mean_v, mean_i, sum_v2, sum_i2);
+    	PRF_BLM("  blm_corr %d %f %f %f %f %f %f %d %d", blm_corr_buf_index, mean_v, mean_i, sum_v2, sum_i2, var_v, var_i, var_v <= 0.0f, var_i <= 0.0f);
         return -2;
     }
     float corr = cov_vi / sqrtf(var_v * var_i);
