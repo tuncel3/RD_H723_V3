@@ -1322,7 +1322,6 @@ float blm_corr_results[BLM_CORR_RESULTS_SIZE] = {1};
 uint8_t blm_corr_results_index = 0;
 uint8_t blm_corr_results_index_prev = 0;
 
-float blm_corr2 = 1.0f;
 
 typedef enum {
 	B_SKIP_DELAY_RESTART=100,

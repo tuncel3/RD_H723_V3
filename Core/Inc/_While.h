@@ -861,9 +861,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_enable_collect_samples = 0;
 			blm_corr_p = blm_corr;			// bir önceki corr
 			blm_corr = calculate_blm_op();	// şimdiki corr
-			blm_corr2 = calculate_blm_op2();	// şimdiki corr
 			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
-			PRF_BLM("  blm_corr %f %f", blm_corr, blm_corr2);
+			PRF_BLM("  blm_corr %f", blm_corr);
 			if (discard_corr_result == 0) {
 				if (blm_corr >= 0.90) {	// bir tanesi 0.9 üstü ise corr ok.
 					blm_req_corr_batt_connected=1;

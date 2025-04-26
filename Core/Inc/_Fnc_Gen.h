@@ -1227,42 +1227,4 @@ float calculate_blm_op(void) {
     return corr;
 }
 
-float calculate_blm_op2(void) {
-    if (blm_corr_buf_index < 2) {
-        return -1;
-    }
-
-    float mean_v = 0.0f, mean_i = 0.0f;
-    float M2_v = 0.0f, M2_i = 0.0f;
-    float cov_vi = 0.0f;
-
-    for (uint16_t i = 0; i < blm_corr_buf_index; i++) {
-        float v = vrect_buf[i];
-        float ib = ibat_buf[i];
-
-        float delta_v = v - mean_v;
-        mean_v += delta_v / (i + 1);
-
-        float delta_i = ib - mean_i;
-        mean_i += delta_i / (i + 1);
-
-        M2_v += delta_v * (v - mean_v);
-        M2_i += delta_i * (ib - mean_i);
-
-        cov_vi += delta_v * (ib - mean_i); // ← burası kritik doğru oldu
-    }
-
-    if (M2_v <= 0.0f || M2_i <= 0.0f) {
-        return -2;
-    }
-
-    float corr = cov_vi / sqrtf(M2_v * M2_i);
-
-    if (corr > 1.0f) corr = 1.0f;
-    else if (corr < -1.0f) corr = -1.0f;
-
-    blm_corr_buf_index = 0;
-    return corr;
-}
-
 
