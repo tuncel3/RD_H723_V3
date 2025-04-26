@@ -880,6 +880,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 					PRF_BLM("corr results requires no action this time.");
 				}
 			} else {
+		    	discard_corr_result=0;
 				PRF_BLM("discard_corr_result %f", blm_corr);
 			}
 			blm_corr_results_index=(blm_corr_results_index+1) % BLM_CORR_RESULTS_SIZE;
