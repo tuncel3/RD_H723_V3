@@ -1242,13 +1242,14 @@ float calculate_blm_op2(void) {
 
         float delta_v = v - mean_v;
         mean_v += delta_v / (i + 1);
-        M2_v += delta_v * (v - mean_v);
 
         float delta_i = ib - mean_i;
         mean_i += delta_i / (i + 1);
+
+        M2_v += delta_v * (v - mean_v);
         M2_i += delta_i * (ib - mean_i);
 
-        cov_vi += (v - mean_v) * (ib - mean_i);
+        cov_vi += delta_v * (ib - mean_i); // ← burası kritik doğru oldu
     }
 
     if (M2_v <= 0.0f || M2_i <= 0.0f) {
@@ -1263,4 +1264,5 @@ float calculate_blm_op2(void) {
     blm_corr_buf_index = 0;
     return corr;
 }
+
 
