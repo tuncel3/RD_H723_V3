@@ -821,7 +821,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_op_phase=2;
 	} else if (blm_op_phase == 2) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
 		blm_corr_buf_index = 0;
-    	blm_vrect_max = 0; blm_vrect_min = 1000; blm_vtarg_max = 0; blm_vtarg_min = 1000;
+//    	blm_vrect_max = 0; blm_vrect_min = 1000; blm_vtarg_max = 0; blm_vtarg_min = 1000;
 		blm_enable_collect_samples = 1;
 		check_vrect_vtarg_e_asagi_gitti =1;									// will check in phase 5
 		check_vrect_vtarg_e_yukari_gitti =1;								// will check in phase 7

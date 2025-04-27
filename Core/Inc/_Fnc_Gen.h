@@ -1216,22 +1216,22 @@ float calculate_blm_op(void) {
         sum_i2 += ib * ib;
         sum_vi += v * ib;
 
-		if (v1 > blm_vrect_max) {
-			blm_vrect_max = v1;
-			blm_vrect_max_ind = i;
-		}
-		if (v1 < blm_vrect_min) {
-			blm_vrect_min = v1;
-			blm_vrect_min_ind = i;
-		}
-		if (vt > blm_vtarg_max) {
-			blm_vtarg_max = vt;
-			blm_vtarg_max_ind = i;
-		}
-		if (vt < blm_vtarg_min) {
-			blm_vtarg_min = vt;
-			blm_vtarg_min_ind = i;
-		}
+//		if (v1 > blm_vrect_max) {
+//			blm_vrect_max = v1;
+//			blm_vrect_max_ind = i;
+//		}
+//		if (v1 < blm_vrect_min) {
+//			blm_vrect_min = v1;
+//			blm_vrect_min_ind = i;
+//		}
+//		if (vt > blm_vtarg_max) {
+//			blm_vtarg_max = vt;
+//			blm_vtarg_max_ind = i;
+//		}
+//		if (vt < blm_vtarg_min) {
+//			blm_vtarg_min = vt;
+//			blm_vtarg_min_ind = i;
+//		}
     }
 //		blm_vdev_rect=fabs(blm_vrect_max-blm_vrect_min);
 //		blm_vdev_targ=fabs(blm_vtarg_max-blm_vtarg_min);
