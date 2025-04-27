@@ -844,8 +844,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			vrect_vtarg_fark=fabs(VRECT_pas.a16-V_targ_con_sy);
 			vrect_vsta_fark=fabs(blm_stable_v_vrect-VRECT_pas.a16);
 			vtarg_vsta_fark=fabs(blm_stable_v_vrect-V_targ_con_sy);
-			vrect_position=vrect_vtarg_fark/vtarg_vsta_fark;
-			PRF_BLM("asag fark. %f %f", vtarg_vsta_fark, vrect_position);
+			vrect_position_dn=vrect_vtarg_fark/vtarg_vsta_fark;
+			PRF_BLM("asag fark. %f %f", vtarg_vsta_fark, vrect_position_dn);
 		}
 
 //		blm_vtarg_move_up_max=47;											//	**************
@@ -866,8 +866,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			vrect_vtarg_fark=fabs(VRECT_pas.a16-V_targ_con_sy);
 			vrect_vsta_fark=fabs(blm_stable_v_vrect-VRECT_pas.a16);
 			vtarg_vsta_fark=fabs(blm_stable_v_vrect-V_targ_con_sy);
-			vrect_position=vrect_vtarg_fark/vtarg_vsta_fark;
-			PRF_BLM("yuka fark. %f %f", vtarg_vsta_fark, vrect_position);
+			vrect_position_up=vrect_vtarg_fark/vtarg_vsta_fark;
+			PRF_BLM("yuka fark. %f %f", vtarg_vsta_fark, vrect_position_up);
 		}
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
@@ -926,15 +926,19 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		vtarg_buf[blm_corr_buf_index] = V_targ_con_sy;
 		blm_corr_buf_index++;
 	}
-	if (blm_req_corr_batt_connected == 1) { // corr sonucuna göre batt line broken state uygulaması buraya koyuldu, çünkü başka durumlar da izlenerek sonuç çıkarılmaya çalışılacak. örneğin vtarg düşürüldü ama vrect düşmedi.
-		blm_req_corr_batt_connected=99;
+	if (blm_req_corr_batt_connected == 1 && vrect_position_dn >= 0.8) { // corr sonucuna göre batt line broken state uygulaması buraya koyuldu, çünkü başka durumlar da izlenerek sonuç çıkarılmaya çalışılacak. örneğin vtarg düşürüldü ama vrect düşmedi.
+		blm_req_corr_batt_connected=99;		// vrect_position_dn >= 0.8 yani vrect vtargın indiği kadarın yüzde 20 si kadar inmemiş olmalı
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-	} else if (blm_req_corr_batt_connected == 0) {
+	} else if (blm_req_corr_batt_connected == 0 && vrect_position_dn <= 0.2) {
 		blm_req_corr_batt_connected=99;
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 	}
 } // if (sfsta_op_phase == S_SFSTA_REQ_OK) {
-
+//blm_stable_v_vrect						|
+//											|
+//VRECT_pas.a16		  |		vtarg_vsta_fark |
+//	vrect_vtarg_fark  |						|
+//V_targ_con_sy		  |						|
 ////// BATT LINE MONITORING /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
