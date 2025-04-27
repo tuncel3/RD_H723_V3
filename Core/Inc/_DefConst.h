@@ -406,6 +406,7 @@ typedef enum {
 	SET_UNSEEN_FLT,
 	SET_BATT_REV_DET,
 	SET_BATT_DISC_DET,
+	SET_DROPPER_MANOTO,
 	SET_DROPPER_K1,
 	SET_DROPPER_K2,
 	SET_OVTM_ALRM_LIM,
@@ -461,6 +462,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_UNSEEN_FLT, 0.0}, {SET_UNSEEN_FLT, 0.0} },
     { {SET_BATT_REV_DET, 1.0}, {SET_BATT_REV_DET, 1.0} },
     { {SET_BATT_DISC_DET, 0.0}, {SET_BATT_DISC_DET, 0.0} },
+    { {SET_DROPPER_MANOTO, 1.0}, {SET_DROPPER_MANOTO, 1.0} },
     { {SET_DROPPER_K1, 0.0}, {SET_DROPPER_K1, 0.0} },
     { {SET_DROPPER_K2, 0.0}, {SET_DROPPER_K2, 0.0} },
     { {SET_OVTM_ALRM_LIM, 80.0}, {SET_OVTM_ALRM_LIM, 80.0} },
@@ -514,6 +516,7 @@ const char* Eep_data_Names[] = { // for printing in uart
     "SET_UNSEEN_FLT",
     "SET_BATT_REV_DET",
     "SET_BATT_DISC_DET",
+    "SET_DROPPER_MANOTO",
     "SET_DROPPER_K1",
     "SET_DROPPER_K2",
     "SET_OVTM_ALRM_LIM",
@@ -564,6 +567,10 @@ uint8_t chg_setting_edit_mode = 0;
 const char* AKTFPAS_SEL_Items[] = {
     "  Pasif ",
     "  Aktif "
+};
+const char* MANUOTO_SEL_Items[] = {
+    "  Manuel",
+    "  Oto   "
 };
 
 float IRECT_Short_Lim = 8;
