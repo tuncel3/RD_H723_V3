@@ -30,9 +30,8 @@ if (sta_op_phase == S_STARTUP_DELAY_CNT) {	// delay bekleme state'i.
 	}
 }
 // thy_drv_en_req set etmek başlatma işlemi yapmak için yeterli.
-if (VRECT_pas.a64 <= S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
-	if (thy_drv_en==0 && thy_drv_en_req ==1 && line_sgn_stable && thy_stop_fault_hold_bits==0) {
+	if (VRECT_pas.a64 <= Current_charge_voltage && thy_drv_en==0 && thy_drv_en_req ==1 && line_sgn_stable && thy_stop_fault_hold_bits==0) {
 		sf_sta_req_cnt++;
 		if (sf_sta_req_cnt >= 20) {		// delayed soft start trigger
 			set_V_targ_con_sy(5);
