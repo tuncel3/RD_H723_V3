@@ -152,6 +152,7 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// vtarg düşük ayarlı iken bat votajı dc voltajının yüksek olmasına neden oluyor.
 // fanlar hangi sıcaklıkta devreye grirecek. ayar sayfası lazım.
 // 16 lı röleler sıralamsı ters olarak devreye alınıyor
 // dropper oto manuel seçenek. devreye girme voltaj yüzde.
