@@ -1297,6 +1297,7 @@ uint8_t check_vrect_vtarg_e_yukari_gitti = 1;
 float vrect_vtarg_fark = 0;
 float vrect_vsta_fark = 0;
 float vtarg_vsta_fark = 0;
+float vrect_position = 0;
 float blm_vrect_max = 0;
 float blm_vrect_min = 1000;
 float blm_vtarg_max = 0;
