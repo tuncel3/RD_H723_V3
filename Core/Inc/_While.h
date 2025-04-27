@@ -823,6 +823,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_corr_buf_index = 0;
     	blm_vrect_max = 0; blm_vrect_min = 1000; blm_vtarg_max = 0; blm_vtarg_min = 1000;
 		blm_enable_collect_samples = 1;
+		check_vrect_vtarg_e_asagi_gitti =1;									// will check in phase 5
+		check_vrect_vtarg_e_yukari_gitti =1;								// will check in phase 7
 		blm_set_up_down_vtarg_limits();
 		PRF_BLM("start changing voltage");
 		blm_op_phase = 3;
@@ -882,8 +884,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_enable_collect_samples = 0;
 			blm_corr = calculate_blm_op();	// şimdiki corr
 
-			check_vrect_vtarg_e_asagi_gitti =1;									// reset variables
-			check_vrect_vtarg_e_yukari_gitti =1;								// reset variables
 			PRF_BLM("  blm_corr %f", blm_corr);
 			if (discard_corr_result == 0) {
 				if (blm_corr >= 0.90) {	// bir tanesi 0.9 üstü ise corr ok.
