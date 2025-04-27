@@ -1201,6 +1201,7 @@ uint8_t sogut_sensor_exists = 0;
 uint8_t trafo_sensor_exists = 0;
 uint8_t batt_sensor_exists = 0;
 int dropper_test_var_1 = 0;
+int load_dcv_test_var_1 = 0;
 
 
 
