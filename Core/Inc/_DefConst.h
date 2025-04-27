@@ -1291,10 +1291,14 @@ uint16_t blm_vrect_min_ind = 0;
 uint16_t blm_vtarg_max_ind = 0;
 uint16_t blm_vtarg_min_ind = 0;
 uint8_t blm_VRECT_changed = 0;
+uint8_t vrect_vtarg_e_asagi_gitti = 0;
+uint8_t vrect_vtarg_e_yukari_gitti = 0;
 float blm_vrect_max = 0;
 float blm_vrect_min = 1000;
 float blm_vtarg_max = 0;
 float blm_vtarg_min = 1000;
+float blm_vdev_rect = 0;
+float blm_vdev_targ = 0;
 float blm_vdiff_mins = 0;
 float blm_vdiff_maxs = 0;
 

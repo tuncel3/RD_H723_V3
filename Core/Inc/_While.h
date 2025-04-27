@@ -838,7 +838,12 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_op_phase = 5;
 		}
 	} else if (blm_op_phase == 5) { // Vtarg’ı yükselt
-		blm_vtarg_move_up_max=47;
+		if (fabs(VRECT_pas.a16-V_targ_con_sy) < blm_V_step_05perc && !vrect_vtarg_e_asagi_gitti) {
+			vrect_vtarg_e_asagi_gitti=1;
+			PRF_BLM("vrect vtarg seviyesine indi.");
+		} else { PRF_BLM("vrect vtarg seviyesine inmedi.");}
+
+		blm_vtarg_move_up_max=47;											//	**************
 		if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_max) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
 		} else {
@@ -851,6 +856,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_op_phase = 7;
 		}
 	} else if (blm_op_phase == 7) { // Vtarg’ı tekrar düşür
+		if (fabs(VRECT_pas.a16-V_targ_con_sy) < blm_V_step_05perc && !vrect_vtarg_e_yukari_gitti) {
+			vrect_vtarg_e_yukari_gitti=1;
+			PRF_BLM("vrect vtarg seviyesine çıktı.");
+		} else { PRF_BLM("vrect vtarg seviyesine çıkmadı.");}
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
@@ -865,6 +874,9 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_p = blm_corr;			// bir önceki corr
 			blm_corr = calculate_blm_op();	// şimdiki corr
 			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
+
+			vrect_vtarg_e_asagi_gitti = 1;										// reset variables
+			vrect_vtarg_e_yukari_gitti = 1;										// reset variables
 			PRF_BLM("  blm_corr %f", blm_corr);
 			if (discard_corr_result == 0) {
 				if (blm_corr >= 0.90) {	// bir tanesi 0.9 üstü ise corr ok.
