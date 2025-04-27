@@ -18,7 +18,7 @@ inline extern void DROPPER_pg_disp(void) {
         GLCD_PrintString(0, 3*lnhg, L);
     }
 	if (dropper_edit_mode) {
-		GLCD_Rect_E(69,(selected_DROPPER_PG_line+2)*9-2,101,(selected_DROPPER_PG_line+3)*9-1); // batt rect
+		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,101,(selected_DROPPER_PG_line+2)*9-1); // batt rect
 	}
 }
 
