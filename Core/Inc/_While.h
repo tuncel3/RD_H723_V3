@@ -799,10 +799,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_enable_collect_samples = 0;
 			PRF_BLM("blm !ibat_stable");
 	}
-	if (user_wants_allows_thy_drv) {
-//			blm_op_phase = B_RESTRT_AFTR_DELAY;
-//			blm_enable_collect_samples = 0;
-//			PRF_BLM("blm delay restart load dc low");
+	if (!user_wants_allows_thy_drv) {
+			blm_op_phase = B_RESTRT_AFTR_DELAY;
+			blm_enable_collect_samples = 0;
+			PRF_BLM("blm delay restart load dc low");
 	}
 //	if (is_state_active(LOAD_DC_LW_FC)) {
 //			blm_op_phase = B_RESTRT_AFTR_DELAY;
