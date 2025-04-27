@@ -21,14 +21,14 @@ inline extern void DROPPER_pg_disp(void) {
 		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,109,(selected_DROPPER_PG_line+2)*9-1); // batt rect
 	}
 	if (EpD[SET_DROPPER_K1][0].V1==0) {
-		sprintf(L, "_/_"); 		GLCD_PrintString(110, 2*lnhg, L);
+		sprintf(L, "---"); 		GLCD_PrintString(110, 2*lnhg, L);
 	} else {
-		sprintf(L, "___"); 		GLCD_PrintString(110, 2*lnhg, L);
+		sprintf(L, "->-"); 		GLCD_PrintString(110, 2*lnhg, L);
 	}
 	if (EpD[SET_DROPPER_K2][0].V1==0) {
-		sprintf(L, "_/_"); 		GLCD_PrintString(110, 3*lnhg, L);
+		sprintf(L, "---"); 		GLCD_PrintString(110, 3*lnhg, L);
 	} else {
-		sprintf(L, "___"); 		GLCD_PrintString(110, 3*lnhg, L);
+		sprintf(L, "->-"); 		GLCD_PrintString(110, 3*lnhg, L);
 	}
 }
 
