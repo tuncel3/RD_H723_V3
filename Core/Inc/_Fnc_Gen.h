@@ -870,7 +870,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	REL_MB_8Bit_Data &= ~REL8_bit; }  // deactivate REL 8 if required
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
-        	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 10); }
+        	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 0); }
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
