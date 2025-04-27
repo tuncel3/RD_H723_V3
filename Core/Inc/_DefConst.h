@@ -354,6 +354,7 @@ uint32_t charge_mode_timed_time_cnt=0;
 uint32_t charge_mode_timed_time_sec=0;
 uint8_t dropper_edit_mode = 0;
 uint8_t selected_DROPPER_PG_line = 0;
+uint8_t dropper_control_man_oto = 0;
 
 typedef enum {
 	FLOAT,

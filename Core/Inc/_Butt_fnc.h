@@ -487,18 +487,12 @@ if (!chg_setting_edit_mode) {
     	if (dropper_edit_mode == 0) {
     		selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
 		} else if (dropper_edit_mode == 1) {
-			if (selected_DROPPER_PG_line == 1) {
-				if (EpD[SET_DROPPER_MANOTO][1].V1==1) {
-					EpD[SET_DROPPER_MANOTO][1].V1=0;
-				} else { EpD[SET_DROPPER_MANOTO][1].V1=1;}
+			if (selected_DROPPER_PG_line == 0) {
+				EpD[SET_DROPPER_MANOTO][1].V1^=1;
 			} else if (selected_DROPPER_PG_line == 1) {
-				if (EpD[SET_DROPPER_K1][1].V1==1) {
-					EpD[SET_DROPPER_K1][1].V1=0;
-				} else { EpD[SET_DROPPER_K1][1].V1=1;}
+				EpD[SET_DROPPER_K1][1].V1^=1;
 			} else if (selected_DROPPER_PG_line == 2) {
-				if (EpD[SET_DROPPER_K2][1].V1==1) {
-					EpD[SET_DROPPER_K2][1].V1=0;
-				} else { EpD[SET_DROPPER_K2][1].V1=1;}
+				EpD[SET_DROPPER_K2][1].V1^=1;
 			}
 		}
     }
@@ -848,14 +842,12 @@ if (!chg_setting_edit_mode) {
 		if (dropper_edit_mode == 0) {
 			selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+3) % 3;
 		} else if (dropper_edit_mode == 1) {
-			if (selected_DROPPER_PG_line == 1) {
-				if (EpD[SET_DROPPER_K1][1].V1==1) {
-					EpD[SET_DROPPER_K1][1].V1=0;
-				} else { EpD[SET_DROPPER_K1][1].V1=1;}
+			if (selected_DROPPER_PG_line == 0) {
+				EpD[SET_DROPPER_MANOTO][1].V1^=1;
+			} else if (selected_DROPPER_PG_line == 1) {
+				EpD[SET_DROPPER_K1][1].V1^=1;
 			} else if (selected_DROPPER_PG_line == 2) {
-				if (EpD[SET_DROPPER_K2][1].V1==1) {
-					EpD[SET_DROPPER_K2][1].V1=0;
-				} else { EpD[SET_DROPPER_K2][1].V1=1;}
+				EpD[SET_DROPPER_K2][1].V1^=1;
 			}
 		}
 	}
