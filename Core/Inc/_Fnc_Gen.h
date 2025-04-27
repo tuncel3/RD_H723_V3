@@ -1051,17 +1051,16 @@ void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
 void generate_REL_24Bit_Data_fc(void) {
     rel_out_16Bit_Data = 0; // Clear current value
 
-    for (int i = 0; i < 16; ++i) {
+    for (int i = 15; i >= 0; --i) {
         uint8_t order = rel_ord_tb[i].rel_ord_order;
         uint8_t val = rel_ord_tb[i].rel_ord_val;
 
         if (order < 16) {
             if (val) {
-                rel_out_16Bit_Data |= (1 << order);
+                rel_out_16Bit_Data |= (1 << order);  // Eğer 'val' 1 ise, belirtilen 'order' bitini 1 yap.
             } else {
-                rel_out_16Bit_Data &= ~(1 << order);
+                rel_out_16Bit_Data &= ~(1 << order);  // Eğer 'val' 0 ise, belirtilen 'order' bitini 0 yap.
             }
-        	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         }
     }
 }
