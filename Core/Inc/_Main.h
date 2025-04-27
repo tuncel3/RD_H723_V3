@@ -155,7 +155,7 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // fanlar hangi sıcaklıkta devreye grirecek. ayar sayfası lazım.
-// dropper devreye girme voltaj yüzde. dropper manuel aktif pasif seçeneği yanına grafik animasyon.
+// dropper devreye girme voltaj yüzde.
 // zero cross var yok flagı lazım. yoksa ac voltaj ölçümü geçersiz durumda oluyor be lcd de gösterilmemeli. 0 olarak gösterilmeli.
 // 3 - butona basar basmaz tepki olmuyor. bunu hızlandırmak lazım. butonu bırakınca kısa süreliğine butonu disable etmek lazım.
 // 1 - data kayıt için adrese ihtiyaç yok

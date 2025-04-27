@@ -569,6 +569,10 @@ const char* AKTFPAS_SEL_Items[] = {
     "  Pasif ",
     "  Aktif "
 };
+const char* DROPNORM_SEL_Items[] = {
+    "  Normal ",
+    "  Drop   "
+};
 const char* MANUOTO_SEL_Items[] = {
     " Manuel ",
     "  Oto   "
