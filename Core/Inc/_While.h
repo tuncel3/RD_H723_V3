@@ -756,7 +756,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
-	if (!SW_BATT_OFF && !s_state_active(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1) {
+	if (!SW_BATT_OFF && !is_state_active(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1) {
 			blm_op_phase = B_SKIP_DELAY_RESTART;										// BATT SWITCH ON
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
