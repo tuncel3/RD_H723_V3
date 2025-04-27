@@ -6,7 +6,7 @@
 #define DEBUG_MODE 1
 
 volatile uint8_t dbg_gen = 1;
-volatile uint8_t dbg_blm = 1;
+volatile uint8_t dbg_blm = 0;
 
 #if DEBUG_MODE
     // Debug açıkken runtime flag ile kontrol
