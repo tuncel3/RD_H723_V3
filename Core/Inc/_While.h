@@ -788,8 +788,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_corr_buf_index = 0;
 		PRF_BLM("user disabled batt mon");
 	}
-	if (!irect_stable && blm_op_phase != B_SKIP_DELAY_RESTART) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
-			blm_op_phase = B_SKIP_DELAY_RESTART;
+	if (!irect_stable && blm_op_phase != B_SKIP_DELAY_RESTART) {	// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
+			blm_op_phase = B_SKIP_DELAY_RESTART;					// irect stable değilse incelemeyi iptal edip baştan başla.
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
 			PRF_BLM("blm !irect_stable");
