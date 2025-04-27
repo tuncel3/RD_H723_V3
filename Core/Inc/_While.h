@@ -892,10 +892,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				} else if (blm_corr >= 0.85 && blm_corr_p >= 0.85) { // son ikisi 0.85 üstü ise corr ok
 					blm_req_corr_batt_connected=1;
 					PRF_BLM("corr good. 2x0.85 batt connected.");
-				} else if (blm_corr < 0.75 && blm_corr_p < 0.75 && !is_state_active(BATT_LINE_BROKEN_FC)) { // iki kez üst üste 0.75 altı olmuşsa corr yok.
-					blm_req_corr_batt_connected=0;
+				} else if (blm_corr < 0.75 && blm_corr_p < 0.75 && !is_state_active(BATT_LINE_BROKEN_FC) && vrect_position_dn <= 0.2) { // iki kez üst üste 0.75 altı olmuşsa corr yok.
+					blm_req_corr_batt_connected=0; 												// vrect_position_dn, ne kadar düşükse o kadar vrect vtarg ı takip etmiş
 					PRF_BLM("corr low. batt broken.");
-				} else if (blm_corr < 0.25 && !is_state_active(BATT_LINE_BROKEN_FC)) { // 0.25 altı olmuşsa corr yok.
+				} else if (blm_corr < 0.25 && !is_state_active(BATT_LINE_BROKEN_FC) && vrect_position_dn <= 0.2) { // 0.25 altı olmuşsa corr yok.
 					blm_req_corr_batt_connected=0;
 					PRF_BLM("corr low. batt broken.");
 				} else  {
@@ -928,7 +928,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	if (blm_req_corr_batt_connected == 1) { // corr sonucuna göre batt line broken state uygulaması buraya koyuldu, çünkü başka durumlar da izlenerek sonuç çıkarılmaya çalışılacak. örneğin vtarg düşürüldü ama vrect düşmedi.
 		blm_req_corr_batt_connected=99;
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
-	} else if (blm_req_corr_batt_connected == 0 && vrect_position_dn <= 0.2) {
+	} else if (blm_req_corr_batt_connected == 0) {
 		blm_req_corr_batt_connected=99;
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 	}
