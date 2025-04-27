@@ -1181,6 +1181,14 @@ void blm_set_up_down_vtarg_limits(void) {
 	blm_vtarg_move_dn_targ=blm_stable_v_vrect-blm_V_step_05perc*5;
 	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
 	blm_vtarg_move_dn_min=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
+
+	if (blm_vtarg_move_up_max <= blm_vtarg_move_up_targ) {
+		blm_vtarg_move_up_max = blm_vtarg_move_up_targ;
+	}
+	if (blm_vtarg_move_dn_min >= blm_vtarg_move_dn_targ) {
+		blm_vtarg_move_dn_min = blm_vtarg_move_dn_targ;
+	}
+
 }
 
 
