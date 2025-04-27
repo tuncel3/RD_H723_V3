@@ -1233,19 +1233,16 @@ float calculate_blm_op(void) {
 			blm_vtarg_min_ind = i;
 		}
     }
-		blm_vdev_rect=fabs(blm_vrect_max-blm_vrect_min);
-		blm_vdev_targ=fabs(blm_vtarg_max-blm_vtarg_min);
-		blm_vdiff_mins=fabs(blm_vrect_min-blm_vtarg_min);
-		blm_vdiff_maxs=fabs(blm_vrect_max-blm_vtarg_max);
+//		blm_vdev_rect=fabs(blm_vrect_max-blm_vrect_min);
+//		blm_vdev_targ=fabs(blm_vtarg_max-blm_vtarg_min);
+//		blm_vdiff_mins=fabs(blm_vrect_min-blm_vtarg_min);
+//		blm_vdiff_maxs=fabs(blm_vrect_max-blm_vtarg_max);
 
-		if (blm_vdev_rect > blm_V_step_15perc) {
-			blm_VRECT_changed = 1;
-		} else {
-			blm_VRECT_changed = 0;
-		}
-
-
-
+//		if (blm_vdev_rect > blm_V_step_15perc) {
+//			blm_VRECT_changed = 1;
+//		} else {
+//			blm_VRECT_changed = 0;
+//		}
 
 
     float mean_v = sum_v / blm_corr_buf_index;
@@ -1255,23 +1252,21 @@ float calculate_blm_op(void) {
     float var_i = sum_i2 - blm_corr_buf_index * mean_i * mean_i;
     float cov_vi = sum_vi - blm_corr_buf_index * mean_v * mean_i;
 
+//    	PRF_BLM("  blm_corr_buf_index var_v var_i %d %f %f", blm_corr_buf_index, var_v, var_i);
+//    	PRF_BLM("  vrmx vrmxi vrmn vrmni %f %d %f %d", blm_vrect_max, blm_vrect_max_ind, blm_vrect_min, blm_vrect_min_ind);
+//    	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", blm_vtarg_max, blm_vtarg_max_ind, blm_vtarg_min, blm_vtarg_min_ind);
+//    	PRF_BLM("  blm_vdiff_mins blm_vdiff_maxs %f %f", blm_vdiff_mins, blm_vdiff_maxs);
 
-
-    	PRF_BLM("  blm_corr_buf_index var_v var_i %d %f %f", blm_corr_buf_index, var_v, var_i);
-    	PRF_BLM("  vrmx vrmxi vrmn vrmni %f %d %f %d", blm_vrect_max, blm_vrect_max_ind, blm_vrect_min, blm_vrect_min_ind);
-    	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", blm_vtarg_max, blm_vtarg_max_ind, blm_vtarg_min, blm_vtarg_min_ind);
-    	PRF_BLM("  blm_vdiff_mins blm_vdiff_maxs %f %f", blm_vdiff_mins, blm_vdiff_maxs);
-
-    	blm_vrect_max = 0;
-    	blm_vrect_min = 1000;
-    	blm_vtarg_max = 0;
-    	blm_vtarg_min = 1000;
+//    	blm_vrect_max = 0;
+//    	blm_vrect_min = 1000;
+//    	blm_vtarg_max = 0;
+//    	blm_vtarg_min = 1000;
 
 
     	if (var_v <= 0.0f || var_i <= 0.0f) {
-    	discard_corr_result=1;
-		return -2;
-    }
+    		discard_corr_result=1;
+			return -2;
+    	}
     float corr = cov_vi / sqrtf(var_v * var_i);
 
     if (corr > 1.0f) corr = 1.0f;

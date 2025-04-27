@@ -880,9 +880,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_bck_per) {
 			blm_enable_collect_samples = 0;
-			blm_corr_p = blm_corr;			// bir önceki corr
 			blm_corr = calculate_blm_op();	// şimdiki corr
-			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
 
 			check_vrect_vtarg_e_asagi_gitti =1;									// reset variables
 			check_vrect_vtarg_e_yukari_gitti =1;								// reset variables
@@ -903,10 +901,12 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				} else  {
 					PRF_BLM("corr results requires no action this time.");
 				}
+				blm_corr_p = blm_corr;			// bir önceki corr
 			} else {
 		    	discard_corr_result=0;
 				PRF_BLM("discard_corr_result %f", blm_corr);
 			}
+			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
 			blm_corr_results_index=(blm_corr_results_index+1) % BLM_CORR_RESULTS_SIZE;
 			blm_corr_op_start_delay_cnt = 0;
 			blm_op_phase = 9;
