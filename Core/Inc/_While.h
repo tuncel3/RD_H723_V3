@@ -848,7 +848,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			PRF_BLM("asag fark. %f %f", vtarg_vsta_fark, vrect_position);
 		}
 
-		blm_vtarg_move_up_max=47;											//	**************
+//		blm_vtarg_move_up_max=47;											//	**************
 		if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_max) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
 		} else {
