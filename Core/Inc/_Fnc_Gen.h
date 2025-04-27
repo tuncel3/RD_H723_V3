@@ -1131,6 +1131,17 @@ void inline extern bring_vtarg_back_goto_delay(void) {
 	}
 }
 
+void inline extern bring_vtarg_back(void) {
+	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
+		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
+	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
+		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
+	} else {
+		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
+		PRF_BLM("bring_vtarg_back");
+	}
+}
+
 
 void stability_vrect_fc(void) {
 		if (VRECT_pas.a16 > v_max_stb) {

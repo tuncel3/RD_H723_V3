@@ -874,7 +874,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
-			set_V_targ_con_sy(Current_charge_voltage);
+			bring_vtarg_back();
+//			set_V_targ_con_sy(Current_charge_voltage);
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 8;
 		}
