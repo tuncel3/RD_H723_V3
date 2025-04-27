@@ -1205,6 +1205,7 @@ float calculate_blm_op(void) {
 
     for (uint16_t i = 0; i < blm_corr_buf_index; i++) {
     	float v = vrect_buf[i];
+    	float v1 = vrect_buf_1[i];
     	float vt = vtarg_buf[i];
     	float ib = ibat_buf[i];
 
@@ -1214,12 +1215,12 @@ float calculate_blm_op(void) {
         sum_i2 += ib * ib;
         sum_vi += v * ib;
 
-		if (v > blm_VRECT_pas_max) {
-			blm_VRECT_pas_max = v;
+		if (v1 > blm_VRECT_pas_max) {
+			blm_VRECT_pas_max = v1;
 			blm_VRECT_pas_max_ind = i;
 		}
-		if (v < blm_VRECT_pas_min) {
-			blm_VRECT_pas_min = v;
+		if (v1 < blm_VRECT_pas_min) {
+			blm_VRECT_pas_min = v1;
 			blm_VRECT_pas_min_ind = i;
 		}
 		if (vt > V_targ_con_sy_max) {
