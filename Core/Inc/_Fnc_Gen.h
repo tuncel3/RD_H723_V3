@@ -1206,6 +1206,7 @@ float calculate_blm_op(void) {
 
     for (uint16_t i = 0; i < blm_corr_buf_index; i++) {
     	float v = vrect_buf[i];
+    	float vt = vtarg_buf[i];
     	float ib = ibat_buf[i];
 
         sum_v += v;
@@ -1214,20 +1215,20 @@ float calculate_blm_op(void) {
         sum_i2 += ib * ib;
         sum_vi += v * ib;
 
-		if (vrect_buf[i] > blm_VRECT_pas_max) {
+		if (v > blm_VRECT_pas_max) {
 			blm_VRECT_pas_max = v;
 			blm_VRECT_pas_max_ind = i;
 		}
-		if (vrect_buf[i] < blm_VRECT_pas_min) {
+		if (v < blm_VRECT_pas_min) {
 			blm_VRECT_pas_min = v;
 			blm_VRECT_pas_min_ind = i;
 		}
-		if (vtarg_buf[i] > V_targ_con_sy_max) {
-			V_targ_con_sy_max = vtarg;
+		if (vt > V_targ_con_sy_max) {
+			V_targ_con_sy_max = vt;
 			V_targ_con_sy_max_ind = i;
 		}
-		if (vtarg_buf[i] < V_targ_con_sy_min) {
-			V_targ_con_sy_min = vtarg;
+		if (vt < V_targ_con_sy_min) {
+			V_targ_con_sy_min = vt;
 			V_targ_con_sy_min_ind = i;
 		}
     }
@@ -1243,7 +1244,14 @@ float calculate_blm_op(void) {
     	PRF_BLM("  blm_corr_buf_index var_v var_i %d %f %f", blm_corr_buf_index, var_v, var_i);
     	PRF_BLM("  vrmx vrmxi vrmn vrmni %f %d %f %d", blm_VRECT_pas_max, blm_VRECT_pas_max_ind, blm_VRECT_pas_min, blm_VRECT_pas_min_ind);
     	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", V_targ_con_sy_max, V_targ_con_sy_max_ind, V_targ_con_sy_min, V_targ_con_sy_min_ind);
-    if (var_v <= 0.0f || var_i <= 0.0f) {
+
+    	blm_VRECT_pas_max = 0;
+    	blm_VRECT_pas_min = 1000;
+    	V_targ_con_sy_max = 0;
+    	V_targ_con_sy_min = 1000;
+
+
+    	if (var_v <= 0.0f || var_i <= 0.0f) {
     	discard_corr_result=1;
 		return -2;
     }

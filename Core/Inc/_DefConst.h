@@ -1290,9 +1290,9 @@ uint16_t blm_VRECT_pas_min_ind = 0;
 uint16_t V_targ_con_sy_max_ind = 0;
 uint16_t V_targ_con_sy_min_ind = 0;
 float blm_VRECT_pas_max = 0;
-float blm_VRECT_pas_min = 0;
+float blm_VRECT_pas_min = 1000;
 float V_targ_con_sy_max = 0;
-float V_targ_con_sy_min = 0;
+float V_targ_con_sy_min = 1000;
 
 
 
