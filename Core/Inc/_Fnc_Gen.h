@@ -1109,39 +1109,36 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 //	blm_corr_buf_index = 0;
 //}
 
-void inline extern bring_vtarg_back_skip_delay(void) {
-	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
-	} else {
-		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-		blm_op_phase = 0; PRF_BLM("blm_op_phase 0");
-	}
-}
+//void inline extern bring_vtarg_back_skip_delay(void) {
+//	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
+//		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
+//	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
+//		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
+//	} else {
+//		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
+//		blm_op_phase = 0; PRF_BLM("blm_op_phase 0");
+//	}
+//}
 
-void inline extern bring_vtarg_back_goto_delay(void) {
-	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
-	} else {
-		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-		blm_op_phase = 9; PRF_BLM("blm_op_phase 9");
-	}
-}
+//void inline extern bring_vtarg_back_goto_delay(void) {
+//	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
+//		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
+//	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
+//		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
+//	} else {
+//		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
+//		blm_op_phase = 9; PRF_BLM("blm_op_phase 9");
+//	}
+//}
 
-void inline extern bring_vtarg_back(void) {
+void inline extern bring_vtarg_back_to_chrgV(uint8_t num) {
 	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-		PRF_BLM("V_targ_con_sy < %f", V_targ_con_sy);
 	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
-		PRF_BLM("V_targ_con_sy > %f", V_targ_con_sy);
 	} else {
 		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-		PRF_BLM("bring_vtarg_back");
-		blm_op_phase = 8; PRF_BLM("blm_op_phase 9");
+		blm_op_phase = num;
 	}
 }
 

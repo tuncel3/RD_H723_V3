@@ -808,10 +808,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 // bat akımı varsa zaten bat bağlı demek oluyor, inspection a gerek yok.
 // irect stable a1 yani bir örneklik periyot ortalaması
 	if (blm_op_phase == B_SKIP_DELAY_RESTART) {
-		bring_vtarg_back_skip_delay();
+		bring_vtarg_back_to_chrgV(0);
 	}
 	if (blm_op_phase == B_RESTRT_AFTR_DELAY) {
-		bring_vtarg_back_goto_delay();	// iptal edilen optan sonra buraya geliniyor.
+		bring_vtarg_back_to_chrgV(9);	// iptal edilen optan sonra buraya geliniyor.
 	}
 	if (!SW_BATT_OFF && VBAT_pas.a16 > Vbat_flt && !batt_current_detected && blm_op_phase==0) {
 		blm_op_phase=1; PRF_BLM("blm_op_phase 1");
@@ -874,12 +874,11 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
-//			set_V_targ_con_sy(Current_charge_voltage);
 			blm_phase_switch_delay_cnt = 0;
-			blm_op_phase = 81;
+			blm_op_phase = 71;
 		}
-	} else if (blm_op_phase == 81) {
-			bring_vtarg_back(); PRF_BLM("goto bring_vtarg_back");
+	} else if (blm_op_phase == 71) {
+		bring_vtarg_back_to_chrgV(8);
 	} else if (blm_op_phase == 8) { // Bekle
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_bck_per) {
