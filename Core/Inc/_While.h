@@ -820,8 +820,9 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		PRF_BLM("vrect stable. ");
 		blm_op_phase=2;
 	} else if (blm_op_phase == 2) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
-		blm_enable_collect_samples = 1;
 		blm_corr_buf_index = 0;
+    	blm_vrect_max = 0; blm_vrect_min = 1000; blm_vtarg_max = 0; blm_vtarg_min = 1000;
+		blm_enable_collect_samples = 1;
 		blm_set_up_down_vtarg_limits();
 		PRF_BLM("start changing voltage");
 		blm_op_phase = 3;
@@ -931,9 +932,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 	}
 } // if (sfsta_op_phase == S_SFSTA_REQ_OK) {
-else
 
-}
 ////// BATT LINE MONITORING /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
