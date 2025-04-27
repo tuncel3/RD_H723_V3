@@ -1143,7 +1143,11 @@ void besc_fnc(void) {
     	}
     }
     else if (currentPage == DROPPER_pg) {
-        currentPage = MAIN_MENU_pg;
+        if (dropper_edit_mode) {
+        	dropper_edit_mode=0;
+        } else {
+        	currentPage = MAIN_MENU_pg;
+        }
     }
     else if (currentPage == RELAY_ORDER_pg) {
         if (rel_disp_mode) {
