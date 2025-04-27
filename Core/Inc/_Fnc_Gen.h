@@ -1227,7 +1227,7 @@ float calculate_blm_op(void) {
     	discard_corr_result=1;
 		return -2;
     }
-    double corr = cov_vi / sqrtf(var_v * var_i);
+    double corr = cov_vi / sqrt(var_v * var_i);
 
     if (corr > 1.0f) corr = 1.0f;
     else if (corr < -1.0f) corr = -1.0f;
