@@ -1245,6 +1245,13 @@ float calculate_blm_op(void) {
     	PRF_BLM("  vrmx vrmxi vrmn vrmni %f %d %f %d", blm_VRECT_pas_max, blm_VRECT_pas_max_ind, blm_VRECT_pas_min, blm_VRECT_pas_min_ind);
     	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", V_targ_con_sy_max, V_targ_con_sy_max_ind, V_targ_con_sy_min, V_targ_con_sy_min_ind);
 
+		if (fabs(blm_VRECT_pas_max-blm_VRECT_pas_min) > blm_V_step_15perc) {
+			blm_VRECT_changed = 1;
+		} else {
+			blm_VRECT_changed = 0;
+		}
+
+
     	blm_VRECT_pas_max = 0;
     	blm_VRECT_pas_min = 1000;
     	V_targ_con_sy_max = 0;
