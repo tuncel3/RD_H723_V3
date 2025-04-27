@@ -10,13 +10,15 @@ inline extern void DROPPER_pg_disp(void) {
 	sprintf(L, " Kademe 1 %s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_DROPPER_K1][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 2*lnhg, L);
 	sprintf(L, " Kademe 2 %s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_DROPPER_K2][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 3*lnhg, L);
     sprintf(L, ">");
-	if (selected_DROPPER==0) {
+	if (selected_DROPPER_PG_line==0) {
+        GLCD_PrintString(0, 1*lnhg, L);
+    } else if (selected_DROPPER_PG_line==1) {
         GLCD_PrintString(0, 2*lnhg, L);
-    } else if (selected_DROPPER==1) {
+    } else if (selected_DROPPER_PG_line==2) {
         GLCD_PrintString(0, 3*lnhg, L);
     }
 	if (dropper_edit_mode) {
-		GLCD_Rect_E(69,(selected_DROPPER+2)*9-2,101,(selected_DROPPER+3)*9-1); // batt rect
+		GLCD_Rect_E(69,(selected_DROPPER_PG_line+2)*9-2,101,(selected_DROPPER_PG_line+3)*9-1); // batt rect
 	}
 }
 
