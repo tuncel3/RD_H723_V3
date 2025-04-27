@@ -280,7 +280,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			vload_dc_high_lim_ret_Acc_cnt=0;
 			if (vload_dc_high_lim_Acc_cnt >= vload_dc_high_lim_Acc_per) {
 				vload_dc_high_lim_Acc_cnt=0;
-				apply_state_changes_f(LOAD_DC_HG_FC, 1);
+//				apply_state_changes_f(LOAD_DC_HG_FC, 1);
 				PRF_GEN("LOAD DC High");
 			}
 		} else { vload_dc_high_lim_Acc_cnt=0; }
@@ -301,7 +301,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			vload_dc_low_lim_ret_Acc_cnt=0;
 			if (vload_dc_low_lim_Acc_cnt >= VLOAD_DC_LOW_LIM_Acc_per) {
 				vload_dc_low_lim_Acc_cnt=0;
-				apply_state_changes_f(LOAD_DC_LW_FC, 1);
+//				apply_state_changes_f(LOAD_DC_LW_FC, 1);
 				PRF_GEN("LOAD DC Low");
 			}
 		} else { vload_dc_low_lim_Acc_cnt=0; }
