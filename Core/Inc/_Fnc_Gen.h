@@ -1255,11 +1255,6 @@ float calculate_blm_op(void) {
     	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", blm_vtarg_max, blm_vtarg_max_ind, blm_vtarg_min, blm_vtarg_min_ind);
     	PRF_BLM("  blm_vdiff_mins blm_vdiff_maxs %f %f", blm_vdiff_mins, blm_vdiff_maxs);
 
-
-
-
-
-
     	blm_vrect_max = 0;
     	blm_vrect_min = 1000;
     	blm_vtarg_max = 0;
