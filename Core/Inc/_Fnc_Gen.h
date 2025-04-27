@@ -1134,8 +1134,10 @@ void inline extern bring_vtarg_back_goto_delay(void) {
 void inline extern bring_vtarg_back(void) {
 	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
+		PRF_BLM("V_targ_con_sy < %f", V_targ_con_sy);
 	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
+		PRF_BLM("V_targ_con_sy > %f", V_targ_con_sy);
 	} else {
 		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
 		PRF_BLM("bring_vtarg_back");
