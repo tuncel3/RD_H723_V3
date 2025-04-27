@@ -792,7 +792,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_op_phase = B_SKIP_DELAY_RESTART;					// irect stable değilse incelemeyi iptal edip baştan başla.
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
-			PRF_BLM("blm !irect_stable");
+//			PRF_BLM("blm !irect_stable");
 	}
 	if (!ibat_stable && blm_op_phase != B_SKIP_DELAY_RESTART) {		// ibat akımının stabil olması. bataryanın iç yapısının stabil olduğu anlamına geliyor. yüklemeden yeni çıktığında iç yapısı stabil olmuyor ve voltaj ile akım corr olmuyor.
 			blm_op_phase = B_SKIP_DELAY_RESTART;
