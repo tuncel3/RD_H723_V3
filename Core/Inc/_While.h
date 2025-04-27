@@ -845,7 +845,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			vrect_vsta_fark=fabs(blm_stable_v_vrect-VRECT_pas.a16);
 			vtarg_vsta_fark=fabs(blm_stable_v_vrect-V_targ_con_sy);
 			vrect_position=vrect_vtarg_fark/vrect_vsta_fark;
-			PRF_BLM("asag fark. %f %f %f", vrect_vtarg_fark, vrect_vsta_fark, vtarg_vsta_fark);
+			PRF_BLM("asag fark. %f %f", vtarg_vsta_fark, vrect_position);
 		}
 
 		blm_vtarg_move_up_max=47;											//	**************
@@ -867,7 +867,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			vrect_vsta_fark=fabs(blm_stable_v_vrect-VRECT_pas.a16);
 			vtarg_vsta_fark=fabs(blm_stable_v_vrect-V_targ_con_sy);
 			vrect_position=vrect_vtarg_fark/vrect_vsta_fark;
-			PRF_BLM("yuka fark. %f %f %f", vrect_vtarg_fark, vrect_vsta_fark, vtarg_vsta_fark);
+			PRF_BLM("asag fark. %f %f", vtarg_vsta_fark, vrect_position);
 		}
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
