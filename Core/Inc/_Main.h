@@ -149,6 +149,8 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 } else {
 	thy_drv_en_req=0;
 	user_wants_allows_thy_drv=0;
+	PRF_GEN("Cihaz açılışta otomatik devreye girmeyecek.");
+	PRF_GEN("Yönetim ayarları -> Açılışta aktif özelliği.");
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
