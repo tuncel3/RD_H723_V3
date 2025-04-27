@@ -1247,13 +1247,13 @@ float calculate_blm_op(void) {
 			blm_VRECT_changed = 0;
 		}
 
-		blm_vrect_vtarg_min_diff=fabs(blm_vrect_min-blm_vtarg_min);
-		blm_vrect_vtarg_max_diff=fabs(blm_vrect_max-blm_vtarg_max);
+		blm_vdiff_mins=fabs(blm_vrect_min-blm_vtarg_min);
+		blm_vdiff_maxs=fabs(blm_vrect_max-blm_vtarg_max);
 
     	PRF_BLM("  blm_corr_buf_index var_v var_i %d %f %f", blm_corr_buf_index, var_v, var_i);
     	PRF_BLM("  vrmx vrmxi vrmn vrmni %f %d %f %d", blm_vrect_max, blm_vrect_max_ind, blm_vrect_min, blm_vrect_min_ind);
     	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", blm_vtarg_max, blm_vtarg_max_ind, blm_vtarg_min, blm_vtarg_min_ind);
-    	PRF_BLM("  blm_vrect_vtarg_min_diff blm_vrect_vtarg_max_diff %f %f", blm_vrect_vtarg_min_diff, blm_vrect_vtarg_max_diff);
+    	PRF_BLM("  blm_vdiff_mins blm_vdiff_maxs %f %f", blm_vdiff_mins, blm_vdiff_maxs);
 
 
 

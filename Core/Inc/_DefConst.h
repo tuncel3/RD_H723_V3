@@ -1295,8 +1295,8 @@ float blm_vrect_max = 0;
 float blm_vrect_min = 1000;
 float blm_vtarg_max = 0;
 float blm_vtarg_min = 1000;
-float blm_vrect_vtarg_min_diff = 0;
-float blm_vrect_vtarg_max_diff = 0;
+float blm_vdiff_mins = 0;
+float blm_vdiff_maxs = 0;
 
 
 
