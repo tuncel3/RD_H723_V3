@@ -799,6 +799,11 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_enable_collect_samples = 0;
 			PRF_BLM("blm !ibat_stable");
 	}
+	if (is_state_active(LOAD_DC_LW_FC)) {
+			blm_op_phase = B_SKIP_DELAY_RESTART;
+			blm_enable_collect_samples = 0;
+			PRF_BLM("blm !ibat_stable");
+	}
 
 /// WHAT STOPS AND RESETS BATT LINE MONITORING  && is_state_active(BATT_LINE_BROKEN_FC)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
