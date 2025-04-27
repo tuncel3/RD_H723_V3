@@ -1251,6 +1251,13 @@ float calculate_blm_op(void) {
 			blm_VRECT_changed = 0;
 		}
 
+		blm_vrect_vtarg_min_diff=fabs(blm_VRECT_pas_min-V_targ_con_sy_min);
+		blm_vrect_vtarg_max_diff=fabs(blm_VRECT_pas_min-V_targ_con_sy_min);
+
+
+
+
+
 
     	blm_VRECT_pas_max = 0;
     	blm_VRECT_pas_min = 1000;
