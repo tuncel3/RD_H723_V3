@@ -840,10 +840,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == 5) { // Vtarg’ı yükselt
 		if (check_vrect_vtarg_e_asagi_gitti) {
 			check_vrect_vtarg_e_asagi_gitti=0;
-			if (fabs(VRECT_pas.a16-V_targ_con_sy) < blm_V_step_05perc) {
+			if (fabs(VRECT_pas.a1-V_targ_con_sy) < blm_V_step_05perc) {
 				vrect_vtarg_e_asagi_gitti=1;
-				PRF_BLM("vrect vtarg seviyesine indi.");
-			} else { PRF_BLM("vrect vtarg seviyesine inmedi.");}
+				PRF_BLM("vrect vtarg seviyesine indi. %f %f %f", VRECT_pas.a16, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy));
+			} else { PRF_BLM("vrect vtarg seviyesine inmedi. %f %f %f", VRECT_pas.a16, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy));}
 		}
 
 		blm_vtarg_move_up_max=47;											//	**************
@@ -861,10 +861,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == 7) { // Vtarg’ı tekrar düşür
 		if (check_vrect_vtarg_e_yukari_gitti) {
 			check_vrect_vtarg_e_yukari_gitti=0;
-			if (fabs(VRECT_pas.a16-V_targ_con_sy) < blm_V_step_05perc && !vrect_vtarg_e_yukari_gitti) {
+			if (fabs(VRECT_pas.a1-V_targ_con_sy) < blm_V_step_05perc && !vrect_vtarg_e_yukari_gitti) {
 				vrect_vtarg_e_yukari_gitti=1;
-				PRF_BLM("vrect vtarg seviyesine çıktı.");
-			} else { PRF_BLM("vrect vtarg seviyesine çıkmadı.");}
+				PRF_BLM("vrect vtarg seviyesine çıktı. %f %f %f", VRECT_pas.a16, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy));
+			} else { PRF_BLM("vrect vtarg seviyesine çıkmadı. %f %f %f", VRECT_pas.a16, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy));}
 		}
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
@@ -882,6 +882,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
 
 			check_vrect_vtarg_e_asagi_gitti =1;									// reset variables
+			check_vrect_vtarg_e_yukari_gitti =1;								// reset variables
 			vrect_vtarg_e_asagi_gitti = 0;										// reset variables
 			vrect_vtarg_e_yukari_gitti = 0;										// reset variables
 			PRF_BLM("  blm_corr %f", blm_corr);
