@@ -925,8 +925,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		vtarg_buf[blm_corr_buf_index] = V_targ_con_sy;
 		blm_corr_buf_index++;
 	}
-	if (blm_req_corr_batt_connected == 1 && vrect_position_dn >= 0.8) { // corr sonucuna göre batt line broken state uygulaması buraya koyuldu, çünkü başka durumlar da izlenerek sonuç çıkarılmaya çalışılacak. örneğin vtarg düşürüldü ama vrect düşmedi.
-		blm_req_corr_batt_connected=99;		// vrect_position_dn >= 0.8 yani vrect vtargın indiği kadarın yüzde 20 si kadar inmemiş olmalı
+	if (blm_req_corr_batt_connected == 1) { // corr sonucuna göre batt line broken state uygulaması buraya koyuldu, çünkü başka durumlar da izlenerek sonuç çıkarılmaya çalışılacak. örneğin vtarg düşürüldü ama vrect düşmedi.
+		blm_req_corr_batt_connected=99;
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 0);
 	} else if (blm_req_corr_batt_connected == 0 && vrect_position_dn <= 0.2) {
 		blm_req_corr_batt_connected=99;
