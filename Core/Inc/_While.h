@@ -788,8 +788,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_corr_buf_index = 0;
 		PRF_BLM("user disabled batt mon");
 	}
-	if (!irect_stable && blm_op_phase != B_SKIP_DELAY_RESTART) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
-			blm_op_phase = B_SKIP_DELAY_RESTART;
+	if (!irect_stable && !vrect_stable && blm_op_phase != B_SKIP_DELAY_RESTART) {		// rectifier akımındaki oynama bat akımında oynamaya neden olup operasyonu bozabiliyor.
+			blm_op_phase = B_SKIP_DELAY_RESTART; // vrect stable değilse başlama. sakin durumda iken yap.
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
 			PRF_BLM("blm !irect_stable");
@@ -819,7 +819,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	if (blm_op_phase == 1 && EpD[SET_BATT_DISC_DET][0].V1==1 && vrect_stable) {		// BATT MONITORING ENABLED OR DISABLED
 		PRF_BLM("vrect stable. ");
 		blm_op_phase=2;
-	} else if (blm_op_phase == 2) { // Başlatma. vrect stable değilse başlama. sakin durumda iken yap.
+	} else if (blm_op_phase == 2) {
 		blm_corr_buf_index = 0;
 //    	blm_vrect_max = 0; blm_vrect_min = 1000; blm_vtarg_max = 0; blm_vtarg_min = 1000;
 		blm_enable_collect_samples = 1;
