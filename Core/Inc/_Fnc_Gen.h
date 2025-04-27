@@ -846,6 +846,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) {  // stop thy drv if fault requires
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
+        	blm_op_phase = B_RESTRT_AFTR_DELAY;
             thy_stop_fault_hold_bits |= fault_bit;
         	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }

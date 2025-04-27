@@ -747,7 +747,7 @@ if (fabs(IBAT_pas.a64) >= blm_I_step_075perc && !batt_current_detected) {
 	batt_curr_not_detected_cnt=0;
 }
 
-if (sfsta_op_phase == S_SFSTA_REQ_OK) {
+if (sfsta_op_phase == S_SFSTA_REQ_OK)) {
 // soft start tamamlanmış. tristör devreden çıkaran yerler bu değişkeni de değiştiriyor.
 // böylece tristörler kapatıldığında blm ye girilmiyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
