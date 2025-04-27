@@ -759,6 +759,7 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         blm_I_step_075perc = EpD[DEV_NOM_IOUT][0].V1 * 0.0075;
         blm_I_step_10perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.010;
         blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
+        blm_V_step_10perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.010;
         blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;
     }
     if (scope == SCOPE_VAR_ALL_FROM_EEP) {

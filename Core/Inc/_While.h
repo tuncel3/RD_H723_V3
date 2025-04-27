@@ -840,7 +840,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == 5) { // Vtarg’ı yükselt
 		if (check_vrect_vtarg_e_asagi_gitti) {
 			check_vrect_vtarg_e_asagi_gitti=0;
-			if (fabs(VRECT_pas.a1-V_targ_con_sy) < blm_V_step_05perc) {
+			if (fabs(VRECT_pas.a1-V_targ_con_sy) < blm_V_step_10perc) {
 				vrect_vtarg_e_asagi_gitti=1;
 				PRF_BLM("vrect vtarg seviyesine indi. %f %f %f", VRECT_pas.a1, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy));
 			} else { PRF_BLM("vrect vtarg seviyesine inmedi. %f %f %f", VRECT_pas.a1, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy));}
@@ -861,7 +861,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == 7) { // Vtarg’ı tekrar düşür
 		if (check_vrect_vtarg_e_yukari_gitti) {
 			check_vrect_vtarg_e_yukari_gitti=0;
-			if (fabs(VRECT_pas.a1-V_targ_con_sy) < blm_V_step_05perc && !vrect_vtarg_e_yukari_gitti) {
+			if (fabs(VRECT_pas.a1-V_targ_con_sy) < blm_V_step_10perc && !vrect_vtarg_e_yukari_gitti) {
 				vrect_vtarg_e_yukari_gitti=1;
 				PRF_BLM("vrect vtarg seviyesine çıktı. %f %f %f", VRECT_pas.a1, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy));
 			} else { PRF_BLM("vrect vtarg seviyesine çıkmadı. %f %f %f", VRECT_pas.a1, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy));}
