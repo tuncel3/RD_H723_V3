@@ -490,7 +490,7 @@ if (!chg_setting_edit_mode) {
 			if (selected_DROPPER_PG_line == 1) {
 				if (EpD[SET_DROPPER_MANOTO][1].V1==1) {
 					EpD[SET_DROPPER_MANOTO][1].V1=0;
-				} else { EpD[SET_DROPPER_K1][1].V1=1;}
+				} else { EpD[SET_DROPPER_MANOTO][1].V1=1;}
 			} else if (selected_DROPPER_PG_line == 1) {
 				if (EpD[SET_DROPPER_K1][1].V1==1) {
 					EpD[SET_DROPPER_K1][1].V1=0;
