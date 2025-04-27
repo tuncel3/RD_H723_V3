@@ -1188,7 +1188,6 @@ void blm_set_up_down_vtarg_limits(void) {
 	if (blm_vtarg_move_dn_min >= blm_vtarg_move_dn_targ) {
 		blm_vtarg_move_dn_min = blm_vtarg_move_dn_targ;
 	}
-	blm_vtarg_move_up_max=47;
 }
 
 
