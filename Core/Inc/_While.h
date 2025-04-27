@@ -875,8 +875,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_corr = calculate_blm_op();	// şimdiki corr
 			blm_corr_results[blm_corr_results_index]=blm_corr;	// corr ları kaydet. bir yerde kullanılmıyor.
 
-			vrect_vtarg_e_asagi_gitti = 1;										// reset variables
-			vrect_vtarg_e_yukari_gitti = 1;										// reset variables
+			vrect_vtarg_e_asagi_gitti = 0;										// reset variables
+			vrect_vtarg_e_yukari_gitti = 0;										// reset variables
 			PRF_BLM("  blm_corr %f", blm_corr);
 			if (discard_corr_result == 0) {
 				if (blm_corr >= 0.90) {	// bir tanesi 0.9 üstü ise corr ok.
