@@ -1116,7 +1116,7 @@ void inline extern bring_vtarg_back_skip_delay(void) {
 		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
 	} else {
 		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-		blm_op_phase = 0;
+		blm_op_phase = 0; PRF_BLM("blm_op_phase 0");
 	}
 }
 
@@ -1127,7 +1127,7 @@ void inline extern bring_vtarg_back_goto_delay(void) {
 		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
 	} else {
 		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-		blm_op_phase = 9;
+		blm_op_phase = 9; PRF_BLM("blm_op_phase 9");
 	}
 }
 
