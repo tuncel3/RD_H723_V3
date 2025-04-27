@@ -264,9 +264,8 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
 		} else if (!dropper_edit_mode) {
 			if (selected_DROPPER_PG_line == 0) {
 				EpD[SET_DROPPER_MANOTO][0].V1 = EpD[SET_DROPPER_MANOTO][1].V1;
-				dropper_control_man_oto=
-//				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
-//				Rec_Dat_to_EEp_f(SET_DROPPER_K1);
+				dropper_control_man_oto=EpD[SET_DROPPER_MANOTO][0].V1;
+				Rec_Dat_to_EEp_f(SET_DROPPER_MANOTO);
 			} else if (selected_DROPPER_PG_line == 1) {
 				EpD[SET_DROPPER_K1][0].V1 = EpD[SET_DROPPER_K1][1].V1;
 				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
