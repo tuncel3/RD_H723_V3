@@ -1200,13 +1200,13 @@ float calculate_blm_op(void) {
         return -1;
     }
 
-    float sum_v = 0.0f, sum_i = 0.0f;
-    float sum_v2 = 0.0f, sum_i2 = 0.0f;
-    float sum_vi = 0.0f;
+    double sum_v = 0.0f, sum_i = 0.0f;
+    double sum_v2 = 0.0f, sum_i2 = 0.0f;
+    double sum_vi = 0.0f;
 
     for (uint16_t i = 0; i < blm_corr_buf_index; i++) {
-        float v = vrect_buf[i];
-        float ib = ibat_buf[i];
+    	double v = vrect_buf[i];
+    	double ib = ibat_buf[i];
 
         sum_v += v;
         sum_i += ib;
@@ -1215,19 +1215,19 @@ float calculate_blm_op(void) {
         sum_vi += v * ib;
     }
 
-    float mean_v = sum_v / blm_corr_buf_index;
-    float mean_i = sum_i / blm_corr_buf_index;
+    double mean_v = sum_v / blm_corr_buf_index;
+    double mean_i = sum_i / blm_corr_buf_index;
 
-    float var_v = sum_v2 - blm_corr_buf_index * mean_v * mean_v;
-    float var_i = sum_i2 - blm_corr_buf_index * mean_i * mean_i;
-    float cov_vi = sum_vi - blm_corr_buf_index * mean_v * mean_i;
+    double var_v = sum_v2 - blm_corr_buf_index * mean_v * mean_v;
+    double var_i = sum_i2 - blm_corr_buf_index * mean_i * mean_i;
+    double cov_vi = sum_vi - blm_corr_buf_index * mean_v * mean_i;
 
-    if (var_v <= 0.0f || var_i <= 0.0f) {
     	PRF_BLM("  blm_corr %d %f %f %f %f %f %f %d %d", blm_corr_buf_index, mean_v, mean_i, sum_v2, sum_i2, var_v, var_i, var_v <= 0.0f, var_i <= 0.0f);
+    if (var_v <= 0.0f || var_i <= 0.0f) {
     	discard_corr_result=1;
 		return -2;
     }
-    float corr = cov_vi / sqrtf(var_v * var_i);
+    double corr = cov_vi / sqrtf(var_v * var_i);
 
     if (corr > 1.0f) corr = 1.0f;
     else if (corr < -1.0f) corr = -1.0f;
