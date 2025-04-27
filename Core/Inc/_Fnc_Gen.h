@@ -1063,6 +1063,7 @@ void generate_REL_24Bit_Data_fc(void) {
             }
         }
     }
+        	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 }
 
 void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val)
