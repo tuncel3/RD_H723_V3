@@ -570,7 +570,7 @@ const char* AKTFPAS_SEL_Items[] = {
     "  Aktif "
 };
 const char* MANUOTO_SEL_Items[] = {
-    "  Manuel",
+    " Manuel ",
     "  Oto   "
 };
 
