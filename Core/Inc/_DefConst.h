@@ -1312,6 +1312,7 @@ float blm_vdiff_maxs = 0;
 
 
 
+uint8_t fast_restart_blm_after_bat_switch_on = 0;
 uint32_t batt_current_detected = 0;
 uint32_t batt_curr_detected_cnt = 0;
 uint32_t batt_curr_not_detected_cnt = 0;

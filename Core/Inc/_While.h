@@ -756,20 +756,22 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
-	if (!SW_BATT_OFF && !is_state_active(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1) {
-			blm_op_phase = B_SKIP_DELAY_RESTART;										// BATT SWITCH ON
-			blm_corr_op_start_delay_cnt = 0;
-			blm_enable_collect_samples = 0;
-			blm_corr_buf_index = 0;
-		PRF_BLM("blm SW on. start inspection now");
-	}
 	if (SW_BATT_OFF && !is_state_active(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
 			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
+			fast_restart_blm_after_bat_switch_on = 1;
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
 			blm_corr_buf_index = 0;
 		PRF_BLM("blm SW off. batt broken set");
+	}
+	if (!SW_BATT_OFF && !is_state_active(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1 && fast_restart_blm_after_bat_switch_on) {
+			blm_op_phase = B_SKIP_DELAY_RESTART;										// BATT SWITCH ON
+			fast_restart_blm_after_bat_switch_on = 0;
+			blm_corr_op_start_delay_cnt = 0;
+			blm_enable_collect_samples = 0;
+			blm_corr_buf_index = 0;
+		PRF_BLM("blm SW on. start inspection now");
 	}
 	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !is_state_active(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// VBAT LOW
