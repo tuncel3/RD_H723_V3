@@ -281,7 +281,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			if (vload_dc_high_lim_Acc_cnt >= vload_dc_high_lim_Acc_per) {
 				vload_dc_high_lim_Acc_cnt=0;
 //				apply_state_changes_f(LOAD_DC_HG_FC, 1);
-				PRF_GEN("LOAD DC High");
+//				PRF_GEN("LOAD DC High");
 			}
 		} else { vload_dc_high_lim_Acc_cnt=0; }
 
@@ -302,7 +302,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			if (vload_dc_low_lim_Acc_cnt >= VLOAD_DC_LOW_LIM_Acc_per) {
 				vload_dc_low_lim_Acc_cnt=0;
 //				apply_state_changes_f(LOAD_DC_LW_FC, 1);
-				PRF_GEN("LOAD DC Low");
+//				PRF_GEN("LOAD DC Low");
 			}
 		} else { vload_dc_low_lim_Acc_cnt=0; }
 
@@ -331,7 +331,7 @@ if (VRECT_pas.a1 > vrect_dc_high_lim && !is_state_active(RECT_DC_HG_FC) && sfsta
 	if (vrect_dc_high_lim_Acc_cnt >= vrect_dc_high_lim_Acc_per) {
 		vrect_dc_high_lim_Acc_cnt=0;
 //		apply_state_changes_f(RECT_DC_HG_FC, 1);
-		PRF_GEN("RECT DC High");
+//		PRF_GEN("RECT DC High");
 	}
 } else {
 	vrect_dc_high_lim_Acc_cnt=0;
@@ -341,7 +341,7 @@ if (VRECT_pas.a1 <= vrect_dc_high_lim_ret && is_state_active(RECT_DC_HG_FC)) {
 	vrect_dc_high_lim_Acc_cnt=0;
 	if (vrect_dc_high_lim_ret_Acc_cnt >= vrect_dc_high_lim_ret_Acc_per) {
 		vrect_dc_high_lim_ret_Acc_cnt=0;
-//		apply_state_changes_f(RECT_DC_HG_FC, 0);
+		apply_state_changes_f(RECT_DC_HG_FC, 0);
 		PRF_GEN("RECT DC High Return");
 	}
 } else {
@@ -353,7 +353,7 @@ if (VRECT_pas.a1 < vrect_dc_low_lim && !is_state_active(RECT_DC_LW_FC) && sfsta_
 	if (vrect_dc_low_lim_Acc_cnt >= vrect_dc_low_lim_Acc_per) {
 		vrect_dc_low_lim_Acc_cnt=0;
 //		apply_state_changes_f(RECT_DC_LW_FC, 1);
-		PRF_GEN("RECT DC Low");
+//		PRF_GEN("RECT DC Low");
 	}
 } else {
 	vrect_dc_low_lim_Acc_cnt=0;
@@ -363,7 +363,7 @@ if (VRECT_pas.a1 >= vrect_dc_low_lim_ret && is_state_active(RECT_DC_LW_FC)) {
 	vrect_dc_low_lim_Acc_cnt=0;
 	if (vrect_dc_low_lim_ret_Acc_cnt >= vrect_dc_low_lim_ret_Acc_per) {
 		vrect_dc_low_lim_ret_Acc_cnt=0;
-//		apply_state_changes_f(RECT_DC_LW_FC, 0);
+		apply_state_changes_f(RECT_DC_LW_FC, 0);
 		PRF_GEN("RECT DC Low Return");
 	}
 } else {
