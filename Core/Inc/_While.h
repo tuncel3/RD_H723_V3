@@ -221,7 +221,9 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 ////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	if (EpD[SET_DROPPER_MANOTO][0].V1==0) { // 1 manuel 0 auto
+PRF_GEN("şş");
+	if (EpD[SET_DROPPER_MANOTO][0].V1==1) { // 0 manuel 1 auto
+		PRF_GEN("lan");
 		if (VLOAD_pas.a1+dropper_test_var_1 > dropp_reg_high_lim && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) {
