@@ -1294,6 +1294,9 @@ float blm_VRECT_pas_max = 0;
 float blm_VRECT_pas_min = 1000;
 float V_targ_con_sy_max = 0;
 float V_targ_con_sy_min = 1000;
+float blm_vrect_vtarg_min_diff = 0;
+float blm_vrect_vtarg_max_diff = 0;
+
 
 
 

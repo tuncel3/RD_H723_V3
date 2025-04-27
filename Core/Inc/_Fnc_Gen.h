@@ -1241,10 +1241,6 @@ float calculate_blm_op(void) {
     float cov_vi = sum_vi - blm_corr_buf_index * mean_v * mean_i;
 
 
-    	PRF_BLM("  blm_corr_buf_index var_v var_i %d %f %f", blm_corr_buf_index, var_v, var_i);
-    	PRF_BLM("  vrmx vrmxi vrmn vrmni %f %d %f %d", blm_VRECT_pas_max, blm_VRECT_pas_max_ind, blm_VRECT_pas_min, blm_VRECT_pas_min_ind);
-    	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", V_targ_con_sy_max, V_targ_con_sy_max_ind, V_targ_con_sy_min, V_targ_con_sy_min_ind);
-
 		if (fabs(blm_VRECT_pas_max-blm_VRECT_pas_min) > blm_V_step_15perc) {
 			blm_VRECT_changed = 1;
 		} else {
@@ -1253,6 +1249,11 @@ float calculate_blm_op(void) {
 
 		blm_vrect_vtarg_min_diff=fabs(blm_VRECT_pas_min-V_targ_con_sy_min);
 		blm_vrect_vtarg_max_diff=fabs(blm_VRECT_pas_min-V_targ_con_sy_min);
+
+    	PRF_BLM("  blm_corr_buf_index var_v var_i %d %f %f", blm_corr_buf_index, var_v, var_i);
+    	PRF_BLM("  vrmx vrmxi vrmn vrmni %f %d %f %d", blm_VRECT_pas_max, blm_VRECT_pas_max_ind, blm_VRECT_pas_min, blm_VRECT_pas_min_ind);
+    	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", V_targ_con_sy_max, V_targ_con_sy_max_ind, V_targ_con_sy_min, V_targ_con_sy_min_ind);
+    	PRF_BLM("  blm_vrect_vtarg_min_diff blm_vrect_vtarg_max_diff %f %f", blm_vrect_vtarg_min_diff, blm_vrect_vtarg_max_diff);
 
 
 
