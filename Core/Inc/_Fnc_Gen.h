@@ -1141,6 +1141,7 @@ void inline extern bring_vtarg_back(void) {
 	} else {
 		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
 		PRF_BLM("bring_vtarg_back");
+		blm_op_phase = 8; PRF_BLM("blm_op_phase 9");
 	}
 }
 
