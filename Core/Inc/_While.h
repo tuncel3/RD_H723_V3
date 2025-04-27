@@ -880,7 +880,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		}
 	} else if (blm_op_phase == 81) {
 			bring_vtarg_back(); PRF_BLM("goto bring_vtarg_back");
-	}
 	} else if (blm_op_phase == 8) { // Bekle
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_bck_per) {
