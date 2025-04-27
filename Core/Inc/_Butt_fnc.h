@@ -1145,6 +1145,13 @@ void besc_fnc(void) {
     else if (currentPage == DROPPER_pg) {
         if (dropper_edit_mode) {
         	dropper_edit_mode=0;
+    		if (selected_DROPPER_PG_line==0) {
+    			EpD[SET_DROPPER_MANOTO][1].V1=EpD[SET_DROPPER_MANOTO][0].V1;
+    		} else if (selected_DROPPER_PG_line==1) {
+    			EpD[SET_DROPPER_K1][1].V1=EpD[SET_DROPPER_K1][0].V1;
+    		} else if (selected_DROPPER_PG_line==2) {
+				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
+	    	}
         } else {
         	currentPage = MAIN_MENU_pg;
         }
