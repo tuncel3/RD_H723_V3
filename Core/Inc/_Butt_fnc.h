@@ -485,7 +485,7 @@ if (!chg_setting_edit_mode) {
     }
     else if (currentPage == DROPPER_pg) {
     	if (dropper_edit_mode == 0) {
-    		selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1) % 3;
+    		selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
 		} else if (dropper_edit_mode == 1) {
 			if (selected_DROPPER_PG_line == 0) {
 				if (EpD[SET_DROPPER_K1][1].V1==1) {
@@ -842,7 +842,7 @@ if (!chg_setting_edit_mode) {
     }
     else if (currentPage == DROPPER_pg) {
 		if (dropper_edit_mode == 0) {
-			selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
+			selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+3) % 3;
 		} else if (dropper_edit_mode == 1) {
 			if (selected_DROPPER_PG_line == 0) {
 				if (EpD[SET_DROPPER_K1][1].V1==1) {
