@@ -840,10 +840,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == 5) { // Vtarg’ı yükselt
 		if (check_vrect_vtarg_e_asagi_gitti) {
 			check_vrect_vtarg_e_asagi_gitti=0;
-			if (fabs(VRECT_pas.a1-V_targ_con_sy) < blm_V_step_10perc) {
-				vrect_vtarg_e_asagi_gitti=1;
-				PRF_BLM("vrect vtarg seviyesine indi. %f %f %f %f", VRECT_pas.a1, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy), blm_stable_v_vrect);
-			} else { PRF_BLM("vrect vtarg seviyesine inmedi. %f %f %f %f", VRECT_pas.a1, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy), blm_stable_v_vrect);}
+			vrect_vtarg_fark=VRECT_pas.a1-V_targ_con_sy;
+			vrect_vsta_fark=blm_stable_v_vrect-VRECT_pas.a1;
+			vtarg_vsta_fark=blm_stable_v_vrect-V_targ_con_sy;
+			PRF_BLM("asag fark. %f %f %f", vrect_vtarg_fark, vrect_vsta_fark, vtarg_vsta_fark);
 		}
 
 		blm_vtarg_move_up_max=47;											//	**************
@@ -861,10 +861,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == 7) { // Vtarg’ı tekrar düşür
 		if (check_vrect_vtarg_e_yukari_gitti) {
 			check_vrect_vtarg_e_yukari_gitti=0;
-			if (fabs(VRECT_pas.a1-V_targ_con_sy) < blm_V_step_10perc && !vrect_vtarg_e_yukari_gitti) {
-				vrect_vtarg_e_yukari_gitti=1;
-				PRF_BLM("vrect vtarg seviyesine çıktı. %f %f %f %f", VRECT_pas.a1, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy), blm_stable_v_vrect);
-			} else { PRF_BLM("vrect vtarg seviyesine çıkmadı. %f %f %f %f", VRECT_pas.a1, V_targ_con_sy, fabs(VRECT_pas.a1-V_targ_con_sy), blm_stable_v_vrect);}
+			vrect_vtarg_fark=V_targ_con_sy-VRECT_pas.a1;
+			vrect_vsta_fark=VRECT_pas.a1-blm_stable_v_vrect;
+			vtarg_vsta_fark=V_targ_con_sy-blm_stable_v_vrect;
+			PRF_BLM("yuka fark. %f %f %f", vrect_vtarg_fark, vrect_vsta_fark, vtarg_vsta_fark);
 		}
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
@@ -883,8 +883,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 
 			check_vrect_vtarg_e_asagi_gitti =1;									// reset variables
 			check_vrect_vtarg_e_yukari_gitti =1;								// reset variables
-			vrect_vtarg_e_asagi_gitti = 0;										// reset variables
-			vrect_vtarg_e_yukari_gitti = 0;										// reset variables
 			PRF_BLM("  blm_corr %f", blm_corr);
 			if (discard_corr_result == 0) {
 				if (blm_corr >= 0.90) {	// bir tanesi 0.9 üstü ise corr ok.
