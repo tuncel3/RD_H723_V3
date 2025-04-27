@@ -1239,7 +1239,9 @@ float calculate_blm_op(void) {
         V_targ_con_sy_min_ind = i;
     }
 
-    	PRF_BLM("  blm_corr %d %f %f %f %f %f %f %d %d", blm_corr_buf_index, mean_v, mean_i, sum_v2, sum_i2, var_v, var_i, var_v <= 0.0f, var_i <= 0.0f);
+    	PRF_BLM("  blm_corr_buf_index var_v var_i %d %f %f", blm_corr_buf_index, var_v, var_i);
+    	PRF_BLM("  vrmx vrmxi vrmn vrmni %f %d %f %d", blm_VRECT_pas_max, blm_VRECT_pas_max_ind, blm_VRECT_pas_min, blm_VRECT_pas_min_ind);
+    	PRF_BLM("  vtmx vtmxi vtmn vtmni %f %d %f %d", V_targ_con_sy_max, V_targ_con_sy_max_ind, V_targ_con_sy_min, V_targ_con_sy_min_ind);
     if (var_v <= 0.0f || var_i <= 0.0f) {
     	discard_corr_result=1;
 		return -2;
