@@ -832,7 +832,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 4;
 		}
-	} else if (blm_op_phase == 4) { // Bekle asagida
+	} else if (blm_op_phase == 4) { // Bekle dn
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_dn_per) {
 			blm_op_phase = 5;
@@ -853,7 +853,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 6;
 		}
-	} else if (blm_op_phase == 6) { // Bekle
+	} else if (blm_op_phase == 6) { // Bekle up
 		blm_phase_switch_delay_cnt++;
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_up_per) {
 			blm_op_phase = 7;
