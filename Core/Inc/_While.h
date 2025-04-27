@@ -275,6 +275,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
 				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 			}
+			PRF_GEN("DR6");
 		}
 	}
 
