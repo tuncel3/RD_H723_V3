@@ -120,7 +120,7 @@ void bleft_fnc(void) {
     	}
     }
     else if (currentPage == DROPPER_pg) { // LEFT
-    	selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
+    	selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+4) % 4;
     }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
@@ -285,7 +285,12 @@ void bright_fnc(void) {
     	}
     }
     else if (currentPage == DROPPER_pg) { // RIGHT
-    	selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1) % 3;
+    	selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+4) % 4;
+    	if (dropper_edit_mode) {
+    		if ((selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4)) {
+    			drop_set_dig=(drop_set_dig+1+6) % 6;
+    		}
+    	}
     }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT+1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
@@ -461,7 +466,7 @@ if (!chg_setting_edit_mode) {
     }
     else if (currentPage == DROPPER_pg) { // UP
     	if (dropper_edit_mode == 0) {
-    		selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
+    		selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+4) % 4;
 		} else if (dropper_edit_mode == 1) {
 			if (selected_DROPPER_PG_line == 0) {
 			    EpD[SET_DROPPER_MANOTO][1].V1 = (float)(((int)(EpD[SET_DROPPER_MANOTO][1].V1)) ^ 1);
@@ -808,7 +813,7 @@ if (!chg_setting_edit_mode) {
     }
     else if (currentPage == DROPPER_pg) { // DOWN
 		if (dropper_edit_mode == 0) {
-			selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+3) % 3;
+			selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+4) % 4;
 		} else if (dropper_edit_mode == 1) {
 			if (selected_DROPPER_PG_line == 0) {
 			    EpD[SET_DROPPER_MANOTO][1].V1 = (float)(((int)(EpD[SET_DROPPER_MANOTO][1].V1)) ^ 1);
