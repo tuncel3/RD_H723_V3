@@ -354,6 +354,7 @@ uint8_t dropper_edit_mode = 0;
 uint8_t drop_set_dig = 0;
 uint8_t selected_DROPPER_PG_line = 0;
 uint8_t dropper_control_man_oto = 0;
+uint8_t dropper_edit_blink = 0;
 float set_dropper_l_hg_V = 0.15f;
 float set_dropper_l_lw_V = 0.1f;
 float set_dropper_l_hg_perc = 0;
