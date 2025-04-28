@@ -17,7 +17,7 @@ inline extern void DROPPER_pg_disp(void) {
 		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // batt rect
 	}
 
-	if (drop_==0) {
+	if (drop_set_dig==0) {
 	    if (cal_sel_edit_mode != cal_none) {x0=48+64; w=4;}
 	}
 	if (cal_sel_digit==1) {
