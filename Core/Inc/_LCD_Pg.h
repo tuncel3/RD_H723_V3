@@ -14,7 +14,7 @@ inline extern void DROPPER_pg_disp(void) {
 
 	GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, ">");	// sprintf(L, ">") bu yazılıyor burda
 	if (dropper_edit_mode) {
-		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,109,(selected_DROPPER_PG_line+2)*9-1); // batt rect
+		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // batt rect
 	}
 
 // DIODE ANIMATION
@@ -31,7 +31,7 @@ inline extern void DROPPER_pg_disp(void) {
 //	GLCD_PrintString(110, 3 * lnhg, dropper_status(EpD[SET_DROPPER_K2][0].V1));
 
 	static const char *dropperPic[2] = { "---", "->-" };   // 0 → “---”, 1 → “->-”
-	GLCD_PrintString(110, 2 * lnhg, dropperPic[EpD[SET_DROPPER_K1][0].V1 != 0]);
+	GLCD_PrintString(110, 2 * lnhg, dropperPic[EpD[SET_DROPPER_K1][0].V1 != 0]); // EpD[SET_DROPPER_K1][0].V1==0 ise "---" yazıyor
 	GLCD_PrintString(110, 3 * lnhg, dropperPic[EpD[SET_DROPPER_K2][0].V1 != 0]);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
