@@ -846,6 +846,7 @@ if (!chg_setting_edit_mode) {
 			} else if (selected_DROPPER_PG_line == 3) {
 				if (drop_set_dig==0) {
 					set_dropper_l_hg_V_h-=10;
+					set_dropper_l_hg_perc_h=
 				} else if (drop_set_dig==1) {
 					set_dropper_l_hg_V_h-=1;
 				} else if (drop_set_dig==2) {
