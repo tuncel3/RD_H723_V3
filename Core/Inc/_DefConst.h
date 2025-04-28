@@ -359,6 +359,10 @@ float set_dropper_l_hg_V = 0.15f;
 float set_dropper_l_lw_V = 0.1f;
 float set_dropper_l_hg_perc = 0;
 float set_dropper_l_lw_perc = 0;
+float set_dropper_l_hg_V_h = 0.15f;
+float set_dropper_l_lw_V_h = 0.1f;
+float set_dropper_l_hg_perc_h = 0;
+float set_dropper_l_lw_perc_h = 0;
 
 typedef enum {
 	FLOAT,
