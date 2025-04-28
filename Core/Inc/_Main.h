@@ -17,6 +17,9 @@ olacak ve açılışta bu 12345 okunamayacak.
 
 SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();
+if (Read_RTC_Osc_Status() == 0) {
+	write_Dat_to_EEp_fn(); // write default variables to eep.
+}
 
 actions_after_charge_mode_change(5); // set charge mode values
 set_variables_from_EEP_fc(SCOPE_VAR_ALL_FROM_EEP);
