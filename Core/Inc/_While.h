@@ -276,7 +276,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// V LOAD DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
 //	dropper high limit vload_dc_high_lim olarak kabul ediliyor
-		if (VLOAD_pas.a1+load_dcv_test_var_1 > dropp_reg_high_lim && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)
+		if (VLOAD_pas.a1+load_dcv_test_var_1 > set_dropper_l_hg_V && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)
 				&& !is_state_active(LOAD_DC_HG_FC)) {
 			vload_dc_high_lim_Acc_cnt++; // dropper kademeleri devreye alınmasına rağmen limitin üzerine çıkmış
 			vload_dc_high_lim_ret_Acc_cnt=0;
@@ -287,7 +287,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			}
 		} else { vload_dc_high_lim_Acc_cnt=0; }
 
-		if (VLOAD_pas.a1+load_dcv_test_var_1 <= dropp_reg_high_lim && is_state_active(LOAD_DC_HG_FC)) {
+		if (VLOAD_pas.a1+load_dcv_test_var_1 <= set_dropper_l_hg_V && is_state_active(LOAD_DC_HG_FC)) {
 			vload_dc_high_lim_ret_Acc_cnt++;
 			vload_dc_high_lim_Acc_cnt=0;
 			if (vload_dc_high_lim_ret_Acc_cnt >= vload_dc_high_lim_ret_Acc_per) {
@@ -297,7 +297,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			}
 		} else { vload_dc_high_lim_ret_Acc_cnt=0; }
 
-		if (VLOAD_pas.a1+load_dcv_test_var_1 < dropp_reg_low_lim && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)
+		if (VLOAD_pas.a1+load_dcv_test_var_1 < set_dropper_l_lw_V && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)
 				&& !is_state_active(LOAD_DC_LW_FC)) {
 			vload_dc_low_lim_Acc_cnt++; // dropper kademeleri devrede olmamasına rağmen limitin altına inilmiş
 			vload_dc_low_lim_ret_Acc_cnt=0;
@@ -308,7 +308,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			}
 		} else { vload_dc_low_lim_Acc_cnt=0; }
 
-		if (VLOAD_pas.a1+load_dcv_test_var_1 >= dropp_reg_low_lim && is_state_active(LOAD_DC_LW_FC)) {
+		if (VLOAD_pas.a1+load_dcv_test_var_1 >= set_dropper_l_lw_V && is_state_active(LOAD_DC_LW_FC)) {
 			vload_dc_low_lim_ret_Acc_cnt++;
 			vload_dc_low_lim_Acc_cnt=0;
 			if (vload_dc_low_lim_ret_Acc_cnt >= vload_dc_low_lim_ret_Acc_per) {
