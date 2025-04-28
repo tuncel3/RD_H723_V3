@@ -17,7 +17,7 @@ SPI4_WriteVolatRegDisableBuff();
 
 SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();
-if (EpD[TRACK_TABLE_CHANGE][0].V1 != 12345.123) {
+if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != 1234567) {
 	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
 	write_Dat_to_EEp_fn(); // write default variables to eep.
 	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
