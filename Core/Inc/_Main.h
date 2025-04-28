@@ -19,11 +19,11 @@ SPI4_WriteVolatRegDisableBuff();
 //print_Eep_data_f();
 //track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*24);
 PRF_GEN("ttc1 %f", SPI4_ReadDataSetting(3145728+0));
-PRF_GEN("ttc1 %f", SPI4_ReadDataSetting(3145728+1));
-PRF_GEN("ttc2 %f", SPI4_ReadDataSetting(3145728+2));
-PRF_GEN("ttc3 %f", SPI4_ReadDataSetting(3145728+3));
-PRF_GEN("ttc4 %f", SPI4_ReadDataSetting(3145728+4));
-PRF_GEN("ttc5 %f", SPI4_ReadDataSetting(3145728+5));
+PRF_GEN("ttc1 %f", SPI4_ReadDataSetting(3145728+8));
+PRF_GEN("ttc2 %f", SPI4_ReadDataSetting(3145728+16));
+PRF_GEN("ttc3 %f", SPI4_ReadDataSetting(3145728+24));
+PRF_GEN("ttc4 %f", SPI4_ReadDataSetting(3145728+32));
+PRF_GEN("ttc5 %f", SPI4_ReadDataSetting(3145728+40));
 //if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != 1234567) {
 //	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
 //	write_Dat_to_EEp_fn(); // write default variables to eep.
