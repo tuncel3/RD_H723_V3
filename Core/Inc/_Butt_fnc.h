@@ -76,18 +76,6 @@ void bleft_fnc(void) {
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1-1.0;
 				if (EpD[DEV_NOM_VOUT][1].V1 <= 0)
 					EpD[DEV_NOM_VOUT][1].V1=0;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-				EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][1].V1-1.0;
-				if (EpD[SET_OVTM_ALRM_LIM][1].V1 <= 0)
-					EpD[SET_OVTM_ALRM_LIM][1].V1=0;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-				EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][1].V1-10.0;
-				if (EpD[SET_OVTM_OPEN_DUR][1].V1 <= 0)
-					EpD[SET_OVTM_OPEN_DUR][1].V1=0;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-				EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][1].V1-1.0;
-				if (EpD[SET_OVTM_OPEN_LIM][1].V1 <= 0)
-					EpD[SET_OVTM_OPEN_LIM][1].V1=0;
 	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 	    		EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1-1.0;
 	    		if (EpD[IRECT_LIM_RT_][1].V1 <= Irect_min)
@@ -752,19 +740,7 @@ void bdown_fnc(void) {
     			EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1-0.1;
     			if (EpD[DEV_NOM_VOUT][1].V1 <= VDC_NOM_MIN) {
     				EpD[DEV_NOM_VOUT][1].V1=VDC_NOM_MIN;}
-    		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-				EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][1].V1-0.1;
-				if (EpD[SET_OVTM_ALRM_LIM][1].V1 <= 0)
-					EpD[SET_OVTM_ALRM_LIM][1].V1=0;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-				EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][1].V1-1;
-				if (EpD[SET_OVTM_OPEN_DUR][1].V1 <= 0)
-					EpD[SET_OVTM_OPEN_DUR][1].V1=0;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-				EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][1].V1-0.1;
-				if (EpD[SET_OVTM_OPEN_LIM][1].V1 <= 0)
-					EpD[SET_OVTM_OPEN_LIM][1].V1=0;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
+    		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
     			EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1-0.1;
     			if (EpD[IRECT_LIM_RT_][1].V1 <= Irect_min)
     				EpD[IRECT_LIM_RT_][1].V1=Irect_min;
@@ -1134,13 +1110,7 @@ void besc_fnc(void) {
     			EpD[SET_BATT_REV_DET][1].V1=EpD[SET_BATT_REV_DET][0].V1;
     		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
     			EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][0].V1;
-    		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-				EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][0].V1;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-				EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][0].V1;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-				EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][0].V1;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_IRECT_CAL) {
+    		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_IRECT_CAL) {
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
     		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1 == DC_KAC_POS) {
 			    EpD[DC_KAC_POS][1].V1=EpD[DC_KAC_POS][0].V1;
