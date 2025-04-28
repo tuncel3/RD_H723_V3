@@ -484,6 +484,12 @@ if (!chg_setting_edit_mode) {
 					set_dropper_l_hg_V+=1;
 				} else if (drop_set_dig==2) {
 					set_dropper_l_hg_V+=0.1;
+				} else if (drop_set_dig==3) {
+					set_dropper_l_hg_V+=1;
+				} else if (drop_set_dig==4) {
+					set_dropper_l_hg_V+=0.1;
+				} else if (drop_set_dig==5) {
+					set_dropper_l_hg_V+=0.1;
 				}
 			}
 		}
