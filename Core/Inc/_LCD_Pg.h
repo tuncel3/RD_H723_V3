@@ -20,14 +20,14 @@ inline extern void DROPPER_pg_disp(void) {
 // DIODE ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	if (EpD[SET_DROPPER_K1][0].V1==0) {
-		sprintf(L, "---"); 		GLCD_PrintString(110, 2*lnhg, L);
+		GLCD_PrintString(110, 2*lnhg, "---");
 	} else {
-		sprintf(L, "->-"); 		GLCD_PrintString(110, 2*lnhg, L);
+		GLCD_PrintString(110, 2*lnhg, "->-");
 	}
 	if (EpD[SET_DROPPER_K2][0].V1==0) {
-		sprintf(L, "---"); 		GLCD_PrintString(110, 3*lnhg, L);
+		GLCD_PrintString(110, 3*lnhg, "---");
 	} else {
-		sprintf(L, "->-"); 		GLCD_PrintString(110, 3*lnhg, L);
+		GLCD_PrintString(110, 3*lnhg, "->-");
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
