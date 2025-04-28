@@ -15,10 +15,12 @@ SPI4_WriteVolatRegDisableBuff();
 // açıldığında 12345 olmayacak. o yüzden defaultlar yüklenecek. 12345 okursa devam edecek. programlama sırasında yeni kayıt oluşturulursa tabloda kayma
 //olacak ve açılışta bu 12345 okunamayacak.
 
-SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
+//SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();
-track_table_change=(uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1;
-PRF_GEN("ttc1 %lu", track_table_change);
+//track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*24);
+PRF_GEN("ttc1lu %lu", SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*24));
+PRF_GEN("ttc1f %f", SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*24));
+PRF_GEN("ttc1d %d", SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*24));
 if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != 1234567) {
 	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
 	write_Dat_to_EEp_fn(); // write default variables to eep.
