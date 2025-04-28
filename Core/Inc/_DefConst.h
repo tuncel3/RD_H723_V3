@@ -103,8 +103,6 @@ uint32_t vrect_dc_low_lim_Acc_cnt = 0;
 uint32_t vrect_dc_low_lim_Acc_per = 200;
 uint32_t vrect_dc_low_lim_ret_Acc_cnt = 0;
 uint32_t vrect_dc_low_lim_ret_Acc_per = 20;
-float set_dropper_l_hg = 0.15f;
-float set_dropper_l_lw = 0.1f;
 uint32_t vload_dc_high_lim_Acc_cnt = 0;
 uint32_t vload_dc_high_lim_Acc_per = 200;
 uint32_t vload_dc_high_lim_ret_Acc_cnt = 0;
@@ -355,8 +353,10 @@ uint32_t charge_mode_timed_time_sec=0;
 uint8_t dropper_edit_mode = 0;
 uint8_t selected_DROPPER_PG_line = 0;
 uint8_t dropper_control_man_oto = 0;
-float set_dropper_k1_v_perc = 0;
-float set_dropper_k2_v_perc = 0;
+float set_dropper_l_hg_V = 0.15f;
+float set_dropper_l_lw_V = 0.1f;
+float set_dropper_l_hg_perc = 0;
+float set_dropper_l_lw_perc = 0;
 
 typedef enum {
 	FLOAT,
@@ -412,8 +412,8 @@ typedef enum {
 	SET_DROPPER_MANOTO,
 	SET_DROPPER_K1,
 	SET_DROPPER_K2,
-	SET_DROPPER_L_HG,
-	SET_DROPPER_L_LW,
+	SET_DROPP_L_HG_PERC,
+	SET_DROPP_L_LW_PERC,
 	SET_OVTM_ALRM_LIM,
 	SET_OVTM_OPEN_DUR,
 	SET_OVTM_OPEN_LIM,
@@ -469,8 +469,8 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_DROPPER_MANOTO, 1.0}, {SET_DROPPER_MANOTO, 1.0} },
     { {SET_DROPPER_K1, 0.0}, {SET_DROPPER_K1, 0.0} },
     { {SET_DROPPER_K2, 0.0}, {SET_DROPPER_K2, 0.0} },
-    { {SET_DROPPER_L_HG, 200.0}, {SET_DROPPER_L_HG, 200.0} },
-    { {SET_DROPPER_L_LW, 20.0}, {SET_DROPPER_L_LW, 20.0} },
+    { {SET_DROPP_L_HG_PERC, 200.0}, {SET_DROPP_L_HG_PERC, 200.0} },
+    { {SET_DROPP_L_LW_PERC, 20.0}, {SET_DROPP_L_LW_PERC, 20.0} },
     { {SET_OVTM_ALRM_LIM, 80.0}, {SET_OVTM_ALRM_LIM, 80.0} },
     { {SET_OVTM_OPEN_DUR, 120.0}, {SET_OVTM_OPEN_DUR, 120.0} },
     { {SET_OVTM_OPEN_LIM, 90.0}, {SET_OVTM_OPEN_LIM, 90.0} },
@@ -524,8 +524,8 @@ const char* Eep_data_Names[] = { // for printing in uart
     "SET_DROPPER_MANOTO",
     "SET_DROPPER_K1",
     "SET_DROPPER_K2",
-    "SET_DROPPER_L_HG",
-    "SET_DROPPER_L_LW",
+    "SET_DROPP_L_HG_PERC",
+    "SET_DROPP_L_LW_PERC",
     "SET_OVTM_ALRM_LIM",
     "SET_OVTM_OPEN_DUR",
     "SET_OVTM_OPEN_LIM",
