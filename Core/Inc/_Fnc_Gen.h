@@ -1149,12 +1149,12 @@ void inline extern bring_vtarg_back_to_chrgV(uint8_t num) {
 
 void stability_vrect_fc(void) {
 		if (VRECT_pas.a16 > v_max_stb) {
-			v_max_stb = VRECT_pas.a16 + blm_V_step_15perc*2;
-			v_min_stb = VRECT_pas.a16 - blm_V_step_15perc*2;
+			v_max_stb = VRECT_pas.a16 + blm_V_step_15perc;
+			v_min_stb = VRECT_pas.a16 - blm_V_step_15perc;
 			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0; // koşul sağlanmıyorsa sayacı 4 geri çek.
 		} else if (VRECT_pas.a16 < v_min_stb) {
-			v_max_stb = VRECT_pas.a16 + blm_V_step_15perc*2;
-			v_min_stb = VRECT_pas.a16 - blm_V_step_15perc*2;
+			v_max_stb = VRECT_pas.a16 + blm_V_step_15perc;
+			v_min_stb = VRECT_pas.a16 - blm_V_step_15perc;
 			vrect_stable_cnt = (vrect_stable_cnt > 4) ? vrect_stable_cnt - 4 : 0;
 		} else if (vrect_stable_cnt < 150) {
 			vrect_stable_cnt++;
@@ -1177,12 +1177,12 @@ void stability_irect_fc(void) {
 }
 void stability_ibat_fc(void) {
     if (IBAT_pas.a64 > i_bat_max_stb) {
-        i_bat_max_stb = IBAT_pas.a64 + blm_I_step_05perc/1;
-        i_bat_min_stb = IBAT_pas.a64 - blm_I_step_05perc/1;
+        i_bat_max_stb = IBAT_pas.a64 + blm_I_step_05perc/2;
+        i_bat_min_stb = IBAT_pas.a64 - blm_I_step_05perc/2;
         ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
     } else if (IBAT_pas.a64 < i_bat_min_stb) {
-        i_bat_max_stb = IBAT_pas.a64 + blm_I_step_05perc/1;
-        i_bat_min_stb = IBAT_pas.a64 - blm_I_step_05perc/1;
+        i_bat_max_stb = IBAT_pas.a64 + blm_I_step_05perc/2;
+        i_bat_min_stb = IBAT_pas.a64 - blm_I_step_05perc/2;
         ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
     } else if (ibat_stable_cnt < 150) {
         ibat_stable_cnt++;
