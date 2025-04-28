@@ -11,7 +11,9 @@ SPI4_WriteVolatRegDisableBuff();
 
 // burası otomatize edilebilir. default değeri 12345 olan bir kayıt olur. bu kayıt eğer açılışta 12345 değil ise default değerler eeprom a yazılır.
 // write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
-// daha sonra bu kayıt 12345 olarak eeprom a yazılacak.
+// daha sonra bu kayıt 12345 olarak eeprom a yazılacak. şimdi tabloda değişiklik olunca bu kayıt yeri kayacak ondan açıldığında okunamayacak.
+// açıldığında 12345 olmayacak. o yüzden defaultlar yüklenecek. 12345 okursa devam edecek. programlama sırasında yeni kayıt oluşturulursa tabloda kayma
+olacak ve açılışta bu 12345 okunamayacak.
 
 SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();

@@ -490,7 +490,8 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {VRECT_DC_HIGH_LIM_add, 10.0}, {VRECT_DC_HIGH_LIM_add, 10.0} },
     { {VRECT_DC_LOW_LIM_add, 10.0}, {VRECT_DC_LOW_LIM_add, 10.0} },
     { {dropp_reg_high_lim_add, 15.0}, {dropp_reg_high_lim_add, 15.0} },
-    { {dropp_reg_low_lim_sub, 10.0}, {dropp_reg_low_lim_sub, 10.0} }
+    { {dropp_reg_low_lim_sub, 10.0}, {dropp_reg_low_lim_sub, 10.0} },
+    { {TRACK_TABLE_CHANGE, 10.0}, {LED RED THT 5MM, 10.0} }
 };
 
 const char* Eep_data_Names[] = { // for printing in uart
