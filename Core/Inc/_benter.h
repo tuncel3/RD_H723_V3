@@ -289,7 +289,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				}
 				Rec_Dat_to_EEp_f(SET_DROPP_L_LW_PERC);
 			}
-			set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
+//			set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 		}
 	}
     else if (currentPage == RELAY_ORDER_pg) {
