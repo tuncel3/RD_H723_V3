@@ -19,7 +19,7 @@ inline extern void DROPPER_pg_disp(void) {
 
 // DIODE ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	static const char *dropperPic[2] = { "->-", "---" };   // 0 → “->-”, 1 → “---”
+	static const char *dropperPic[2] = { "->-", "---" };   // 0 ise “->-”, 1 ise “---”
 	GLCD_PrintString(110, 2 * lnhg, dropperPic[EpD[SET_DROPPER_K1][0].V1 == 0]); // EpD[SET_DROPPER_K1][0].V1==0 ise sonuç 1 oluyor ve dropperPic[1]="---" yazıyor
 	GLCD_PrintString(110, 3 * lnhg, dropperPic[EpD[SET_DROPPER_K2][0].V1 == 0]);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

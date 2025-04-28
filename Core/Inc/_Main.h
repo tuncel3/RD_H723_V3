@@ -9,12 +9,7 @@ set_(CS_M95P32);
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
 
-// burası otomatize edilebilir. default değeri 12345 olan bir kayıt olur. bu kayıt eğer açılışta 12345 değil ise default değerler eeprom a yazılır.
 // write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
-// daha sonra bu kayıt 12345 olarak eeprom a yazılacak. şimdi tabloda değişiklik olunca bu kayıt yeri kayacak ondan açıldığında okunamayacak.
-// açıldığında 12345 olmayacak. o yüzden defaultlar yüklenecek. 12345 okursa devam edecek. programlama sırasında yeni kayıt oluşturulursa tabloda kayma
-//olacak ve açılışta bu 12345 okunamayacak.
-
  // programlarken eep table da değişiklik yapılmış ise bu bölümde o değişiklik inceleniyor
 track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8); // tablo sonundaki değer sadece okunuyor. kayma varsa programdaki değerden farklı olacaktır.
 if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
