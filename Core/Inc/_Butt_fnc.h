@@ -730,11 +730,11 @@ void bdown_fnc(void) {
     	HOME_PAGE_pg_sel = 1;
     }
     else if (currentPage == MAIN_MENU_pg) {
-		if (main_menu_arrow_loc > 1) {
-			main_menu_arrow_loc--;
-		} else if (main_menu_arrow_loc == 1) {
+//		if (main_menu_arrow_loc > 1) {
+//			main_menu_arrow_loc--;
+//		} else if (main_menu_arrow_loc == 1) {
 			main_menu_disp_index=(main_menu_disp_index+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
-		}
+//		}
     	selected_MAIN_MENU=(selected_MAIN_MENU+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
     }
     else if (currentPage == DEVICE_SETT_pg) {
