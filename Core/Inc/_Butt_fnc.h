@@ -484,6 +484,7 @@ if (!chg_setting_edit_mode) {
 				    set_dropper_l_hg_perc_h=(set_dropper_l_hg_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
 				} else {
 				    set_dropper_l_hg_perc_h += dropper_step_values[drop_set_dig];
+				    set_dropper_l_hg_V_h=EpD[DEV_NOM_VOUT][0].V1 * (1 + (set_dropper_l_hg_perc_h / 100));
 				}
 			} else if (selected_DROPPER_PG_line == 4) {
 				static const float dropper_step_values[6] = {10.0f, 1.0f, 0.1f, 10.0f, 1.0f, 0.1f};
@@ -493,6 +494,7 @@ if (!chg_setting_edit_mode) {
 				    set_dropper_l_lw_perc_h=-(set_dropper_l_lw_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
 				} else {
 				    set_dropper_l_lw_perc_h += dropper_step_values[drop_set_dig];
+				    set_dropper_l_lw_V_h=EpD[DEV_NOM_VOUT][0].V1 * (1 + (set_dropper_l_lw_perc_h / 100));
 				}
 
 			}
@@ -854,6 +856,7 @@ if (!chg_setting_edit_mode) {
 				set_dropper_l_hg_perc_h=(set_dropper_l_hg_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
 			} else {
 			    set_dropper_l_hg_perc_h -= dropper_step_values[drop_set_dig];
+			    set_dropper_l_hg_V_h=EpD[DEV_NOM_VOUT][0].V1 * (1 + (set_dropper_l_hg_perc_h / 100));
 			}
 			} else if (selected_DROPPER_PG_line == 4) {static const float dropper_step_values[6] = {10.0f, 1.0f, 0.1f, 10.0f, 1.0f, 0.1f};
 
@@ -862,6 +865,7 @@ if (!chg_setting_edit_mode) {
 				set_dropper_l_lw_perc_h=-(set_dropper_l_lw_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
 			} else {
 			    set_dropper_l_lw_perc_h -= dropper_step_values[drop_set_dig];
+			    set_dropper_l_lw_V_h=EpD[DEV_NOM_VOUT][0].V1 * (1 + (set_dropper_l_lw_perc_h / 100));
 			}
 			}
 		}
