@@ -19,11 +19,8 @@ inline extern void DROPPER_pg_disp(void) {
 	}
 
 	if (dropper_edit_mode) {
-		if (selected_DROPPER_PG_line==3 && drop_set_dig==0) {
-			x0=48+64; y0=(selected_DROPPER_PG_line+1)*lnhg; w=4;
-		}
-		if (selected_DROPPER_PG_line==3 && drop_set_dig==1) {
-			x0=42+64; y0=0; w=4;
+		if ((selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4) && drop_set_dig==0) {
+			x0=48-(drop_set_dig*6)+64; y0=(selected_DROPPER_PG_line+2)*10; w=4;
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
