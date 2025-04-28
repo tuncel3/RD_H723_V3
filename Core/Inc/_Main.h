@@ -15,6 +15,7 @@ SPI4_WriteVolatRegDisableBuff();
 // açıldığında 12345 olmayacak. o yüzden defaultlar yüklenecek. 12345 okursa devam edecek. programlama sırasında yeni kayıt oluşturulursa tabloda kayma
 //olacak ve açılışta bu 12345 okunamayacak.
 
+ // programlarken eep table da değişiklik yapılmış ise bu bölümde o değişiklik
 //SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();
 track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8);
@@ -33,6 +34,8 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != track_table_change) {
 	PRF_GEN("track_table_change %f", track_table_change);
 //	track_table_change=(uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1;
 //	PRF_GEN("ttc3 %lu", track_table_change);
+} else {
+	PRF_GEN("EEP Table size OK");
 }
 //track_table_change=(uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1;
 //PRF_GEN("ttc4 %lu", track_table_change);
