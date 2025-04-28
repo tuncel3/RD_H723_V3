@@ -11,25 +11,24 @@ inline extern void DROPPER_pg_disp(void) {
 	sprintf(L, " Kademe 2 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K2][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 3*lnhg, L);
 	sprintf(L, " Kd 1 V %5.1f %%%4.1f", EpD[SET_DROPPER_K1_V][dropper_edit_mode].V1, set_dropper_k1_v_perc); 	GLCD_PrintString(0, 4*lnhg, L);
 	sprintf(L, " Kd 2 V %5.1f %%%4.1f", EpD[SET_DROPPER_K2_V][dropper_edit_mode].V1, set_dropper_k2_v_perc); 	GLCD_PrintString(0, 5*lnhg, L);
-
-	GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, ">");	// sprintf(L, ">") bu yazılıyor burda
+    sprintf(L, ">");
+//	if (selected_DROPPER_PG_line==0) {
+        GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, L);			// sprintf(L, ">") bu yazılıyor burda
 	if (dropper_edit_mode) {
 		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,109,(selected_DROPPER_PG_line+2)*9-1); // batt rect
 	}
 
 // DIODE ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//	char K[4]={45,45,45,'\0'};
-//	if (EpD[SET_DROPPER_K1][0].V1==0) {
-//		GLCD_PrintString(110, 2*lnhg, K);
-//	} else {
-	char K[4]={45,45+17*EpD[SET_DROPPER_K1][0].V1,45,'\0'};
-		GLCD_PrintString(110, 2*lnhg, K);
-//	}
-	if (EpD[SET_DROPPER_K2][0].V1==0) {
-		GLCD_PrintString(110, 3*lnhg, "---");
+	if (EpD[SET_DROPPER_K1][0].V1==0) {
+		sprintf(L, "---"); 		GLCD_PrintString(110, 2*lnhg, L);
 	} else {
-		GLCD_PrintString(110, 3*lnhg, "->-");
+		sprintf(L, "->-"); 		GLCD_PrintString(110, 2*lnhg, L);
+	}
+	if (EpD[SET_DROPPER_K2][0].V1==0) {
+		sprintf(L, "---"); 		GLCD_PrintString(110, 3*lnhg, L);
+	} else {
+		sprintf(L, "->-"); 		GLCD_PrintString(110, 3*lnhg, L);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
