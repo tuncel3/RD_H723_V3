@@ -10,10 +10,14 @@ inline extern void DROPPER_pg_disp(void) {
 	sprintf(L, " Kontrol   %s", MANUOTO_SEL_Items[(uint32_t)EpD[SET_DROPPER_MANOTO][dropper_edit_mode].V1]); 	GLCD_PrintString(0, 1*lnhg, L);
 	sprintf(L, " Kademe 1 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K1][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 2*lnhg, L);
 	sprintf(L, " Kademe 2 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K2][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 3*lnhg, L);
-//	sprintf(L, " Üst Lm %5.1fV %4.1f%%", set_dropper_l_hg_V, EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 4*lnhg, L);
-//	sprintf(L, " Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V, EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 5*lnhg, L);
-	sprintf(L, " Üst Lm %5.1fV %4.1f%%", set_dropper_l_hg_V_h, set_dropper_l_hg_perc_h); 	GLCD_PrintString(0, 4*lnhg, L);
-	sprintf(L, " Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V_h, set_dropper_l_lw_perc_h); 	GLCD_PrintString(0, 5*lnhg, L);
+
+	if (dropper_edit_mode) {
+		sprintf(L, " Üst Lm %5.1fV %4.1f%%", set_dropper_l_hg_V, EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 4*lnhg, L);
+		sprintf(L, " Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V, EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 5*lnhg, L);
+	} else {
+		sprintf(L, " Üst Lm %5.1fV %4.1f%%", set_dropper_l_hg_V_h, set_dropper_l_hg_perc_h); 	GLCD_PrintString(0, 4*lnhg, L);
+		sprintf(L, " Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V_h, set_dropper_l_lw_perc_h); 	GLCD_PrintString(0, 5*lnhg, L);
+	}
 
 	GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, ">");	// sprintf(L, ">") bu yazılıyor burda
 	if ((selected_DROPPER_PG_line >= 0 && selected_DROPPER_PG_line <= 2) && dropper_edit_mode) {
