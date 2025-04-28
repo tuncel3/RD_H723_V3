@@ -17,6 +17,14 @@ inline extern void DROPPER_pg_disp(void) {
 		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // batt rect
 	}
 
+	if (drop_==0) {
+	    if (cal_sel_edit_mode != cal_none) {x0=48+64; w=4;}
+	}
+	if (cal_sel_digit==1) {
+	    if (cal_sel_edit_mode != cal_none) {x0=42+64; w=4;}
+	}
+}
+GLCD_Line(x0, y0, x0+w, y0);
 // DIODE ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	static const char *dropperPic[2] = { "->-", "---" };   // 0 ise “->-”, 1 ise “---”
