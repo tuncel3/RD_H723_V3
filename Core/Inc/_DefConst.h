@@ -494,7 +494,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {dropp_reg_low_lim_sub, 10.0}, {dropp_reg_low_lim_sub, 10.0} },
     { {TRACK_TABLE_CHANGE, 1234567.0}, {TRACK_TABLE_CHANGE, 1234567.0} }
 };
-
+uint32_t track_table_change=0;
 const char* Eep_data_Names[] = { // for printing in uart
     "SETTING_RECORD_START_ADDRESS",
     "SET_CHARGE_MODE",
