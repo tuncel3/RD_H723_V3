@@ -30,7 +30,6 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
 actions_after_charge_mode_change(5); // set charge mode values
 set_variables_from_EEP_fc(SCOPE_VAR_ALL_FROM_EEP);
 //update_VDC_high_low_lim_fc();
-set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
 delay_1ms(100);
 
 GLCD_Init();

@@ -19,23 +19,10 @@ inline extern void DROPPER_pg_disp(void) {
 
 // DIODE ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//	char K[4]={45,45+17*EpD[SET_DROPPER_K1][0].V1,45,'\0'};
-//		GLCD_PrintString(110, 2*lnhg, K);
-//	char K[4]={45,45+17*EpD[SET_DROPPER_K2][0].V1,45,'\0'};
-//		GLCD_PrintString(110, 3*lnhg, K);
-
-//	const char* dropper_status(int v1) {
-//		return (v1 == 0) ? "---" : "->-";
-//	}
-//	GLCD_PrintString(110, 2 * lnhg, dropper_status(EpD[SET_DROPPER_K1][0].V1));
-//	GLCD_PrintString(110, 3 * lnhg, dropper_status(EpD[SET_DROPPER_K2][0].V1));
-
-	static const char *dropperPic[2] = { "->-", "---" };   // 0 → “---”, 1 → “->-”
-	GLCD_PrintString(110, 2 * lnhg, dropperPic[EpD[SET_DROPPER_K1][0].V1 == 0]); // EpD[SET_DROPPER_K1][0].V1==0 ise "---" yazıyor"---"
-
+	static const char *dropperPic[2] = { "->-", "---" };   // 0 → “->-”, 1 → “---”
+	GLCD_PrintString(110, 2 * lnhg, dropperPic[EpD[SET_DROPPER_K1][0].V1 == 0]); // EpD[SET_DROPPER_K1][0].V1==0 ise sonuç 1 oluyor ve dropperPic[1]="---" yazıyor
 	GLCD_PrintString(110, 3 * lnhg, dropperPic[EpD[SET_DROPPER_K2][0].V1 == 0]);
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 inline extern void CALIBRATION_pg_disp(void) {

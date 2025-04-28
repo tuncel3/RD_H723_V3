@@ -762,13 +762,12 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         blm_V_step_10perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.010;
         blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;
     }
-    if (scope == SCOPE_VAR_ALL_FROM_EEP) {
+    if (scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
         Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
         VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
         VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
     }
-//
-    if (scope == SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP) {
+    if (scope == SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
     	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
     	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
     	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
