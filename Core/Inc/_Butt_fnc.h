@@ -127,7 +127,7 @@ void bleft_fnc(void) {
 			}
     	}
     }
-    else if (currentPage == DROPPER_pg) {
+    else if (currentPage == DROPPER_pg) { // LEFT
     	selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
     }
     else if (currentPage == MANAGEMENT_pg) {
@@ -300,7 +300,7 @@ void bright_fnc(void) {
 			}
     	}
     }
-    else if (currentPage == DROPPER_pg) {
+    else if (currentPage == DROPPER_pg) { // RIGHT
     	selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1) % 3;
     }
     else if (currentPage == MANAGEMENT_pg) {
@@ -483,7 +483,7 @@ if (!chg_setting_edit_mode) {
 	}
 }
     }
-    else if (currentPage == DROPPER_pg) {
+    else if (currentPage == DROPPER_pg) { // UP
     	if (dropper_edit_mode == 0) {
     		selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
 		} else if (dropper_edit_mode == 1) {
@@ -1142,7 +1142,7 @@ void besc_fnc(void) {
     		currentPage = MAIN_MENU_pg;
     	}
     }
-    else if (currentPage == DROPPER_pg) {
+    else if (currentPage == DROPPER_pg) { // ESC
         if (dropper_edit_mode) {
         	dropper_edit_mode=0;
     		if (selected_DROPPER_PG_line==0) {
