@@ -17,7 +17,7 @@ SPI4_WriteVolatRegDisableBuff();
 
  // programlarken eep table da değişiklik yapılmış ise bu bölümde o değişiklik inceleniyor
 track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8); // tablo sonundaki değer sadece okunuyor. kayma varsa programdaki değerden farklı olacaktır.
-if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != track_table_change) {
+if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
 	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
 	write_Dat_to_EEp_fn(); // write default variables to eep.
 	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
