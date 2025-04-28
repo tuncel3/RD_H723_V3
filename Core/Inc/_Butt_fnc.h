@@ -479,11 +479,11 @@ if (!chg_setting_edit_mode) {
 			    EpD[SET_DROPPER_K2][1].V1 = (float)(((int)(EpD[SET_DROPPER_K2][1].V1)) ^ 1);
 			} else if (selected_DROPPER_PG_line == 3) {
 				if (drop_set_dig==0) {
-					set_dropper_l_hg_V+=10;
+					set_dropper_l_hg_V_h+=10;
 				} else if (drop_set_dig==1) {
-					set_dropper_l_hg_V+=1;
+					set_dropper_l_hg_V_h+=1;
 				} else if (drop_set_dig==2) {
-					set_dropper_l_hg_V+=0.1;
+					set_dropper_l_hg_V_h+=0.1;
 				} else if (drop_set_dig==3) {
 					set_dropper_l_hg_perc_h+=1;
 				} else if (drop_set_dig==4) {
