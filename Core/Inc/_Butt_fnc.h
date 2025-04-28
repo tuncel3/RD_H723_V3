@@ -120,7 +120,11 @@ void bleft_fnc(void) {
     	}
     }
     else if (currentPage == DROPPER_pg) { // LEFT
-    	selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+5) % 5;
+    	if (!dropper_edit_mode) {
+    		selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+5) % 5;
+    	} else if (dropper_edit_mode && (selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4)) {
+    		drop_set_dig=(drop_set_dig-1+6) % 6;
+    	}
     }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
@@ -285,11 +289,10 @@ void bright_fnc(void) {
     	}
     }
     else if (currentPage == DROPPER_pg) { // RIGHT
-    	selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+5) % 5;
-    	if (dropper_edit_mode) {
-    		if ((selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4)) {
-    			drop_set_dig=(drop_set_dig+1+6) % 6;
-    		}
+    	if (!dropper_edit_mode) {
+    		selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+5) % 5;
+    	} else if (dropper_edit_mode && (selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4)) {
+    		drop_set_dig=(drop_set_dig+1+6) % 6;
     	}
     }
     else if (currentPage == MANAGEMENT_pg) {
