@@ -19,12 +19,13 @@ inline extern void DROPPER_pg_disp(void) {
 
 // DIODE ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	char K[4]={45,45,45,'\0'};
-	if (EpD[SET_DROPPER_K1][0].V1==0) {
+//	char K[4]={45,45,45,'\0'};
+//	if (EpD[SET_DROPPER_K1][0].V1==0) {
+//		GLCD_PrintString(110, 2*lnhg, K);
+//	} else {
+	char K[4]={45,45+17*EpD[SET_DROPPER_K1][0].V1,45,'\0'};
 		GLCD_PrintString(110, 2*lnhg, K);
-	} else {
-		GLCD_PrintString(110, 2*lnhg, "->-");
-	}
+//	}
 	if (EpD[SET_DROPPER_K2][0].V1==0) {
 		GLCD_PrintString(110, 3*lnhg, "---");
 	} else {
