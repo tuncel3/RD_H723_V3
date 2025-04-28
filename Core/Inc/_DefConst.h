@@ -437,10 +437,6 @@ typedef enum {
     NUM_SET_ENUM            // Keeps track of total settings
 } EEPROM_Setting_ID;
 
-    static const char * const MANUOTO_SEL_Items[] = {"Auto", "Manual"};
-    static const char * const DROPNORM_SEL_Items[] = {"Low", "Medium", "High"};
-    static const char * const dropperPic[2] = {"->-", "---"};
-    static const uint8_t dropperLnPic[6] = {0, 1, 3, 6, 7, 9};
 //uint32_t SETTING_RECORD_START_ADDRESS=0x300000; // 3145728
 EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SETTING_RECORD_START_ADDRESS, 3145728.0}, {SETTING_RECORD_START_ADDRESS, 3145728.0} },

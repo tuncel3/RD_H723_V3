@@ -3,6 +3,10 @@
 
 
 inline extern void DROPPER_pg_disp(void) {
+    static const char  MANUOTO_SEL_Items[] = {"Auto", "Manual"};
+    static const char * const DROPNORM_SEL_Items[] = {"Low", "Medium", "High"};
+    static const char * const dropperPic[2] = {"->-", "---"};
+    static const uint8_t dropperLnPic[6] = {0, 1, 3, 6, 7, 9};
 
     uint8_t x0 = 0, y0 = 0, w = 0;
     uint8_t lnhg = 9;
