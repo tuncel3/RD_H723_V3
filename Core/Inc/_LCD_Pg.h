@@ -10,7 +10,7 @@ inline extern void DROPPER_pg_disp(void) {
 	sprintf(L, " Kademe 1 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K1][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 2*lnhg, L);
 	sprintf(L, " Kademe 2 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K2][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 3*lnhg, L);
 	sprintf(L, " Kd 1 V %s", EpD[SET_DROPPER_K1_V][dropper_edit_mode].V1); 									GLCD_PrintString(0, 4*lnhg, L);
-	sprintf(L, " Kd 2 V %s", EpD[SET_DROPPER_K2][dropper_edit_mode].V1); 		GLCD_PrintString(0, 5*lnhg, L);
+	sprintf(L, " Kd 2 V %s", EpD[SET_DROPPER_K2_V][dropper_edit_mode].V1); 		GLCD_PrintString(0, 5*lnhg, L);
     sprintf(L, ">");
 	if (selected_DROPPER_PG_line==0) {
         GLCD_PrintString(0, 1*lnhg, L);			// sprintf(L, ">") bu yazılıyor burda
