@@ -19,7 +19,7 @@ inline extern void DROPPER_pg_disp(void) {
 	}
 	static uint8_t dropperLnPic[6] = { 0, 1, 3, 6, 7, 9};
 	if (dropper_edit_mode) {
-		if ((selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4) && dropper_edit_blink^=1) {
+		if ((selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4) && (dropper_edit_blink^=1)==0) {
 			x0=54+(dropperLnPic[drop_set_dig]*6); y0=(selected_DROPPER_PG_line+2)*lnhg-1; w=4;
 		}
 	}
