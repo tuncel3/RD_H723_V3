@@ -17,9 +17,10 @@ inline extern void DROPPER_pg_disp(void) {
 	if ((selected_DROPPER_PG_line >= 0 && selected_DROPPER_PG_line <= 2) && dropper_edit_mode) {
 		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // edit rectangle
 	}
+	static int *dropperLnPic[6] = { 0, 1, 3, 5, 6, 8 };
 	if (dropper_edit_mode) {
 		if ((selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4)) {
-			x0=54+(drop_set_dig*6); y0=(selected_DROPPER_PG_line+2)*lnhg-1; w=4;
+			x0=54+(dropperLnPic[drop_set_dig]*6); y0=(selected_DROPPER_PG_line+2)*lnhg-1; w=4;
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
