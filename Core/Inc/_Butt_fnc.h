@@ -355,7 +355,7 @@ void bup_fnc(void) {
     }
     else if (currentPage == MAIN_MENU_pg) {
 		main_menu_disp_index=(main_menu_disp_index-1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
-    	selected_MAIN_MENU=(selected_MAIN_MENU-1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
+    	selected_MAIN_MENU=(main_menu_disp_index+main_menu_arrow_loc) % NUM_MAIN_MENU_ITEMS;
     }
     else if (currentPage == DEVICE_SETT_pg) {
 
