@@ -494,7 +494,7 @@ if (!chg_setting_edit_mode) {
 				    set_dropper_l_lw_perc_h=-(set_dropper_l_lw_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
 				} else {
 				    set_dropper_l_lw_perc_h += dropper_step_values[drop_set_dig];
-				    set_dropper_l_lw_V_h=EpD[DEV_NOM_VOUT][0].V1 * (1 + (set_dropper_l_lw_perc_h / 100));
+				    set_dropper_l_lw_V_h=EpD[DEV_NOM_VOUT][0].V1 * (1 - (set_dropper_l_lw_perc_h / 100));
 				}
 
 			}
@@ -865,7 +865,7 @@ if (!chg_setting_edit_mode) {
 				set_dropper_l_lw_perc_h=-(set_dropper_l_lw_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
 			} else {
 			    set_dropper_l_lw_perc_h -= dropper_step_values[drop_set_dig];
-			    set_dropper_l_lw_V_h=EpD[DEV_NOM_VOUT][0].V1 * (1 + (set_dropper_l_lw_perc_h / 100));
+			    set_dropper_l_lw_V_h=EpD[DEV_NOM_VOUT][0].V1 * (1 - (set_dropper_l_lw_perc_h / 100));
 			}
 			}
 		}
