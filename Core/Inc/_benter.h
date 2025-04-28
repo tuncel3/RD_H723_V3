@@ -241,9 +241,22 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			}
 			if (selected_DROPPER_PG_line == 1) {
 				EpD[SET_DROPPER_K1][1].V1=EpD[SET_DROPPER_K1][0].V1;
-			}
-			else if (selected_DROPPER_PG_line == 2) {
+			} else if (selected_DROPPER_PG_line == 2) {
 				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
+			} else if (selected_DROPPER_PG_line == 3) {
+				if (drop_set_dig==0) {
+					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;
+				} else if (drop_set_dig==1) {
+					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;
+				} else if (drop_set_dig==2) {
+					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;
+				} else if (drop_set_dig==3) {
+					set_dropper_l_hg_perc_h=EpD[SET_DROPP_L_HG_PERC][0].V1;
+				} else if (drop_set_dig==4) {
+					set_dropper_l_hg_perc_h=EpD[SET_DROPP_L_HG_PERC][0].V1;
+				} else if (drop_set_dig==5) {
+					set_dropper_l_hg_perc_h=EpD[SET_DROPP_L_HG_PERC][0].V1;
+				}
 			}
 		} else if (!dropper_edit_mode) {
 			if (selected_DROPPER_PG_line == 0) {
