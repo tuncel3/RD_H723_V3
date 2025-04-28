@@ -338,6 +338,7 @@ const char* MAIN_MENU_Items[] = {
     "Cihaz Ayarları",
     "Arıza Kod Raporu",
     "Dropper",
+    "Fanlar",
     "Kontak Çıkışları",	// RELAY_ORDER_pg
     "Yönetim"
 };
