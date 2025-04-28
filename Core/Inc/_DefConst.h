@@ -355,6 +355,8 @@ uint32_t charge_mode_timed_time_sec=0;
 uint8_t dropper_edit_mode = 0;
 uint8_t selected_DROPPER_PG_line = 0;
 uint8_t dropper_control_man_oto = 0;
+float set_dropper_k1_v_perc = 0;
+float set_dropper_k2_v_perc = 0;
 
 typedef enum {
 	FLOAT,
@@ -524,6 +526,8 @@ const char* Eep_data_Names[] = { // for printing in uart
     "SET_DROPPER_MANOTO",
     "SET_DROPPER_K1",
     "SET_DROPPER_K2",
+    "SET_DROPPER_K1_V",
+    "SET_DROPPER_K2_V",
     "SET_OVTM_ALRM_LIM",
     "SET_OVTM_OPEN_DUR",
     "SET_OVTM_OPEN_LIM",
