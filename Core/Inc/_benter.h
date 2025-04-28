@@ -244,6 +244,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			} else if (selected_DROPPER_PG_line == 2) {
 				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
 			} else if (selected_DROPPER_PG_line == 3) {
+				dropper_edit_blink=1;
 				if (drop_set_dig==0) {
 					set_dropper_l_hg_V_h=set_dropper_l_hg_V;
 				} else if (drop_set_dig==1) {
@@ -258,6 +259,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 					set_dropper_l_hg_perc_h=EpD[SET_DROPP_L_HG_PERC][0].V1;
 				}
 			} else if (selected_DROPPER_PG_line == 4) {
+				dropper_edit_blink=1;
 				if (drop_set_dig==0) {
 					set_dropper_l_lw_V_h=set_dropper_l_lw_V;
 				} else if (drop_set_dig==1) {
