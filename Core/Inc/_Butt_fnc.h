@@ -506,7 +506,7 @@ if (!chg_setting_edit_mode) {
 				} else if (drop_set_dig==5) {
 					set_dropper_l_lw_perc_h+=0.1;
 				}
-				set_dropper_l_lw_perc_h=(-set_dropper_l_lw_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
+				set_dropper_l_lw_perc_h=-(set_dropper_l_lw_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
 			}
 		}
 
@@ -888,7 +888,7 @@ if (!chg_setting_edit_mode) {
 				} else if (drop_set_dig==5) {
 					set_dropper_l_lw_perc_h-=0.1;
 				}
-				set_dropper_l_lw_perc_h=(-set_dropper_l_lw_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
+				set_dropper_l_lw_perc_h=-(set_dropper_l_lw_V_h/EpD[DEV_NOM_VOUT][0].V1-1)*100;
 			}
 		}
 	}
