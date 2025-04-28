@@ -257,6 +257,20 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				} else if (drop_set_dig==5) {
 					set_dropper_l_hg_perc_h=EpD[SET_DROPP_L_HG_PERC][0].V1;
 				}
+			} else if (selected_DROPPER_PG_line == 4) {
+				if (drop_set_dig==0) {
+					set_dropper_l_lw_V_h=set_dropper_l_lw_V;
+				} else if (drop_set_dig==1) {
+					set_dropper_l_lw_V_h=set_dropper_l_lw_V;
+				} else if (drop_set_dig==2) {
+					set_dropper_l_lw_V_h=set_dropper_l_lw_V;
+				} else if (drop_set_dig==3) {
+					set_dropper_l_lw_perc_h=EpD[SET_DROPP_L_LW_PERC][0].V1;
+				} else if (drop_set_dig==4) {
+					set_dropper_l_lw_perc_h=EpD[SET_DROPP_L_LW_PERC][0].V1;
+				} else if (drop_set_dig==5) {
+					set_dropper_l_lw_perc_h=EpD[SET_DROPP_L_LW_PERC][0].V1;
+				}
 			}
 		} else if (!dropper_edit_mode) {
 			if (selected_DROPPER_PG_line == 0) {
@@ -275,11 +289,11 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				Rec_Dat_to_EEp_f(SET_DROPPER_K2);
 			} else if (selected_DROPPER_PG_line == 3) {
 				if (drop_set_dig==0) {
-					EpD[SET_DROPP_L_LW_PERC][0].V1=set_dropper_l_hg_V_h;
+					set_dropper_l_hg_V=set_dropper_l_hg_V_h;
 				} else if (drop_set_dig==1) {
-					EpD[SET_DROPP_L_LW_PERC][0].V1=set_dropper_l_hg_V_h;
+					set_dropper_l_hg_V=set_dropper_l_hg_V_h;
 				} else if (drop_set_dig==2) {
-					EpD[SET_DROPP_L_LW_PERC][0].V1=set_dropper_l_hg_V_h;
+					set_dropper_l_hg_V=set_dropper_l_hg_V_h;
 				} else if (drop_set_dig==3) {
 					EpD[SET_DROPP_L_HG_PERC][0].V1=set_dropper_l_hg_perc_h;
 				} else if (drop_set_dig==4) {
@@ -287,7 +301,20 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				} else if (drop_set_dig==5) {
 					EpD[SET_DROPP_L_HG_PERC][0].V1=set_dropper_l_hg_perc_h;
 				}
-				Rec_Dat_to_EEp_f(SET_DROPP_L_LW_PERC);
+			} else if (selected_DROPPER_PG_line == 4) {
+				if (drop_set_dig==0) {
+					set_dropper_l_lw_V=set_dropper_l_lw_V_h;
+				} else if (drop_set_dig==1) {
+					set_dropper_l_lw_V=set_dropper_l_lw_V_h;
+				} else if (drop_set_dig==2) {
+					set_dropper_l_lw_V=set_dropper_l_lw_V_h;
+				} else if (drop_set_dig==3) {
+					EpD[SET_DROPP_L_LW_PERC][0].V1=set_dropper_l_lw_perc_h;
+				} else if (drop_set_dig==4) {
+					EpD[SET_DROPP_L_LW_PERC][0].V1=set_dropper_l_lw_perc_h;
+				} else if (drop_set_dig==5) {
+					EpD[SET_DROPP_L_LW_PERC][0].V1=set_dropper_l_lw_perc_h;
+				}
 			}
 //			set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 		}
