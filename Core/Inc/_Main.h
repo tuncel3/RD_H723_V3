@@ -154,6 +154,7 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 // fanlar hangi sıcaklıkta devreye grirecek. ayar sayfası lazım.
 // dropper devreye girme voltaj yüzde.
 // zero cross var yok flagı lazım. yoksa ac voltaj ölçümü geçersiz durumda oluyor be lcd de gösterilmemeli. 0 olarak gösterilmeli.
@@ -162,6 +163,7 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 // 6 - arıza tekrarladıkça geri dönme süresini uzatma algoritması
 // 4 - eeprom okuma başarısız ise arıza durumu gösterilmeli.
 // 3 - bir anda batarya akımı kesilirse battery inspection hemen başlat.
+// 5 - blm bat bağlı, rect akım sınırı 3.4 ve bat akımı 0 iken blm sistemi kararsız çalışıyor. bat inceleme yöntemi kullanıldı sonuç alınamadığında başka bir yöntem kullanılmalı. mesela hızlı yöntem olan korelasyon yerine yavaş yavaş düşürerek takip edip etmediğine bakma.
 // batarya devreye alındığında DC short hatası oluyor. DC short hatası olmadan batarya devreye alınmalı.
 // bunu yapmak için kısa devre akımındaki değişime bakılabilir. aşağı yönlü bir değişim varsa bunu batarya devreye alma olarak algıla.
 // eeprom kaydetemden önce oku. aynı değer varsa yazma.
