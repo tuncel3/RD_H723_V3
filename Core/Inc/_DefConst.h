@@ -351,6 +351,7 @@ uint32_t float_of_auto_mode_active=0;
 uint32_t charge_mode_timed_time_cnt=0;
 uint32_t charge_mode_timed_time_sec=0;
 uint8_t dropper_edit_mode = 0;
+uint8_t drop_set_dig = 0;
 uint8_t selected_DROPPER_PG_line = 0;
 uint8_t dropper_control_man_oto = 0;
 float set_dropper_l_hg_V = 0.15f;
