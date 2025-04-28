@@ -2,54 +2,8 @@
 
 
 
-inline extern void DROPPER_pg_disp(void) {
-    static const char * const MANUOTO_SEL_Items[] = {"Auto", "Manual"};
-    static const char * const DROPNORM_SEL_Items[] = {"Low", "Medium", "High"};
-    static const char * const dropperPic[2] = {"->-", "---"};
-    static const uint8_t dropperLnPic[6] = {0, 1, 3, 6, 7, 9};
 
-    uint8_t x0 = 0, y0 = 0, w = 0;
-    uint8_t lnhg = 9;
-    uint8_t selected_y = (selected_DROPPER_PG_line + 1) * lnhg;
-
-    GLCD_PrintString(0, 0, "Dropper");
-
-    // Basitleştirilmiş string basımları
-    GLCD_PrintString(0, 1 * lnhg, MANUOTO_SEL_Items[EpD[SET_DROPPER_MANOTO][dropper_edit_mode].V1]);
-    GLCD_PrintString(0, 2 * lnhg, DROPNORM_SEL_Items[EpD[SET_DROPPER_K1][dropper_edit_mode].V1]);
-    GLCD_PrintString(0, 3 * lnhg, DROPNORM_SEL_Items[EpD[SET_DROPPER_K2][dropper_edit_mode].V1]);
-
-    // Voltaj ve Yüzde bilgileri: sprintf zorunlu
-    char L[32];
-    snprintf(L, sizeof(L), "Üst Lm %5.1fV %4.1f%%", set_dropper_l_hg_V, EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1);
-    GLCD_PrintString(0, 4 * lnhg, L);
-    snprintf(L, sizeof(L), "Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V, EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1);
-    GLCD_PrintString(0, 5 * lnhg, L);
-
-    // Seçili satırı işaretle
-    GLCD_PrintString(0, selected_y, ">");
-
-    // Edit modunda rectangle
-    if ((selected_DROPPER_PG_line <= 2) && dropper_edit_mode) {
-        GLCD_Rect_E(69, selected_y - 2, 108, selected_y + lnhg - 1);
-    }
-
-    // DIODE ANIMASYON
-    if (dropper_edit_mode) {
-        dropper_edit_blink ^= 1;
-        if ((selected_DROPPER_PG_line == 3 || selected_DROPPER_PG_line == 4) && dropper_edit_blink == 0) {
-            x0 = 54 + (dropperLnPic[drop_set_dig] * 6);
-            y0 = (selected_DROPPER_PG_line + 2) * lnhg - 1;
-            w = 4;
-            GLCD_Line(x0, y0, x0 + w, y0);
-        }
-    }
-
-    // Dropper status gösterimi
-    GLCD_PrintString(110, 2 * lnhg, dropperPic[EpD[SET_DROPPER_K1][0].V1 == 0]);
-    GLCD_PrintString(110, 3 * lnhg, dropperPic[EpD[SET_DROPPER_K2][0].V1 == 0]);
-}
-
+ara
 
 inline extern void CALIBRATION_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon");
