@@ -479,6 +479,11 @@ if (!chg_setting_edit_mode) {
 			    EpD[SET_DROPPER_K2][1].V1 = (float)(((int)(EpD[SET_DROPPER_K2][1].V1)) ^ 1);
 			}
 		}
+
+
+
+
+
     }
 
     else if (currentPage == RELAY_ORDER_pg) {
