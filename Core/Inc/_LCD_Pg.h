@@ -1,8 +1,5 @@
 
 
-
-
-
 inline extern void DROPPER_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
     GLCD_PrintString(0, 0, "Dropper");
@@ -247,19 +244,6 @@ inline extern void HOME_PAGE_pg_disp(void) {
 	}
 }
 
-inline extern void MAIN_MENU_pg_disp(void) {
-    GLCD_PrintString(0, 0, "Ana Menü");
-
-    for (uint8_t i = 0; i < NUM_MAIN_MENU_ITEMS; i++) {
-        char L[32];
-        if (i == selected_MAIN_MENU) {
-            sprintf(L, ">%s", MAIN_MENU_Items[i]);
-        } else {
-            sprintf(L, " %s", MAIN_MENU_Items[i]);
-        }
-        GLCD_PrintString(0, (i + 1) * 9, L);
-    }
-}
 inline extern void RELAY_ORDER_pg_disp(void) {
 
 	char L[32];
@@ -371,6 +355,20 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].type == 0 && chg_setting_edit_m
 }
 }
 
+inline extern void MAIN_MENU_pg_disp(void) {
+    GLCD_PrintString(0, 0, "Ana Menü");
+//    uint8_t main_menu_disp_index_=main_menu_disp_index;
+
+    for (uint8_t i = 0; i < NUM_MAIN_MENU_ITEMS; i++) {
+        char L[32];
+        if (i == selected_MAIN_MENU) {
+            sprintf(L, ">%s", MAIN_MENU_Items[i]);
+        } else {
+            sprintf(L, " %s", MAIN_MENU_Items[i]);
+        }
+        GLCD_PrintString(0, (i + 1) * 9, L);
+    }
+}
 inline extern void DEVICE_SETT_pg_disp(void) {
     GLCD_PrintString(0, 0, "Cihaz Ayarları");
         char L[32];
