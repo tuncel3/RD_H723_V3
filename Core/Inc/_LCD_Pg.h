@@ -19,9 +19,9 @@ inline extern void DROPPER_pg_disp(void) {
 
 // DIODE ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	char L[3]={4,6,7};
+	char K[4]={45,45,45,'\0'};
 	if (EpD[SET_DROPPER_K1][0].V1==0) {
-		GLCD_PrintString(110, 2*lnhg, "---");
+		GLCD_PrintString(110, 2*lnhg, K);
 	} else {
 		GLCD_PrintString(110, 2*lnhg, "->-");
 	}
