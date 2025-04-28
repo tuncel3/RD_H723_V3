@@ -14,16 +14,16 @@ inline extern void DROPPER_pg_disp(void) {
 	sprintf(L, " Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V, EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 5*lnhg, L);
 
 	GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, ">");	// sprintf(L, ">") bu yazılıyor burda
-	if (dropper_edit_mode) {
-		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // batt rect
+	if ((selected_DROPPER_PG_line >= 0 && selected_DROPPER_PG_line <= 2) && dropper_edit_mode) {
+		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // edit rectangle
 	}
 
 	if (dropper_edit_mode) {
 		if (selected_DROPPER_PG_line==3 && drop_set_dig==0) {
-			x0=48+64; w=4;
+			x0=48+64; y0=(selected_DROPPER_PG_line+1)*lnhg; w=4;
 		}
 		if (selected_DROPPER_PG_line==3 && drop_set_dig==1) {
-			x0=42+64; w=4;
+			x0=42+64; y0=0; w=4;
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
