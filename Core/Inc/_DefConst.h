@@ -311,6 +311,7 @@ typedef enum {
 	MANAGEMENT_pg,
 	FAULT_CODES_REPORT_pg,
 	DROPPER_pg,
+	FANS_pg,
 	RELAY_ORDER_pg,
 	FAULT_CODES_RESET_pg,
 	RECTF_ACTIVE_AT_STARTUP_pg,
@@ -338,7 +339,7 @@ const char* MAIN_MENU_Items[] = {
     "Cihaz Ayarları",
     "Arıza Kod Raporu",
     "Dropper",
-    "Fanlar",
+    "Fanlar Sıcakl Koruma",
     "Kontak Çıkışları",	// RELAY_ORDER_pg
     "Yönetim"
 };

@@ -355,6 +355,9 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].type == 0 && chg_setting_edit_m
 }
 }
 
+inline extern void FANS_pg_disp(void) {
+    GLCD_PrintString(0, 0, "Fanlar Sıcakl Koruma");
+}
 inline extern void MAIN_MENU_pg_disp(void) {
     GLCD_PrintString(0, 0, "Ana Menü");
     char L[32];
