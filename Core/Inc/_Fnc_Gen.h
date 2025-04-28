@@ -750,10 +750,9 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100;
         set_dropper_l_lw_perc=EpD[SET_DROPP_L_LW_PERC][0].V1 / 100;
         set_dropper_l_hg_V_h=set_dropper_l_hg_V;
+        set_dropper_l_hg_perc_h=EpD[SET_DROPP_L_HG_PERC][0].V1;
         set_dropper_l_lw_V_h=set_dropper_l_lw_V;
-        set_dropper_l_hg_perc_h=set_dropper_l_hg_perc;
-        set_dropper_l_lw_perc_h=set_dropper_l_lw_perc;
-    	PRF_GEN("dbg1");
+        set_dropper_l_lw_perc_h=EpD[SET_DROPP_L_LW_PERC][0].V1;
     }
     if (scope & SCOPE_CURRENT_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
         Irect_max = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
