@@ -358,19 +358,14 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].type == 0 && chg_setting_edit_m
 inline extern void MAIN_MENU_pg_disp(void) {
     GLCD_PrintString(0, 0, "Ana Menü");
     char L[32];
-    char M[32];
+//    char M[32];
     uint8_t main_menu_disp_index_=main_menu_disp_index;
 
     for (uint8_t i = 0; i < 6; i++) {
 		sprintf(L, " %s ", MAIN_MENU_Items[main_menu_disp_index_]);
 		GLCD_PrintString(0, (i + 1) * 9, L);
 		GLCD_PrintString(0, (main_menu_arrow_loc+1) * 9, ">");
-//        if (i == selected_MAIN_MENU) {
-//            sprintf(L, ">%s", MAIN_MENU_Items[i]);
-//        } else {
-//            sprintf(L, " %s", MAIN_MENU_Items[i]);
-//        }
-//        GLCD_PrintString(0, (i + 1) * 9, L);
+		main_menu_disp_index_=(main_menu_disp_index_+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
     }
 }
 inline extern void DEVICE_SETT_pg_disp(void) {
