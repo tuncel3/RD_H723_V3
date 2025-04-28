@@ -343,7 +343,7 @@ const char* MAIN_MENU_Items[] = {
     "Yönetim"
 };
 #define NUM_MAIN_MENU_ITEMS (sizeof(MAIN_MENU_Items) / sizeof(MAIN_MENU_Items[0]))
-uint8_t main_menu_disp_index =0;
+uint8_t main_menu_disp_index =2;
 uint8_t main_menu_arrow_loc = 2;
 
 uint8_t selected_MAIN_MENU = 0;
