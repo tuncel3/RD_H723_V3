@@ -431,8 +431,6 @@ typedef enum {
 	RECT_ACTV_AT_STARTUP,
 	VRECT_DC_HIGH_LIM_add,
 	VRECT_DC_LOW_LIM_add,
-	dropp_reg_high_lim_add,
-	dropp_reg_low_lim_sub,
 	TRACK_TABLE_CHANGE,
     NUM_SET_ENUM            // Keeps track of total settings
 } EEPROM_Setting_ID;
@@ -472,7 +470,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_DROPPER_K1, 0.0}, {SET_DROPPER_K1, 0.0} },
     { {SET_DROPPER_K2, 0.0}, {SET_DROPPER_K2, 0.0} },
     { {SET_DROPPER_L_HG, 200.0}, {SET_DROPPER_L_HG, 200.0} },
-    { {SET_DROPPER_L_LW, 200.0}, {SET_DROPPER_L_LW, 200.0} },
+    { {SET_DROPPER_L_LW, 20.0}, {SET_DROPPER_L_LW, 20.0} },
     { {SET_OVTM_ALRM_LIM, 80.0}, {SET_OVTM_ALRM_LIM, 80.0} },
     { {SET_OVTM_OPEN_DUR, 120.0}, {SET_OVTM_OPEN_DUR, 120.0} },
     { {SET_OVTM_OPEN_LIM, 90.0}, {SET_OVTM_OPEN_LIM, 90.0} },
@@ -490,8 +488,6 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {RECT_ACTV_AT_STARTUP, 1.0}, {RECT_ACTV_AT_STARTUP, 1.0} },
     { {VRECT_DC_HIGH_LIM_add, 10.0}, {VRECT_DC_HIGH_LIM_add, 10.0} },
     { {VRECT_DC_LOW_LIM_add, 10.0}, {VRECT_DC_LOW_LIM_add, 10.0} },
-    { {dropp_reg_high_lim_add, 15.0}, {dropp_reg_high_lim_add, 15.0} },
-    { {dropp_reg_low_lim_sub, 10.0}, {dropp_reg_low_lim_sub, 10.0} },
     { {TRACK_TABLE_CHANGE, 1234567.0}, {TRACK_TABLE_CHANGE, 1234567.0} }
 };
 float track_table_change=0;
@@ -547,8 +543,6 @@ const char* Eep_data_Names[] = { // for printing in uart
 	"RECT_ACTV_AT_STARTUP",
 	"VRECT_DC_HIGH_LIM_add",
 	"VRECT_DC_LOW_LIM_add",
-	"dropp_reg_high_lim_add",
-	"dropp_reg_low_lim_sub",
 	"TRACK_TABLE_CHANGE"
 };
 
