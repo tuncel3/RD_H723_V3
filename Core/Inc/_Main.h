@@ -13,12 +13,14 @@ SPI4_WriteVolatRegDisableBuff();
 // write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
 // daha sonra bu kayıt 12345 olarak eeprom a yazılacak. şimdi tabloda değişiklik olunca bu kayıt yeri kayacak ondan açıldığında okunamayacak.
 // açıldığında 12345 olmayacak. o yüzden defaultlar yüklenecek. 12345 okursa devam edecek. programlama sırasında yeni kayıt oluşturulursa tabloda kayma
-olacak ve açılışta bu 12345 okunamayacak.
+//olacak ve açılışta bu 12345 okunamayacak.
 
 SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();
-if (Read_RTC_Osc_Status() == 0) {
+if (EpD[TRACK_TABLE_CHANGE][0].V1 != 12345.12345) {
+	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
 	write_Dat_to_EEp_fn(); // write default variables to eep.
+	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 }
 
 actions_after_charge_mode_change(5); // set charge mode values
