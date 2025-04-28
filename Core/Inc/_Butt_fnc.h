@@ -351,7 +351,12 @@ void bright_fnc(void) {
 
 void bup_fnc(void) {
     if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
-    	asm("NOP");
+		if (main_menu_arrow_loc > 1) {
+			main_menu_arrow_loc--;
+		} else if (main_menu_arrow_loc == 1) {
+			main_menu_disp_index=(main_menu_disp_index-1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
+		}
+		selected_DEVICE_SETT=(main_menu_disp_index+main_menu_arrow_loc) % NUM_MAIN_MENU_ITEMS;
     }
     else if (currentPage == MAIN_MENU_pg) {
     	selected_MAIN_MENU=(selected_MAIN_MENU-1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
