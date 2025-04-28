@@ -671,10 +671,10 @@ float Ibat_min=0; // updated at startup and when DEV_NOM_VOUT changed
 float Vbat_flt=0; // updated at startup and when DEV_NOM_VOUT changed
 //float Vdc_drop_in_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 //float Vdc_drop_in_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
-float dropp_reg_low_lim=0.0f; // updated at startup and when DEV_NOM_VOUT changed
-float dropp_reg_high_lim=0.0f; // updated at startup and when DEV_NOM_VOUT changed
-float Batt_inspect_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
-float Batt_inspect_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
+//float dropp_reg_low_lim=0.0f; // updated at startup and when DEV_NOM_VOUT changed
+//float dropp_reg_high_lim=0.0f; // updated at startup and when DEV_NOM_VOUT changed
+//float Batt_inspect_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
+//float Batt_inspect_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 #define BOOST_CHARGE_TIME_MIN 1
 //#define VDC_FLOAT_MIN 10
 //#define VDC_BOOST_MIN 11
