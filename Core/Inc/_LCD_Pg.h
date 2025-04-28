@@ -4,7 +4,7 @@
 
 
 inline extern void DROPPER_pg_disp(void) {
-    uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
+    uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
     GLCD_PrintString(0, 0, "Dropper");
 	char L[32]; static uint8_t lnhg=9;
 	sprintf(L, " Kontrol   %s", MANUOTO_SEL_Items[(uint32_t)EpD[SET_DROPPER_MANOTO][dropper_edit_mode].V1]); 	GLCD_PrintString(0, 1*lnhg, L);
@@ -18,11 +18,11 @@ inline extern void DROPPER_pg_disp(void) {
 		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // batt rect
 	}
 
-	if (dropper_edit_mode==0) {
-		if (drop_set_dig==0) {
+	if (dropper_edit_mode) {
+		if (selected_DROPPER_PG_line==3 && drop_set_dig==0) {
 			x0=48+64; w=4;
 		}
-		if (drop_set_dig==1) {
+		if (selected_DROPPER_PG_line==3 && drop_set_dig==1) {
 			x0=42+64; w=4;
 		}
 	}
