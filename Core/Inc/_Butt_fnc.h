@@ -838,7 +838,7 @@ if (!chg_setting_edit_mode) {
 	}
 }
     }
-    else if (currentPage == DROPPER_pg) {
+    else if (currentPage == DROPPER_pg) { // DOWN
 		if (dropper_edit_mode == 0) {
 			selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+3) % 3;
 		} else if (dropper_edit_mode == 1) {
