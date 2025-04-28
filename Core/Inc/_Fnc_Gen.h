@@ -747,8 +747,8 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     	//Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
 //        dropp_reg_high_lim = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[dropp_reg_high_lim_add][0].V1 / 100));
 //        dropp_reg_low_lim  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[dropp_reg_low_lim_sub][0].V1 / 100));
-        dropp_reg_high_lim=EpD[SET_DROPPER_K1_V][0].V1;
-        dropp_reg_low_lim=EpD[SET_DROPPER_K1_V][1].V1;
+    	set_dropper_l_hg=EpD[SET_DROPPER_L_HG][0].V1;
+    	set_dropper_l_lw=EpD[SET_DROPPER_L_LW][1].V1;
     }
     if (scope & SCOPE_CURRENT_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
         Irect_max = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
