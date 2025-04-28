@@ -18,12 +18,18 @@ SPI4_WriteVolatRegDisableBuff();
 SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //print_Eep_data_f();
 track_table_change=(uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1;
-PRF_GEN("ttc %lu", track_table_change);
+PRF_GEN("ttc1 %lu", track_table_change);
 if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != 1234567) {
 	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
 	write_Dat_to_EEp_fn(); // write default variables to eep.
+	track_table_change=(uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1;
+	PRF_GEN("ttc2 %lu", track_table_change);
 	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
+	track_table_change=(uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1;
+	PRF_GEN("ttc3 %lu", track_table_change);
 }
+track_table_change=(uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1;
+PRF_GEN("ttc4 %lu", track_table_change);
 
 actions_after_charge_mode_change(5); // set charge mode values
 set_variables_from_EEP_fc(SCOPE_VAR_ALL_FROM_EEP);
