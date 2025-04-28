@@ -15,7 +15,7 @@ void benter_fnc(void) {
 			there_is_past_unseen_fault=0;
 		} else if (selected_MAIN_MENU == 3) {
 			currentPage = DROPPER_pg;
-		} else if (selected_MAIN_MENU == 4) {{
+		} else if (selected_MAIN_MENU == 4) {
 			currentPage = FANS_pg;
 		} else if (selected_MAIN_MENU == 5) {
 			currentPage = RELAY_ORDER_pg;
