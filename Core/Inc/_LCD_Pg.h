@@ -8,10 +8,9 @@ inline extern void FANS_TEMP_pg_disp(void) {
 //    Aşırı Sıck Alarm  80 C
 //    Aşırı Sıck Açma  85 C
 //    Aşr Sıc Açma Süre  10 sn
-	for (int i = 0; i < 6; ++i) {
-		GLCD_DisplayString(0, i, L);
-		sprintf(L, " %s, %5.1f C", FANS_TEMP_Items[0], EpD[SET_COOL_FAN_TEMP][fan_temp_edit_mode].V1); 	GLCD_PrintString(0, 1*lnhg, L);
-	}
+		sprintf(L, " %s, %5.1f C", FANS_TEMP_Items[0], EpD[SET_COOL_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 1*lnhg, L);
+		sprintf(L, " %s, %5.1f C", FANS_TEMP_Items[1], EpD[SET_COOL_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 2*lnhg, L);
+
 }
 inline extern void DROPPER_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
