@@ -244,10 +244,10 @@ if (BLEFT == 0 && BRIGHT == 0 && BUP == 1 && BDOWN == 0 && BENTER == 0 && BESC =
 	if (bup_first_pressed == 0) {
 		bup_first_pressed = 1;
 		bup_fnc();
-		bup_down_cnt+=5;
+		bup_down_cnt+=1;
 	} else {
 		bup_down_cnt+=1;
-		if (bup_down_cnt >= 24) {
+		if (bup_down_cnt >= 50) {
 			bup_down_cnt = 0;
 			bup_fnc();
 		}
@@ -263,10 +263,10 @@ if (BLEFT==0 && BRIGHT==0 && BUP==0 && BDOWN==1 && BENTER==0 && BESC==0) {
 	if (bdown_first_pressed == 0) {
 		bdown_first_pressed = 1;
 		bdown_fnc();
-		bdown_down_cnt+=3;
-	} else {
 		bdown_down_cnt+=1;
-		if (bdown_down_cnt >= 36) {
+	} else {
+		bdown_down_cnt+=5;
+		if (bdown_down_cnt >= 100) {
 			bdown_down_cnt = 0;
 			bdown_fnc();
 		}
