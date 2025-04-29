@@ -82,7 +82,21 @@ inline extern void delayA_1us_g(uint32_t us)
 
 #include "glcd_bsrr_tables.h"
 
-  cpu_cycle_counter_init();
+
+  static inline void delay_cycles(uint32_t cyc)
+  {
+      uint32_t start = DWT->CYCCNT;
+      while ((DWT->CYCCNT - start) < cyc) { __NOP(); }
+  }
+
+  static inline void cpu_cycle_counter_init(void)
+  {
+      CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;   // Trace modülü
+      DWT->CTRL      |= DWT_CTRL_CYCCNTENA_Msk;         // Sayaç koşsun
+  }
+
+static inline void cpu_cycle_counter_init(void);
+cpu_cycle_counter_init();
 
 static inline void GLCD_WriteCommand(uint8_t d) {
 	SET_MODE_COMMAND_WRITE;
