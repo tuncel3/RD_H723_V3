@@ -80,6 +80,7 @@ inline extern void delayA_1us_g(uint32_t us)
       /* 4) EN darbesi (≥450 ns) */
       EN1_g;
       DELAY_NS(100);
+      ////      delayA_1us_g(1); // Add delay if needed
       EN0_g;
   }
 

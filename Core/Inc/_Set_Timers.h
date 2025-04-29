@@ -139,5 +139,5 @@ LL_TIM_EnableCounter(TIM3);
 // TIM3
 ////////////////////////////////////////////
 
-
+cpu_cycle_counter_init();
 
