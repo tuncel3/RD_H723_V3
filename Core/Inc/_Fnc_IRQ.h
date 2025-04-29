@@ -385,7 +385,7 @@ void TIM1_UP_IRQHandler(void)
 	            up_pressed    = 1;
 	            up_hold_cnt   = 0;
 	            up_next_rep   = FIRST_REPEAT_T;
-	            up_fire_flag  = 1;               // anında tetik
+	            bup_fnc();               // anında tetik
 	        }
 	    }
 
@@ -396,7 +396,7 @@ void TIM1_UP_IRQHandler(void)
 	            up_hold_cnt++;
 	            if (up_hold_cnt >= up_next_rep) {
 	                up_next_rep += NEXT_REPEAT_T;
-	                up_fire_flag = 1;            // oto-tekrar
+	                bup_fnc();            // oto-tekrar
 	            }
 	        } else {                            /* ► Bırakıldı */
 	            up_pressed     = 0;
