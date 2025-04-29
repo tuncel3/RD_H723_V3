@@ -58,7 +58,7 @@ inline extern void delayA_1us_g(uint32_t us)
       }
 
       EN1_g;
-      delayA_1us_g(10); // Add delay if needed
+      delayA_1us_g(1); // Add delay if needed
       EN0_g;
   }
 
@@ -91,7 +91,7 @@ inline extern void delayA_1us_g(uint32_t us)
       }
 
       EN1_g;
-      delayA_1us_g(10);
+      delayA_1us_g(1);
       EN0_g;
   }
 
@@ -103,7 +103,7 @@ inline extern void delayA_1us_g(uint32_t us)
    // Argument      : None	                                                     /
    // Return			   : None                                                      /
    //---------------------------------------------------------------------------/
-  void GLCD_RefreshGRAM_fast(void)
+  void GLCD_RefreshGRAM(void)
   {
       uint8_t i, j;
 
