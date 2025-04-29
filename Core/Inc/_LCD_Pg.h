@@ -12,7 +12,7 @@ inline extern void FANS_TEMP_pg_disp(void) {
 	sprintf(L, " %s   %03lu s", FANS_TEMP_Items[4], (uint32_t)EpD[SET_OVT_OPEN_DELAY][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 5*lnhg, L);
 	GLCD_PrintString(0, (selected_FAN_TEMP_PG_line+1)*lnhg, ">");
 
-	if (dropper_edit_mode) {
+	if (fan_temp_edit_mode) {
 		if ((fan_temp_blink^=1)==0) {
 			x0=64+(fan_temp_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
 		}
