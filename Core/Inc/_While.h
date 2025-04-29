@@ -975,7 +975,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
 
-if (up_fire_flag) { up_fire_flag = 0;  bup_fnc();   }
 
 if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 	while_RTC_delay_h=ms_tick_cnt;
@@ -1083,6 +1082,7 @@ if (req_reset_db==1) {
 	NVIC_SystemReset();
 }
 
+if (up_fire_flag) { up_fire_flag = 0;  bup_fnc();   }
 //if (BDOWN_fire) { BDOWN_fire = 0;  bdown_fnc(); }
 
 
