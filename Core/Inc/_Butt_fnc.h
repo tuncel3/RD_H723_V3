@@ -489,20 +489,35 @@ if (!chg_setting_edit_mode) {
 		if (!fan_temp_edit_mode) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
 		} else if (fan_temp_edit_mode) {
-			if (selected_FAN_TEMP_PG_line == 0) {
+			if (selected_FAN_TEMP_PG_line == 0 && EpD[SET_COOL_FAN_TEMP][1].V1 < 80) {
 				EpD[SET_COOL_FAN_TEMP][1].V1 += fan_temp_step_values[fan_temp_dig];
+				if (EpD[SET_COOL_FAN_TEMP][1].V1 > 90) {
+					EpD[SET_COOL_FAN_TEMP][1].V1 = 90;
+				}
 			}
 			if (selected_FAN_TEMP_PG_line == 1) {
 				EpD[SET_TRANSF_FAN_TEMP][1].V1 += fan_temp_step_values[fan_temp_dig];
+				if (EpD[SET_TRANSF_FAN_TEMP][1].V1 > 90) {
+					EpD[SET_TRANSF_FAN_TEMP][1].V1 = 90;
+				}
 			}
 			if (selected_FAN_TEMP_PG_line == 2) {
 				EpD[SET_OVERTEMP_ALARM][1].V1 += fan_temp_step_values[fan_temp_dig];
+				if (EpD[SET_OVERTEMP_ALARM][1].V1 > 85) {
+					EpD[SET_OVERTEMP_ALARM][1].V1 = 85;
+				}
 			}
 			if (selected_FAN_TEMP_PG_line == 3) {
 				EpD[SET_OVERTEMP_OPEN][1].V1 += fan_temp_step_values[fan_temp_dig];
+				if (EpD[SET_OVERTEMP_OPEN][1].V1 > 90) {
+					EpD[SET_OVERTEMP_OPEN][1].V1 = 90;
+				}
 			}
 			if (selected_FAN_TEMP_PG_line == 4) {
 				EpD[SET_OVT_OPEN_DELAY][1].V1 += fan_temp_step_values[fan_temp_dig];
+				if (EpD[SET_OVT_OPEN_DELAY][1].V1 > 10) {
+					EpD[SET_OVT_OPEN_DELAY][1].V1 = 10;
+				}
 			}
 		}
 
@@ -868,6 +883,9 @@ if (!chg_setting_edit_mode) {
 		} else if (fan_temp_edit_mode) {
 			if (selected_FAN_TEMP_PG_line == 0) {
 				EpD[SET_COOL_FAN_TEMP][1].V1 -= fan_temp_step_values[fan_temp_dig];
+				if (EpD[SET_OVT_OPEN_DELAY][1].V1 > 10) {
+					EpD[SET_OVT_OPEN_DELAY][1].V1 = 10;
+				}
 			}
 			if (selected_FAN_TEMP_PG_line == 1) {
 				EpD[SET_TRANSF_FAN_TEMP][1].V1 -= fan_temp_step_values[fan_temp_dig];
