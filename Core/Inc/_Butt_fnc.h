@@ -524,7 +524,7 @@ if (!chg_setting_edit_mode) {
 
     }
 
-    else if (currentPage == RELAY_ORDER_pg) {
+    else if (currentPage == RELAY_ORDER_pg) { // UP
 
         if (rel_disp_mode == 1) {
 			if (rel_ord_arrow_loc > 1) {
@@ -546,10 +546,10 @@ if (!chg_setting_edit_mode) {
         }
     }
 
-    else if (currentPage == MANAGEMENT_pg) {
+    else if (currentPage == MANAGEMENT_pg) { // UP
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
-    else if (currentPage == CALIBRATION_pg) {
+    else if (currentPage == CALIBRATION_pg) { // UP
     	if (cal_sel_edit_mode == cal_none) {
 			if (cal_sel_col==0) {
 				cal_sel_item_left=((cal_sel_item_left-1+5)%5);
@@ -640,7 +640,7 @@ if (!chg_setting_edit_mode) {
 				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
 			}
     	}
-    	else if (cal_sel_col==1) {
+    	else if (cal_sel_col==1) { // UP
 			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==0 && cal_sel_digit==0) {
 				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1*1.0002;
 				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
@@ -693,7 +693,7 @@ if (!chg_setting_edit_mode) {
 
 
     }
-    else if (currentPage == FAULT_CODES_REPORT_pg) {
+    else if (currentPage == FAULT_CODES_REPORT_pg) { // UP
     	flt_disp_index=(flt_disp_index-1+NUM_FAULT_RECORD) % NUM_FAULT_RECORD;
     }
     else if (currentPage == DATE_TIME_pg && DATE_TIME_edit_mode == 1 && DATE_TIME_edit_digit == 11) {
@@ -736,17 +736,17 @@ if (!chg_setting_edit_mode) {
 }
 
 void bdown_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
+    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) { // DOWN
     	HOME_PAGE_pg_sel = 2;
     }
-    else if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 2) {
+    else if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 2) { // DOWN
     	HOME_PAGE_pg_sel = 1;
     }
-    else if (currentPage == MAIN_MENU_pg) {
+    else if (currentPage == MAIN_MENU_pg) { // DOWN
 		main_menu_disp_index=(main_menu_disp_index+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
     	selected_MAIN_MENU=(selected_MAIN_MENU+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
     }
-    else if (currentPage == DEVICE_SETT_pg) {
+    else if (currentPage == DEVICE_SETT_pg) { // DOWN
 
 
     	if (!dev_setting_edit_mode) {
@@ -800,7 +800,7 @@ void bdown_fnc(void) {
 			}
     	}
     }
-    else if (currentPage == CHARGE_SETT_pg) {
+    else if (currentPage == CHARGE_SETT_pg) { // DOWN
 
 if (!chg_setting_edit_mode) {
 	if (chg_set_arrow_loc < 4) {
@@ -916,7 +916,7 @@ if (!chg_setting_edit_mode) {
 
     }
 
-    else if (currentPage == RELAY_ORDER_pg) {
+    else if (currentPage == RELAY_ORDER_pg) { // DOWN
 
         if (rel_disp_mode == 1) {
 			if (rel_ord_arrow_loc < 4) {
@@ -939,7 +939,7 @@ if (!chg_setting_edit_mode) {
         }
     }
 
-    else if (currentPage == MANAGEMENT_pg) {
+    else if (currentPage == MANAGEMENT_pg) { // DOWN
     	selected_MANAGEMENT=(selected_MANAGEMENT+1) % NUM_MANAGEMENT_ITEMS;
     }
     else if (currentPage == CALIBRATION_pg) {
@@ -1034,7 +1034,7 @@ if (!chg_setting_edit_mode) {
 				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
 			}
     	}
-    	else if (cal_sel_col==1) {
+    	else if (cal_sel_col==1) { // DOWN
 			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==0 && cal_sel_digit==0) {
 				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1/1.0002;
 				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
@@ -1087,7 +1087,7 @@ if (!chg_setting_edit_mode) {
 
 
     }
-    else if (currentPage == FAULT_CODES_REPORT_pg) {
+    else if (currentPage == FAULT_CODES_REPORT_pg) { // DOWN
     	flt_disp_index=(flt_disp_index+1+NUM_FAULT_RECORD) % NUM_FAULT_RECORD;
     }
     else if (currentPage == DATE_TIME_pg && DATE_TIME_edit_mode == 1 && DATE_TIME_edit_digit == 11) {
@@ -1131,16 +1131,16 @@ if (!chg_setting_edit_mode) {
 
 
 void besc_fnc(void) {
-    if (currentPage == HOME_PAGE_pg) {
+    if (currentPage == HOME_PAGE_pg) { // ESC
     	asm("NOP");
     }
-    else if (currentPage == MAIN_MENU_pg) {
+    else if (currentPage == MAIN_MENU_pg) { // ESC
         currentPage = HOME_PAGE_pg;
     }
-    else if (currentPage == FANS_TEMP_pg) {
+    else if (currentPage == FANS_TEMP_pg) { // ESC
         currentPage = HOME_PAGE_pg;
     }
-    else if (currentPage == CHARGE_SETT_pg) {
+    else if (currentPage == CHARGE_SETT_pg) { // ESC
     	if (chg_setting_edit_mode) {
     		chg_setting_edit_mode = 0;
 
@@ -1173,7 +1173,7 @@ void besc_fnc(void) {
 	        currentPage = MAIN_MENU_pg;
     	}
     }
-    else if (currentPage == DEVICE_SETT_pg) {
+    else if (currentPage == DEVICE_SETT_pg) { // ESC
     	if (dev_setting_edit_mode) {
     		dev_setting_edit_mode = 0;
     		if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_REV_DET) {
@@ -1227,7 +1227,7 @@ void besc_fnc(void) {
         	currentPage = MAIN_MENU_pg;
         }
     }
-    else if (currentPage == RELAY_ORDER_pg) {
+    else if (currentPage == RELAY_ORDER_pg) { // ESC
         if (rel_disp_mode) {
         	rel_disp_mode = 1;
         	rel_edit_mode = 0;
@@ -1237,14 +1237,14 @@ void besc_fnc(void) {
         	rel_edit_mode = 0;
         }
     }
-    else if (currentPage == MANAGEMENT_pg) {
+    else if (currentPage == MANAGEMENT_pg) { // ESC
         currentPage = MAIN_MENU_pg;
     }
-    else if (currentPage == CALIBRATION_pg) {
+    else if (currentPage == CALIBRATION_pg) { // ESC
         currentPage = MANAGEMENT_pg;
 		bat_inspection_allowed=1;
     }
-    else if (currentPage == FAULT_CODES_REPORT_pg) {
+    else if (currentPage == FAULT_CODES_REPORT_pg) { // ESC
         currentPage = MAIN_MENU_pg;
         FAULT_CODES_REPORT_disp_mode=0;
     }
