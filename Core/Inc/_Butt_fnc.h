@@ -180,6 +180,9 @@ void bright_fnc(void) {
     		PRF_GEN("User req STOP rectf");
     	}
     }
+    else if (currentPage == FANS_TEMP_pg) {
+
+    }
     else if (currentPage == CHARGE_SETT_pg) {
     	if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_CHARGE_MODE) {
     		EpD[SET_CHARGE_MODE][1].V1=((uint32_t)EpD[SET_CHARGE_MODE][1].V1-1+NUM_CH_MOD_SEL_ITEMS) % NUM_CH_MOD_SEL_ITEMS;
