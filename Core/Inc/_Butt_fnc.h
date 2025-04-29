@@ -233,18 +233,6 @@ void bright_fnc(void) {
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1+1.0;
 				if (EpD[DEV_NOM_VOUT][1].V1 >= VDC_NOM_MAX)
 					EpD[DEV_NOM_VOUT][1].V1=VDC_NOM_MAX;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-				EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][1].V1+1.0;
-				if (EpD[SET_OVTM_ALRM_LIM][1].V1 >= 80.0f)
-					EpD[SET_OVTM_ALRM_LIM][1].V1=80.0f;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-				EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][1].V1+10.0;
-				if (EpD[SET_OVTM_OPEN_DUR][1].V1 >= 600.0f)
-					EpD[SET_OVTM_OPEN_DUR][1].V1=600.0f;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-				EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][1].V1+1.0;
-				if (EpD[SET_OVTM_OPEN_LIM][1].V1 >= 90.0f)
-					EpD[SET_OVTM_OPEN_LIM][1].V1=90.0f;
 	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 	    		EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1+1.0;
 	    		if (EpD[IRECT_LIM_RT_][1].V1 >= Irect_max)
@@ -367,19 +355,7 @@ void bup_fnc(void) {
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1+0.1;
 				if (EpD[DEV_NOM_VOUT][1].V1 >= VDC_NOM_MAX)
 					EpD[DEV_NOM_VOUT][1].V1=VDC_NOM_MAX;
-			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-				EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][1].V1+0.1;
-				if (EpD[SET_OVTM_ALRM_LIM][1].V1 >= 80.0f)
-					EpD[SET_OVTM_ALRM_LIM][1].V1=80.0f;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-				EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][1].V1+1;
-				if (EpD[SET_OVTM_OPEN_DUR][1].V1 >= 600.0f)
-					EpD[SET_OVTM_OPEN_DUR][1].V1=600.0f;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-				EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][1].V1+0.1;
-				if (EpD[SET_OVTM_OPEN_LIM][1].V1 >= 90.0f)
-					EpD[SET_OVTM_OPEN_LIM][1].V1=90.0f;
-	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 				EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1+0.1;
 				if (EpD[IRECT_LIM_RT_][1].V1 >= Irect_max)
 					EpD[IRECT_LIM_RT_][1].V1=Irect_max;
