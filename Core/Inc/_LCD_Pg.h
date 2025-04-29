@@ -13,8 +13,8 @@ inline extern void FANS_TEMP_pg_disp(void) {
 	GLCD_PrintString(0, (selected_FAN_TEMP_PG_line+1)*lnhg, ">");
 
 	if (dropper_edit_mode) {
-		if ((dropper_edit_blink^=1)==0) {
-			x0=64+(drop_set_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
+		if ((fan_temp_blink^=1)==0) {
+			x0=64+(fan_temp_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
