@@ -1046,6 +1046,9 @@ void besc_fnc(void) {
     else if (currentPage == MAIN_MENU_pg) {
         currentPage = HOME_PAGE_pg;
     }
+    else if (currentPage == FANS_TEMP_pg) {
+        currentPage = HOME_PAGE_pg;
+    }
     else if (currentPage == CHARGE_SETT_pg) {
     	if (chg_setting_edit_mode) {
     		chg_setting_edit_mode = 0;

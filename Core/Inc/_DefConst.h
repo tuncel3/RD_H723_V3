@@ -376,8 +376,8 @@ float set_dropper_l_hg_perc = 0;
 float set_dropper_l_lw_perc = 0;
 float set_dropper_l_hg_V_h = 0.15f;
 float set_dropper_l_lw_V_h = 0.1f;
-float EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1 = 0;
-float EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1 = 0;
+//float EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1 = 0;
+//float EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1 = 0;
 
 typedef enum {
 	FLOAT,
