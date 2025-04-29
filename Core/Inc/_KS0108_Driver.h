@@ -100,7 +100,7 @@ extern stFonts_t *SelectedFont;
 
 extern  void __delay(void);
 extern void   GLCD_WriteCommand(uint8_t Command);
-extern void GLCD_WriteData(uint8_t Data);
+//static inline void GLCD_WriteData(uint8_t Data);
 extern void  GLCD_RefreshGRAM(void);
 extern void GLCD_ClearScreen(uint8_t Fill);
 extern void  GLCD_SetFont(stFonts_t *Font);

@@ -104,7 +104,7 @@ static inline void GLCD_WriteData(uint8_t d)
     GPIOD->BSRR = bsrrD[d];   // bit0    → PD
 
     EN1_g;              // /WR yüksek
-    __NOP(); __NOP();   // ~60 ns (KS0108 min. 450 ns; isteğe göre uzat)
+//    __NOP(); __NOP();   // ~60 ns (KS0108 min. 450 ns; isteğe göre uzat)
     EN0_g;              // /WR düşük
 }
 
