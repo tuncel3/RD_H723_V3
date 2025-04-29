@@ -242,11 +242,11 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			} else if (selected_DROPPER_PG_line == 3) {
 				dropper_edit_blink=1;
 					set_dropper_l_hg_V_h=set_dropper_l_hg_V;
-					EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1=EpD[SET_DROPP_L_HG_PERC][0].V1;
+					EpD[SET_DROPP_L_HG_PERC][1].V1=EpD[SET_DROPP_L_HG_PERC][0].V1;
 			} else if (selected_DROPPER_PG_line == 4) {
 				dropper_edit_blink=1;
 					set_dropper_l_lw_V_h=set_dropper_l_lw_V;
-					EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1=EpD[SET_DROPP_L_LW_PERC][0].V1;
+					EpD[SET_DROPP_L_LW_PERC][1].V1=EpD[SET_DROPP_L_LW_PERC][0].V1;
 			}
 		} else if (!dropper_edit_mode) {
 			if (selected_DROPPER_PG_line == 0) {
@@ -265,11 +265,11 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				Rec_Dat_to_EEp_f(SET_DROPPER_K2);
 			} else if (selected_DROPPER_PG_line == 3) {
 				set_dropper_l_hg_V=set_dropper_l_hg_V_h;
-				EpD[SET_DROPP_L_HG_PERC][0].V1=EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1;
+				EpD[SET_DROPP_L_HG_PERC][0].V1=EpD[SET_DROPP_L_HG_PERC][1].V1;
 				Rec_Dat_to_EEp_f(SET_DROPP_L_HG_PERC);
 			} else if (selected_DROPPER_PG_line == 4) {
 				set_dropper_l_lw_V=set_dropper_l_lw_V_h;
-				EpD[SET_DROPP_L_LW_PERC][0].V1=EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1;
+				EpD[SET_DROPP_L_LW_PERC][0].V1=EpD[SET_DROPP_L_LW_PERC][1].V1;
 				Rec_Dat_to_EEp_f(SET_DROPP_L_LW_PERC);
 			}
 //			set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
