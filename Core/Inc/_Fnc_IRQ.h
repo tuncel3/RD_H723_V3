@@ -374,6 +374,12 @@ void TIM1_UP_IRQHandler(void)
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
 		LL_TIM_ClearFlag_UPDATE(TIM1);
 
+		if (BLEFT == 0 && BRIGHT == 0 && BUP == 1 && BDOWN == 0 && BENTER == 0 && BESC == 0) {
+			bup_fnc();
+		}
+		if (BLEFT == 0 && BRIGHT == 0 && BUP == 0 && BDOWN == 1 && BENTER == 0 && BESC == 0) {
+			bdown_fnc();
+		}
 	}
 }
 
