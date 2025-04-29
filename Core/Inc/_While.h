@@ -975,6 +975,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
 
+if (up_fire_flag) { up_fire_flag = 0;  bup_fnc();   }
 
 if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 	while_RTC_delay_h=ms_tick_cnt;
@@ -982,65 +983,65 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
     rtc_timestamp_fnc();
 }
 
-if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
-	while_LCD_delay_h=ms_tick_cnt;
-
-	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
-		while_LCD_reinit_per=ms_tick_cnt;
-		GLCD_Init_while();
-
-	}
-
-	GLCD_ClearScreen(0x00);
-
-    switch (currentPage) {
-        case HOME_PAGE_pg:
-        	HOME_PAGE_pg_disp();
-            break;
-        case MAIN_MENU_pg:
-        	MAIN_MENU_pg_disp();
-            break;
-        case CHARGE_SETT_pg:
-        	CHARGE_SETT_pg_disp();
-            break;
-        case DEVICE_SETT_pg:
-        	DEVICE_SETT_pg_disp();
-            break;
-        case MANAGEMENT_pg:
-        	MANAGEMENT_pg_disp();
-            break;
-        case FAULT_CODES_REPORT_pg:
-        	FAULT_CODES_REPORT_pg_disp();
-            break;
-        case DROPPER_pg:
-        	DROPPER_pg_disp();
-            break;
-        case FANS_TEMP_pg:
-        	FANS_TEMP_pg_disp();
-            break;
-        case RELAY_ORDER_pg:
-        	RELAY_ORDER_pg_disp();
-            break;
-        case FAULT_CODES_RESET_pg:
-        	FAULT_CODES_RESET_pg_disp();
-            break;
-        case RECTF_ACTIVE_AT_STARTUP_pg:
-        	RECTF_ACTIVE_AT_STARTUP_pg_disp();
-            break;
-        case DEVICE_RESET_pg:
-        	DEVICE_RESET_pg_disp();
-            break;
-        case CALIBRATION_pg:
-        	CALIBRATION_pg_disp();
-            break;
-        case DATE_TIME_pg:
-        	DATE_TIME_pg_disp();
-            break;
-        default:
-            break;
-    }
-	GLCD_RefreshGRAM();
-}
+//if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
+//	while_LCD_delay_h=ms_tick_cnt;
+//
+//	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
+//		while_LCD_reinit_per=ms_tick_cnt;
+//		GLCD_Init_while();
+//
+//	}
+//
+//	GLCD_ClearScreen(0x00);
+//
+//    switch (currentPage) {
+//        case HOME_PAGE_pg:
+//        	HOME_PAGE_pg_disp();
+//            break;
+//        case MAIN_MENU_pg:
+//        	MAIN_MENU_pg_disp();
+//            break;
+//        case CHARGE_SETT_pg:
+//        	CHARGE_SETT_pg_disp();
+//            break;
+//        case DEVICE_SETT_pg:
+//        	DEVICE_SETT_pg_disp();
+//            break;
+//        case MANAGEMENT_pg:
+//        	MANAGEMENT_pg_disp();
+//            break;
+//        case FAULT_CODES_REPORT_pg:
+//        	FAULT_CODES_REPORT_pg_disp();
+//            break;
+//        case DROPPER_pg:
+//        	DROPPER_pg_disp();
+//            break;
+//        case FANS_TEMP_pg:
+//        	FANS_TEMP_pg_disp();
+//            break;
+//        case RELAY_ORDER_pg:
+//        	RELAY_ORDER_pg_disp();
+//            break;
+//        case FAULT_CODES_RESET_pg:
+//        	FAULT_CODES_RESET_pg_disp();
+//            break;
+//        case RECTF_ACTIVE_AT_STARTUP_pg:
+//        	RECTF_ACTIVE_AT_STARTUP_pg_disp();
+//            break;
+//        case DEVICE_RESET_pg:
+//        	DEVICE_RESET_pg_disp();
+//            break;
+//        case CALIBRATION_pg:
+//        	CALIBRATION_pg_disp();
+//            break;
+//        case DATE_TIME_pg:
+//        	DATE_TIME_pg_disp();
+//            break;
+//        default:
+//            break;
+//    }
+//	GLCD_RefreshGRAM();
+//}
 
 if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 	UART_Debg_t_h=ms_tick_cnt;
@@ -1082,7 +1083,6 @@ if (req_reset_db==1) {
 	NVIC_SystemReset();
 }
 
-if (up_fire_flag) { up_fire_flag = 0;  bup_fnc();   }
 //if (BDOWN_fire) { BDOWN_fire = 0;  bdown_fnc(); }
 
 
