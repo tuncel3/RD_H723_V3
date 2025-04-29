@@ -15,7 +15,7 @@
 // TIM23	THY TRIG TIME S				32
 // TIM24	THY TRIG TIME T				32
 
-NVIC_SetPriority(SysTick_IRQn, 14);			// SYS TICK
+NVIC_SetPriority(SysTick_IRQn, 8);			// SYS TICK
 NVIC_SetPriority(DMA1_Stream1_IRQn, 0);		// ADC DMA
 NVIC_SetPriority(EXTI9_5_IRQn, 2);			// ZCR INPUTS
 NVIC_SetPriority(TIM16_IRQn, 3);			// TIM16	THY DRV PWM
@@ -23,8 +23,8 @@ NVIC_SetPriority(TIM2_IRQn, 4);				// TIM2		THY TRIG TIME R
 NVIC_SetPriority(TIM23_IRQn, 4);			// TIM23	THY TRIG TIME S
 NVIC_SetPriority(TIM24_IRQn, 4);			// TIM24	THY TRIG TIME T
 NVIC_SetPriority(TIM3_IRQn, 4);				// TIM3		DELAY ZC
-NVIC_SetPriority(TIM7_IRQn, 10);			// TIM7		1MS COUNTER
-NVIC_SetPriority(TIM1_IRQn, 9);				// TIM1		10US COUNTER
+NVIC_SetPriority(TIM7_IRQn, 9);			// TIM7		1MS COUNTER
+NVIC_SetPriority(TIM1_IRQn, 10);				// TIM1		10US COUNTER
 NVIC_SetPriority(DMA1_Stream0_IRQn, 15);	// UART DMA
 
 NVIC_EnableIRQ(TIM2_IRQn);
