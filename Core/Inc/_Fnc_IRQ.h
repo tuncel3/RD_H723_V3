@@ -374,31 +374,28 @@ void TIM1_UP_IRQHandler(void)
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
 		LL_TIM_ClearFlag_UPDATE(TIM1);
 
-	    /* ---------------- BUP ---------------- */
-	    uint8_t up_raw = (BLEFT==0 && BRIGHT==0 && BUP==1 &&
-	                      BDOWN==0 && BENTER==0 && BESC==0);
+        if (BLEFT == 0 && BRIGHT == 0 && BUP == 1 && BDOWN == 0 && BENTER == 0 && BESC == 0) {
+            if (BUP_pressed == 0) {
+                BUP_pressed = 1;
+                bup_fnc(); // İlk bastığında çağır
+                BUP_press_time = 0;
+                BUP_repeat_time = 0;
+            } else {
+//                BUP_press_time++;
+//                if (BUP_press_time >= 50000) { // 500 ms (10us x 50000 = 500ms)
+//                    BUP_repeat_time++;
+//                    if (BUP_repeat_time >= 10000) { // 100 ms (10us x 10000 = 100ms)
+//                        BUP_repeat_time = 0;
+//                        bup_fnc();
+//                    }
+//                }
+            }
+        } else {
+            BUP_pressed = 0;
+            BUP_press_time = 0;
+            BUP_repeat_time = 0;
+        }
 
-	    if (up_raw) {
-	        if (!BUP_pressed) {                     // ilk basış
-	            BUP_pressed = 1;
-	            BUP_press_time  = 0;
-	            BUP_repeat_time = 0;
-	            BUP_fire = 1;                       // ilk tetik
-	        } else {
-	            BUP_press_time++;
-	            if (BUP_press_time >= FIRST_REPEAT_T) {
-	                BUP_repeat_time++;
-	                if (BUP_repeat_time >= NEXT_REPEAT_T) {
-	                    BUP_repeat_time = 0;
-	                    BUP_fire = 1;               // oto-tekrar tetik
-	                }
-	            }
-	        }
-	    } else {                                   // bırakıldı
-	        BUP_pressed = 0;
-	        BUP_press_time  = 0;
-	        BUP_repeat_time = 0;
-	    }
 	}
 }
 
