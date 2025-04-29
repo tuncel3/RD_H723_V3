@@ -1407,13 +1407,16 @@ typedef enum {
 BLM_STATE blm_op_phase = 0;
 
 
+#define FIRST_REPEAT_T     50000u   // 500 ms
+#define NEXT_REPEAT_T      10000u   // 100 ms
+#define RELEASE_DELAY_T     5000u   //  50 ms  (yeni)
 
-#define FIRST_REPEAT_T   50000u   // 500 ms
-#define NEXT_REPEAT_T    10000u   // 100 ms
-
-static volatile uint8_t  BUP_pressed      = 0;
-static volatile uint32_t BUP_press_time   = 0;
-static volatile uint32_t BUP_repeat_time  = 0;
-static volatile uint8_t  BUP_fire         = 0;   // ana döngüde çalıştır
-
+/* -------------------------------------------------
+   Değişkenler
+   -------------------------------------------------*/
+volatile uint8_t  up_pressed    = 0;      // 0=boşta, 1=basılı
+volatile uint32_t up_hold_cnt   = 0;      // basılı süresi
+volatile uint32_t up_next_rep   = 0;      // sonraki tekrar eşiği
+volatile uint8_t  up_fire_flag  = 0;      // ana döngüde bup_fnc() için
+volatile uint16_t up_release_cnt= RELEASE_DELAY_T; // bırakıldıktan sonra sayaç
 
