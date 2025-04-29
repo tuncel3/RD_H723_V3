@@ -40,28 +40,45 @@ inline extern void delayA_1us_g(uint32_t us)
  // Argument      : Command			                                             /
  // Return			   : None                                                      /
  //---------------------------------------------------------------------------/
-  void GLCD_WriteCommand(uint8_t Command) {
-      SET_MODE_COMMAND_WRITE;
+//  void GLCD_WriteCommand(uint8_t Command) {
+//      SET_MODE_COMMAND_WRITE;
+//
+//      // Define static constant arrays to avoid re-initialization
+//      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
+//      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
+//                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
+//
+//      // Write each bit efficiently
+//      for (int i = 0; i < 8; i++) {
+//          if (Command & (1 << i)) {
+//              ports[i]->BSRR = pins[i];  // Set bit
+//          } else {
+//              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
+//          }
+//      }
+//
+//      EN1_g;
+////      delayA_1us_g(1); // Add delay if needed
+//      EN0_g;
+//  }
+  static inline void GLCD_WriteCommand(uint8_t cmd)
+  {
+      /* 1) RS=0, RW=0  → Komut-yazma modu */
+      SET_MODE_COMMAND_WRITE;     //  ←  burası RS’i 0’a çeker
 
-      // Define static constant arrays to avoid re-initialization
-      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
-      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
-                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
+      /* 2) Veri pinlerini ayarla (D0-D7) */
+      GPIOA->BSRR = bsrrA[cmd];   // PA15/12/11/10
+      GPIOC->BSRR = bsrrC[cmd];   // PC12/11/10
+      GPIOD->BSRR = bsrrD[cmd];   // PD0
 
-      // Write each bit efficiently
-      for (int i = 0; i < 8; i++) {
-          if (Command & (1 << i)) {
-              ports[i]->BSRR = pins[i];  // Set bit
-          } else {
-              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
-          }
-      }
+      /* 3) Setup gecikmesi (≥140 ns) */
+      for (volatile int k = 0; k < 12; k++) __NOP__;   // ≈170 ns @72 MHz
 
-      EN1_g;
-//      delayA_1us_g(1); // Add delay if needed
-      EN0_g;
+      /* 4) EN darbesi (≥450 ns) */
+      EN1_g;                                // /WR ↑
+      for (volatile int k = 0; k < 16; k++) __NOP__;  // ≈225 ns
+      EN0_g;                                // /WR ↓
   }
-
 
 
 
