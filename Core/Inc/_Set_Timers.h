@@ -64,21 +64,15 @@ LL_TIM_EnableIT_UPDATE(TIM7);
 LL_TIM_SetPrescaler(TIM7, 4);
 LL_TIM_SetCounterMode(TIM7, LL_TIM_COUNTERMODE_UP);
 LL_TIM_SetAutoReload(TIM7, 54999);
-LL_TIM_EnableARRPreload(TIM7);
-LL_TIM_SetTriggerOutput(TIM7, LL_TIM_TRGO_RESET);
-LL_TIM_DisableMasterSlaveMode(TIM7);
 LL_TIM_EnableCounter(TIM7);
 // TIM7
 ////////////////////////////////////////////
 // TIM1		10US COUNTER
 LL_TIM_EnableIT_UPDATE(TIM1);
-LL_TIM_SetPrescaler(TIM1, 4);
-LL_TIM_SetCounterMode(TIM7, LL_TIM_COUNTERMODE_UP);
-LL_TIM_SetAutoReload(TIM7, 54999);
-LL_TIM_EnableARRPreload(TIM7);
-LL_TIM_SetTriggerOutput(TIM7, LL_TIM_TRGO_RESET);
-LL_TIM_DisableMasterSlaveMode(TIM7);
-LL_TIM_EnableCounter(TIM7);
+LL_TIM_SetPrescaler(TIM1, 0);
+LL_TIM_SetCounterMode(TIM1, LL_TIM_COUNTERMODE_UP);
+LL_TIM_SetAutoReload(TIM1, 2749);
+LL_TIM_EnableCounter(TIM1);
 // TIM1
 ////////////////////////////////////////////
 // TIM15	FORWARD CONV. MOS GATE
