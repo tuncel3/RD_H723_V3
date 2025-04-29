@@ -1082,7 +1082,7 @@ if (req_reset_db==1) {
 	NVIC_SystemReset();
 }
 
-if (BUP_fire)   { BUP_fire   = 0;  bup_fnc();   }
+if (up_fire_flag) { up_fire_flag = 0;  bup_fnc();   }
 //if (BDOWN_fire) { BDOWN_fire = 0;  bdown_fnc(); }
 
 

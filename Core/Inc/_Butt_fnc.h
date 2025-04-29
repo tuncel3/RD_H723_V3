@@ -342,6 +342,7 @@ void bright_fnc(void) {
 void bup_fnc(void) {
     if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
     	asm("NOP");
+    	PRF_GEN("%lu", var1++);
     }
     else if (currentPage == MAIN_MENU_pg) {
 		main_menu_disp_index=(main_menu_disp_index-1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
