@@ -1,5 +1,18 @@
 
 
+inline extern void FANS_TEMP_pg_disp(void) {
+	char L[32]; static uint8_t lnhg=9;
+    GLCD_PrintString(0, 0, "Fanlar Sıcakl Koruma");
+//    Soğutuc Fan  75 C
+//    Trafo Fan    75 C
+//    Aşırı Sıck Alarm  80 C
+//    Aşırı Sıck Açma  85 C
+//    Aşr Sıc Açma Süre  10 sn
+	for (int i = 0; i < 6; ++i) {
+		GLCD_DisplayString(0, i, L);
+		sprintf(L, " %s, %5.1f C", FANS_TEMP_Items[0], EpD[SET_COOL_FAN_TEMP][fan_temp_edit_mode].V1); 	GLCD_PrintString(0, 1*lnhg, L);
+	}
+}
 inline extern void DROPPER_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
     GLCD_PrintString(0, 0, "Dropper");
@@ -355,9 +368,6 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].type == 0 && chg_setting_edit_m
 }
 }
 
-inline extern void FANS_pg_disp(void) {
-    GLCD_PrintString(0, 0, "Fanlar Sıcakl Koruma");
-}
 inline extern void MAIN_MENU_pg_disp(void) {
     GLCD_PrintString(0, 0, "Ana Menü");
     char L[32];

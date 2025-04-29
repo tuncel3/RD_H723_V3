@@ -334,6 +334,17 @@ uint8_t fault_codes_reset_qst_accept = 0;
 uint8_t fault_codes_reset_completed = 0;
 uint8_t batt_reverse_req_right = 0;
 
+const char* FANS_TEMP_Items[] = {
+	"Soğutuc Fan",
+	"Trafo Fan",
+	"Aşırı Sıck Alarm",
+	"Aşırı Sıck Açma",
+	"Aşr Sıc Açma Süre"
+};
+#define FANS_TEMP_ITEMS (sizeof(MAIN_MENU_Items) / sizeof(MAIN_MENU_Items[0]))
+uint8_t fan_temp_edit_mode = 0;
+uint8_t selected_FANS_TEMP = 0;
+
 const char* MAIN_MENU_Items[] = {
     "Şarj Ayarları",
     "Cihaz Ayarları",
@@ -347,7 +358,6 @@ const char* MAIN_MENU_Items[] = {
 uint8_t main_menu_disp_index =5;
 uint8_t main_menu_arrow_loc = 2;
 uint8_t selected_MAIN_MENU = 0;
-
 uint32_t switch_to_auto_mode_completed=0;
 uint32_t timed_mode_actions_do_once=0;
 uint32_t timed_mode_time_ended=0;
