@@ -24,11 +24,13 @@ NVIC_SetPriority(TIM23_IRQn, 4);			// TIM23	THY TRIG TIME S
 NVIC_SetPriority(TIM24_IRQn, 4);			// TIM24	THY TRIG TIME T
 NVIC_SetPriority(TIM3_IRQn, 4);				// TIM3		DELAY ZC
 NVIC_SetPriority(TIM7_IRQn, 10);			// TIM7		1MS COUNTER
+NVIC_SetPriority(TIM1_IRQn, 9);				// TIM1		10US COUNTER
 NVIC_SetPriority(DMA1_Stream0_IRQn, 15);	// UART DMA
 
 NVIC_EnableIRQ(TIM2_IRQn);
 NVIC_EnableIRQ(TIM3_IRQn);
 NVIC_EnableIRQ(TIM7_IRQn);
+NVIC_EnableIRQ(TIM1_IRQn);
 NVIC_EnableIRQ(TIM16_IRQn);
 NVIC_EnableIRQ(TIM17_IRQn);
 NVIC_EnableIRQ(TIM23_IRQn);
@@ -67,6 +69,17 @@ LL_TIM_SetTriggerOutput(TIM7, LL_TIM_TRGO_RESET);
 LL_TIM_DisableMasterSlaveMode(TIM7);
 LL_TIM_EnableCounter(TIM7);
 // TIM7
+////////////////////////////////////////////
+// TIM1		10US COUNTER
+LL_TIM_EnableIT_UPDATE(TIM1);
+LL_TIM_SetPrescaler(TIM1, 4);
+LL_TIM_SetCounterMode(TIM7, LL_TIM_COUNTERMODE_UP);
+LL_TIM_SetAutoReload(TIM7, 54999);
+LL_TIM_EnableARRPreload(TIM7);
+LL_TIM_SetTriggerOutput(TIM7, LL_TIM_TRGO_RESET);
+LL_TIM_DisableMasterSlaveMode(TIM7);
+LL_TIM_EnableCounter(TIM7);
+// TIM1
 ////////////////////////////////////////////
 // TIM15	FORWARD CONV. MOS GATE
 LL_TIM_SetPrescaler(TIM15, 0);

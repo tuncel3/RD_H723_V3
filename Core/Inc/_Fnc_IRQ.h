@@ -369,6 +369,13 @@ void TIM7_IRQHandler(void)
 
 	}
 }
+void TIM1_UP_IRQHandler(void)
+{
+	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
+		LL_TIM_ClearFlag_UPDATE(TIM1);
+
+	}
+}
 
 void SysTick_Handler(void) {	// n009
 	if (LL_EXTI_LINE_7_reenable_cnt < ZCRENDELY) {
