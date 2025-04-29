@@ -104,10 +104,8 @@ static inline void GLCD_WriteData(uint8_t d) {
     EN0_g;
 }
 
-void GLCD_RefreshGRAM(void)
-{
-    for (uint8_t page = 0; page < 8; page++)
-    {
+void GLCD_RefreshGRAM(void) {
+    for (uint8_t page = 0; page < 8; page++) {
         uint16_t idx = page * KS0108_WIDTH;   // 0, 128, 256, ...
 
         /* Sol çip (0-63) */
@@ -128,22 +126,12 @@ void GLCD_RefreshGRAM(void)
     }
 }
 
-
-
-
-   //---------------------------------------------------------------------------/
-   // Function Name : GLCD_ClearScreen         			      				             /
-   // Description   : Clear GLCD Display Screen                                 /
-   // Argument      : Pixel Mode (Dark/Bright)  			                           /
-   // Return			   : None                                                      /
-   //---------------------------------------------------------------------------/
-   void GLCD_ClearScreen(uint8_t Fill){
-   	uint16_t i;
-   	for (i = 0; i < KS0108_BUFFER_LENGTH; i++)
-     {
-       DisplayBuffer[i] = Fill;
-   	}
-   }
+void GLCD_ClearScreen(uint8_t Fill) {
+	uint16_t i;
+	for (i = 0; i < KS0108_BUFFER_LENGTH; i++) {
+	   DisplayBuffer[i] = Fill;
+	}
+}
 
    //---------------------------------------------------------------------------/
    // Function Name : GLCD_SetFont         			      				                 /
