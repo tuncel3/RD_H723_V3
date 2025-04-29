@@ -388,10 +388,10 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_DISC_DET][dev_setting_edit_mode].V1]);
 			GLCD_PrintString(86, (i + 1) * 9, M);
 		}
-		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_OVTM_OPEN_DUR) {
-			sprintf(M, "%03lusn", (uint32_t) EpD[SET_OVTM_OPEN_DUR][dev_setting_edit_mode].V1);
-			GLCD_PrintString(97, (i + 1) * 9, M);
-		}
+//		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_OVTM_OPEN_DUR) {
+//			sprintf(M, "%03lusn", (uint32_t) EpD[SET_OVTM_OPEN_DUR][dev_setting_edit_mode].V1);
+//			GLCD_PrintString(97, (i + 1) * 9, M);
+//		}
 		else if (DEVICE_SETT_Items[dev_set_disp_index_].type == 3) {
 			sprintf(M, "%05.1f", EpD[DEVICE_SETT_Items[dev_set_disp_index_].V1][dev_setting_edit_mode].V1);
 			GLCD_PrintString(98, (i + 1) * 9, M);
