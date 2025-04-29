@@ -341,7 +341,7 @@ const char* FANS_TEMP_Items[] = {
 	"Aşr Sıc Açma",
 	"Açma Geck Sn"
 };
-#define FANS_TEMP_ITEMS (sizeof(MAIN_MENU_Items) / sizeof(MAIN_MENU_Items[0]))
+#define NUM_FANS_TEMP_ITEMS (sizeof(FANS_TEMP_Items) / sizeof(FANS_TEMP_Items[0]))
 uint8_t fan_temp_edit_mode = 0;
 uint8_t selected_FANS_TEMP = 0;
 uint8_t selected_FAN_TEMP_PG_line = 0;

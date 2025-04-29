@@ -180,9 +180,6 @@ void bright_fnc(void) {
     		PRF_GEN("User req STOP rectf");
     	}
     }
-    else if (currentPage == FANS_TEMP_pg) {
-
-    }
     else if (currentPage == CHARGE_SETT_pg) {
     	if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_CHARGE_MODE) {
     		EpD[SET_CHARGE_MODE][1].V1=((uint32_t)EpD[SET_CHARGE_MODE][1].V1-1+NUM_CH_MOD_SEL_ITEMS) % NUM_CH_MOD_SEL_ITEMS;
@@ -271,6 +268,13 @@ void bright_fnc(void) {
     	if (!dropper_edit_mode) {
     		selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+5) % 5;
     	} else if (dropper_edit_mode && (selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4)) {
+    		drop_set_dig=(drop_set_dig+1+6) % 6;
+    	}
+    }
+    else if (currentPage == FANS_TEMP_pg) { // RIGHT
+    	if (!dropper_edit_mode) {
+    		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
+    	} else if (dropper_edit_mode) {
     		drop_set_dig=(drop_set_dig+1+6) % 6;
     	}
     }
