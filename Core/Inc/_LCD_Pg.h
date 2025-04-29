@@ -13,7 +13,7 @@ inline extern void FANS_TEMP_pg_disp(void) {
 	GLCD_PrintString(0, (selected_FAN_TEMP_PG_line+1)*lnhg, ">");
 
 	if (fan_temp_edit_mode) {
-		if ((fan_temp_blink^=1)==0) {
+		if ((fan_temp_edit_blink^=1)==0) {
 			x0=95+(fan_temp_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
 		}
 	}

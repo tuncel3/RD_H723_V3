@@ -115,9 +115,6 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_VBAT_CAL) {
 }
 			}
     }
-    else if (currentPage == FANS_TEMP_pg) {
-    	fan_temp_edit_mode ^= 1;
-    }
     else if (currentPage == DEVICE_SETT_pg) {
 
 		dev_setting_edit_mode ^= 1;
@@ -278,6 +275,15 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 //			set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 		}
 	}
+    else if (currentPage == FANS_TEMP_pg) {
+    	fan_temp_edit_mode ^= 1;
+		if (fan_temp_edit_mode) {
+			fan_temp_edit_blink=1;
+
+		} else if (!fan_temp_edit_mode) {
+
+		}
+    }
     else if (currentPage == RELAY_ORDER_pg) {
     	rel_disp_mode ^=1;
     	rel_edit_mode ^=1;
