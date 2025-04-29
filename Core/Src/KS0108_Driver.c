@@ -34,12 +34,8 @@ inline extern void delayA_1us_g(uint32_t us)
   uint8_t   Busy;
   stFonts_t *SelectedFont;
 
- //---------------------------------------------------------------------------/
- // Function Name : GLCD_WriteCommand																				 /
- // Description   : Send Command to GLCD Display                              /
- // Argument      : Command			                                             /
- // Return			   : None                                                      /
- //---------------------------------------------------------------------------/
+
+
 //  void GLCD_WriteCommand(uint8_t Command) {
 //      SET_MODE_COMMAND_WRITE;
 //
@@ -61,38 +57,6 @@ inline extern void delayA_1us_g(uint32_t us)
 ////      delayA_1us_g(1); // Add delay if needed
 //      EN0_g;
 //  }
-
-#include "glcd_bsrr_tables.h"   // ↩︎ otomatik üretilen diziler
-
-  static inline void GLCD_WriteCommand(uint8_t cmd)
-  {
-      /* 1) RS=0, RW=0  → Komut-yazma modu */
-      SET_MODE_COMMAND_WRITE;     //  ←  burası RS’i 0’a çeker
-
-      /* 2) Veri pinlerini ayarla (D0-D7) */
-      GPIOA->BSRR = bsrrA[cmd];   // PA15/12/11/10
-      GPIOC->BSRR = bsrrC[cmd];   // PC12/11/10
-      GPIOD->BSRR = bsrrD[cmd];   // PD0
-
-      /* 3) Setup gecikmesi (≥140 ns) */
-      DELAY_NS(20);
-
-      /* 4) EN darbesi (≥450 ns) */
-      EN1_g;
-      DELAY_NS(100);
-      ////      delayA_1us_g(1); // Add delay if needed
-      EN0_g;
-  }
-
-
-
-
-   //---------------------------------------------------------------------------/
-   // Function Name : GLCD_WriteData																						 /
-   // Description   : Send Data to KS0108 Display                               /
-   // Argument      : Data			                                                 /
-   // Return			   : None                                                      /
-   //---------------------------------------------------------------------------/
 
 //  void GLCD_WriteData(uint8_t Data) {
 //      SET_MODE_DATA_WRITE;
@@ -116,53 +80,54 @@ inline extern void delayA_1us_g(uint32_t us)
 //      EN0_g;
 //  }
 
+#include "glcd_bsrr_tables.h"
 
-static inline void GLCD_WriteData(uint8_t d)
-{
-	      SET_MODE_DATA_WRITE;
-    GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA
-    GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC
-    GPIOD->BSRR = bsrrD[d];   // bit0    → PD
+static inline void GLCD_WriteCommand(uint8_t d) {
+	SET_MODE_COMMAND_WRITE;
+	GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA		// PA15/12/11/10
+	GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC		// PC12/11/10
+	GPIOD->BSRR = bsrrD[d];   // bit0    → PD		// PD0
+	DELAY_NS(20);
+	EN1_g;
+	DELAY_NS(100);
+	EN0_g;
+}
+static inline void GLCD_WriteData(uint8_t d) {
+	SET_MODE_DATA_WRITE;
+    GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA		// PA15/12/11/10
+    GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC		// PC12/11/10
+    GPIOD->BSRR = bsrrD[d];   // bit0    → PD		// PD0
     delayA_1us_g(1);
-
-    EN1_g;              // /WR yüksek
-    //      delayA_1us_g(1);
-    EN0_g;              // /WR düşük
+    DELAY_NS(20);
+    EN1_g;
+    DELAY_NS(100);
+    EN0_g;
 }
 
+void GLCD_RefreshGRAM(void)
+{
+    for (uint8_t page = 0; page < 8; page++)
+    {
+        uint16_t idx = page * KS0108_WIDTH;   // 0, 128, 256, ...
 
-   //---------------------------------------------------------------------------/
-   // Function Name : KS0108_RefreshGRAM         			      				           /
-   // Description   : Refresh GRAM of GLCD Display                              /
-   // Argument      : None	                                                     /
-   // Return			   : None                                                      /
-   //---------------------------------------------------------------------------/
-  void GLCD_RefreshGRAM(void)
-  {
-      uint8_t i, j;
+        /* Sol çip (0-63) */
+        SELECT_FIRST_CHIP;
+        GLCD_WriteCommand(X_BASE_ADDRESS | page);
+        GLCD_WriteCommand(Y_BASE_ADDRESS);
 
-      for (i = 0; i < 8; i++)          /* 8 sayfa (8×8 = 64 satır) */
-      {
-          /* ---- Çip-1: sol 64 sütun ---- */
-          SELECT_FIRST_CHIP;
+        for (uint8_t col = 0; col < 64; col++)
+            GLCD_WriteData(DisplayBuffer[idx + col]);
 
-          GLCD_WriteCommand(X_BASE_ADDRESS | i);   /* page      */
-          GLCD_WriteCommand(Y_BASE_ADDRESS);       /* column 0  */
+        /* Sağ çip (64-127) */
+        SELECT_SECOND_CHIP;
+        GLCD_WriteCommand(X_BASE_ADDRESS | page);
+        GLCD_WriteCommand(Y_BASE_ADDRESS);
 
-          for (j = 0; j < 64; j++)                 /* 64 bayt   */
-              GLCD_WriteData(DisplayBuffer[KS0108_WIDTH * i + j]);
+        for (uint8_t col = 0; col < 64; col++)
+            GLCD_WriteData(DisplayBuffer[idx + 64 + col]);
+    }
+}
 
-          /* ---- Çip-2: sağ 64 sütun ---- */
-          SELECT_SECOND_CHIP;
-
-          GLCD_WriteCommand(X_BASE_ADDRESS | i);
-          GLCD_WriteCommand(Y_BASE_ADDRESS);
-
-          /* buffer adresi  +64  kaydırıldı   */
-          for (j = 0; j < 64; j++)
-              GLCD_WriteData(DisplayBuffer[KS0108_WIDTH * i + 64 + j]);
-      }
-  }
 
 
 
