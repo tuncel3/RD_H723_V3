@@ -798,6 +798,7 @@ if (!chg_setting_edit_mode) {
 			selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+5) % 5;
 		} else if (fan_temp_edit_mode == 1) {
 			if (selected_FAN_TEMP_PG_line == 0) {
+				EpD[I_LIM_TO_BOOST][1].V1 -= dropper_step_values[drop_set_dig];
 			}
 		}
 
