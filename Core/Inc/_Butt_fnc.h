@@ -272,10 +272,10 @@ void bright_fnc(void) {
     	}
     }
     else if (currentPage == FANS_TEMP_pg) { // RIGHT
-    	if (!dropper_edit_mode) {
+    	if (!fan_temp_edit_mode) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
     	} else if (dropper_edit_mode) {
-    		drop_set_dig=(drop_set_dig+1+6) % 6;
+    		fan_temp_edit_mode=(drop_set_dig+1+6) % 6;
     	}
     }
     else if (currentPage == MANAGEMENT_pg) {
@@ -802,9 +802,9 @@ if (!chg_setting_edit_mode) {
     }
     else if (currentPage == FANS_TEMP_pg) { // DOWN
     	static const float fan_temp_step_values[3] = {100.0f, 10.0f, 1.0f};
-		if (fan_temp_edit_mode == 0) {
+		if (!fan_temp_edit_mode) {
 			selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+5) % 5;
-		} else if (fan_temp_edit_mode == 1) {
+		} else if (fan_temp_edit_mode) {
 			if (selected_FAN_TEMP_PG_line == 0) {
 				EpD[SET_COOL_FAN_TEMP][1].V1 -= fan_temp_step_values[fan_temp_dig];
 			}
