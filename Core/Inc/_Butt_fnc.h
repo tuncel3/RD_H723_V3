@@ -485,7 +485,7 @@ if (!chg_setting_edit_mode) {
 
     }
     else if (currentPage == FANS_TEMP_pg) { // UP
-    	static const float fan_temp_step_values[3] = {100.0f, 10.0f, 1.0f};
+    	static const float fan_temp_step_values[3] = {10.0f, 1.0f};
 		if (!fan_temp_edit_mode) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
 		} else if (fan_temp_edit_mode) {
@@ -862,7 +862,7 @@ if (!chg_setting_edit_mode) {
 		}
 	}
     else if (currentPage == FANS_TEMP_pg) { // DOWN
-    	static const float fan_temp_step_values[3] = {100.0f, 10.0f, 1.0f};
+    	static const float fan_temp_step_values[3] = {10.0f, 1.0f};
 		if (!fan_temp_edit_mode) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
 		} else if (fan_temp_edit_mode) {

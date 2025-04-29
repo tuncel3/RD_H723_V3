@@ -282,11 +282,11 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				EpD[SET_COOL_FAN_TEMP][1].V1 = EpD[SET_COOL_FAN_TEMP][0].V1;
 			} else if (selected_FAN_TEMP_PG_line == 1) {
 				EpD[SET_TRANSF_FAN_TEMP][1].V1 = EpD[SET_TRANSF_FAN_TEMP][0].V1;
-			} else if (selected_FAN_TEMP_PG_line == 1) {
+			} else if (selected_FAN_TEMP_PG_line == 2) {
 				EpD[SET_OVERTEMP_ALARM][1].V1 = EpD[SET_OVERTEMP_ALARM][0].V1;
-			} else if (selected_FAN_TEMP_PG_line == 1) {
+			} else if (selected_FAN_TEMP_PG_line == 3) {
 				EpD[SET_OVERTEMP_OPEN][1].V1 = EpD[SET_OVERTEMP_OPEN][0].V1;
-			} else if (selected_FAN_TEMP_PG_line == 1) {
+			} else if (selected_FAN_TEMP_PG_line == 4) {
 				EpD[SET_OVT_OPEN_DELAY][1].V1 = EpD[SET_OVT_OPEN_DELAY][0].V1;
 			}
 			fan_temp_edit_blink=1;
@@ -297,13 +297,13 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			} else if (selected_FAN_TEMP_PG_line == 1) {
 				EpD[SET_TRANSF_FAN_TEMP][0].V1 = EpD[SET_TRANSF_FAN_TEMP][1].V1;
 				Rec_Dat_to_EEp_f(SET_TRANSF_FAN_TEMP);
-			} else if (selected_FAN_TEMP_PG_line == 1) {
+			} else if (selected_FAN_TEMP_PG_line == 2) {
 				EpD[SET_OVERTEMP_ALARM][0].V1 = EpD[SET_OVERTEMP_ALARM][1].V1;
 				Rec_Dat_to_EEp_f(SET_OVERTEMP_ALARM);
-			} else if (selected_FAN_TEMP_PG_line == 1) {
+			} else if (selected_FAN_TEMP_PG_line == 3) {
 				EpD[SET_OVERTEMP_OPEN][0].V1 = EpD[SET_OVERTEMP_OPEN][1].V1;
 				Rec_Dat_to_EEp_f(SET_OVERTEMP_OPEN);
-			} else if (selected_FAN_TEMP_PG_line == 1) {
+			} else if (selected_FAN_TEMP_PG_line == 4) {
 				EpD[SET_OVT_OPEN_DELAY][0].V1 = EpD[SET_OVT_OPEN_DELAY][1].V1;
 				Rec_Dat_to_EEp_f(SET_OVT_OPEN_DELAY);
 			}
