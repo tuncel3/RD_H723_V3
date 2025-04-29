@@ -194,24 +194,37 @@ void printBinary(uint8_t num) {
 
 
 
-/* ortak kısaltma */
-static inline void hBtn(uint8_t raw,
-                        volatile uint8_t  *prs,
-                        volatile uint16_t *rel,
-                        volatile uint32_t *hold,
-                        volatile uint32_t *nxt,
-                        volatile uint8_t  *flag)
+static inline void handleButton(uint8_t pinState,
+                                volatile uint8_t  *isHeld,
+                                volatile uint16_t *releaseCnt,
+                                volatile uint32_t *holdCnt,
+                                volatile uint32_t *nextRepeatEdg,
+                                volatile uint8_t  *fireFlag)
 {
-    if (!*prs && *rel >= RELEASE_DELAY_T) {          /* idle */
-        if (raw) { *prs=1; *hold=0; *nxt=FIRST_REPEAT_T; *flag=1; }
+    if (!*isHeld && *releaseCnt >= RELEASE_DELAY_T) {            // idle
+        if (pinState) {
+            *isHeld = 1;
+            *holdCnt = 0;
+            *nextRepeatEdg = FIRST_REPEAT_T;
+            *fireFlag = 1;
+        }
     }
-    else if (*prs) {                                 /* held */
-        if (raw) {
-            if (++*hold >= *nxt) { *nxt+=NEXT_REPEAT_T; *flag=1; }
-        } else { *prs=0; *rel=0; }
+    else if (*isHeld) {                                          // held
+        if (pinState) {
+            if (++*holdCnt >= *nextRepeatEdg) {
+                *nextRepeatEdg += NEXT_REPEAT_T;
+                *fireFlag = 1;
+            }
+        } else {                                                 // released
+            *isHeld = 0;
+            *releaseCnt = 0;
+        }
     }
-    else { (*rel)++; }                               /* lock */
+    else {                                                       // lock
+        (*releaseCnt)++;
+    }
 }
+
 
 void buttonScn(void) {
 	if (ButtScanDelay_cnt > 2) {
