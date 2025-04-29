@@ -91,7 +91,7 @@ inline extern void delayA_1us_g(uint32_t us)
 //      }
 //
 //      EN1_g;
-////      delayA_1us_g(1);
+//      delayA_1us_g(1);
 //      EN0_g;
 //  }
 
@@ -106,8 +106,7 @@ static inline void GLCD_WriteData(uint8_t d)
     delayA_1us_g(1);
 
     EN1_g;              // /WR yüksek
-//    __NOP(); __NOP();   // ~60 ns (KS0108 min. 450 ns; isteğe göre uzat)
-          delayA_1us_g(1);
+    //      delayA_1us_g(1);
     EN0_g;              // /WR düşük
 }
 
