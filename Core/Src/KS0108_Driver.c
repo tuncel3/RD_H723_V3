@@ -64,12 +64,6 @@ inline extern void delayA_1us_g(uint32_t us)
 
 #include "glcd_bsrr_tables.h"   // ↩︎ otomatik üretilen diziler
 
-  static inline void delay_cycles(uint32_t cyc)
-  {
-      uint32_t start = DWT->CYCCNT;
-      while ((DWT->CYCCNT - start) < cyc) { __NOP(); }
-  }
-
   static inline void GLCD_WriteCommand(uint8_t cmd)
   {
       /* 1) RS=0, RW=0  → Komut-yazma modu */
@@ -81,12 +75,12 @@ inline extern void delayA_1us_g(uint32_t us)
       GPIOD->BSRR = bsrrD[cmd];   // PD0
 
       /* 3) Setup gecikmesi (≥140 ns) */
-      DELAY_NS(1000);
+      DELAY_NS(20);
 
       /* 4) EN darbesi (≥450 ns) */
-      EN1_g;                                // /WR ↑uint32_t start = DWT->CYCCNT;
-      DELAY_NS(1000);
-      EN0_g;                                // /WR ↓
+      EN1_g;
+      DELAY_NS(100);
+      EN0_g;
   }
 
 
