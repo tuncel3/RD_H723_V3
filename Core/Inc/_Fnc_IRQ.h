@@ -373,44 +373,22 @@ void TIM1_UP_IRQHandler(void)
 {
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
 		LL_TIM_ClearFlag_UPDATE(TIM1);
+		uint8_t up_raw = (BLEFT==0 && BRIGHT==0 && BUP && !BDOWN && !BENTER && !BESC);
 
-	    /* Tuş gerçekten tek başına basılı mı? */
-	    uint8_t up_raw = (BLEFT==0 && BRIGHT==0 && BUP==1 &&
-	                      BDOWN==0 && BENTER==0 && BESC==0);
+		if (!up_pressed && up_release_cnt >= RELEASE_DELAY_T) {          /* idle */
+		    if (up_raw) { up_pressed=1; up_hold_cnt=0; up_next_rep=FIRST_REPEAT_T; up_fire_flag=1; }
+		}
+		else if (up_pressed) {                                           /* held */
+		    if (up_raw) {
+		        if (++up_hold_cnt >= up_next_rep) { up_next_rep += NEXT_REPEAT_T; up_fire_flag=1; }
+		    } else { up_pressed=0; up_release_cnt=0; }
+		}
+		else {                                                           /* locked */
+		    up_release_cnt++;
+		}
 
-	    /* ---------- 1) Boştayken yeni basış kontrolü ---------- */
-	    if (!up_pressed && up_release_cnt >= RELEASE_DELAY_T)
-	    {
-	        if (up_raw) {                        // ► İlk basış
-	            up_pressed    = 1;
-	            up_hold_cnt   = 0;
-	            up_next_rep   = FIRST_REPEAT_T;
-	            up_fire_flag  = 1;               // anında tetik
-	        }
-	    }
 
-	    /* ---------- 2) Basılı faz ---------- */
-	    else if (up_pressed)
-	    {
-	        if (up_raw) {
-	            up_hold_cnt++;
-	            if (up_hold_cnt >= up_next_rep) {
-	                up_next_rep += NEXT_REPEAT_T;
-	                up_fire_flag = 1;            // oto-tekrar
-	            }
-	        } else {                            /* ► Bırakıldı */
-	            up_pressed     = 0;
-	            up_release_cnt = 0;             /* sayaç sıfırla */
-	        }
-	    }
 
-	    /* ---------- 3) Kilitli faz (50 ms) ---------- */
-	    else /* (!up_pressed && up_release_cnt < RELEASE_DELAY_T) */
-	    {
-	        up_release_cnt++;                   /*  <-- İSTENEN satır
-	                                                50 ms dolana kadar
-	                                                sadece bu cnt++ işlemi */
-	    }
 
 	}
 }

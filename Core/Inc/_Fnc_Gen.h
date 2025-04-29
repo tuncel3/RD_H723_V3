@@ -184,16 +184,43 @@ void disb_uart_msg_group(uint32_t group)
     enabled_message_groups &= ~group;
 }
 
-
-
-
-
 void printBinary(uint8_t num) {
     PRF_GEN("0b");
     for (int i = 7; i >= 0; i--) { // Loop through each bit
         PRF_GEN("%d", (num >> i) & 1);
     }
     PRF_GEN("\n");
+}
+
+
+
+/* ortak kısaltma */
+static inline void hBtn(uint8_t raw,
+                        uint8_t *prs, uint16_t *rel,
+                        uint32_t *hold, uint32_t *nxt,
+                        uint8_t *flag)
+{
+    if (!*prs && *rel >= RELEASE_DELAY_T) {          /* idle */
+        if (raw) { *prs=1; *hold=0; *nxt=FIRST_REPEAT_T; *flag=1; }
+    }
+    else if (*prs) {                                 /* held */
+        if (raw) {
+            if (++*hold >= *nxt) { *nxt+=NEXT_REPEAT_T; *flag=1; }
+        } else { *prs=0; *rel=0; }
+    }
+    else { (*rel)++; }                               /* lock */
+}
+
+void TIM1_UP_IRQHandler(void)
+{
+    if (!LL_TIM_IsActiveFlag_UPDATE(TIM1)) return;
+    LL_TIM_ClearFlag_UPDATE(TIM1);
+
+    uint8_t up_raw = (!BLEFT && !BRIGHT &&  BUP && !BDOWN && !BENTER && !BESC);
+    uint8_t dn_raw = (!BLEFT && !BRIGHT && !BUP &&  BDOWN && !BENTER && !BESC);
+
+    hBtn(up_raw,&up_pressed,&up_release_cnt,&up_hold_cnt,&up_next_rep,&up_fire_flag);
+    hBtn(dn_raw,&dn_pressed,&dn_release_cnt,&dn_hold_cnt,&dn_next_rep,&dn_fire_flag);
 }
 
 
