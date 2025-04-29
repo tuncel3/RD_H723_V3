@@ -115,6 +115,9 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_VBAT_CAL) {
 }
 			}
     }
+    else if (currentPage == FANS_TEMP_pg) {
+    	fan_temp_edit_mode ^= 1;
+    }
     else if (currentPage == DEVICE_SETT_pg) {
 
 		dev_setting_edit_mode ^= 1;
