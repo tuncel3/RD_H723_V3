@@ -793,6 +793,15 @@ if (!chg_setting_edit_mode) {
 	}
 }
     }
+    else if (currentPage == FANS_TEMP_pg) { // DOWN
+		if (fan_temp_edit_mode == 0) {
+			selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+5) % 5;
+		} else if (fan_temp_edit_mode == 1) {
+			if (selected_FAN_TEMP_PG_line == 0) {
+			}
+		}
+
+    }
     else if (currentPage == DROPPER_pg) { // DOWN
 		if (dropper_edit_mode == 0) {
 			selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+5) % 5;

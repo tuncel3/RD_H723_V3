@@ -1,6 +1,7 @@
 
 
 inline extern void FANS_TEMP_pg_disp(void) {
+    uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
 	char L[32]; static uint8_t lnhg=9;
     GLCD_PrintString(0, 0, "Fanlar Sıcakl Koruma");
 //    Soğutuc Fan  75 C
@@ -13,6 +14,14 @@ inline extern void FANS_TEMP_pg_disp(void) {
 		sprintf(L, " %s%5.0f C", FANS_TEMP_Items[2], EpD[SET_OVERTEMP_ALARM][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 3*lnhg, L);
 		sprintf(L, " %s %5.0f C", FANS_TEMP_Items[3], EpD[SET_OVERTEMP_OPEN][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 4*lnhg, L);
 		sprintf(L, " %s   %03lu s", FANS_TEMP_Items[4], (uint32_t)EpD[SET_OVT_OPEN_DELAY][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 5*lnhg, L);
+		GLCD_PrintString(0, (selected_FAN_TEMP_PG_line+1)*lnhg, ">");
+
+		if (dropper_edit_mode) {
+			if ((dropper_edit_blink^=1)==0) {
+				x0=64+(drop_set_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
+			}
+		}
+		GLCD_Line(x0, y0, x0+w, y0);
 }
 inline extern void DROPPER_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
@@ -30,7 +39,7 @@ inline extern void DROPPER_pg_disp(void) {
 		sprintf(L, " Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V_h, EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 5*lnhg, L);
 	}
 
-	GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, ">");	// sprintf(L, ">") bu yazılıyor burda
+	GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, ">");
 	if ((selected_DROPPER_PG_line >= 0 && selected_DROPPER_PG_line <= 2) && dropper_edit_mode) {
 		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // edit rectangle
 	}
