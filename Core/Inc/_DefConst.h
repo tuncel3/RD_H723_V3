@@ -323,7 +323,7 @@ typedef enum {
     NUM_PAGES
 } MenuPage;
 
-MenuPage currentPage = MAIN_MENU_pg;
+MenuPage currentPage = FANS_pg;
 uint8_t HOME_PAGE_pg_sel = 2;
 
 uint8_t fault_codes_reset_req = 0;
