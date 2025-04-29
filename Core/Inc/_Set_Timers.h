@@ -1,6 +1,6 @@
 
 // TIM1		E							16
-// TIM2		E							32
+// TIM2		THY TRIG TIME R				32
 // TIM3		DELAY ZC					16
 // TIM4		E							16
 // TIM5		MEAS PER					32
@@ -12,8 +12,8 @@
 // TIM14	E							16
 // TIM15	FORWARD CONV. MOS GATE		16
 // TIM16	THY DRV PWM					16
-// TIM23	E							32
-// TIM24	E							32
+// TIM23	THY TRIG TIME S				32
+// TIM24	THY TRIG TIME T				32
 
 NVIC_SetPriority(SysTick_IRQn, 14);			// SYS TICK
 NVIC_SetPriority(DMA1_Stream1_IRQn, 0);		// ADC DMA
@@ -90,7 +90,6 @@ LL_TIM_CC_EnableChannel(TIM16, LL_TIM_CHANNEL_CH1);
 LL_TIM_EnableCounter(TIM16);
 // TIM16
 ////////////////////////////////////////////
-
 // TIM2			THY TRIG TIME R
 LL_TIM_SetPrescaler(TIM2, 0);
 LL_TIM_SetAutoReload(TIM2, 3299999);
@@ -102,7 +101,6 @@ LL_TIM_OC_EnablePreload(TIM2, LL_TIM_CHANNEL_CH1);
 LL_TIM_GenerateEvent_UPDATE(TIM2);
 // TIM2 4294967296
 ////////////////////////////////////////////
-
 // TIM23		THY TRIG TIME S
 LL_TIM_SetPrescaler(TIM23, 0);
 LL_TIM_SetAutoReload(TIM23, 3299999);
@@ -114,7 +112,6 @@ LL_TIM_OC_EnablePreload(TIM23, LL_TIM_CHANNEL_CH1);
 LL_TIM_GenerateEvent_UPDATE(TIM23);
 // TIM23
 ////////////////////////////////////////////
-
 // TIM24		THY TRIG TIME T
 LL_TIM_SetPrescaler(TIM24, 0);
 LL_TIM_SetAutoReload(TIM24, 3299999);
@@ -126,7 +123,6 @@ LL_TIM_OC_EnablePreload(TIM24, LL_TIM_CHANNEL_CH1);
 LL_TIM_GenerateEvent_UPDATE(TIM24);
 // TIM24
 ////////////////////////////////////////////
-
 // TIM3	DELAY ZC
 LL_TIM_SetPrescaler(TIM3, zc_start_delay_300u_psc_16);
 LL_TIM_SetAutoReload(TIM3, zc_start_delay_300u_arr_16);	// 300 us after zero cross

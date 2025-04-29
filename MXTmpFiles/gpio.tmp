@@ -1,0 +1,155 @@
+
+/**
+#t* @brief GPIO Initialization Function
+#t* @param None
+#t* @retval None
+#t*/
+static void MX_GPIO_Init(void)
+{
+#tLL_EXTI_InitTypeDef EXTI_InitStruct = {0};
+#tLL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+#t/* USER CODE BEGIN MX_GPIO_Init_1 */
+#n
+#t/* USER CODE END MX_GPIO_Init_1 */
+#n#t/* GPIO Ports Clock Enable */
+#tLL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOE);
+#tLL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOC);
+#tLL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOH);
+#tLL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOA);
+#tLL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOB);
+#tLL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOD);
+#n#t/**/
+#tLL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_12|LL_GPIO_PIN_14|LL_GPIO_PIN_15|LL_GPIO_PIN_0 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|Buzzer_Pin);
+#n#t/**/
+#tLL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_14|LL_GPIO_PIN_5|LL_GPIO_PIN_6|LL_GPIO_PIN_7 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_8|LL_GPIO_PIN_9);
+#n#t/**/
+#tLL_GPIO_ResetOutputPin(GPIOD, LL_GPIO_PIN_8|LL_GPIO_PIN_9|LL_GPIO_PIN_10|LL_GPIO_PIN_11 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_12|LL_GPIO_PIN_13|LL_GPIO_PIN_14|LL_GPIO_PIN_15 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_0|LL_GPIO_PIN_1|LL_GPIO_PIN_2|LL_GPIO_PIN_3);
+#n#t/**/
+#tLL_GPIO_ResetOutputPin(GPIOC, LL_GPIO_PIN_6|LL_GPIO_PIN_7|LL_GPIO_PIN_8|LL_GPIO_PIN_9 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_10|LL_GPIO_PIN_11|LL_GPIO_PIN_12);
+#n#t/**/
+#tLL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_8|LL_GPIO_PIN_9|LL_GPIO_PIN_10|LL_GPIO_PIN_11 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_12|LL_GPIO_PIN_15);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_4|LL_GPIO_PIN_6|LL_GPIO_PIN_13;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_13;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_14|LL_GPIO_PIN_15|LL_GPIO_PIN_0|LL_GPIO_PIN_1 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_2|LL_GPIO_PIN_3;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_0|LL_GPIO_PIN_1;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_2|LL_GPIO_PIN_15;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_10|LL_GPIO_PIN_11;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_12|LL_GPIO_PIN_14|LL_GPIO_PIN_15|LL_GPIO_PIN_0 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|Buzzer_Pin;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+#tGPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+#tGPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_14|LL_GPIO_PIN_5|LL_GPIO_PIN_6|LL_GPIO_PIN_7 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_8|LL_GPIO_PIN_9;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+#tGPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+#tGPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_8|LL_GPIO_PIN_9|LL_GPIO_PIN_10|LL_GPIO_PIN_11 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_12|LL_GPIO_PIN_13|LL_GPIO_PIN_14|LL_GPIO_PIN_15 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_0|LL_GPIO_PIN_1|LL_GPIO_PIN_2|LL_GPIO_PIN_3;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+#tGPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+#tGPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_6|LL_GPIO_PIN_7|LL_GPIO_PIN_8|LL_GPIO_PIN_9 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_10|LL_GPIO_PIN_11|LL_GPIO_PIN_12;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+#tGPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+#tGPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_8|LL_GPIO_PIN_9|LL_GPIO_PIN_10|LL_GPIO_PIN_11 #n#t#t#t#t#t#t#t#t#t#t#t#t#t|LL_GPIO_PIN_12|LL_GPIO_PIN_15;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+#tGPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+#tGPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_4|LL_GPIO_PIN_5|LL_GPIO_PIN_6|LL_GPIO_PIN_7;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+#n#t/**/
+#tGPIO_InitStruct.Pin = LL_GPIO_PIN_3|LL_GPIO_PIN_4;
+#tGPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+#tGPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+#tLL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+#n#t/**/
+#tLL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTE, LL_SYSCFG_EXTI_LINE7);
+#n#t/**/
+#tLL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTE, LL_SYSCFG_EXTI_LINE8);
+#n#t/**/
+#tLL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTE, LL_SYSCFG_EXTI_LINE9);
+#n#t/**/
+#tEXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_7;
+#tEXTI_InitStruct.Line_32_63 = LL_EXTI_LINE_NONE;
+#tEXTI_InitStruct.Line_64_95 = LL_EXTI_LINE_NONE;
+#tEXTI_InitStruct.LineCommand = ENABLE;
+#tEXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
+#tEXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
+#tLL_EXTI_Init(&EXTI_InitStruct);
+#n#t/**/
+#tEXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_8;
+#tEXTI_InitStruct.Line_32_63 = LL_EXTI_LINE_NONE;
+#tEXTI_InitStruct.Line_64_95 = LL_EXTI_LINE_NONE;
+#tEXTI_InitStruct.LineCommand = ENABLE;
+#tEXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
+#tEXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
+#tLL_EXTI_Init(&EXTI_InitStruct);
+#n#t/**/
+#tEXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_9;
+#tEXTI_InitStruct.Line_32_63 = LL_EXTI_LINE_NONE;
+#tEXTI_InitStruct.Line_64_95 = LL_EXTI_LINE_NONE;
+#tEXTI_InitStruct.LineCommand = ENABLE;
+#tEXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
+#tEXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
+#tLL_EXTI_Init(&EXTI_InitStruct);
+#n#t/**/
+#tLL_GPIO_SetPinPull(GPIOE, LL_GPIO_PIN_7, LL_GPIO_PULL_NO);
+#n#t/**/
+#tLL_GPIO_SetPinPull(GPIOE, LL_GPIO_PIN_8, LL_GPIO_PULL_NO);
+#n#t/**/
+#tLL_GPIO_SetPinPull(GPIOE, LL_GPIO_PIN_9, LL_GPIO_PULL_NO);
+#n#t/**/
+#tLL_GPIO_SetPinMode(GPIOE, LL_GPIO_PIN_7, LL_GPIO_MODE_INPUT);
+#n#t/**/
+#tLL_GPIO_SetPinMode(GPIOE, LL_GPIO_PIN_8, LL_GPIO_MODE_INPUT);
+#n#t/**/
+#tLL_GPIO_SetPinMode(GPIOE, LL_GPIO_PIN_9, LL_GPIO_MODE_INPUT);
+#n#t/* EXTI interrupt init*/
+#tNVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
+#tNVIC_EnableIRQ(EXTI9_5_IRQn);#n
+#t/* USER CODE BEGIN MX_GPIO_Init_2 */
+#n
+#t/* USER CODE END MX_GPIO_Init_2 */
+}
+#n
