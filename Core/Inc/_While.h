@@ -1082,8 +1082,12 @@ if (req_reset_db==1) {
 	NVIC_SystemReset();
 }
 
-if (up_fire_flag) { up_fire_flag = 0;  bup_fnc();   }
-//if (BDOWN_fire) { BDOWN_fire = 0;  bdown_fnc(); }
+if (upFireFlag) { upFireFlag = 0;  bup_fnc();    }
+if (dnFireFlag) { dnFireFlag = 0;  bdown_fnc();  }
+if (lfFireFlag) { lfFireFlag = 0;  bleft_fnc();  }
+if (rtFireFlag) { rtFireFlag = 0;  bright_fnc(); }
+if (enFireFlag) { enFireFlag = 0;  benter_fnc(); }
+if (esFireFlag) { esFireFlag = 0;  besc_fnc();   }
 
 
 

@@ -1411,20 +1411,39 @@ BLM_STATE blm_op_phase = 0;
 #define NEXT_REPEAT_T      10000u   // 100 ms
 #define RELEASE_DELAY_T     5000u   //  50 ms  (yeni)
 
-/* -------------------------------------------------
-   Değişkenler
-   -------------------------------------------------*/
-volatile uint8_t  up_pressed    = 0;
-volatile uint8_t  up_fire_flag  = 0;
-volatile uint16_t up_release_cnt= RELEASE_DELAY_T;
-volatile uint32_t up_hold_cnt   = 0;
-volatile uint32_t up_next_rep   = 0;
 
-volatile uint8_t  dn_pressed     = 0;
-volatile uint8_t  dn_fire_flag   = 0;
-volatile uint16_t dn_release_cnt = RELEASE_DELAY_T;
-volatile uint32_t dn_hold_cnt    = 0;
-volatile uint32_t dn_next_rep    = 0;
+
+// BUTTON VARIABLES
+/* -------- UP -------- */
+volatile uint8_t  upIsHeld = 0,   upFireFlag = 0;
+volatile uint16_t upReleaseCnt = RELEASE_DELAY_T;
+volatile uint32_t upHoldCnt = 0,  upNextRepeatEdge = 0;
+
+/* -------- DOWN -------- */
+volatile uint8_t  dnIsHeld = 0,   dnFireFlag = 0;
+volatile uint16_t dnReleaseCnt = RELEASE_DELAY_T;
+volatile uint32_t dnHoldCnt = 0,  dnNextRepeatEdge = 0;
+
+/* -------- LEFT -------- */
+volatile uint8_t  lfIsHeld = 0,   lfFireFlag = 0;
+volatile uint16_t lfReleaseCnt = RELEASE_DELAY_T;
+volatile uint32_t lfHoldCnt = 0,  lfNextRepeatEdge = 0;
+
+/* -------- RIGHT -------- */
+volatile uint8_t  rtIsHeld = 0,   rtFireFlag = 0;
+volatile uint16_t rtReleaseCnt = RELEASE_DELAY_T;
+volatile uint32_t rtHoldCnt = 0,  rtNextRepeatEdge = 0;
+
+/* -------- ENTER -------- */
+volatile uint8_t  enIsHeld = 0,   enFireFlag = 0;
+volatile uint16_t enReleaseCnt = RELEASE_DELAY_T;
+volatile uint32_t enHoldCnt = 0,  enNextRepeatEdge = 0;
+
+/* -------- ESC -------- */
+volatile uint8_t  esIsHeld = 0,   esFireFlag = 0;
+volatile uint16_t esReleaseCnt = RELEASE_DELAY_T;
+volatile uint32_t esHoldCnt = 0,  esNextRepeatEdge = 0;
+
 
 
 
