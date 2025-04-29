@@ -114,6 +114,13 @@ void bleft_fnc(void) {
     		drop_set_dig=(drop_set_dig-1+6) % 6;
     	}
     }
+    else if (currentPage == FANS_TEMP_pg) { // LEFT
+    	if (!fan_temp_edit_mode) {
+    		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
+    	} else if (dropper_edit_mode) {
+    		fan_temp_edit_mode=(drop_set_dig+1+6) % 6;
+    	}
+    }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
@@ -273,13 +280,13 @@ void bright_fnc(void) {
     }
     else if (currentPage == FANS_TEMP_pg) { // RIGHT
     	if (!fan_temp_edit_mode) {
-    		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
+    		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
     	} else if (dropper_edit_mode) {
     		fan_temp_edit_mode=(drop_set_dig+1+6) % 6;
     	}
     }
     else if (currentPage == MANAGEMENT_pg) {
-    	selected_MANAGEMENT=(selected_MANAGEMENT+1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
+    	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
     else if (currentPage == CALIBRATION_pg) {
     	if (cal_sel_edit_mode == cal_none) {
@@ -475,6 +482,17 @@ if (!chg_setting_edit_mode) {
 
 
 
+
+    }
+    else if (currentPage == FANS_TEMP_pg) { // UP
+    	static const float fan_temp_step_values[3] = {100.0f, 10.0f, 1.0f};
+		if (!fan_temp_edit_mode) {
+			selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+5) % 5;
+		} else if (fan_temp_edit_mode) {
+			if (selected_FAN_TEMP_PG_line == 0) {
+				EpD[SET_COOL_FAN_TEMP][1].V1 += fan_temp_step_values[fan_temp_dig];
+			}
+		}
 
     }
 
@@ -800,17 +818,6 @@ if (!chg_setting_edit_mode) {
 	}
 }
     }
-    else if (currentPage == FANS_TEMP_pg) { // DOWN
-    	static const float fan_temp_step_values[3] = {100.0f, 10.0f, 1.0f};
-		if (!fan_temp_edit_mode) {
-			selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+5) % 5;
-		} else if (fan_temp_edit_mode) {
-			if (selected_FAN_TEMP_PG_line == 0) {
-				EpD[SET_COOL_FAN_TEMP][1].V1 -= fan_temp_step_values[fan_temp_dig];
-			}
-		}
-
-    }
     else if (currentPage == DROPPER_pg) { // DOWN
 		if (dropper_edit_mode == 0) {
 			selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+5) % 5;
@@ -842,6 +849,17 @@ if (!chg_setting_edit_mode) {
 			}
 		}
 	}
+    else if (currentPage == FANS_TEMP_pg) { // DOWN
+    	static const float fan_temp_step_values[3] = {100.0f, 10.0f, 1.0f};
+		if (!fan_temp_edit_mode) {
+			selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+5) % 5;
+		} else if (fan_temp_edit_mode) {
+			if (selected_FAN_TEMP_PG_line == 0) {
+				EpD[SET_COOL_FAN_TEMP][1].V1 -= fan_temp_step_values[fan_temp_dig];
+			}
+		}
+
+    }
 
     else if (currentPage == RELAY_ORDER_pg) {
 
