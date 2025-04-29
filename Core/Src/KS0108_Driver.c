@@ -73,28 +73,40 @@ inline extern void delayA_1us_g(uint32_t us)
    // Return			   : None                                                      /
    //---------------------------------------------------------------------------/
 
-  void GLCD_WriteData(uint8_t Data) {
-      SET_MODE_DATA_WRITE;
+//  void GLCD_WriteData(uint8_t Data) {
+//      SET_MODE_DATA_WRITE;
+//
+//      // Corrected: Removed "const" before GPIO_TypeDef *
+//      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
+//      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
+//                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
+//
+//      // Write each bit efficiently
+//      for (int i = 0; i < 8; i++) {
+//          if (Data & (1 << i)) {
+//              ports[i]->BSRR = pins[i];  // Set bit
+//          } else {
+//              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
+//          }
+//      }
+//
+//      EN1_g;
+////      delayA_1us_g(1);
+//      EN0_g;
+//  }
 
-      // Corrected: Removed "const" before GPIO_TypeDef *
-      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
-      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
-                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
+#include "glcd_bsrr_tables.h"   // ↩︎ otomatik üretilen diziler
 
-      // Write each bit efficiently
-      for (int i = 0; i < 8; i++) {
-          if (Data & (1 << i)) {
-              ports[i]->BSRR = pins[i];  // Set bit
-          } else {
-              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
-          }
-      }
+static inline void GLCD_WriteData(uint8_t d)
+{
+    GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA
+    GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC
+    GPIOD->BSRR = bsrrD[d];   // bit0    → PD
 
-      EN1_g;
-//      delayA_1us_g(1);
-      EN0_g;
-  }
-
+    EN1_g;              // /WR yüksek
+    __NOP(); __NOP();   // ~60 ns (KS0108 min. 450 ns; isteğe göre uzat)
+    EN0_g;              // /WR düşük
+}
 
 
    //---------------------------------------------------------------------------/
