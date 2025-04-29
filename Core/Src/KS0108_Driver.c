@@ -103,29 +103,33 @@ inline extern void delayA_1us_g(uint32_t us)
    // Argument      : None	                                                     /
    // Return			   : None                                                      /
    //---------------------------------------------------------------------------/
-   void  GLCD_RefreshGRAM(void){
-   	uint8_t i, j;
-   	for(i = 0; i < 8; i++)
-     {
+  void GLCD_RefreshGRAM_fast(void)
+  {
+      uint8_t i, j;
 
-   		SELECT_FIRST_CHIP;
-   		GLCD_WriteCommand(i | X_BASE_ADDRESS);	     	// First Chip First Row
-   		GLCD_WriteCommand(Y_BASE_ADDRESS);				// First Chip First Column
+      for (i = 0; i < 8; i++)          /* 8 sayfa (8×8 = 64 satır) */
+      {
+          /* ---- Çip-1: sol 64 sütun ---- */
+          SELECT_FIRST_CHIP;
 
-   		SELECT_SECOND_CHIP;
-   		GLCD_WriteCommand(i | X_BASE_ADDRESS);		// Second Chip First Row
-   		GLCD_WriteCommand(Y_BASE_ADDRESS);				// Second Chip First Column
+          GLCD_WriteCommand(X_BASE_ADDRESS | i);   /* page      */
+          GLCD_WriteCommand(Y_BASE_ADDRESS);       /* column 0  */
 
-       for(j = 0; j < 64; j++)
-       {
-       	SELECT_FIRST_CHIP;
-           GLCD_WriteData(DisplayBuffer[KS0108_WIDTH * i + j]);
+          for (j = 0; j < 64; j++)                 /* 64 bayt   */
+              GLCD_WriteData(DisplayBuffer[KS0108_WIDTH * i + j]);
 
-       	SELECT_SECOND_CHIP;
-           GLCD_WriteData(DisplayBuffer[KS0108_WIDTH * i + j + 64]);
-       }
-     }
-   }
+          /* ---- Çip-2: sağ 64 sütun ---- */
+          SELECT_SECOND_CHIP;
+
+          GLCD_WriteCommand(X_BASE_ADDRESS | i);
+          GLCD_WriteCommand(Y_BASE_ADDRESS);
+
+          /* buffer adresi  +64  kaydırıldı   */
+          for (j = 0; j < 64; j++)
+              GLCD_WriteData(DisplayBuffer[KS0108_WIDTH * i + 64 + j]);
+      }
+  }
+
 
 
    //---------------------------------------------------------------------------/
