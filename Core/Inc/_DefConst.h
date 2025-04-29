@@ -1408,7 +1408,7 @@ BLM_STATE blm_op_phase = 0;
 
 
 #define FIRST_REPEAT_T     500u   // 500 ms
-#define NEXT_REPEAT_T      300u   // 100 ms
+#define NEXT_REPEAT_T      200u   // 100 ms
 #define RELEASE_DELAY_T     50u   //  50 ms  (yeni)
 
 
