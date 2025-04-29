@@ -119,7 +119,10 @@ extern void GLCD_Rect_E(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
 extern void GLCD_RectNEW(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t Colour);
 extern void glcd_text57(uint8_t x, uint8_t y,  char* textptr, uint8_t size, int8_t color);
 
-
+/* Flash veya RAM */
+static const uint32_t bsrrA[256] = { /* Python/Excel ile otomatik üret */ };
+static const uint32_t bsrrC[256] = { /* … */ };
+static const uint32_t bsrrD[256] = { /* … */ };
 
 
 
