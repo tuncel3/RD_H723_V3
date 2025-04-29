@@ -345,7 +345,7 @@ const char* FANS_TEMP_Items[] = {
 uint8_t fan_temp_edit_mode = 0;
 uint8_t selected_FANS_TEMP = 0;
 uint8_t selected_FAN_TEMP_PG_line = 0;
-uint8_t fan_temp_dig = 2;
+uint8_t fan_temp_dig = 1;
 uint8_t fan_temp_edit_blink = 0;
 
 const char* MAIN_MENU_Items[] = {
