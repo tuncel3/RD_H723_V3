@@ -99,6 +99,7 @@ inline extern void delayA_1us_g(uint32_t us)
 
 static inline void GLCD_WriteData(uint8_t d)
 {
+	      SET_MODE_DATA_WRITE;
     GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA
     GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC
     GPIOD->BSRR = bsrrD[d];   // bit0    → PD
