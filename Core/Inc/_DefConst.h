@@ -311,7 +311,7 @@ typedef enum {
 	MANAGEMENT_pg,
 	FAULT_CODES_REPORT_pg,
 	DROPPER_pg,
-	FANS_pg,
+	FANS_TEMP_pg,
 	RELAY_ORDER_pg,
 	FAULT_CODES_RESET_pg,
 	RECTF_ACTIVE_AT_STARTUP_pg,
@@ -323,7 +323,7 @@ typedef enum {
     NUM_PAGES
 } MenuPage;
 
-MenuPage currentPage = FANS_pg;
+MenuPage currentPage = FANS_TEMP_pg;
 uint8_t HOME_PAGE_pg_sel = 2;
 
 uint8_t fault_codes_reset_req = 0;

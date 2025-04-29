@@ -1015,7 +1015,7 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
         case DROPPER_pg:
         	DROPPER_pg_disp();
             break;
-        case FANS_pg:
+        case FANS_TEMP_pg:
         	FANS_TEMP_pg_disp();
             break;
         case RELAY_ORDER_pg:
