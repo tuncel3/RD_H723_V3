@@ -75,8 +75,8 @@ inline extern void delayA_1us_g(uint32_t us)
       for (volatile int k = 0; k < 12; k++) __NOP__;   // ≈170 ns @72 MHz
 
       /* 4) EN darbesi (≥450 ns) */
-      EN1_g;                                // /WR ↑
-      for (volatile int k = 0; k < 16; k++) __NOP__;  // ≈225 ns
+      EN1_g;                                // /WR ↑uint32_t start = DWT->CYCCNT;
+      while ((DWT->CYCCNT - start) < cyc) { __NOP(); }
       EN0_g;                                // /WR ↓
   }
 
