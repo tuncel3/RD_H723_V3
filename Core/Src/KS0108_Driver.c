@@ -102,6 +102,7 @@ static inline void GLCD_WriteData(uint8_t d)
     GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA
     GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC
     GPIOD->BSRR = bsrrD[d];   // bit0    → PD
+    delayA_1us_g(1);
 
     EN1_g;              // /WR yüksek
 //    __NOP(); __NOP();   // ~60 ns (KS0108 min. 450 ns; isteğe göre uzat)
