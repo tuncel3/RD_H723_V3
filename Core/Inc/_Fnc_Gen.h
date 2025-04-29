@@ -194,25 +194,25 @@ void printBinary(uint8_t num) {
 
 
 
-static inline void handleButton(uint8_t pinState,
+static inline void handleButton(uint8_t pinState,					// n014
                                 volatile uint8_t  *isHeld,
                                 volatile uint16_t *releaseCnt,
                                 volatile uint32_t *holdCnt,
-                                volatile uint32_t *nextRepeatEdg,
+                                volatile uint32_t *nextRepeatEdge,
                                 volatile uint8_t  *fireFlag)
 {
     if (!*isHeld && *releaseCnt >= RELEASE_DELAY_T) {            // idle
         if (pinState) {
             *isHeld = 1;
             *holdCnt = 0;
-            *nextRepeatEdg = FIRST_REPEAT_T;
+            *nextRepeatEdge = FIRST_REPEAT_T;
             *fireFlag = 1;
         }
     }
     else if (*isHeld) {                                          // held
         if (pinState) {
-            if (++*holdCnt >= *nextRepeatEdg) {
-                *nextRepeatEdg += NEXT_REPEAT_T;
+            if (++*holdCnt >= *nextRepeatEdge) {
+                *nextRepeatEdge += NEXT_REPEAT_T;
                 *fireFlag = 1;
             }
         } else {                                                 // released
