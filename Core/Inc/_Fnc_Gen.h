@@ -198,7 +198,7 @@ void printBinary(uint8_t num) {
 
 
 void buttonScn(void) {
-	if (ButtScanDelay_cnt > 5) {
+	if (ButtScanDelay_cnt > 2) {
 		ButtScanDelay_cnt=0;
 
 // BLEFT
@@ -244,11 +244,11 @@ if (BLEFT == 0 && BRIGHT == 0 && BUP == 1 && BDOWN == 0 && BENTER == 0 && BESC =
 	if (bup_first_pressed == 0) {
 		bup_first_pressed = 1;
 		bup_fnc();
-		bup_down_cnt++;
+		bup_down_cnt+=5;
 	} else {
-		bup_down_cnt++;
-		if (bup_down_cnt >= 12) {
-			bup_down_cnt = 8;
+		bup_down_cnt+=1;
+		if (bup_down_cnt >= 24) {
+			bup_down_cnt = 0;
 			bup_fnc();
 		}
 	}
@@ -263,11 +263,11 @@ if (BLEFT==0 && BRIGHT==0 && BUP==0 && BDOWN==1 && BENTER==0 && BESC==0) {
 	if (bdown_first_pressed == 0) {
 		bdown_first_pressed = 1;
 		bdown_fnc();
-		bdown_down_cnt++;
+		bdown_down_cnt+=3;
 	} else {
-		bdown_down_cnt++;
-		if (bdown_down_cnt >= 12) {
-			bdown_down_cnt = 8;
+		bdown_down_cnt+=1;
+		if (bdown_down_cnt >= 36) {
+			bdown_down_cnt = 0;
 			bdown_fnc();
 		}
 	}
