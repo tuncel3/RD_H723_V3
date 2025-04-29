@@ -196,9 +196,11 @@ void printBinary(uint8_t num) {
 
 /* ortak kısaltma */
 static inline void hBtn(uint8_t raw,
-                        uint8_t *prs, uint16_t *rel,
-                        uint32_t *hold, uint32_t *nxt,
-                        uint8_t *flag)
+                        volatile uint8_t  *prs,
+                        volatile uint16_t *rel,
+                        volatile uint32_t *hold,
+                        volatile uint32_t *nxt,
+                        volatile uint8_t  *flag)
 {
     if (!*prs && *rel >= RELEASE_DELAY_T) {          /* idle */
         if (raw) { *prs=1; *hold=0; *nxt=FIRST_REPEAT_T; *flag=1; }
