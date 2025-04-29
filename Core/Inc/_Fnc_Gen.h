@@ -198,7 +198,7 @@ void printBinary(uint8_t num) {
 
 
 void buttonScn(void) {
-	if (ButtScanDelay_cnt > 30) {
+	if (ButtScanDelay_cnt > 5) {
 		ButtScanDelay_cnt=0;
 
 // BLEFT

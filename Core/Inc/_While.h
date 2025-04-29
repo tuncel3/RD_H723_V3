@@ -1071,7 +1071,7 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 //		print_REL_OUT_Table();
 //	}
 }
-
+//PRF_GEN("%lu", var1++);
 buttonScn();
 processShiftRegister_LED_16(LED_16_Data);
 processShiftRegister_LED_7(LED_7_Data);
