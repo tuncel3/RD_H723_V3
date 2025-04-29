@@ -1414,11 +1414,19 @@ BLM_STATE blm_op_phase = 0;
 /* -------------------------------------------------
    Değişkenler
    -------------------------------------------------*/
-volatile uint8_t  up_pressed    = 0;      // 0=boşta, 1=basılı
-volatile uint32_t up_hold_cnt   = 0;      // basılı süresi
-volatile uint32_t up_next_rep   = 0;      // sonraki tekrar eşiği
-volatile uint8_t  up_fire_flag  = 0;      // ana döngüde bup_fnc() için
-volatile uint16_t up_release_cnt= RELEASE_DELAY_T; // bırakıldıktan sonra sayaç
+volatile uint8_t  up_pressed    = 0;
+volatile uint8_t  up_fire_flag  = 0;
+volatile uint16_t up_release_cnt= RELEASE_DELAY_T;
+volatile uint32_t up_hold_cnt   = 0;
+volatile uint32_t up_next_rep   = 0;
+
+volatile uint8_t  dn_pressed     = 0;
+volatile uint8_t  dn_fire_flag   = 0;
+volatile uint16_t dn_release_cnt = RELEASE_DELAY_T;
+volatile uint32_t dn_hold_cnt    = 0;
+volatile uint32_t dn_next_rep    = 0;
+
+
 
 #define NS_TO_CYC(ns)  (uint32_t)(((ns) * 550 + 999) / 1000)  // yuvarla
 #define DELAY_NS(ns)   delay_cycles(NS_TO_CYC(ns))

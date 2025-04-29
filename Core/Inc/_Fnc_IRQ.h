@@ -373,21 +373,14 @@ void TIM1_UP_IRQHandler(void)
 {
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
 		LL_TIM_ClearFlag_UPDATE(TIM1);
-		uint8_t up_raw = (BLEFT==0 && BRIGHT==0 && BUP && !BDOWN && !BENTER && !BESC);
-
-		if (!up_pressed && up_release_cnt >= RELEASE_DELAY_T) {          /* idle */
-		    if (up_raw) { up_pressed=1; up_hold_cnt=0; up_next_rep=FIRST_REPEAT_T; up_fire_flag=1; }
-		}
-		else if (up_pressed) {                                           /* held */
-		    if (up_raw) {
-		        if (++up_hold_cnt >= up_next_rep) { up_next_rep += NEXT_REPEAT_T; up_fire_flag=1; }
-		    } else { up_pressed=0; up_release_cnt=0; }
-		}
-		else {                                                           /* locked */
-		    up_release_cnt++;
-		}
 
 
+
+	    uint8_t up_raw = (!BLEFT && !BRIGHT &&  BUP && !BDOWN && !BENTER && !BESC);
+	    uint8_t dn_raw = (!BLEFT && !BRIGHT && !BUP &&  BDOWN && !BENTER && !BESC);
+
+	    hBtn(up_raw,&up_pressed,&up_release_cnt,&up_hold_cnt,&up_next_rep,&up_fire_flag);
+	    hBtn(dn_raw,&dn_pressed,&dn_release_cnt,&dn_hold_cnt,&dn_next_rep,&dn_fire_flag);
 
 
 	}
