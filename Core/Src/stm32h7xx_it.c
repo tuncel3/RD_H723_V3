@@ -185,7 +185,7 @@ void PendSV_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles TIM1 update interrupt.
+  * @brief This function handles TIM1 update interrupt.s
   */
 void TIM1_UP_IRQHandler(void)
 {
