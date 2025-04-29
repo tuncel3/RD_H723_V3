@@ -150,6 +150,7 @@ if (temp_sens_count == 0) {
 generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
 generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
 
+cpu_cycle_counter_init();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // cihaz ilk açılışta doğrultucuyu direk devreye alacak mı.
