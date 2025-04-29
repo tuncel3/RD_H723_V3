@@ -241,20 +241,9 @@ if (BLEFT == 0 && BRIGHT == 1 && BUP == 0 && BDOWN == 0 && BENTER == 0 && BESC =
 //////////////////////////////////////////////////////////////////////////////////
 //// BUP
 if (BLEFT == 0 && BRIGHT == 0 && BUP == 1 && BDOWN == 0 && BENTER == 0 && BESC == 0) {
-	if (bup_first_pressed == 0) {
-		bup_first_pressed = 1;
+
 		bup_fnc();
-		bup_down_cnt+=1;
-	} else {
-		bup_down_cnt+=1;
-		if (bup_down_cnt >= 50) {
-			bup_down_cnt = 0;
-			bup_fnc();
-		}
-	}
-} else if (BUP == 0) {
-	bup_first_pressed = 0;
-	bup_down_cnt = 0;
+
 }
 //// BUP
 ////////////////////////////////////////////////////////////////////////////////////
