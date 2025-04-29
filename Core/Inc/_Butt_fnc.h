@@ -118,7 +118,7 @@ void bleft_fnc(void) {
     	if (!fan_temp_edit_mode) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
     	} else if (fan_temp_edit_mode) {
-    		fan_temp_edit_mode=(fan_temp_dig+1+6) % 6;
+    		fan_temp_dig=(fan_temp_dig+1+6) % 6;
     	}
     }
     else if (currentPage == MANAGEMENT_pg) {
@@ -282,7 +282,7 @@ void bright_fnc(void) {
     	if (!fan_temp_edit_mode) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
     	} else if (fan_temp_edit_mode) {
-    		fan_temp_edit_mode=(fan_temp_dig+1+6) % 6;
+    		fan_temp_dig=(fan_temp_dig+1+6) % 6;
     	}
     }
     else if (currentPage == MANAGEMENT_pg) {
