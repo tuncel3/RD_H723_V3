@@ -1,5 +1,6 @@
 
 
+
 inline extern void FANS_TEMP_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
 	char L[32]; static uint8_t lnhg=9;
@@ -14,7 +15,7 @@ inline extern void FANS_TEMP_pg_disp(void) {
 
 	if (fan_temp_edit_mode) {
 		if ((fan_temp_edit_blink^=1)==0) {
-			x0=95+(fan_temp_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
+			x0=96+(fan_temp_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
