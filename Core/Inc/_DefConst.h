@@ -1420,3 +1420,5 @@ volatile uint32_t up_next_rep   = 0;      // sonraki tekrar eşiği
 volatile uint8_t  up_fire_flag  = 0;      // ana döngüde bup_fnc() için
 volatile uint16_t up_release_cnt= RELEASE_DELAY_T; // bırakıldıktan sonra sayaç
 
+#define NS_TO_CYC(ns)  (uint32_t)(((ns) * 550 + 999) / 1000)  // yuvarla
+#define DELAY_NS(ns)   delay_cycles(NS_TO_CYC(ns))
