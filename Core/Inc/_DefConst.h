@@ -1407,9 +1407,9 @@ typedef enum {
 BLM_STATE blm_op_phase = 0;
 
 
-#define FIRST_REPEAT_T     50000u   // 500 ms
-#define NEXT_REPEAT_T      10000u   // 100 ms
-#define RELEASE_DELAY_T     5000u   //  50 ms  (yeni)
+#define FIRST_REPEAT_T     500u   // 500 ms
+#define NEXT_REPEAT_T      300u   // 100 ms
+#define RELEASE_DELAY_T     50u   //  50 ms  (yeni)
 
 
 
