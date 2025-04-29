@@ -374,12 +374,31 @@ void TIM1_UP_IRQHandler(void)
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
 		LL_TIM_ClearFlag_UPDATE(TIM1);
 
-		if (BLEFT == 0 && BRIGHT == 0 && BUP == 1 && BDOWN == 0 && BENTER == 0 && BESC == 0) {
-			bup_fnc();
-		}
-		if (BLEFT == 0 && BRIGHT == 0 && BUP == 0 && BDOWN == 1 && BENTER == 0 && BESC == 0) {
-			bdown_fnc();
-		}
+	    /* ---------------- BUP ---------------- */
+	    uint8_t up_raw = (BLEFT==0 && BRIGHT==0 && BUP==1 &&
+	                      BDOWN==0 && BENTER==0 && BESC==0);
+
+	    if (up_raw) {
+	        if (!BUP_pressed) {                     // ilk basış
+	            BUP_pressed = 1;
+	            BUP_press_time  = 0;
+	            BUP_repeat_time = 0;
+	            BUP_fire = 1;                       // ilk tetik
+	        } else {
+	            BUP_press_time++;
+	            if (BUP_press_time >= FIRST_REPEAT_T) {
+	                BUP_repeat_time++;
+	                if (BUP_repeat_time >= NEXT_REPEAT_T) {
+	                    BUP_repeat_time = 0;
+	                    BUP_fire = 1;               // oto-tekrar tetik
+	                }
+	            }
+	        }
+	    } else {                                   // bırakıldı
+	        BUP_pressed = 0;
+	        BUP_press_time  = 0;
+	        BUP_repeat_time = 0;
+	    }
 	}
 }
 

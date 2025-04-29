@@ -1072,7 +1072,7 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 //	}
 }
 //PRF_GEN("%lu", var1++);
-buttonScn();
+//buttonScn();
 processShiftRegister_LED_16(LED_16_Data);
 processShiftRegister_LED_7(LED_7_Data);
 processShiftRegister_Relay_Board_16(REL_24Bit_Data);
@@ -1081,5 +1081,11 @@ if (req_reset_db==1) {
 	req_reset_db=0;
 	NVIC_SystemReset();
 }
+
+if (BUP_fire)   { BUP_fire   = 0;  bup_fnc();   }
+//if (BDOWN_fire) { BDOWN_fire = 0;  bdown_fnc(); }
+
+
+
 
 

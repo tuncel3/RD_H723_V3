@@ -1407,3 +1407,13 @@ typedef enum {
 BLM_STATE blm_op_phase = 0;
 
 
+
+#define FIRST_REPEAT_T   50000u   // 500 ms
+#define NEXT_REPEAT_T    10000u   // 100 ms
+
+static volatile uint8_t  BUP_pressed      = 0;
+static volatile uint32_t BUP_press_time   = 0;
+static volatile uint32_t BUP_repeat_time  = 0;
+static volatile uint8_t  BUP_fire         = 0;   // ana döngüde çalıştır
+
+
