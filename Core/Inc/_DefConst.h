@@ -337,9 +337,9 @@ uint8_t batt_reverse_req_right = 0;
 const char* FANS_TEMP_Items[] = {
 	"Soğutuc Fan",
 	"Trafo Fan",
-	"Aşırı Sıck Alarm",
-	"Aşırı Sıck Açma",
-	"Aşr Sıc Açma Süre"
+	"Aşr Sıc Alarm",
+	"Aşr Sıc Açma",
+	"Açma Geck Süre"
 };
 #define FANS_TEMP_ITEMS (sizeof(MAIN_MENU_Items) / sizeof(MAIN_MENU_Items[0]))
 uint8_t fan_temp_edit_mode = 0;

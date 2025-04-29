@@ -8,11 +8,11 @@ inline extern void FANS_TEMP_pg_disp(void) {
 //    Aşırı Sıck Alarm  80 C
 //    Aşırı Sıck Açma  85 C
 //    Aşr Sıc Açma Süre  10 sn
-		sprintf(L, " %s  %5.1f C", FANS_TEMP_Items[0], EpD[SET_COOL_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 1*lnhg, L);
-		sprintf(L, " %s    %5.1f C", FANS_TEMP_Items[1], EpD[SET_TRANSF_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 2*lnhg, L);
-		sprintf(L, " %s  %5.1f C", FANS_TEMP_Items[2], EpD[SET_OVERTEMP_ALARM][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 3*lnhg, L);
-		sprintf(L, " %s  %5.1f C", FANS_TEMP_Items[3], EpD[SET_OVERTEMP_OPEN][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 4*lnhg, L);
-		sprintf(L, " %s  %5.1f C", FANS_TEMP_Items[4], EpD[SET_OVT_OPEN_DELAY][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 5*lnhg, L);
+		sprintf(L, " %s  %5.1f", FANS_TEMP_Items[0], EpD[SET_COOL_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 1*lnhg, L);
+		sprintf(L, " %s    %5.1f", FANS_TEMP_Items[1], EpD[SET_TRANSF_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 2*lnhg, L);
+		sprintf(L, " %s  %5.1f", FANS_TEMP_Items[2], EpD[SET_OVERTEMP_ALARM][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 3*lnhg, L);
+		sprintf(L, " %s  %5.1f", FANS_TEMP_Items[3], EpD[SET_OVERTEMP_OPEN][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 4*lnhg, L);
+		sprintf(L, " %s  %5.1f", FANS_TEMP_Items[4], EpD[SET_OVT_OPEN_DELAY][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 5*lnhg, L);
 }
 inline extern void DROPPER_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
