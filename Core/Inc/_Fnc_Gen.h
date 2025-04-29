@@ -198,7 +198,7 @@ void printBinary(uint8_t num) {
 
 
 void buttonScn(void) {
-	if (ButtScanDelay_cnt > 2) {
+	if (ButtScanDelay_cnt > 1) {
 		ButtScanDelay_cnt=0;
 
 // BLEFT
@@ -265,8 +265,8 @@ if (BLEFT==0 && BRIGHT==0 && BUP==0 && BDOWN==1 && BENTER==0 && BESC==0) {
 		bdown_fnc();
 		bdown_down_cnt+=1;
 	} else {
-		bdown_down_cnt+=5;
-		if (bdown_down_cnt >= 100) {
+		bdown_down_cnt+=10;
+		if (bdown_down_cnt >= 200) {
 			bdown_down_cnt = 0;
 			bdown_fnc();
 		}
