@@ -340,7 +340,7 @@ void bright_fnc(void) {
 }
 
 void bup_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
+    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 2) {
     	asm("NOP");
     	PRF_GEN("%lu", var1++);
     }
