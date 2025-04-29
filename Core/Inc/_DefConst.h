@@ -339,7 +339,7 @@ const char* FANS_TEMP_Items[] = {
 	"Trafo Fan",
 	"Aşr Sıc Alarm",
 	"Aşr Sıc Açma",
-	"Açma Geck Süre"
+	"Açma Geck Sn"
 };
 #define FANS_TEMP_ITEMS (sizeof(MAIN_MENU_Items) / sizeof(MAIN_MENU_Items[0]))
 uint8_t fan_temp_edit_mode = 0;
