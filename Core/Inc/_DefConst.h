@@ -660,7 +660,7 @@ const char* MANAGEMENT_Items[] = {
 "Arıza Kaytları Sil",
 "Cihaz Yeniden Başlat",
 "Doğrltc Açlşta Aktif",
-"Kalibrasyon"
+"Kalibrasyon",
 "Test"
 };
 #define NUM_MANAGEMENT_ITEMS (sizeof(MANAGEMENT_Items) / sizeof(MANAGEMENT_Items[0]))
