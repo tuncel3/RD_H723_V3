@@ -1463,8 +1463,11 @@ volatile uint8_t  esIsHeld = 0,   esFireFlag = 0;
 volatile uint16_t esReleaseCnt = RELEASE_DELAY_T;
 volatile uint32_t esHoldCnt = 0,  esNextRepeatEdge = 0;
 
-
-
-
 #define NS_TO_CYC(ns)  (uint32_t)(((ns) * 550 + 999) / 1000)  // yuvarla
 #define DELAY_NS(ns)   delay_cycles(NS_TO_CYC(ns))
+
+
+uint32_t zcr_record_ind = 0;
+
+
+

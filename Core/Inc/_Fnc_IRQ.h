@@ -441,7 +441,7 @@ void SysTick_Handler(void) {	// n009
 		}
 	}
 		if (LL_EXTI_LINE_9_reenable_cnt == ZCRENDELY) {
-
+			zcr_record_ind=(zcr_record_ind+1)%10;
 		}
 
 }
