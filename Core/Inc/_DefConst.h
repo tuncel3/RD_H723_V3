@@ -611,7 +611,6 @@ SETT_type CHARGE_SETT_Items[] = {
 {"Tama Geçiş", I_LIM_TO_BOOST, 0}
 };
 
-
 #define NUM_CHARGE_SETT_ITEMS (sizeof(CHARGE_SETT_Items) / sizeof(CHARGE_SETT_Items[0]))
 uint8_t selected_CHARGE_SETT = 1;
 uint8_t chg_set_disp_index =0;
