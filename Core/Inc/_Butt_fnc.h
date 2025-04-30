@@ -504,7 +504,7 @@ if (!chg_setting_edit_mode) {
 		if (!fan_temp_edit_mode) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
 		} else if (fan_temp_edit_mode) {
-			if (selected_FAN_TEMP_PG_line == 0 && EpD[SET_COOL_FAN_TEMP][1].V1 < 80) {
+			if (selected_FAN_TEMP_PG_line == 0) {
 				EpD[SET_COOL_FAN_TEMP][1].V1 += fan_temp_step_values[fan_temp_dig];
 				if (EpD[SET_COOL_FAN_TEMP][1].V1 > 90) {
 					EpD[SET_COOL_FAN_TEMP][1].V1 = 90;
@@ -540,12 +540,15 @@ if (!chg_setting_edit_mode) {
 
 
 
-    else if (currentPage == TEST_pg) { // UP
-        if (!test_edit_mode) {
-            selected_TEST_PG_line = (selected_TEST_PG_line - 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
-        } else if (test_edit_mode) {
-            test_dig = (test_dig + 1) % test_dig_num;
-        }
+    else if (currentPage == TEST_pg) { // RIGHT
+    	static const float test_step_values[3] = {10.0f, 1.0f};
+    	if (!test_edit_mode) {
+    		selected_TEST_PG_line = (selected_TEST_PG_line + 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
+    	} else if (test_edit_mode) {
+			if (selected_TEST_PG_line == 0) {
+				temp_test_var_1 += test_step_values[fan_temp_dig];
+			}
+    	}
     }
 
 
