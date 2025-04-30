@@ -1017,10 +1017,6 @@ void print_REL_OUT_Table() {
     }
 }
 
-//void calc_REL_24Bit_Data_f(void) {
-//	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
-//}
-
 
 void compress_REL_OUT_order_to_parts(void) {
     REL_OUT_order_part1 = 0;
