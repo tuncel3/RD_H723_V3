@@ -24,7 +24,7 @@
 //#define DBG21	set_(DBG2_P);
 //#define DBG20	res_(DBG2_P);
 
-#define BUZZ_P(x)  ((x) ? LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_0) : LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_0))
+#define BUZZ_P(x)  ((x) ? LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1) : LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1))
 
 // FP BUTTONS
 #define TC_3_1_P GPIOB, LL_GPIO_PIN_4
