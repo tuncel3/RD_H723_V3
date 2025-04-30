@@ -21,10 +21,9 @@ inline extern void TEST_pg_disp(void) {
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
-//	if (selected_TEST_PG_line == 3) {
-//		uint8_t index = (leds_rels_override > 1) ? 0 : leds_rels_override;
-		sprintf(L, "%s", AKTFPAS_SEL_Items[leds_rels_override]); 	GLCD_PrintString(0+6*7, 4*lnhg, L);
-//	}
+
+	sprintf(L, "%s", AKTFPAS_SEL_Items[buzzer_override]); 	GLCD_PrintString(0+6*7, 3*lnhg, L);
+	sprintf(L, "%s", AKTFPAS_SEL_Items[leds_rels_override]); 	GLCD_PrintString(0+6*7, 4*lnhg, L);
 }
 
 inline extern void FANS_TEMP_pg_disp(void) {
