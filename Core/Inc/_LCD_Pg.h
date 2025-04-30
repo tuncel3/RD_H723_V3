@@ -15,7 +15,7 @@ inline extern void TEST_pg_disp(void) {
 
 	static uint8_t testLnPic[6] = { 0, 1, 3};
 
-	if (test_edit_mode) {
+	if (test_edit_mode && selected_TEST_PG_line <= 1) {
 		if ((test_edit_blink^=1)==0) {
 			x0=48+(testLnPic[test_dig]*6); y0=(selected_TEST_PG_line+2)*lnhg-1; w=4;
 		}
