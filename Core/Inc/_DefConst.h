@@ -361,7 +361,7 @@ uint8_t test_edit_mode = 0;
 uint8_t selected_TEST = 0;
 uint8_t selected_TEST_PG_line = 0;
 uint8_t test_dig = 1;
-uint8_t test_dig_num = 2;
+uint8_t test_dig_num = 3;
 uint8_t test_edit_blink = 0;
 
 const char* MAIN_MENU_Items[] = {
