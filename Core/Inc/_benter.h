@@ -388,7 +388,9 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
     else if (currentPage == TEST_pg) {
     	test_edit_mode ^=1;
         if (test_edit_mode) {
-        	temp_test_thy_1=0;
+			if (selected_TEST_PG_line==0) {
+				temp_test_thy_1=0;
+			}
         }
         if (!test_edit_mode) {
         	__NOP();
