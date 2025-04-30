@@ -1096,6 +1096,7 @@ if (leds_rels_override) {
 	LED_16_Data=65535;
 	LED_7_Data=255;
 	REL_24Bit_Data=16777215;
+	leds_rels_override_returned=0;
 } else if (!leds_rels_override_returned) {
 	leds_rels_override_returned=1;
 	LED_16_Data=LED_16_Data_h;

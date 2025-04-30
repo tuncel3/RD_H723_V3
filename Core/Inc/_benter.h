@@ -399,7 +399,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				test_dig=0;
 			}
 			if (selected_TEST_PG_line==3) {
-				leds_rels_override_returned^=1;
+				leds_rels_override^=1;
 				test_dig=0;
 			}
         }
