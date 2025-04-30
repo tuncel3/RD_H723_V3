@@ -1087,7 +1087,14 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 //	}
 }
 //PRF_GEN("%lu", var1++);
-//buttonScn();
+
+//buzzer_override;
+if (leds_override) {
+	LED_16_Data=65535;
+	LED_7_Data=255;
+	REL_24Bit_Data=16777215;
+}
+
 processShiftRegister_LED_16(LED_16_Data);
 processShiftRegister_LED_7(LED_7_Data);
 processShiftRegister_Relay_Board_16(REL_24Bit_Data);
