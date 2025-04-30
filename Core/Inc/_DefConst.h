@@ -317,6 +317,7 @@ typedef enum {
 	RECTF_ACTIVE_AT_STARTUP_pg,
 	DEVICE_RESET_pg,
 	CALIBRATION_pg,
+	TEST_pg,
 	DATE_TIME_pg,
 	BATT_REVERSE_DETECT_pg,
 	CONT_SYS_pg,
@@ -347,6 +348,20 @@ uint8_t selected_FANS_TEMP = 0;
 uint8_t selected_FAN_TEMP_PG_line = 0;
 uint8_t fan_temp_dig = 1;
 uint8_t fan_temp_edit_blink = 0;
+
+const char* TEST_Items[] = {
+"Temp 1",
+"Temp 2",
+"Fan 1",
+"Fan 2",
+"Buzz 1"
+};
+#define NUM_TEST_ITEMS (sizeof(TEST_Items) / sizeof(TEST_Items[0]))
+uint8_t test_edit_mode = 0;
+uint8_t selected_TEST = 0;
+uint8_t selected_TEST_PG_line = 0;
+uint8_t test_dig = 1;
+uint8_t test_edit_blink = 0;
 
 const char* MAIN_MENU_Items[] = {
     "Şarj Ayarları",
@@ -649,6 +664,7 @@ const char* MANAGEMENT_Items[] = {
 };
 #define NUM_MANAGEMENT_ITEMS (sizeof(MANAGEMENT_Items) / sizeof(MANAGEMENT_Items[0]))
 uint8_t selected_MANAGEMENT = 0;
+
 
 typedef enum {
 	cal_none,
