@@ -699,7 +699,8 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 			ovtmp_open_cnt++;
 		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVERTEMP_OPEN][0].V1-5 && is_state_active(OVERTEMP_OPEN_FC)) { // overtemp alarm disable
 			apply_state_changes_f(OVERTEMP_OPEN_FC, 0);
-		}
+			ovtmp_open_cnt=0;
+		} el
 
 		if (ovtmp_open_cnt >= ovtmp_open_per && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp alarm enable
 			apply_state_changes_f(OVERTEMP_OPEN_FC, 1);
