@@ -1090,9 +1090,16 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 //buzzer_override;
 if (leds_override) {
+	LED_16_Data_h=LED_16_Data;
+	LED_7_Data_h=LED_7_Data;
+	REL_24Bit_Data_h=REL_24Bit_Data;
 	LED_16_Data=65535;
 	LED_7_Data=255;
 	REL_24Bit_Data=16777215;
+} else {
+	LED_16_Data=LED_16_Data_h;
+	LED_7_Data=LED_7_Data_h;
+	REL_24Bit_Data=REL_24Bit_Data_h;
 }
 
 processShiftRegister_LED_16(LED_16_Data);

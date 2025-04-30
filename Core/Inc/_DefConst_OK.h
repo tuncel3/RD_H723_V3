@@ -131,8 +131,11 @@ uint32_t besc_down_cnt=0;
 uint32_t thy_stop_fault_hold_bits=0b0;
 uint32_t LED_16_Data=0b0;
 uint32_t LED_7_Data=0b0;
-uint8_t  REL_MB_8Bit_Data=0b0;
 uint32_t REL_24Bit_Data=0b0;
+uint32_t LED_16_Data_h=0b0;
+uint32_t LED_7_Data_h=0b0;
+uint32_t REL_24Bit_Data_h=0b0;
+uint8_t  REL_MB_8Bit_Data=0b0;
 uint16_t rel_out_16Bit_Data=0b0;
 // LED SHIFT REGISTER
 ///////////////////////////////////////////////////////////////////////////
