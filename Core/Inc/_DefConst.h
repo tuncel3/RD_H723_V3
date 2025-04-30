@@ -1469,5 +1469,23 @@ volatile uint32_t esHoldCnt = 0,  esNextRepeatEdge = 0;
 
 uint32_t zcr_record_ind = 0;
 uint32_t zcr_record_vals[3][10]={0};
+uint8_t zcr_exist_R=0;
+uint8_t zcr_exist_S=0;
+uint8_t zcr_exist_T=0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
