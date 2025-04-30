@@ -444,6 +444,20 @@ void SysTick_Handler(void) {	// n009
 	zcr_record_vals[1][zcr_record_ind]= LL_EXTI_LINE_8_reenable_cnt;
 	zcr_record_vals[2][zcr_record_ind]= LL_EXTI_LINE_9_reenable_cnt;
 	zcr_record_ind=(zcr_record_ind+1)%10;
+
+	if (LL_EXTI_LINE_7_reenable_cnt == zcr_val_R_p) {           /* aynı değer gelmeye devam mı? */
+	    if (sameCnt < 10) sameCnt++; /* 0‒10 arası say; taşma yok     */
+	} else {                         /* farklı değer gördük           */
+	    sameCnt = 0;
+	}
+	prevVal = var1;                  /* bir sonraki tur için sakla    */
+
+	if (sameCnt == 10) {
+	    /*  -------- SON 10 TURDA HEP AYNI DEĞER --------  */
+	    do_something();              /* alarm, flag, vb. */
+	}
+
+
 }
 
 void DMA1_Stream0_IRQHandler(void)
