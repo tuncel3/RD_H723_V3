@@ -546,7 +546,7 @@ if (!chg_setting_edit_mode) {
     		selected_TEST_PG_line = (selected_TEST_PG_line + 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
     	} else if (test_edit_mode) {
 			if (selected_TEST_PG_line == 0) {
-				temp_test_var_1 += test_step_values[test_dig];
+				temp_test_thy_1 += test_step_values[test_dig];
 			}
     	}
     }
@@ -976,7 +976,7 @@ if (!chg_setting_edit_mode) {
     		selected_TEST_PG_line = (selected_TEST_PG_line - 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
     	} else if (test_edit_mode) {
 			if (selected_TEST_PG_line == 0) {
-				temp_test_var_1 -= test_step_values[test_dig];
+				temp_test_thy_1 -= test_step_values[test_dig];
 			}
     	}
     }
