@@ -1099,7 +1099,8 @@ if (leds_override) {
 } else {
 	LED_16_Data=LED_16_Data_h;
 	LED_7_Data=LED_7_Data_h;
-	REL_24Bit_Data=REL_24Bit_Data_h;
+	rel_out_16Bit_Data=rel_out_16Bit_Data_h;
+	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 }
 
 processShiftRegister_LED_16(LED_16_Data);
