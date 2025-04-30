@@ -400,6 +400,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			}
 			if (selected_TEST_PG_line==3) {
 				leds_override^=1;
+				test_dig=0;
 			}
         }
         if (!test_edit_mode) {
