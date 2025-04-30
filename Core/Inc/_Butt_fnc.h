@@ -549,10 +549,10 @@ if (!chg_setting_edit_mode) {
 				temp_test_thy_1 += test_step_values[test_dig];
 			}
 			if (selected_TEST_PG_line == 1) {
-				temp_test_trf21 += test_step_values[test_dig];
+				temp_test_trf_2 += test_step_values[test_dig];
 			}
 			if (selected_TEST_PG_line == 2) {
-				temp_test_thy_1 += test_step_values[test_dig];
+//				temp_test_thy_1 += test_step_values[test_dig];
 			}
     	}
     }
