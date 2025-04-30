@@ -167,8 +167,6 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// aşırı sıcaklık alarm
-// aşırı sıcaklık açma, gecikme süresi ile
 // zero cross var yok flagı lazım. yoksa ac voltaj ölçümü geçersiz durumda oluyor be lcd de gösterilmemeli. 0 olarak gösterilmeli.
 // 4 - eeprom okuma başarısız ise arıza durumu gösterilmeli.
 // 3 - bir anda batarya akımı kesilirse battery inspection hemen başlat.
