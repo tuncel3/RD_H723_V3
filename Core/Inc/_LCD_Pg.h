@@ -21,7 +21,7 @@ inline extern void TEST_pg_disp(void) {
 		}
 		if (leds_rels_override && selected_TEST_PG_line == 3) {
 			uint8_t index = (leds_rels_override > 1) ? 0 : leds_rels_override;
-			sprintf(L, "%s ", AKTFPAS_SEL_Items[0]); 	GLCD_PrintString(0+6*7, 4*lnhg, L);
+			sprintf(L, "%s %s ", AKTFPAS_SEL_Items[0], AKTFPAS_SEL_Items[1]); 	GLCD_PrintString(0+6*7, 4*lnhg, L);
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);

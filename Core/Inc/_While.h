@@ -1104,9 +1104,9 @@ if (leds_rels_override && leds_rels_override_returned) {
 	REL_24Bit_Data=REL_24Bit_Data_h;
 }
 
-processShiftRegister_LED_16(LED_16_Data);
-processShiftRegister_LED_7(LED_7_Data);
-processShiftRegister_Relay_Board_16(REL_24Bit_Data);
+//processShiftRegister_LED_16(LED_16_Data);
+//processShiftRegister_LED_7(LED_7_Data);
+//processShiftRegister_Relay_Board_16(REL_24Bit_Data);
 
 if (req_reset_db==1) {
 	req_reset_db=0;
