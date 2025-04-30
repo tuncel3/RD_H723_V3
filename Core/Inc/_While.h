@@ -1089,18 +1089,18 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 //PRF_GEN("%lu", var1++);
 
 //buzzer_override;
-if (leds_override) {
+if (leds_rels_override) {
 	LED_16_Data_h=LED_16_Data;
 	LED_7_Data_h=LED_7_Data;
 	REL_24Bit_Data_h=REL_24Bit_Data;
 	LED_16_Data=65535;
 	LED_7_Data=255;
 	REL_24Bit_Data=16777215;
-} else {
+} else if (!leds_rels_override_returned) {
+	leds_rels_override_returned=1;
 	LED_16_Data=LED_16_Data_h;
 	LED_7_Data=LED_7_Data_h;
 	rel_out_16Bit_Data=rel_out_16Bit_Data_h;
-	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 }
 
 processShiftRegister_LED_16(LED_16_Data);
