@@ -349,6 +349,8 @@ uint8_t selected_FAN_TEMP_PG_line = 0;
 uint8_t fan_temp_dig = 1;
 uint8_t fan_temp_edit_blink = 0;
 
+uint8_t fan_temp_edit_blink = 0;
+
 const char* TEST_Items[] = {
 "Temp 1",
 "Temp 2",
