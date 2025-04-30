@@ -1475,7 +1475,12 @@ uint8_t zcr_val_S=0;
 uint8_t zcr_val_S_p=0;
 uint8_t zcr_val_T=0;
 uint8_t zcr_val_T_p=0;
-uint8_t sameCnt=0;
+uint8_t zcr_val_same_cnt_R=0;
+uint8_t zcr_val_same_cnt_S=0;
+uint8_t zcr_val_same_cnt_T=0;
+uint8_t zcr_exist_R=0;
+uint8_t zcr_exist_S=0;
+uint8_t zcr_exist_T=0;
 
 
 
