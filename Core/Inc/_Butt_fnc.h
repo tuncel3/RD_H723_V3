@@ -541,7 +541,7 @@ if (!chg_setting_edit_mode) {
 
 
     else if (currentPage == TEST_pg) { // UP
-    	static const float test_step_values[3] = {10.0f, 1.0f};
+    	static const float test_step_values[3] = {10.0f, 1.0f, 0.1f};
     	if (!test_edit_mode) {
     		selected_TEST_PG_line = (selected_TEST_PG_line - 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
     	} else if (test_edit_mode) {
@@ -977,7 +977,7 @@ if (!chg_setting_edit_mode) {
 
 
     else if (currentPage == TEST_pg) { // DOWN
-    	static const float test_step_values[3] = {10.0f, 1.0f};
+    	static const float test_step_values[3] = {10.0f, 1.0f, 0.1f};
     	if (!test_edit_mode) {
     		selected_TEST_PG_line = (selected_TEST_PG_line+1+NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
     	} else if (test_edit_mode) {
