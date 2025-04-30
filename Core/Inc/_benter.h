@@ -385,6 +385,9 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			}
 		}
     }
+    else if (currentPage == TEST_pg) {
+    	test_edit_mode ^=1;
+    }
     else if (currentPage == FAULT_CODES_RESET_pg) {
     	fault_codes_reset_req=1;
     	if (fault_codes_reset_req_right == 1) {

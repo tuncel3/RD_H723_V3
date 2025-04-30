@@ -12,7 +12,7 @@ inline extern void TEST_pg_disp(void) {
 
 	if (test_edit_mode) {
 		if ((test_edit_blink^=1)==0) {
-			x0=102+(test_dig*6); y0=(selected_TEST_PG_line+2)*lnhg-1; w=4;
+			x0=48+(test_dig*6); y0=(selected_TEST_PG_line+2)*lnhg-1; w=4;
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
