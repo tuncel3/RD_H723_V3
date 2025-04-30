@@ -21,7 +21,7 @@ volatile uint8_t dbg_blm = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-#define BUZZ_P GPIOE, LL_GPIO_PIN_1
+#define BUZZ_P GPIOB, LL_GPIO_PIN_8
 #define E1_1 LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1);
 #define E1_0 LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1);
 //#define E12=1; LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_12);
