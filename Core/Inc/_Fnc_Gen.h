@@ -878,6 +878,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_7_Data |= led7_bit; }  // activate LED 7 if required
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data |= REL8_bit; }  // activate REL 8 if required
+        PRF_GEN(" REL_MB_8Bit_Data |= REL8_bit");
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC);
         	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 1); } // activate general fault LED if associated
