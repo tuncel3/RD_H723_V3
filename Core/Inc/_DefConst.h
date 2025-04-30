@@ -645,6 +645,7 @@ const char* MANAGEMENT_Items[] = {
 "Cihaz Yeniden Başlat",
 "Doğrltc Açlşta Aktif",
 "Kalibrasyon"
+"Test"
 };
 #define NUM_MANAGEMENT_ITEMS (sizeof(MANAGEMENT_Items) / sizeof(MANAGEMENT_Items[0]))
 uint8_t selected_MANAGEMENT = 0;
