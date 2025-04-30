@@ -441,42 +441,6 @@ void SysTick_Handler(void) {	// n009
 		}
 	}
 
-	if (LL_EXTI_LINE_7_reenable_cnt == zcr_val_R_p) {			// aynı değer mi
-	    if (zcr_val_same_cnt_R < 10) zcr_val_same_cnt_R++;		// aynı ise sayacı artır
-	} else {
-		zcr_val_same_cnt_R = 0; 								// farklı ise sıfırla
-	}
-	zcr_val_R_p = LL_EXTI_LINE_7_reenable_cnt;					// prev val sakla
-
-	if (LL_EXTI_LINE_8_reenable_cnt == zcr_val_S_p) {
-	    if (zcr_val_same_cnt_S < 10) zcr_val_same_cnt_S++;
-	} else {
-		zcr_val_same_cnt_S = 0;
-	}
-	zcr_val_S_p = LL_EXTI_LINE_8_reenable_cnt;
-
-	if (LL_EXTI_LINE_9_reenable_cnt == zcr_val_T_p) {
-	    if (zcr_val_same_cnt_T < 10) zcr_val_same_cnt_T++;
-	} else {
-		zcr_val_same_cnt_T = 0;
-	}
-	zcr_val_T_p = LL_EXTI_LINE_9_reenable_cnt;
-
-	if (zcr_val_same_cnt_R == 10) {
-		zcr_exist_R=0;
-	} else {
-		zcr_exist_R=1;
-	}
-	if (zcr_val_same_cnt_S == 10) {
-		zcr_exist_S=0;
-	} else {
-		zcr_exist_S=1;
-	}
-	if (zcr_val_same_cnt_T == 10) {
-		zcr_exist_T=0;
-	} else {
-		zcr_exist_T=1;
-	}
 
 }
 
