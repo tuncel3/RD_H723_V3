@@ -1197,8 +1197,12 @@ void besc_fnc(void) {
         currentPage = HOME_PAGE_pg;
     }
     else if (currentPage == TEST_pg) { // ESC
-    	temp_test_thy_1=0;
-        currentPage = MANAGEMENT_pg;
+    	if (chg_setting_edit_mode) {
+    		temp_test_thy_1=0;
+    	} else {
+			currentPage = MANAGEMENT_pg;
+		}
+
     }
     else if (currentPage == CHARGE_SETT_pg) { // ESC
     	if (chg_setting_edit_mode) {
