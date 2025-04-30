@@ -695,29 +695,33 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVERTEMP_ALARM][0].V1-5 && is_state_active(OVERTEMP_ALARM_FC)) { // overtemp alarm disable
 			apply_state_changes_f(OVERTEMP_ALARM_FC, 0);
 		}
-		if (tmp_dat_C[0]+temp_test_var_1 > EpD[SET_OVERTEMP_OPEN][0].V1 && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp alarm enable
+		if (tmp_dat_C[0]+temp_test_var_1 > EpD[SET_OVERTEMP_OPEN][0].V1 && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp open count
 			ovtmp_open_cnt++;
-		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVERTEMP_OPEN][0].V1-5 && is_state_active(OVERTEMP_OPEN_FC)) { // overtemp alarm disable
+		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVERTEMP_OPEN][0].V1-5 && is_state_active(OVERTEMP_OPEN_FC)) { // overtemp open cancel
 			apply_state_changes_f(OVERTEMP_OPEN_FC, 0);
 			ovtmp_open_cnt=0;
+		} else if (ovtmp_open_cnt < EpD[SET_OVERTEMP_OPEN][0].V1-5 && is_state_active(OVERTEMP_OPEN_FC)) {
+
 		} else {
 			ovtmp_open_cnt=0;
 		}
 
 		if (ovtmp_open_cnt >= ovtmp_open_per && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp alarm enable
+			ovtmp_open_cnt=0;
 			apply_state_changes_f(OVERTEMP_OPEN_FC, 1);
 		}
-//			ovtmp_open_cnt=0; // reset open count only when alarm is deactivated
-//		else if (tmp_dat_C[0]+temp_test_var_1 > EpD[SET_OVERTEMP_OPEN][0].V1 && !is_state_active(SET_OVERTEMP_OPEN)) { // overtemp open enable
-//			apply_state_changes_f(SET_OVERTEMP_OPEN, 1);
-//		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVERTEMP_ALARM][0].V1-5 && is_state_active(SET_OVERTEMP_OPEN)) { // overtemp open disable
-//			apply_state_changes_f(SET_OVERTEMP_OPEN, 0);
-//		}
-//		if (is_state_active(OVERTEMP_ALARM_FC) && !is_state_active(SET_OVERTEMP_OPEN)) {
-//			if (ovtmp_open_cnt >= ovtmp_open_per) {
-//				apply_state_changes_f(SET_OVERTEMP_OPEN, 1);
-//			}
-//		}
+
+
+
+			apply_state_changes_f(TRF_FAN2_REL,1);
+		if (tmp_dat_C[0]+temp_test_var_1 > EpD[SET_COOL_FAN_TEMP][0].V1 && )) { // fan enable
+			apply_state_changes_f(TRF_FAN2_REL, 1);
+		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVERTEMP_ALARM][0].V1-5 && is_state_active(OVERTEMP_ALARM_FC)) { // fan disable
+			apply_state_changes_f(TRF_FAN2_REL, 0);
+		}
+
+
+
 	}
 
 //// AKÜ ////////////////////////////////////////////////////////////////////////////////////////////////////////////
