@@ -540,7 +540,7 @@ if (!chg_setting_edit_mode) {
 
 
 
-    else if (currentPage == TEST_pg) { // RIGHT
+    else if (currentPage == TEST_pg) { // UP
     	static const float test_step_values[3] = {10.0f, 1.0f};
     	if (!test_edit_mode) {
     		selected_TEST_PG_line = (selected_TEST_PG_line + 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
@@ -968,6 +968,21 @@ if (!chg_setting_edit_mode) {
         }
     }
 
+
+
+    else if (currentPage == TEST_pg) { // DOWN
+    	static const float test_step_values[3] = {10.0f, 1.0f};
+    	if (!test_edit_mode) {
+    		selected_TEST_PG_line = (selected_TEST_PG_line - 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
+    	} else if (test_edit_mode) {
+			if (selected_TEST_PG_line == 0) {
+				temp_test_var_1 -= test_step_values[test_dig];
+			}
+    	}
+    }
+
+
+
     else if (currentPage == MANAGEMENT_pg) { // DOWN
     	selected_MANAGEMENT=(selected_MANAGEMENT+1) % NUM_MANAGEMENT_ITEMS;
     }
@@ -1168,6 +1183,9 @@ void besc_fnc(void) {
     }
     else if (currentPage == FANS_TEMP_pg) { // ESC
         currentPage = HOME_PAGE_pg;
+    }
+    else if (currentPage == TEST_pg) { // ESC
+        currentPage = MANAGEMENT_pg;
     }
     else if (currentPage == CHARGE_SETT_pg) { // ESC
     	if (chg_setting_edit_mode) {
