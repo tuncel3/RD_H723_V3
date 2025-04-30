@@ -1,6 +1,24 @@
 
 
 
+inline extern void TEST_pg_disp(void) {
+    uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
+	char L[32]; static uint8_t lnhg=9;
+    GLCD_PrintString(0, 0, "Test");
+
+
+	sprintf(L, " Temp 1   %3.1f", temp_test_var_1); 	GLCD_PrintString(0, 1*lnhg, L);
+
+	GLCD_PrintString(0, (selected_TEST_PG_line+1)*lnhg, ">");
+
+	if (test_edit_mode) {
+		if ((test_edit_blink^=1)==0) {
+			x0=102+(fan_temp_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
+		}
+	}
+	GLCD_Line(x0, y0, x0+w, y0);
+}
+
 inline extern void FANS_TEMP_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
 	char L[32]; static uint8_t lnhg=9;

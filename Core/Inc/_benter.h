@@ -317,6 +317,9 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			currentPage = CALIBRATION_pg;
 			EpD[SET_BATT_DISC_DET][0].V1=0;
 		}
+		if (selected_MANAGEMENT == 4) {
+			currentPage = TEST_pg;
+		}
     }
     else if (currentPage == CALIBRATION_pg) {
     	cal_sel_edit_mode=(cal_sel_edit_mode+1)%3;
