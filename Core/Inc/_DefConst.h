@@ -353,7 +353,7 @@ uint8_t fan_temp_edit_blink = 0;
 const char* TEST_Items[] = {
 "Temp 1",
 "Temp 2",
-"Buzz 1"
+"Buzz 1",
 "Leds"
 };
 #define NUM_TEST_ITEMS (sizeof(TEST_Items) / sizeof(TEST_Items[0]))
@@ -1261,6 +1261,8 @@ uint32_t ovtmp_open_cnt = 0;
 uint32_t ovtmp_open_per = 0; // 1200*50 ms 1dk
 float temp_test_thy_1 = 0;
 float temp_test_trf_2 = 0;
+uint8_t buzzer_override = 0;
+uint8_t leds_override = 0;
 uint8_t sogut_sensor_exists = 0;
 uint8_t trafo_sensor_exists = 0;
 uint8_t batt_sensor_exists = 0;
