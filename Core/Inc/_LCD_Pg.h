@@ -7,6 +7,7 @@ inline extern void TEST_pg_disp(void) {
     GLCD_PrintString(0, 0, "Test");
 
 	sprintf(L, " %s %3.1f", TEST_Items[0], tmp_dat_C[0]+temp_test_thy_1); 	GLCD_PrintString(0, 1*lnhg, L);
+	sprintf(L, " %s %3.1f", TEST_Items[1], tmp_dat_C[1]+temp_test_trf_2); 	GLCD_PrintString(0, 2*lnhg, L);
 
 	GLCD_PrintString(0, (selected_TEST_PG_line+1)*lnhg, ">");
 
