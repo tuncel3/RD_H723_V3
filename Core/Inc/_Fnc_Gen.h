@@ -808,6 +808,9 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
     	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
     }
+    if (scope == SCOPE_FAN_TEMP_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+		ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
+    }
 }
 
 void inline extern set_V_targ_con_sy(float set_val) {

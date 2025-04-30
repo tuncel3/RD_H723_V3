@@ -692,7 +692,6 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 	if (sogut_sensor_exists) {
 		if (tmp_dat_C[0]+temp_test_var_1 > EpD[SET_OVERTEMP_ALARM][0].V1 && !is_state_active(OVERTEMP_ALARM_FC)) { // overtemp alarm enable
 			apply_state_changes_f(OVERTEMP_ALARM_FC, 1);
-			ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
 		} else if (tmp_dat_C[0]+temp_test_var_1 > EpD[SET_OVERTEMP_OPEN][0].V1 && !is_state_active(SET_OVERTEMP_OPEN)) { // overtemp open enable
 			apply_state_changes_f(SET_OVERTEMP_OPEN, 1);
 		} else if (tmp_dat_C[0]+temp_test_var_1 < EpD[SET_OVERTEMP_ALARM][0].V1-5 && is_state_active(OVERTEMP_ALARM_FC)) { // overtemp alarm disable

@@ -251,7 +251,6 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				EpD[SET_DROPP_L_LW_PERC][0].V1=EpD[SET_DROPP_L_LW_PERC][1].V1;
 				Rec_Dat_to_EEp_f(SET_DROPP_L_LW_PERC);
 			}
-//			set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 		}
 	}
     else if (currentPage == FANS_TEMP_pg) {
@@ -267,6 +266,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				EpD[SET_OVERTEMP_OPEN][1].V1 = EpD[SET_OVERTEMP_OPEN][0].V1;
 			} else if (selected_FAN_TEMP_PG_line == 4) {
 				EpD[SET_OVT_OPEN_DELAY][1].V1 = EpD[SET_OVT_OPEN_DELAY][0].V1;
+				ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
 			}
 			fan_temp_edit_blink=1;
 		} else if (!fan_temp_edit_mode) {
