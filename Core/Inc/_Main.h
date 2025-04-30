@@ -167,7 +167,6 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// fanlar otomatik devreye girme
 // aşırı sıcaklık alarm
 // aşırı sıcaklık açma, gecikme süresi ile
 // zero cross var yok flagı lazım. yoksa ac voltaj ölçümü geçersiz durumda oluyor be lcd de gösterilmemeli. 0 olarak gösterilmeli.
