@@ -1286,4 +1286,19 @@ float calculate_blm_op(void) {
     return corr;
 }
 
+uint8_t are_all_equal_fc(phase uint8_t) {
+    uint32_t ref = zcr_record_vals[phase][0];
+    for (int i = 1; i < 10; i++) {
+        if (zcr_record_vals[phase][i] != ref) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+
+
+
 

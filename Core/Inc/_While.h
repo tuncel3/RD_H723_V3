@@ -1121,6 +1121,10 @@ if (rtFireFlag) { rtFireFlag = 0;  bright_fnc(); }
 if (enFireFlag) { enFireFlag = 0;  benter_fnc(); }
 if (esFireFlag) { esFireFlag = 0;  besc_fnc();   }
 
+zcr_exist_R=are_all_equal_fc(0);
+zcr_exist_S=are_all_equal_fc(1);
+zcr_exist_T=are_all_equal_fc(2);
+
 
 
 
