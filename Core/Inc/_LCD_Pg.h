@@ -19,12 +19,12 @@ inline extern void TEST_pg_disp(void) {
 		if ((test_edit_blink^=1)==0 && selected_TEST_PG_line <= 1) {
 			x0=48+(testLnPic[test_dig]*6); y0=(selected_TEST_PG_line+2)*lnhg-1; w=4;
 		}
-		if (leds_rels_override && selected_TEST_PG_line == 3) {
-			uint8_t index = (leds_rels_override > 1) ? 0 : leds_rels_override;
-			sprintf(L, "%s %s ", AKTFPAS_SEL_Items[0], AKTFPAS_SEL_Items[1]); 	GLCD_PrintString(0+6*7, 4*lnhg, L);
-		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
+	if (selected_TEST_PG_line == 3) {
+//		uint8_t index = (leds_rels_override > 1) ? 0 : leds_rels_override;
+		sprintf(L, "%s", AKTFPAS_SEL_Items[leds_rels_override]); 	GLCD_PrintString(0+6*7, 4*lnhg, L);
+	}
 }
 
 inline extern void FANS_TEMP_pg_disp(void) {
