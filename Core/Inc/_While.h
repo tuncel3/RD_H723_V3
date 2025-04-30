@@ -701,7 +701,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 			apply_state_changes_f(OVERTEMP_OPEN_FC, 0);
 			ovtmp_open_cnt=0;
 		} else {
-
+			ovtmp_open_cnt=0;
 		}
 
 		if (ovtmp_open_cnt >= ovtmp_open_per && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp alarm enable
