@@ -423,8 +423,10 @@ inline extern void endOfDMATransfer_f(void) {
 			LL_TIM_EnableCounter(TIM24);
 		}
 	}
-}
 
+
+
+}
 inline extern void per_r_dn_avg_m_f(void) { // exti interrupt fnc
 	tm_r_rise=LL_TIM_GetCounter(TIM5);
 	per_r_dn_smp=tm_r_rise-tm_r_fall;

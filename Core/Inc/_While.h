@@ -1088,7 +1088,7 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 }
 //PRF_GEN("%lu", var1++);
 
-//BUZZ_P(buzzer_override);
+BUZZ_P(buzzer_override);
 
 if (leds_rels_override && leds_rels_override_returned) {
 	LED_16_Data_h=LED_16_Data;

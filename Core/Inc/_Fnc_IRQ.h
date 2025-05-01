@@ -274,6 +274,7 @@ void EXTI9_5_IRQHandler(void){
 		LL_TIM_EnableCounter(TIM3);
 		RU_THY=0;
 		RA_THY=0;
+//		DBG10
 		LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_7);
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_7);
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
@@ -296,6 +297,7 @@ void EXTI9_5_IRQHandler(void){
 		LL_TIM_EnableCounter(TIM3);
 		SU_THY=0;
 		SA_THY=0;
+//		DBG10
 		LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_8);
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_8);
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
@@ -317,6 +319,7 @@ void EXTI9_5_IRQHandler(void){
 		LL_TIM_EnableCounter(TIM3);
 		TU_THY=0;
 		TA_THY=0;
+//		DBG10
 		LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_9);
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_9);
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_9)) {
