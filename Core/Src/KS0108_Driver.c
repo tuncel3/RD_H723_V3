@@ -87,9 +87,9 @@ static inline void GLCD_WriteCommand(uint8_t d) {
 	GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA		// PA15/12/11/10
 	GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC		// PC12/11/10
 	GPIOD->BSRR = bsrrD[d];   // bit0    → PD		// PD0
-	DELAY_NS(20);
+	DELAY_NS(200);
 	EN1_g;
-	DELAY_NS(100);
+	DELAY_NS(1000);
 	EN0_g;
 }
 static inline void GLCD_WriteData(uint8_t d) {
@@ -98,9 +98,9 @@ static inline void GLCD_WriteData(uint8_t d) {
     GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC		// PC12/11/10
     GPIOD->BSRR = bsrrD[d];   // bit0    → PD		// PD0
     delayA_1us_g(1);
-    DELAY_NS(20);
+    DELAY_NS(200);
     EN1_g;
-    DELAY_NS(100);
+    DELAY_NS(1000);
     EN0_g;
 }
 
