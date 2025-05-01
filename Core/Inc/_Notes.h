@@ -108,43 +108,8 @@ n013
 	cs hedef	------
 	min -> Batt_inspect_min
 
-n014
-/*======================================================================
- * handleButton()
- *
- * Çok-tuşlu projelerde tekrar kullanılan minik durum makinesi.
- * Bir kesme (örn. 10 µs timer) içinde her tuş için çağırılır.
- *
- * Davranış
- * --------
- * • İlk basışta hemen tetik (fireFlag = 1)
- * • Basılı kalırsa   500 ms  sonra   ikinci tetik
- * • Sonra basılı kaldıkça 100 ms’de bir tekrar tetik
- * • Bırakıldığında  50 ms  “kilit” (yeni basış yok) — debounce & repeat kırpma
- *
- * Parametreler
- * ------------
- * pinState        : GPIO seviyesi (1 = buton hâlen basılı, 0 = değil)
- *
- * isHeld          : (out) 1 ise “buton şuan basılı” durum bilgisi
- * releaseCnt      : (out) bırakıldıktan sonra geçen kesme sayısı
- * holdCnt         : (out) basılı kaldığı toplam kesme sayısı
- * nextRepeatEdge  : (out) sıradaki oto-tekrar eşiği
- * fireFlag        : (out) 1 olduğunda ana döngü gerçek işlevi çağırır
- *
- * Zaman Sabitleri (başka yerde makro)
- * -----------------------------------
- * FIRST_REPEAT_T      = 500 ms / kesme periyodu
- * NEXT_REPEAT_T       = 100 ms / kesme periyodu
- * RELEASE_DELAY_T     =  50 ms / kesme periyodu
- *
- * Notlar
- * ------
- * - Tüm sayaçlar volatile; ISR <-> main veri yarışı engellenir.
- * - Tuş bırakılınca isHeld sıfırlanır, releaseCnt yeniden başlar.
- * - lock bölümünde yalnızca releaseCnt++ yapılır, böylece kilit süresi
- *   dolana kadar yeni basış görülmez.
- *====================================================================*/
+
+
 
 
 

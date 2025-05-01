@@ -34,104 +34,113 @@ inline extern void delayA_1us_g(uint32_t us)
   uint8_t   Busy;
   stFonts_t *SelectedFont;
 
+ //---------------------------------------------------------------------------/
+ // Function Name : GLCD_WriteCommand																				 /
+ // Description   : Send Command to GLCD Display                              /
+ // Argument      : Command			                                             /
+ // Return			   : None                                                      /
+ //---------------------------------------------------------------------------/
+  void GLCD_WriteCommand(uint8_t Command) {
+      SET_MODE_COMMAND_WRITE;
+
+      // Define static constant arrays to avoid re-initialization
+      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
+      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
+                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
+
+      // Write each bit efficiently
+      for (int i = 0; i < 8; i++) {
+          if (Command & (1 << i)) {
+              ports[i]->BSRR = pins[i];  // Set bit
+          } else {
+              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
+          }
+      }
+
+      EN1_g;
+      delayA_1us_g(10); // Add delay if needed
+      EN0_g;
+  }
 
 
-//  void GLCD_WriteCommand(uint8_t Command) {
-//      SET_MODE_COMMAND_WRITE;
-//
-//      // Define static constant arrays to avoid re-initialization
-//      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
-//      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
-//                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
-//
-//      // Write each bit efficiently
-//      for (int i = 0; i < 8; i++) {
-//          if (Command & (1 << i)) {
-//              ports[i]->BSRR = pins[i];  // Set bit
-//          } else {
-//              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
-//          }
-//      }
-//
-//      EN1_g;
-////      delayA_1us_g(1); // Add delay if needed
-//      EN0_g;
-//  }
 
-//  void GLCD_WriteData(uint8_t Data) {
-//      SET_MODE_DATA_WRITE;
-//
-//      // Corrected: Removed "const" before GPIO_TypeDef *
-//      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
-//      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
-//                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
-//
-//      // Write each bit efficiently
-//      for (int i = 0; i < 8; i++) {
-//          if (Data & (1 << i)) {
-//              ports[i]->BSRR = pins[i];  // Set bit
-//          } else {
-//              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
-//          }
-//      }
-//
-//      EN1_g;
-//      delayA_1us_g(1);
-//      EN0_g;
-//  }
 
-#include "glcd_bsrr_tables.h"
 
-static inline void GLCD_WriteCommand(uint8_t d) {
-	SET_MODE_COMMAND_WRITE;
-	GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA		// PA15/12/11/10
-	GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC		// PC12/11/10
-	GPIOD->BSRR = bsrrD[d];   // bit0    → PD		// PD0
-	DELAY_NS(20);
-	EN1_g;
-	DELAY_NS(100);
-	EN0_g;
-}
-static inline void GLCD_WriteData(uint8_t d) {
-	SET_MODE_DATA_WRITE;
-    GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA		// PA15/12/11/10
-    GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC		// PC12/11/10
-    GPIOD->BSRR = bsrrD[d];   // bit0    → PD		// PD0
-    delayA_1us_g(1);
-    DELAY_NS(20);
-    EN1_g;
-    DELAY_NS(100);
-    EN0_g;
-}
+   //---------------------------------------------------------------------------/
+   // Function Name : GLCD_WriteData																						 /
+   // Description   : Send Data to KS0108 Display                               /
+   // Argument      : Data			                                                 /
+   // Return			   : None                                                      /
+   //---------------------------------------------------------------------------/
 
-void GLCD_RefreshGRAM(void) {
-    for (uint8_t page = 0; page < 8; page++) {
-        uint16_t idx = page * KS0108_WIDTH;   // 0, 128, 256, ...
+  void GLCD_WriteData(uint8_t Data) {
+      SET_MODE_DATA_WRITE;
 
-        /* Sol çip (0-63) */
-        SELECT_FIRST_CHIP;
-        GLCD_WriteCommand(X_BASE_ADDRESS | page);
-        GLCD_WriteCommand(Y_BASE_ADDRESS);
+      // Corrected: Removed "const" before GPIO_TypeDef *
+      static GPIO_TypeDef * const ports[8] = {GPIOD, GPIOC, GPIOC, GPIOC, GPIOA, GPIOA, GPIOA, GPIOA};
+      static const uint16_t pins[8] = {LL_GPIO_PIN_0, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10,
+                                       LL_GPIO_PIN_15, LL_GPIO_PIN_12, LL_GPIO_PIN_11, LL_GPIO_PIN_10};
 
-        for (uint8_t col = 0; col < 64; col++)
-            GLCD_WriteData(DisplayBuffer[idx + col]);
+      // Write each bit efficiently
+      for (int i = 0; i < 8; i++) {
+          if (Data & (1 << i)) {
+              ports[i]->BSRR = pins[i];  // Set bit
+          } else {
+              ports[i]->BSRR = (pins[i] << 16);  // Reset bit
+          }
+      }
 
-        /* Sağ çip (64-127) */
-        SELECT_SECOND_CHIP;
-        GLCD_WriteCommand(X_BASE_ADDRESS | page);
-        GLCD_WriteCommand(Y_BASE_ADDRESS);
+      EN1_g;
+      delayA_1us_g(10);
+      EN0_g;
+  }
 
-        for (uint8_t col = 0; col < 64; col++)
-            GLCD_WriteData(DisplayBuffer[idx + 64 + col]);
-    }
-}
 
-void GLCD_ClearScreen(uint8_t Fill) {
-	uint16_t i;
-	for (i = 0; i < KS0108_BUFFER_LENGTH; i++) {
-	   DisplayBuffer[i] = Fill;
-	}
-}
+
+   //---------------------------------------------------------------------------/
+   // Function Name : KS0108_RefreshGRAM         			      				           /
+   // Description   : Refresh GRAM of GLCD Display                              /
+   // Argument      : None	                                                     /
+   // Return			   : None                                                      /
+   //---------------------------------------------------------------------------/
+   void  GLCD_RefreshGRAM(void){
+   	uint8_t i, j;
+   	for(i = 0; i < 8; i++)
+     {
+
+   		SELECT_FIRST_CHIP;
+   		GLCD_WriteCommand(i | X_BASE_ADDRESS);	     	// First Chip First Row
+   		GLCD_WriteCommand(Y_BASE_ADDRESS);				// First Chip First Column
+
+   		SELECT_SECOND_CHIP;
+   		GLCD_WriteCommand(i | X_BASE_ADDRESS);		// Second Chip First Row
+   		GLCD_WriteCommand(Y_BASE_ADDRESS);				// Second Chip First Column
+
+       for(j = 0; j < 64; j++)
+       {
+       	SELECT_FIRST_CHIP;
+           GLCD_WriteData(DisplayBuffer[KS0108_WIDTH * i + j]);
+
+       	SELECT_SECOND_CHIP;
+           GLCD_WriteData(DisplayBuffer[KS0108_WIDTH * i + j + 64]);
+       }
+     }
+   }
+
+
+   //---------------------------------------------------------------------------/
+   // Function Name : GLCD_ClearScreen         			      				             /
+   // Description   : Clear GLCD Display Screen                                 /
+   // Argument      : Pixel Mode (Dark/Bright)  			                           /
+   // Return			   : None                                                      /
+   //---------------------------------------------------------------------------/
+   void GLCD_ClearScreen(uint8_t Fill){
+   	uint16_t i;
+   	for (i = 0; i < KS0108_BUFFER_LENGTH; i++)
+     {
+       DisplayBuffer[i] = Fill;
+   	}
+   }
 
    //---------------------------------------------------------------------------/
    // Function Name : GLCD_SetFont         			      				                 /

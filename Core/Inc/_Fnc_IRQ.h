@@ -369,27 +369,6 @@ void TIM7_IRQHandler(void)
 
 	}
 }
-void TIM1_UP_IRQHandler(void)
-{
-	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
-		LL_TIM_ClearFlag_UPDATE(TIM1);
-
-//	    uint8_t up_raw = ( BUP && !BDOWN && !BLEFT && !BRIGHT && !BENTER && !BESC);
-//	    uint8_t dn_raw = (!BUP &&  BDOWN && !BLEFT && !BRIGHT && !BENTER && !BESC);
-//	    uint8_t lf_raw = (!BUP && !BDOWN &&  BLEFT && !BRIGHT && !BENTER && !BESC);
-//	    uint8_t rt_raw = (!BUP && !BDOWN && !BLEFT &&  BRIGHT && !BENTER && !BESC);
-//	    uint8_t en_raw = (!BUP && !BDOWN && !BLEFT && !BRIGHT &&  BENTER && !BESC);
-//	    uint8_t es_raw = (!BUP && !BDOWN && !BLEFT && !BRIGHT && !BENTER &&  BESC);
-//
-//	    handleButton(up_raw, &upIsHeld, &upReleaseCnt, &upHoldCnt, &upNextRepeatEdge, &upFireFlag);
-//	    handleButton(dn_raw, &dnIsHeld, &dnReleaseCnt, &dnHoldCnt, &dnNextRepeatEdge, &dnFireFlag);
-//	    handleButton(lf_raw, &lfIsHeld, &lfReleaseCnt, &lfHoldCnt, &lfNextRepeatEdge, &lfFireFlag);
-//	    handleButton(rt_raw, &rtIsHeld, &rtReleaseCnt, &rtHoldCnt, &rtNextRepeatEdge, &rtFireFlag);
-//	    handleButton(en_raw, &enIsHeld, &enReleaseCnt, &enHoldCnt, &enNextRepeatEdge, &enFireFlag);
-//	    handleButton(es_raw, &esIsHeld, &esReleaseCnt, &esHoldCnt, &esNextRepeatEdge, &esFireFlag);
-
-	}
-}
 
 void SysTick_Handler(void) {	// n009
 	if (LL_EXTI_LINE_7_reenable_cnt < ZCRENDELY) {

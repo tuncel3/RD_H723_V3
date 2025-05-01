@@ -16,10 +16,8 @@ void benter_fnc(void) {
 		} else if (selected_MAIN_MENU == 3) {
 			currentPage = DROPPER_pg;
 		} else if (selected_MAIN_MENU == 4) {
-			currentPage = FANS_TEMP_pg;
-		} else if (selected_MAIN_MENU == 5) {
 			currentPage = RELAY_ORDER_pg;
-        } else if (selected_MAIN_MENU == 6) {
+        } else if (selected_MAIN_MENU == 5) {
 			currentPage = MANAGEMENT_pg;
         }
     }
@@ -75,13 +73,13 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==VBAT_FLOAT) {
 	EpD[VBAT_FLOAT][0].V1=EpD[VBAT_FLOAT][1].V1;
 	Rec_Dat_to_EEp_f(VBAT_FLOAT);
 	actions_after_charge_voltage_change();
-		blm_op_phase = B_SKIP_DELAY_RESTART;					// cancel op. bring_vtarg_back_skip_delay
+		blm_op_phase = 100;					// cancel op. bring_vtarg_back_skip_delay
 		blm_enable_collect_samples = 0;
 		blm_corr_buf_index = 0;
 }
 else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==VBAT_BOOST) {
 	EpD[VBAT_BOOST][0].V1=EpD[VBAT_BOOST][1].V1;
-		blm_op_phase = B_SKIP_DELAY_RESTART;					// cancel op. bring_vtarg_back_skip_delay
+		blm_op_phase = 100;					// cancel op. bring_vtarg_back_skip_delay
 		blm_enable_collect_samples = 0;
 		blm_corr_buf_index = 0;
 }
@@ -135,15 +133,15 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][0].V1;
 }
-//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-//	EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][0].V1;
-//}
-//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-//	EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][0].V1;
-//}
-//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-//	EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][0].V1;
-//}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
+	EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][0].V1;
+}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
+	EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][0].V1;
+}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
+	EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][0].V1;
+}
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 	EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][0].V1;
 }
@@ -165,6 +163,12 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_HIGH_LIM_add) {
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 	EpD[VRECT_DC_LOW_LIM_add][1].V1=EpD[VRECT_DC_LOW_LIM_add][0].V1;
 }
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_high_lim_add) {
+	EpD[dropp_reg_high_lim_add][1].V1=EpD[dropp_reg_high_lim_add][0].V1;
+}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
+	EpD[dropp_reg_low_lim_sub][1].V1=EpD[dropp_reg_low_lim_sub][0].V1;
+}
 		} else if (!dev_setting_edit_mode) {
 if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==999) {
 	EpD[SET_CHARGE_MODE][0].V1=EpD[SET_CHARGE_MODE][1].V1;
@@ -180,21 +184,21 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][0].V1=EpD[DEV_NOM_VOUT][1].V1;
-	set_variables_from_EEP_fc(SCOPE_DEV_NOM_VOUT_EEP);
+	set_variables_from_EEP_fc();
 	Rec_Dat_to_EEp_f(DEV_NOM_VOUT);
 }
-//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-//	EpD[SET_OVTM_ALRM_LIM][0].V1=EpD[SET_OVTM_ALRM_LIM][1].V1;
-//	Rec_Dat_to_EEp_f(SET_OVTM_ALRM_LIM);
-//}
-//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-//	EpD[SET_OVTM_OPEN_DUR][0].V1=EpD[SET_OVTM_OPEN_DUR][1].V1;
-//	Rec_Dat_to_EEp_f(SET_OVTM_OPEN_DUR);
-//}
-//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-//	EpD[SET_OVTM_OPEN_LIM][0].V1=EpD[SET_OVTM_OPEN_LIM][1].V1;
-//	Rec_Dat_to_EEp_f(SET_OVTM_OPEN_LIM);
-//}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
+	EpD[SET_OVTM_ALRM_LIM][0].V1=EpD[SET_OVTM_ALRM_LIM][1].V1;
+	Rec_Dat_to_EEp_f(SET_OVTM_ALRM_LIM);
+}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
+	EpD[SET_OVTM_OPEN_DUR][0].V1=EpD[SET_OVTM_OPEN_DUR][1].V1;
+	Rec_Dat_to_EEp_f(SET_OVTM_OPEN_DUR);
+}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
+	EpD[SET_OVTM_OPEN_LIM][0].V1=EpD[SET_OVTM_OPEN_LIM][1].V1;
+	Rec_Dat_to_EEp_f(SET_OVTM_OPEN_LIM);
+}
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 	EpD[IRECT_LIM_RT_][0].V1=EpD[IRECT_LIM_RT_][1].V1;
 	Rec_Dat_to_EEp_f(IRECT_LIM_RT_);
@@ -217,98 +221,52 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==BATT_SHORT) {
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_HIGH_LIM_add) {
 	EpD[VRECT_DC_HIGH_LIM_add][0].V1=EpD[VRECT_DC_HIGH_LIM_add][1].V1;
-//	update_VDC_high_low_lim_fc();
-	set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
+	update_VDC_high_low_lim_fc();
 	Rec_Dat_to_EEp_f(VRECT_DC_HIGH_LIM_add);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 	EpD[VRECT_DC_LOW_LIM_add][0].V1=EpD[VRECT_DC_LOW_LIM_add][1].V1;
-//	update_VDC_high_low_lim_fc();
-	set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
+	update_VDC_high_low_lim_fc();
 	Rec_Dat_to_EEp_f(VRECT_DC_LOW_LIM_add);
+}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_high_lim_add) {
+	EpD[dropp_reg_high_lim_add][0].V1=EpD[dropp_reg_high_lim_add][1].V1;
+	dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+(EpD[dropp_reg_high_lim_add][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
+	dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-(EpD[dropp_reg_low_lim_sub][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
+	Rec_Dat_to_EEp_f(dropp_reg_high_lim_add);
+}
+else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
+	EpD[dropp_reg_low_lim_sub][0].V1=EpD[dropp_reg_low_lim_sub][1].V1;
+	dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+(EpD[dropp_reg_high_lim_add][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
+	dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-(EpD[dropp_reg_low_lim_sub][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
+	Rec_Dat_to_EEp_f(dropp_reg_low_lim_sub);
 }
 		}
     }
     else if (currentPage == DROPPER_pg) {
     	dropper_edit_mode ^= 1;
+
 		if (dropper_edit_mode) {
-			if (selected_DROPPER_PG_line == 1) {
-				EpD[SET_DROPPER_MANOTO][1].V1=EpD[SET_DROPPER_MANOTO][0].V1;
-			}
-			if (selected_DROPPER_PG_line == 1) {
+			if (selected_DROPPER == 0) {
 				EpD[SET_DROPPER_K1][1].V1=EpD[SET_DROPPER_K1][0].V1;
-			} else if (selected_DROPPER_PG_line == 2) {
+			}
+			else if (selected_DROPPER == 1) {
 				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
-			} else if (selected_DROPPER_PG_line == 3) {
-				dropper_edit_blink=1;
-					set_dropper_l_hg_V_h=set_dropper_l_hg_V;
-					EpD[SET_DROPP_L_HG_PERC][1].V1=EpD[SET_DROPP_L_HG_PERC][0].V1;
-			} else if (selected_DROPPER_PG_line == 4) {
-				dropper_edit_blink=1;
-					set_dropper_l_lw_V_h=set_dropper_l_lw_V;
-					EpD[SET_DROPP_L_LW_PERC][1].V1=EpD[SET_DROPP_L_LW_PERC][0].V1;
 			}
 		} else if (!dropper_edit_mode) {
-			if (selected_DROPPER_PG_line == 0) {
-				EpD[SET_DROPPER_MANOTO][0].V1 = EpD[SET_DROPPER_MANOTO][1].V1;
-				dropper_control_man_oto=EpD[SET_DROPPER_MANOTO][0].V1;
-				Rec_Dat_to_EEp_f(SET_DROPPER_MANOTO);
-			} else if (selected_DROPPER_PG_line == 1) {
+			if (selected_DROPPER == 0) {
 				EpD[SET_DROPPER_K1][0].V1 = EpD[SET_DROPPER_K1][1].V1;
 				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
 				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
 				Rec_Dat_to_EEp_f(SET_DROPPER_K1);
-			} else if (selected_DROPPER_PG_line == 2) {
+			} else if (selected_DROPPER == 1) {
 				EpD[SET_DROPPER_K2][0].V1 = EpD[SET_DROPPER_K2][1].V1;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
 				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 				Rec_Dat_to_EEp_f(SET_DROPPER_K2);
-			} else if (selected_DROPPER_PG_line == 3) {
-				set_dropper_l_hg_V=set_dropper_l_hg_V_h;
-				EpD[SET_DROPP_L_HG_PERC][0].V1=EpD[SET_DROPP_L_HG_PERC][1].V1;
-				Rec_Dat_to_EEp_f(SET_DROPP_L_HG_PERC);
-			} else if (selected_DROPPER_PG_line == 4) {
-				set_dropper_l_lw_V=set_dropper_l_lw_V_h;
-				EpD[SET_DROPP_L_LW_PERC][0].V1=EpD[SET_DROPP_L_LW_PERC][1].V1;
-				Rec_Dat_to_EEp_f(SET_DROPP_L_LW_PERC);
 			}
-//			set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 		}
 	}
-    else if (currentPage == FANS_TEMP_pg) {
-    	fan_temp_edit_mode ^= 1;
-		if (fan_temp_edit_mode) {
-			if (selected_FAN_TEMP_PG_line == 0) {
-				EpD[SET_COOL_FAN_TEMP][1].V1 = EpD[SET_COOL_FAN_TEMP][0].V1;
-			} else if (selected_FAN_TEMP_PG_line == 1) {
-				EpD[SET_TRANSF_FAN_TEMP][1].V1 = EpD[SET_TRANSF_FAN_TEMP][0].V1;
-			} else if (selected_FAN_TEMP_PG_line == 2) {
-				EpD[SET_OVERTEMP_ALARM][1].V1 = EpD[SET_OVERTEMP_ALARM][0].V1;
-			} else if (selected_FAN_TEMP_PG_line == 3) {
-				EpD[SET_OVERTEMP_OPEN][1].V1 = EpD[SET_OVERTEMP_OPEN][0].V1;
-			} else if (selected_FAN_TEMP_PG_line == 4) {
-				EpD[SET_OVT_OPEN_DELAY][1].V1 = EpD[SET_OVT_OPEN_DELAY][0].V1;
-			}
-			fan_temp_edit_blink=1;
-		} else if (!fan_temp_edit_mode) {
-			if (selected_FAN_TEMP_PG_line == 0) {
-				EpD[SET_COOL_FAN_TEMP][0].V1 = EpD[SET_COOL_FAN_TEMP][1].V1;
-				Rec_Dat_to_EEp_f(SET_COOL_FAN_TEMP);
-			} else if (selected_FAN_TEMP_PG_line == 1) {
-				EpD[SET_TRANSF_FAN_TEMP][0].V1 = EpD[SET_TRANSF_FAN_TEMP][1].V1;
-				Rec_Dat_to_EEp_f(SET_TRANSF_FAN_TEMP);
-			} else if (selected_FAN_TEMP_PG_line == 2) {
-				EpD[SET_OVERTEMP_ALARM][0].V1 = EpD[SET_OVERTEMP_ALARM][1].V1;
-				Rec_Dat_to_EEp_f(SET_OVERTEMP_ALARM);
-			} else if (selected_FAN_TEMP_PG_line == 3) {
-				EpD[SET_OVERTEMP_OPEN][0].V1 = EpD[SET_OVERTEMP_OPEN][1].V1;
-				Rec_Dat_to_EEp_f(SET_OVERTEMP_OPEN);
-			} else if (selected_FAN_TEMP_PG_line == 4) {
-				EpD[SET_OVT_OPEN_DELAY][0].V1 = EpD[SET_OVT_OPEN_DELAY][1].V1;
-				Rec_Dat_to_EEp_f(SET_OVT_OPEN_DELAY);
-			}
-		}
-    }
     else if (currentPage == RELAY_ORDER_pg) {
     	rel_disp_mode ^=1;
     	rel_edit_mode ^=1;
@@ -322,7 +280,11 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
         	compress_REL_OUT_order_to_parts(); //sıkıştırılmış orderı 20 bitlik parçalara ayır ve eeproma kaydet
         } else if (rel_edit_mode == 1) {
         }
+
+
     }
+
+
 
     else if (currentPage == MANAGEMENT_pg) {
 		if (selected_MANAGEMENT == 0) {

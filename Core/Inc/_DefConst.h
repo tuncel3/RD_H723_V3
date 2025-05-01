@@ -1,26 +1,4 @@
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//////// DEBUG SYSTEM CONTROL //////////////////////////////////////////////////////////////
-// Debug log kontrolü: DEBUG_MODE == 1 ise runtime flag ile kontrol edilir
-// DEBUG_MODE == 0 yapılırsa, PRF_GEN ve PRF_BLM tamamen iptal olur
-#define DEBUG_MODE 1
-
-volatile uint8_t dbg_gen = 1;
-volatile uint8_t dbg_blm = 0;
-
-#if DEBUG_MODE
-    // Debug açıkken runtime flag ile kontrol
-    #define PRF_GEN(...)  if (dbg_gen) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
-    #define PRF_BLM(...)  if (dbg_blm) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
-#else
-    // Release modda debug'ı tamamen kaldır
-    #define PRF_GEN(...)
-    #define PRF_BLM(...)
-#endif
-//////// DEBUG SYSTEM CONTROL //////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-
-
 #define BUZZ_P GPIOE, LL_GPIO_PIN_1
 #define E1_1 LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1);
 #define E1_0 LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1);
@@ -103,6 +81,8 @@ uint32_t vrect_dc_low_lim_Acc_cnt = 0;
 uint32_t vrect_dc_low_lim_Acc_per = 200;
 uint32_t vrect_dc_low_lim_ret_Acc_cnt = 0;
 uint32_t vrect_dc_low_lim_ret_Acc_per = 20;
+//float dropp_reg_low_lim_sub = 0.1f;
+//float dropp_reg_high_lim_add = 0.15f;
 uint32_t vload_dc_high_lim_Acc_cnt = 0;
 uint32_t vload_dc_high_lim_Acc_per = 200;
 uint32_t vload_dc_high_lim_ret_Acc_cnt = 0;
@@ -311,7 +291,6 @@ typedef enum {
 	MANAGEMENT_pg,
 	FAULT_CODES_REPORT_pg,
 	DROPPER_pg,
-	FANS_TEMP_pg,
 	RELAY_ORDER_pg,
 	FAULT_CODES_RESET_pg,
 	RECTF_ACTIVE_AT_STARTUP_pg,
@@ -334,32 +313,15 @@ uint8_t fault_codes_reset_qst_accept = 0;
 uint8_t fault_codes_reset_completed = 0;
 uint8_t batt_reverse_req_right = 0;
 
-const char* FANS_TEMP_Items[] = {
-	"Soğutuc Fan",
-	"Trafo Fan",
-	"Aşr Sıc Alarm",
-	"Aşr Sıc Açma",
-	"Açma Geck Sn"
-};
-#define NUM_FANS_TEMP_ITEMS (sizeof(FANS_TEMP_Items) / sizeof(FANS_TEMP_Items[0]))
-uint8_t fan_temp_edit_mode = 0;
-uint8_t selected_FANS_TEMP = 0;
-uint8_t selected_FAN_TEMP_PG_line = 0;
-uint8_t fan_temp_dig = 1;
-uint8_t fan_temp_edit_blink = 0;
-
 const char* MAIN_MENU_Items[] = {
     "Şarj Ayarları",
     "Cihaz Ayarları",
     "Arıza Kod Raporu",
     "Dropper",
-    "Fanlar Sıcakl Koruma",
     "Kontak Çıkışları",	// RELAY_ORDER_pg
     "Yönetim"
 };
 #define NUM_MAIN_MENU_ITEMS (sizeof(MAIN_MENU_Items) / sizeof(MAIN_MENU_Items[0]))
-uint8_t main_menu_disp_index =5;
-uint8_t main_menu_arrow_loc = 2;
 uint8_t selected_MAIN_MENU = 0;
 uint32_t switch_to_auto_mode_completed=0;
 uint32_t timed_mode_actions_do_once=0;
@@ -369,18 +331,7 @@ uint32_t float_of_auto_mode_active=0;
 uint32_t charge_mode_timed_time_cnt=0;
 uint32_t charge_mode_timed_time_sec=0;
 uint8_t dropper_edit_mode = 0;
-uint8_t drop_set_dig = 1;
-uint8_t selected_DROPPER_PG_line = 0;
-uint8_t dropper_control_man_oto = 0;
-uint8_t dropper_edit_blink = 0;
-float set_dropper_l_hg_V = 0.15f;
-float set_dropper_l_lw_V = 0.1f;
-float set_dropper_l_hg_perc = 0;
-float set_dropper_l_lw_perc = 0;
-float set_dropper_l_hg_V_h = 0.15f;
-float set_dropper_l_lw_V_h = 0.1f;
-//float EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1 = 0;
-//float EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1 = 0;
+uint8_t selected_DROPPER = 0;
 
 typedef enum {
 	FLOAT,
@@ -433,16 +384,11 @@ typedef enum {
 	SET_UNSEEN_FLT,
 	SET_BATT_REV_DET,
 	SET_BATT_DISC_DET,
-	SET_DROPPER_MANOTO,
 	SET_DROPPER_K1,
 	SET_DROPPER_K2,
-	SET_DROPP_L_HG_PERC,
-	SET_DROPP_L_LW_PERC,
-	SET_COOL_FAN_TEMP,
-	SET_TRANSF_FAN_TEMP,
-	SET_OVERTEMP_ALARM,
-	SET_OVERTEMP_OPEN,
-	SET_OVT_OPEN_DELAY,
+	SET_OVTM_ALRM_LIM,
+	SET_OVTM_OPEN_DUR,
+	SET_OVTM_OPEN_LIM,
 	DEV_NOM_VOUT, 		// Cihaz Nom VDC
 	DEV_NOM_IOUT, 		// Cihaz Nom IDC rect out
 	BATT_NOM_IOUT,
@@ -457,7 +403,8 @@ typedef enum {
 	RECT_ACTV_AT_STARTUP,
 	VRECT_DC_HIGH_LIM_add,
 	VRECT_DC_LOW_LIM_add,
-	TRACK_TABLE_CHANGE,
+	dropp_reg_high_lim_add,
+	dropp_reg_low_lim_sub,
     NUM_SET_ENUM            // Keeps track of total settings
 } EEPROM_Setting_ID;
 
@@ -492,16 +439,11 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_UNSEEN_FLT, 0.0}, {SET_UNSEEN_FLT, 0.0} },
     { {SET_BATT_REV_DET, 1.0}, {SET_BATT_REV_DET, 1.0} },
     { {SET_BATT_DISC_DET, 0.0}, {SET_BATT_DISC_DET, 0.0} },
-    { {SET_DROPPER_MANOTO, 1.0}, {SET_DROPPER_MANOTO, 1.0} },
     { {SET_DROPPER_K1, 0.0}, {SET_DROPPER_K1, 0.0} },
     { {SET_DROPPER_K2, 0.0}, {SET_DROPPER_K2, 0.0} },
-    { {SET_DROPP_L_HG_PERC, 15.0}, {SET_DROPP_L_HG_PERC, 15.0} },
-    { {SET_DROPP_L_LW_PERC, 10.0}, {SET_DROPP_L_LW_PERC, 10.0} },
-    { {SET_COOL_FAN_TEMP, 55.0}, {SET_COOL_FAN_TEMP, 55.0} },
-    { {SET_TRANSF_FAN_TEMP, 65.0}, {SET_TRANSF_FAN_TEMP, 65.0} },
-    { {SET_OVERTEMP_ALARM, 70.0}, {SET_OVERTEMP_ALARM, 70.0} },
-    { {SET_OVERTEMP_OPEN, 85.0}, {SET_OVERTEMP_OPEN, 85.0} },
-    { {SET_OVT_OPEN_DELAY, 10.0}, {SET_OVT_OPEN_DELAY, 10.0} },
+    { {SET_OVTM_ALRM_LIM, 80.0}, {SET_OVTM_ALRM_LIM, 80.0} },
+    { {SET_OVTM_OPEN_DUR, 120.0}, {SET_OVTM_OPEN_DUR, 120.0} },
+    { {SET_OVTM_OPEN_LIM, 90.0}, {SET_OVTM_OPEN_LIM, 90.0} },
     { {DEV_NOM_VOUT, 48.0}, {DEV_NOM_VOUT, 48.0} }, // Cihaz Nom VDC
     { {DEV_NOM_IOUT, 40.0}, {DEV_NOM_IOUT, 40.0} },
     { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} }, //
@@ -513,12 +455,13 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {REL_OUT_2, 235701.0}, {REL_OUT_2, 235701.0} },
     { {REL_OUT_3, 370984.0}, {REL_OUT_3, 370984.0} },
     { {REL_OUT_4, 506284.0}, {REL_OUT_4, 506284.0} },
-    { {RECT_ACTV_AT_STARTUP, 1.0}, {RECT_ACTV_AT_STARTUP, 1.0} },
+    { {RECT_ACTV_AT_STARTUP, 0.0}, {RECT_ACTV_AT_STARTUP, 0.0} },
     { {VRECT_DC_HIGH_LIM_add, 10.0}, {VRECT_DC_HIGH_LIM_add, 10.0} },
     { {VRECT_DC_LOW_LIM_add, 10.0}, {VRECT_DC_LOW_LIM_add, 10.0} },
-    { {TRACK_TABLE_CHANGE, 1234567.0}, {TRACK_TABLE_CHANGE, 1234567.0} }
+    { {dropp_reg_high_lim_add, 15.0}, {dropp_reg_high_lim_add, 15.0} },
+    { {dropp_reg_low_lim_sub, 10.0}, {dropp_reg_low_lim_sub, 10.0} }
 };
-float track_table_change=0;
+
 const char* Eep_data_Names[] = { // for printing in uart
     "SETTING_RECORD_START_ADDRESS",
     "SET_CHARGE_MODE",
@@ -549,16 +492,8 @@ const char* Eep_data_Names[] = { // for printing in uart
     "SET_UNSEEN_FLT",
     "SET_BATT_REV_DET",
     "SET_BATT_DISC_DET",
-    "SET_DROPPER_MANOTO",
     "SET_DROPPER_K1",
     "SET_DROPPER_K2",
-    "SET_DROPP_L_HG_PERC",
-    "SET_DROPP_L_LW_PERC",
-	"SET_COOL_FAN_TEMP",
-	"SET_TRANSF_FAN_TEMP",
-	"SET_OVERTEMP_ALARM",
-	"SET_OVERTEMP_OPEN",
-	"SET_OVT_OPEN_DELAY",
     "SET_OVTM_ALRM_LIM",
     "SET_OVTM_OPEN_DUR",
     "SET_OVTM_OPEN_LIM",
@@ -576,7 +511,8 @@ const char* Eep_data_Names[] = { // for printing in uart
 	"RECT_ACTV_AT_STARTUP",
 	"VRECT_DC_HIGH_LIM_add",
 	"VRECT_DC_LOW_LIM_add",
-	"TRACK_TABLE_CHANGE"
+	"dropp_reg_high_lim_add",
+	"dropp_reg_low_lim_sub"
 };
 
 typedef struct {
@@ -607,14 +543,6 @@ const char* AKTFPAS_SEL_Items[] = {
     "  Pasif ",
     "  Aktif "
 };
-const char* DROPNORM_SEL_Items[] = {
-    "  Normal ",
-    "  Drop   "
-};
-const char* MANUOTO_SEL_Items[] = {
-    " Manuel ",
-    "  Oto   "
-};
 
 float IRECT_Short_Lim = 8;
 float IBAT_Short_Lim = 8;
@@ -625,6 +553,9 @@ SETT_type DEVICE_SETT_Items[] = {
 {"Tarh Saat Ayr", 255, 1},
 {"Akü Ters Alg", SET_BATT_REV_DET, 2},
 {"Akü Hat Kopuk", SET_BATT_DISC_DET, 2},
+{"Sıck Alrm C", SET_OVTM_ALRM_LIM, 3},
+{"Sıck Açma Sur", SET_OVTM_OPEN_DUR, 2},
+{"Sıck Açma C", SET_OVTM_OPEN_LIM, 3},
 {"Cihaz Nom VDC", DEV_NOM_VOUT, 3},
 {"I Doğrlt Max", IRECT_LIM_RT_, 3},
 {"DC Kaçak +% L", DC_KAC_POS, 3},
@@ -632,7 +563,9 @@ SETT_type DEVICE_SETT_Items[] = {
 {"K.Devr Doğr A", RECT_SHORT, 3},
 {"K.Devr Bat A", BATT_SHORT, 3},
 {"Doğ VDC Üst L%", VRECT_DC_HIGH_LIM_add, 3},
-{"Doğ VDC Alt L%", VRECT_DC_LOW_LIM_add, 3}
+{"Doğ VDC Alt L%", VRECT_DC_LOW_LIM_add, 3},
+{"Dropper Üst L%", dropp_reg_high_lim_add, 3},
+{"Dropper Alt L%", dropp_reg_low_lim_sub, 3}
 };
 #define NUM_DEVICE_SETT_ITEMS (sizeof(DEVICE_SETT_Items) / sizeof(DEVICE_SETT_Items[0]))
 uint8_t selected_DEVICE_SETT = 0;
@@ -664,15 +597,10 @@ uint32_t cal_sel_edit_mode=0;
 uint8_t rectf_active_at_startup_req_right = 0;
 
 typedef enum {
-    SCOPE_NONE                      = 0x00,
-    SCOPE_DROPPER_LIMITS_FROM_EEP   = 0x01,
-    SCOPE_CURRENT_LIMITS_FROM_EEP   = 0x02,
-    SCOPE_VOLTAGE_LIMITS_FROM_EEP   = 0x04,
-    SCOPE_BLM_LIMITS_FROM_EEP       = 0x08,
-    SCOPE_DEV_NOM_VOUT_EEP          = 0x10,
-	SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP = 0x20,
-    SCOPE_VAR_ALL_FROM_EEP          = 0xFF
-} EEP_ScopeFlags;
+	dropper_limits,
+	S_STARTUP_DELAY_OK
+}set_variables_from_EEP;
+set_variables_from_EEP sta_op_phase = 0;
 
 
 float array_settings_data[NUM_SET_ENUM][2]={{0.0f, 0.0f}};
@@ -701,10 +629,10 @@ float Ibat_min=0; // updated at startup and when DEV_NOM_VOUT changed
 float Vbat_flt=0; // updated at startup and when DEV_NOM_VOUT changed
 //float Vdc_drop_in_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 //float Vdc_drop_in_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
-//float dropp_reg_low_lim=0.0f; // updated at startup and when DEV_NOM_VOUT changed
-//float dropp_reg_high_lim=0.0f; // updated at startup and when DEV_NOM_VOUT changed
-//float Batt_inspect_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
-//float Batt_inspect_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
+float dropp_reg_low_lim=0.0f; // updated at startup and when DEV_NOM_VOUT changed
+float dropp_reg_high_lim=0.0f; // updated at startup and when DEV_NOM_VOUT changed
+float Batt_inspect_min=0.0f; // updated at startup and when DEV_NOM_VOUT changed
+float Batt_inspect_max=0.0f; // updated at startup and when DEV_NOM_VOUT changed
 #define BOOST_CHARGE_TIME_MIN 1
 //#define VDC_FLOAT_MIN 10
 //#define VDC_BOOST_MIN 11
@@ -1208,7 +1136,7 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_SCER  		0x20  // Sector Erase
 #define CMD_BKER  		0xD8  // Block Erase
 #define CMD_CHER  		0xC7  // Chip Erase
-uint32_t var1=0;
+int var1=0;
 //int var2=0;
 //int var3=0;
 //char var4[]="ü";
@@ -1246,7 +1174,6 @@ uint8_t sogut_sensor_exists = 0;
 uint8_t trafo_sensor_exists = 0;
 uint8_t batt_sensor_exists = 0;
 int dropper_test_var_1 = 0;
-int load_dcv_test_var_1 = 0;
 
 
 
@@ -1278,7 +1205,6 @@ float blm_I_step_05perc=0.2f;
 float blm_I_step_03perc=0.3f;
 float blm_I_step_075perc=0.4f;
 float blm_I_step_10perc=0.4f;
-float blm_V_step_10perc=0.4f;
 float blm_V_step_15perc=0.6f;
 float v_max_stb=0;
 float v_min_stb=0;
@@ -1329,50 +1255,20 @@ uint32_t blm_wait_at_high_lim_per              = 4;
 
 #define CORR_BUF_SIZE 1000
 float vrect_buf[CORR_BUF_SIZE];
-float vrect_buf_1[CORR_BUF_SIZE];
 float ibat_buf[CORR_BUF_SIZE];
-float vtarg_buf[CORR_BUF_SIZE];
 uint16_t blm_corr_buf_index = 0;
-uint16_t blm_vrect_max_ind = 0;
-uint16_t blm_vrect_min_ind = 0;
-uint16_t blm_vtarg_max_ind = 0;
-uint16_t blm_vtarg_min_ind = 0;
-uint8_t blm_VRECT_changed = 0;
-uint8_t check_vrect_vtarg_e_asagi_gitti = 1;
-uint8_t check_vrect_vtarg_e_yukari_gitti = 1;
-float vrect_vtarg_fark = 0;
-float vrect_vsta_fark = 0;
-float vtarg_vsta_fark = 0;
-float vrect_position_dn = 0;
-float vrect_position_up = 0;
-float blm_vrect_max = 0;
-float blm_vrect_min = 1000;
-float blm_vtarg_max = 0;
-float blm_vtarg_min = 1000;
-float blm_vdev_rect = 0;
-float blm_vdev_targ = 0;
-float blm_vdiff_mins = 0;
-float blm_vdiff_maxs = 0;
 
-
-
-
-
-uint8_t fast_restart_blm_after_bat_switch_on = 0;
 uint32_t batt_current_detected = 0;
 uint32_t batt_curr_detected_cnt = 0;
 uint32_t batt_curr_not_detected_cnt = 0;
 //uint32_t batt_curr_P_detected_cnt = 0;
 //uint32_t batt_curr_N_detected_cnt = 0;
-uint32_t batt_current_detected_per = 1;
-uint32_t batt_current_not_detected_per = 20;
+uint32_t batt_current_detected_per = 50;
 uint32_t blm_corr_op_start_delay_cnt = 0;
-uint32_t blm_corr_op_start_delay_per = 80;
+uint32_t blm_corr_op_start_delay_per = 200;
 uint8_t blm_phase_switch_delay_cnt = 0;
 uint8_t blm_enable_collect_samples = 0;
-uint8_t blm_phase_switch_delay_bck_per = 4;
-uint8_t blm_phase_switch_delay_dn_per = 100;
-uint8_t blm_phase_switch_delay_up_per = 10;
+uint8_t blm_phase_switch_delay_per = 4;
 float blm_vi_change_mult = 0.005f;
 uint8_t discard_corr_result = 0;
 uint8_t blm_restart_after_return = 0;
@@ -1407,45 +1303,3 @@ typedef enum {
 BLM_STATE blm_op_phase = 0;
 
 
-#define FIRST_REPEAT_T     50000u   // 500 ms
-#define NEXT_REPEAT_T      10000u   // 100 ms
-#define RELEASE_DELAY_T     5000u   //  50 ms  (yeni)
-
-
-
-// BUTTON VARIABLES
-/* -------- UP -------- */
-volatile uint8_t  upIsHeld = 0,   upFireFlag = 0;
-volatile uint16_t upReleaseCnt = RELEASE_DELAY_T;
-volatile uint32_t upHoldCnt = 0,  upNextRepeatEdge = 0;
-
-/* -------- DOWN -------- */
-volatile uint8_t  dnIsHeld = 0,   dnFireFlag = 0;
-volatile uint16_t dnReleaseCnt = RELEASE_DELAY_T;
-volatile uint32_t dnHoldCnt = 0,  dnNextRepeatEdge = 0;
-
-/* -------- LEFT -------- */
-volatile uint8_t  lfIsHeld = 0,   lfFireFlag = 0;
-volatile uint16_t lfReleaseCnt = RELEASE_DELAY_T;
-volatile uint32_t lfHoldCnt = 0,  lfNextRepeatEdge = 0;
-
-/* -------- RIGHT -------- */
-volatile uint8_t  rtIsHeld = 0,   rtFireFlag = 0;
-volatile uint16_t rtReleaseCnt = RELEASE_DELAY_T;
-volatile uint32_t rtHoldCnt = 0,  rtNextRepeatEdge = 0;
-
-/* -------- ENTER -------- */
-volatile uint8_t  enIsHeld = 0,   enFireFlag = 0;
-volatile uint16_t enReleaseCnt = RELEASE_DELAY_T;
-volatile uint32_t enHoldCnt = 0,  enNextRepeatEdge = 0;
-
-/* -------- ESC -------- */
-volatile uint8_t  esIsHeld = 0,   esFireFlag = 0;
-volatile uint16_t esReleaseCnt = RELEASE_DELAY_T;
-volatile uint32_t esHoldCnt = 0,  esNextRepeatEdge = 0;
-
-
-
-
-#define NS_TO_CYC(ns)  (uint32_t)(((ns) * 550 + 999) / 1000)  // yuvarla
-#define DELAY_NS(ns)   delay_cycles(NS_TO_CYC(ns))
