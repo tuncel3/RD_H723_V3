@@ -135,6 +135,15 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][0].V1;
 }
+//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
+//	EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][0].V1;
+//}
+//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
+//	EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][0].V1;
+//}
+//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
+//	EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][0].V1;
+//}
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 	EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][0].V1;
 }
@@ -174,6 +183,18 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	set_variables_from_EEP_fc(SCOPE_DEV_NOM_VOUT_EEP);
 	Rec_Dat_to_EEp_f(DEV_NOM_VOUT);
 }
+//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
+//	EpD[SET_OVTM_ALRM_LIM][0].V1=EpD[SET_OVTM_ALRM_LIM][1].V1;
+//	Rec_Dat_to_EEp_f(SET_OVTM_ALRM_LIM);
+//}
+//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
+//	EpD[SET_OVTM_OPEN_DUR][0].V1=EpD[SET_OVTM_OPEN_DUR][1].V1;
+//	Rec_Dat_to_EEp_f(SET_OVTM_OPEN_DUR);
+//}
+//else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
+//	EpD[SET_OVTM_OPEN_LIM][0].V1=EpD[SET_OVTM_OPEN_LIM][1].V1;
+//	Rec_Dat_to_EEp_f(SET_OVTM_OPEN_LIM);
+//}
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 	EpD[IRECT_LIM_RT_][0].V1=EpD[IRECT_LIM_RT_][1].V1;
 	Rec_Dat_to_EEp_f(IRECT_LIM_RT_);
@@ -251,6 +272,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				EpD[SET_DROPP_L_LW_PERC][0].V1=EpD[SET_DROPP_L_LW_PERC][1].V1;
 				Rec_Dat_to_EEp_f(SET_DROPP_L_LW_PERC);
 			}
+//			set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 		}
 	}
     else if (currentPage == FANS_TEMP_pg) {
@@ -266,7 +288,6 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				EpD[SET_OVERTEMP_OPEN][1].V1 = EpD[SET_OVERTEMP_OPEN][0].V1;
 			} else if (selected_FAN_TEMP_PG_line == 4) {
 				EpD[SET_OVT_OPEN_DELAY][1].V1 = EpD[SET_OVT_OPEN_DELAY][0].V1;
-				ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
 			}
 			fan_temp_edit_blink=1;
 		} else if (!fan_temp_edit_mode) {
@@ -316,9 +337,6 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 		if (selected_MANAGEMENT == 3) {
 			currentPage = CALIBRATION_pg;
 			EpD[SET_BATT_DISC_DET][0].V1=0;
-		}
-		if (selected_MANAGEMENT == 4) {
-			currentPage = TEST_pg;
 		}
     }
     else if (currentPage == CALIBRATION_pg) {
@@ -384,17 +402,6 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				}
 			}
 		}
-    }
-    else if (currentPage == TEST_pg) {
-    	test_edit_mode ^=1;
-        if (test_edit_mode) {
-			if (selected_TEST_PG_line==0) {
-				temp_test_thy_1=0;
-			}
-        }
-        if (!test_edit_mode) {
-        	__NOP();
-        }
     }
     else if (currentPage == FAULT_CODES_RESET_pg) {
     	fault_codes_reset_req=1;

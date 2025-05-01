@@ -808,9 +808,6 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
     	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
     }
-    if (scope == SCOPE_FAN_TEMP_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
-		ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
-    }
 }
 
 void inline extern set_V_targ_con_sy(float set_val) {
@@ -878,7 +875,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_7_Data |= led7_bit; }  // activate LED 7 if required
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data |= REL8_bit; }  // activate REL 8 if required
-    		REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC);
         	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 1); } // activate general fault LED if associated
@@ -906,7 +902,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_7_Data &= ~led7_bit; }  // deactivate LED 7 if required
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data &= ~REL8_bit; }  // deactivate REL 8 if required
-			REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
         	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 0); }
@@ -1015,6 +1010,10 @@ void print_REL_OUT_Table() {
 		PRF_GEN("Order %d %s", rel_ord_tb[i].rel_ord_nm, rel_ord_tb[i].rel_ord_desc);
 		delay_1ms(10);
     }
+}
+
+void calc_REL_24Bit_Data_f(void) {
+	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 }
 
 

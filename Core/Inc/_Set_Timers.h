@@ -69,9 +69,9 @@ LL_TIM_EnableCounter(TIM7);
 ////////////////////////////////////////////
 // TIM1		10US COUNTER
 LL_TIM_EnableIT_UPDATE(TIM1);
-LL_TIM_SetPrescaler(TIM1, 4);
+LL_TIM_SetPrescaler(TIM1, 0);
 LL_TIM_SetCounterMode(TIM1, LL_TIM_COUNTERMODE_UP);
-LL_TIM_SetAutoReload(TIM1, 54999);
+LL_TIM_SetAutoReload(TIM1, 2749);
 LL_TIM_EnableCounter(TIM1);
 // TIM1
 ////////////////////////////////////////////

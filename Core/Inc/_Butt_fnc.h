@@ -121,13 +121,6 @@ void bleft_fnc(void) {
     		fan_temp_dig=(fan_temp_dig-1+2) % 2;
     	}
     }
-    else if (currentPage == TEST_pg) { 		// LEFT
-    	if (!test_edit_mode) {
-    		selected_TEST_PG_line=(selected_TEST_PG_line-1+NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
-    	} else if (test_edit_mode) {
-    		test_dig=(test_dig-1+test_dig_num) % test_dig_num;
-    	}
-    }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
@@ -290,13 +283,6 @@ void bright_fnc(void) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line+1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
     	} else if (fan_temp_edit_mode) {
     		fan_temp_dig=(fan_temp_dig+1+2) % 2;
-    	}
-    }
-    else if (currentPage == TEST_pg) { 		// RIGHT
-    	if (!test_edit_mode) {
-    		selected_TEST_PG_line=(selected_TEST_PG_line+1+NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
-    	} else if (test_edit_mode) {
-    		test_dig=(test_dig+1+test_dig_num) % test_dig_num;
     	}
     }
     else if (currentPage == MANAGEMENT_pg) {
@@ -504,7 +490,7 @@ if (!chg_setting_edit_mode) {
 		if (!fan_temp_edit_mode) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
 		} else if (fan_temp_edit_mode) {
-			if (selected_FAN_TEMP_PG_line == 0) {
+			if (selected_FAN_TEMP_PG_line == 0 && EpD[SET_COOL_FAN_TEMP][1].V1 < 80) {
 				EpD[SET_COOL_FAN_TEMP][1].V1 += fan_temp_step_values[fan_temp_dig];
 				if (EpD[SET_COOL_FAN_TEMP][1].V1 > 90) {
 					EpD[SET_COOL_FAN_TEMP][1].V1 = 90;
@@ -538,28 +524,7 @@ if (!chg_setting_edit_mode) {
 
     }
 
-
-
-    else if (currentPage == TEST_pg) { // UP
-    	static const float test_step_values[3] = {10.0f, 1.0f};
-    	if (!test_edit_mode) {
-    		selected_TEST_PG_line = (selected_TEST_PG_line - 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
-    	} else if (test_edit_mode) {
-			if (selected_TEST_PG_line == 0) {
-				temp_test_thy_1 += test_step_values[test_dig];
-			}
-			if (selected_TEST_PG_line == 1) {
-				temp_test_trf_2 += test_step_values[test_dig];
-			}
-			if (selected_TEST_PG_line == 2) {
-//				temp_test_thy_1 += test_step_values[test_dig];
-			}
-    	}
-    }
-
-
-
-    else if (currentPage == RELAY_ORDER_pg) { // UP
+    else if (currentPage == RELAY_ORDER_pg) {
 
         if (rel_disp_mode == 1) {
 			if (rel_ord_arrow_loc > 1) {
@@ -581,10 +546,10 @@ if (!chg_setting_edit_mode) {
         }
     }
 
-    else if (currentPage == MANAGEMENT_pg) { // UP
+    else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
-    else if (currentPage == CALIBRATION_pg) { // UP
+    else if (currentPage == CALIBRATION_pg) {
     	if (cal_sel_edit_mode == cal_none) {
 			if (cal_sel_col==0) {
 				cal_sel_item_left=((cal_sel_item_left-1+5)%5);
@@ -675,7 +640,7 @@ if (!chg_setting_edit_mode) {
 				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
 			}
     	}
-    	else if (cal_sel_col==1) { // UP
+    	else if (cal_sel_col==1) {
 			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==0 && cal_sel_digit==0) {
 				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1*1.0002;
 				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
@@ -728,7 +693,7 @@ if (!chg_setting_edit_mode) {
 
 
     }
-    else if (currentPage == FAULT_CODES_REPORT_pg) { // UP
+    else if (currentPage == FAULT_CODES_REPORT_pg) {
     	flt_disp_index=(flt_disp_index-1+NUM_FAULT_RECORD) % NUM_FAULT_RECORD;
     }
     else if (currentPage == DATE_TIME_pg && DATE_TIME_edit_mode == 1 && DATE_TIME_edit_digit == 11) {
@@ -771,17 +736,17 @@ if (!chg_setting_edit_mode) {
 }
 
 void bdown_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) { // DOWN
+    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
     	HOME_PAGE_pg_sel = 2;
     }
-    else if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 2) { // DOWN
+    else if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 2) {
     	HOME_PAGE_pg_sel = 1;
     }
-    else if (currentPage == MAIN_MENU_pg) { // DOWN
+    else if (currentPage == MAIN_MENU_pg) {
 		main_menu_disp_index=(main_menu_disp_index+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
     	selected_MAIN_MENU=(selected_MAIN_MENU+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
     }
-    else if (currentPage == DEVICE_SETT_pg) { // DOWN
+    else if (currentPage == DEVICE_SETT_pg) {
 
 
     	if (!dev_setting_edit_mode) {
@@ -835,7 +800,7 @@ void bdown_fnc(void) {
 			}
     	}
     }
-    else if (currentPage == CHARGE_SETT_pg) { // DOWN
+    else if (currentPage == CHARGE_SETT_pg) {
 
 if (!chg_setting_edit_mode) {
 	if (chg_set_arrow_loc < 4) {
@@ -951,7 +916,7 @@ if (!chg_setting_edit_mode) {
 
     }
 
-    else if (currentPage == RELAY_ORDER_pg) { // DOWN
+    else if (currentPage == RELAY_ORDER_pg) {
 
         if (rel_disp_mode == 1) {
 			if (rel_ord_arrow_loc < 4) {
@@ -974,28 +939,7 @@ if (!chg_setting_edit_mode) {
         }
     }
 
-
-
-    else if (currentPage == TEST_pg) { // DOWN
-    	static const float test_step_values[3] = {10.0f, 1.0f};
-    	if (!test_edit_mode) {
-    		selected_TEST_PG_line = (selected_TEST_PG_line+1+NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
-    	} else if (test_edit_mode) {
-			if (selected_TEST_PG_line == 0) {
-				temp_test_thy_1 -= test_step_values[test_dig];
-			}
-			if (selected_TEST_PG_line == 1) {
-				temp_test_trf_2 -= test_step_values[test_dig];
-			}
-			if (selected_TEST_PG_line == 2) {
-				temp_test_trf_2 -= test_step_values[test_dig];
-			}
-    	}
-    }
-
-
-
-    else if (currentPage == MANAGEMENT_pg) { // DOWN
+    else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT+1) % NUM_MANAGEMENT_ITEMS;
     }
     else if (currentPage == CALIBRATION_pg) {
@@ -1090,7 +1034,7 @@ if (!chg_setting_edit_mode) {
 				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
 			}
     	}
-    	else if (cal_sel_col==1) { // DOWN
+    	else if (cal_sel_col==1) {
 			if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==0 && cal_sel_digit==0) {
 				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1/1.0002;
 				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
@@ -1143,7 +1087,7 @@ if (!chg_setting_edit_mode) {
 
 
     }
-    else if (currentPage == FAULT_CODES_REPORT_pg) { // DOWN
+    else if (currentPage == FAULT_CODES_REPORT_pg) {
     	flt_disp_index=(flt_disp_index+1+NUM_FAULT_RECORD) % NUM_FAULT_RECORD;
     }
     else if (currentPage == DATE_TIME_pg && DATE_TIME_edit_mode == 1 && DATE_TIME_edit_digit == 11) {
@@ -1187,20 +1131,16 @@ if (!chg_setting_edit_mode) {
 
 
 void besc_fnc(void) {
-    if (currentPage == HOME_PAGE_pg) { // ESC
+    if (currentPage == HOME_PAGE_pg) {
     	asm("NOP");
     }
-    else if (currentPage == MAIN_MENU_pg) { // ESC
+    else if (currentPage == MAIN_MENU_pg) {
         currentPage = HOME_PAGE_pg;
     }
-    else if (currentPage == FANS_TEMP_pg) { // ESC
+    else if (currentPage == FANS_TEMP_pg) {
         currentPage = HOME_PAGE_pg;
     }
-    else if (currentPage == TEST_pg) { // ESC
-    	temp_test_thy_1=0;
-        currentPage = MANAGEMENT_pg;
-    }
-    else if (currentPage == CHARGE_SETT_pg) { // ESC
+    else if (currentPage == CHARGE_SETT_pg) {
     	if (chg_setting_edit_mode) {
     		chg_setting_edit_mode = 0;
 
@@ -1233,7 +1173,7 @@ void besc_fnc(void) {
 	        currentPage = MAIN_MENU_pg;
     	}
     }
-    else if (currentPage == DEVICE_SETT_pg) { // ESC
+    else if (currentPage == DEVICE_SETT_pg) {
     	if (dev_setting_edit_mode) {
     		dev_setting_edit_mode = 0;
     		if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_REV_DET) {
@@ -1287,7 +1227,7 @@ void besc_fnc(void) {
         	currentPage = MAIN_MENU_pg;
         }
     }
-    else if (currentPage == RELAY_ORDER_pg) { // ESC
+    else if (currentPage == RELAY_ORDER_pg) {
         if (rel_disp_mode) {
         	rel_disp_mode = 1;
         	rel_edit_mode = 0;
@@ -1297,14 +1237,14 @@ void besc_fnc(void) {
         	rel_edit_mode = 0;
         }
     }
-    else if (currentPage == MANAGEMENT_pg) { // ESC
+    else if (currentPage == MANAGEMENT_pg) {
         currentPage = MAIN_MENU_pg;
     }
-    else if (currentPage == CALIBRATION_pg) { // ESC
+    else if (currentPage == CALIBRATION_pg) {
         currentPage = MANAGEMENT_pg;
 		bat_inspection_allowed=1;
     }
-    else if (currentPage == FAULT_CODES_REPORT_pg) { // ESC
+    else if (currentPage == FAULT_CODES_REPORT_pg) {
         currentPage = MAIN_MENU_pg;
         FAULT_CODES_REPORT_disp_mode=0;
     }

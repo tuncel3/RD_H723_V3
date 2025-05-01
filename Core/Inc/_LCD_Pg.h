@@ -1,28 +1,6 @@
 
 
 
-inline extern void TEST_pg_disp(void) {
-    uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
-	char L[32]; static uint8_t lnhg=9;
-    GLCD_PrintString(0, 0, "Test");
-
-	sprintf(L, " %s %3.1f C", TEST_Items[0], tmp_dat_C[0]+temp_test_thy_1); 	GLCD_PrintString(0, 1*lnhg, L);
-	sprintf(L, " %s %3.1f C", TEST_Items[1], tmp_dat_C[1]+temp_test_trf_2); 	GLCD_PrintString(0, 2*lnhg, L);
-	sprintf(L, " %s %d", TEST_Items[2], fan_thy_test);		GLCD_PrintString(0, 3*lnhg, L);
-	sprintf(L, " %s %d", TEST_Items[3], fan_trf_test);		GLCD_PrintString(0, 4*lnhg, L);
-
-	GLCD_PrintString(0, (selected_TEST_PG_line+1)*lnhg, ">");
-
-	static uint8_t testLnPic[6] = { 0, 1, 3};
-
-	if (test_edit_mode) {
-		if ((test_edit_blink^=1)==0) {
-			x0=48+(testLnPic[test_dig]*6); y0=(selected_TEST_PG_line+2)*lnhg-1; w=4;
-		}
-	}
-	GLCD_Line(x0, y0, x0+w, y0);
-}
-
 inline extern void FANS_TEMP_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
 	char L[32]; static uint8_t lnhg=9;

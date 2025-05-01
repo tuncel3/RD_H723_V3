@@ -317,7 +317,6 @@ typedef enum {
 	RECTF_ACTIVE_AT_STARTUP_pg,
 	DEVICE_RESET_pg,
 	CALIBRATION_pg,
-	TEST_pg,
 	DATE_TIME_pg,
 	BATT_REVERSE_DETECT_pg,
 	CONT_SYS_pg,
@@ -348,24 +347,6 @@ uint8_t selected_FANS_TEMP = 0;
 uint8_t selected_FAN_TEMP_PG_line = 0;
 uint8_t fan_temp_dig = 1;
 uint8_t fan_temp_edit_blink = 0;
-
-uint8_t fan_thy_test = 0;
-uint8_t fan_trf_test = 0;
-
-const char* TEST_Items[] = {
-"Temp 1",
-"Temp 2",
-"Fan 1",
-"Fan 2",
-"Buzz 1"
-};
-#define NUM_TEST_ITEMS (sizeof(TEST_Items) / sizeof(TEST_Items[0]))
-uint8_t test_edit_mode = 0;
-uint8_t selected_TEST = 0;
-uint8_t selected_TEST_PG_line = 0;
-uint8_t test_dig = 1;
-uint8_t test_dig_num = 3;
-uint8_t test_edit_blink = 0;
 
 const char* MAIN_MENU_Items[] = {
     "Şarj Ayarları",
@@ -663,12 +644,10 @@ const char* MANAGEMENT_Items[] = {
 "Arıza Kaytları Sil",
 "Cihaz Yeniden Başlat",
 "Doğrltc Açlşta Aktif",
-"Kalibrasyon",
-"Test"
+"Kalibrasyon"
 };
 #define NUM_MANAGEMENT_ITEMS (sizeof(MANAGEMENT_Items) / sizeof(MANAGEMENT_Items[0]))
 uint8_t selected_MANAGEMENT = 0;
-
 
 typedef enum {
 	cal_none,
@@ -692,7 +671,6 @@ typedef enum {
     SCOPE_BLM_LIMITS_FROM_EEP       = 0x08,
     SCOPE_DEV_NOM_VOUT_EEP          = 0x10,
 	SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP = 0x20,
-	SCOPE_FAN_TEMP_EEP 				= 0x40,
     SCOPE_VAR_ALL_FROM_EEP          = 0xFF
 } EEP_ScopeFlags;
 
@@ -1262,8 +1240,8 @@ uint32_t read_temp_dat_from_rx_buffer_cnt = 0;
 float tmp_dat_C[6]={0};
 uint32_t ovtmp_open_cnt = 0;
 uint32_t ovtmp_open_per = 0; // 1200*50 ms 1dk
-uint8_t temp_test_thy_1 = 0;
-uint8_t temp_test_trf_2 = 0;
+uint8_t temp_test_var_1 = 0;
+uint8_t temp_test_var_2 = 0;
 uint8_t sogut_sensor_exists = 0;
 uint8_t trafo_sensor_exists = 0;
 uint8_t batt_sensor_exists = 0;
@@ -1429,9 +1407,9 @@ typedef enum {
 BLM_STATE blm_op_phase = 0;
 
 
-#define FIRST_REPEAT_T     500u   // 500 ms
-#define NEXT_REPEAT_T      200u   // 100 ms
-#define RELEASE_DELAY_T     100u   //  50 ms  (yeni)
+#define FIRST_REPEAT_T     50000u   // 500 ms
+#define NEXT_REPEAT_T      10000u   // 100 ms
+#define RELEASE_DELAY_T     5000u   //  50 ms  (yeni)
 
 
 
