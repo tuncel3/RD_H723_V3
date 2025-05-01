@@ -1087,24 +1087,7 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 //	}
 }
 //PRF_GEN("%lu", var1++);
-
-BUZZ_P(buzzer_override);
-
-if (leds_rels_override && leds_rels_override_returned) {
-	LED_16_Data_h=LED_16_Data;
-	LED_7_Data_h=LED_7_Data;
-	REL_24Bit_Data_h=REL_24Bit_Data;
-	LED_16_Data=65535;
-	LED_7_Data=255;
-	REL_24Bit_Data=16777215;
-	leds_rels_override_returned=0;
-} else if (!leds_rels_override && !leds_rels_override_returned) {
-	leds_rels_override_returned=1;
-	LED_16_Data=LED_16_Data_h;
-	LED_7_Data=LED_7_Data_h;
-	REL_24Bit_Data=REL_24Bit_Data_h;
-}
-
+//buttonScn();
 processShiftRegister_LED_16(LED_16_Data);
 processShiftRegister_LED_7(LED_7_Data);
 processShiftRegister_Relay_Board_16(REL_24Bit_Data);
@@ -1120,6 +1103,8 @@ if (lfFireFlag) { lfFireFlag = 0;  bleft_fnc();  }
 if (rtFireFlag) { rtFireFlag = 0;  bright_fnc(); }
 if (enFireFlag) { enFireFlag = 0;  benter_fnc(); }
 if (esFireFlag) { esFireFlag = 0;  besc_fnc();   }
+
+
 
 
 

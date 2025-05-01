@@ -21,6 +21,7 @@ volatile uint8_t dbg_blm = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
+#define BUZZ_P GPIOE, LL_GPIO_PIN_1
 #define E1_1 LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1);
 #define E1_0 LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1);
 //#define E12=1; LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_12);
@@ -348,11 +349,15 @@ uint8_t selected_FAN_TEMP_PG_line = 0;
 uint8_t fan_temp_dig = 1;
 uint8_t fan_temp_edit_blink = 0;
 
+uint8_t fan_thy_test = 0;
+uint8_t fan_trf_test = 0;
+
 const char* TEST_Items[] = {
 "Temp 1",
 "Temp 2",
-"Buzz 1",
-"LedRel"
+"Fan 1",
+"Fan 2",
+"Buzz 1"
 };
 #define NUM_TEST_ITEMS (sizeof(TEST_Items) / sizeof(TEST_Items[0]))
 uint8_t test_edit_mode = 0;
@@ -609,6 +614,7 @@ SETT_type CHARGE_SETT_Items[] = {
 {"Norma Geçiş", I_LIM_TO_FLOAT, 0},
 {"Tama Geçiş", I_LIM_TO_BOOST, 0}
 };
+
 
 #define NUM_CHARGE_SETT_ITEMS (sizeof(CHARGE_SETT_Items) / sizeof(CHARGE_SETT_Items[0]))
 uint8_t selected_CHARGE_SETT = 1;
@@ -1256,11 +1262,8 @@ uint32_t read_temp_dat_from_rx_buffer_cnt = 0;
 float tmp_dat_C[6]={0};
 uint32_t ovtmp_open_cnt = 0;
 uint32_t ovtmp_open_per = 0; // 1200*50 ms 1dk
-float temp_test_thy_1 = 0;
-float temp_test_trf_2 = 0;
-uint8_t buzzer_override = 0;
-uint8_t leds_rels_override = 0;
-uint8_t leds_rels_override_returned = 1;
+uint8_t temp_test_thy_1 = 0;
+uint8_t temp_test_trf_2 = 0;
 uint8_t sogut_sensor_exists = 0;
 uint8_t trafo_sensor_exists = 0;
 uint8_t batt_sensor_exists = 0;
@@ -1463,37 +1466,8 @@ volatile uint8_t  esIsHeld = 0,   esFireFlag = 0;
 volatile uint16_t esReleaseCnt = RELEASE_DELAY_T;
 volatile uint32_t esHoldCnt = 0,  esNextRepeatEdge = 0;
 
+
+
+
 #define NS_TO_CYC(ns)  (uint32_t)(((ns) * 550 + 999) / 1000)  // yuvarla
 #define DELAY_NS(ns)   delay_cycles(NS_TO_CYC(ns))
-
-
-uint32_t zcr_record_ind = 0;
-uint32_t zcr_record_vals[3][10]={0};
-uint8_t zcr_val_R=0;
-uint8_t zcr_val_R_p=0;
-uint8_t zcr_val_S=0;
-uint8_t zcr_val_S_p=0;
-uint8_t zcr_val_T=0;
-uint8_t zcr_val_T_p=0;
-uint8_t zcr_val_same_cnt_R=0;
-uint8_t zcr_val_same_cnt_S=0;
-uint8_t zcr_val_same_cnt_T=0;
-uint8_t zcr_exist_R=0;
-uint8_t zcr_exist_S=0;
-uint8_t zcr_exist_T=0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

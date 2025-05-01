@@ -8,22 +8,19 @@ inline extern void TEST_pg_disp(void) {
 
 	sprintf(L, " %s %3.1f C", TEST_Items[0], tmp_dat_C[0]+temp_test_thy_1); 	GLCD_PrintString(0, 1*lnhg, L);
 	sprintf(L, " %s %3.1f C", TEST_Items[1], tmp_dat_C[1]+temp_test_trf_2); 	GLCD_PrintString(0, 2*lnhg, L);
-	sprintf(L, " %s", TEST_Items[2]); 	GLCD_PrintString(0, 3*lnhg, L);
-	sprintf(L, " %s", TEST_Items[3]); 	GLCD_PrintString(0, 4*lnhg, L);
+	sprintf(L, " %s %d", TEST_Items[2], fan_thy_test);		GLCD_PrintString(0, 3*lnhg, L);
+	sprintf(L, " %s %d", TEST_Items[3], fan_trf_test);		GLCD_PrintString(0, 4*lnhg, L);
 
 	GLCD_PrintString(0, (selected_TEST_PG_line+1)*lnhg, ">");
 
 	static uint8_t testLnPic[6] = { 0, 1, 3};
 
 	if (test_edit_mode) {
-		if ((test_edit_blink^=1)==0 && selected_TEST_PG_line <= 1) {
+		if ((test_edit_blink^=1)==0) {
 			x0=48+(testLnPic[test_dig]*6); y0=(selected_TEST_PG_line+2)*lnhg-1; w=4;
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
-
-	sprintf(L, "%s", AKTFPAS_SEL_Items[buzzer_override]); 	GLCD_PrintString(0+6*7, 3*lnhg, L);
-	sprintf(L, "%s", AKTFPAS_SEL_Items[leds_rels_override]); 	GLCD_PrintString(0+6*7, 4*lnhg, L);
 }
 
 inline extern void FANS_TEMP_pg_disp(void) {

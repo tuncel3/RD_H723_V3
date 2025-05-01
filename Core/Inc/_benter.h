@@ -391,19 +391,10 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			if (selected_TEST_PG_line==0) {
 				temp_test_thy_1=0;
 			}
-			if (selected_TEST_PG_line==1) {
-				temp_test_trf_2=0;
-			}
         }
         if (!test_edit_mode) {
         	__NOP();
         }
-		if (selected_TEST_PG_line==2) {
-			buzzer_override^=1;
-		}
-		if (selected_TEST_PG_line==3) {
-			leds_rels_override^=1;
-		}
     }
     else if (currentPage == FAULT_CODES_RESET_pg) {
     	fault_codes_reset_req=1;

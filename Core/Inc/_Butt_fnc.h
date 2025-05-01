@@ -541,7 +541,7 @@ if (!chg_setting_edit_mode) {
 
 
     else if (currentPage == TEST_pg) { // UP
-    	static const float test_step_values[3] = {10.0f, 1.0f, 0.1f};
+    	static const float test_step_values[3] = {10.0f, 1.0f};
     	if (!test_edit_mode) {
     		selected_TEST_PG_line = (selected_TEST_PG_line - 1 + NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
     	} else if (test_edit_mode) {
@@ -977,7 +977,7 @@ if (!chg_setting_edit_mode) {
 
 
     else if (currentPage == TEST_pg) { // DOWN
-    	static const float test_step_values[3] = {10.0f, 1.0f, 0.1f};
+    	static const float test_step_values[3] = {10.0f, 1.0f};
     	if (!test_edit_mode) {
     		selected_TEST_PG_line = (selected_TEST_PG_line+1+NUM_TEST_ITEMS) % NUM_TEST_ITEMS;
     	} else if (test_edit_mode) {
@@ -988,7 +988,7 @@ if (!chg_setting_edit_mode) {
 				temp_test_trf_2 -= test_step_values[test_dig];
 			}
 			if (selected_TEST_PG_line == 2) {
-//				temp_test_trf_2 -= test_step_values[test_dig];
+				temp_test_trf_2 -= test_step_values[test_dig];
 			}
     	}
     }
@@ -1197,12 +1197,8 @@ void besc_fnc(void) {
         currentPage = HOME_PAGE_pg;
     }
     else if (currentPage == TEST_pg) { // ESC
-    	if (chg_setting_edit_mode) {
-    		temp_test_thy_1=0;
-    	} else {
-			currentPage = MANAGEMENT_pg;
-		}
-
+    	temp_test_thy_1=0;
+        currentPage = MANAGEMENT_pg;
     }
     else if (currentPage == CHARGE_SETT_pg) { // ESC
     	if (chg_setting_edit_mode) {
