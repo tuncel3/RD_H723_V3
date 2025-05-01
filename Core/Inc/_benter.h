@@ -73,13 +73,13 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==VBAT_FLOAT) {
 	EpD[VBAT_FLOAT][0].V1=EpD[VBAT_FLOAT][1].V1;
 	Rec_Dat_to_EEp_f(VBAT_FLOAT);
 	actions_after_charge_voltage_change();
-		blm_op_phase = 100;					// cancel op. bring_vtarg_back_skip_delay
+		blm_op_phase = B_SKIP_DELAY_RESTART;					// cancel op. bring_vtarg_back_skip_delay
 		blm_enable_collect_samples = 0;
 		blm_corr_buf_index = 0;
 }
 else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==VBAT_BOOST) {
 	EpD[VBAT_BOOST][0].V1=EpD[VBAT_BOOST][1].V1;
-		blm_op_phase = 100;					// cancel op. bring_vtarg_back_skip_delay
+		blm_op_phase = B_SKIP_DELAY_RESTART;					// cancel op. bring_vtarg_back_skip_delay
 		blm_enable_collect_samples = 0;
 		blm_corr_buf_index = 0;
 }
@@ -184,7 +184,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][0].V1=EpD[DEV_NOM_VOUT][1].V1;
-	set_variables_from_EEP_fc();
+	set_variables_from_EEP_fc(SCOPE_DEV_NOM_VOUT_EEP);
 	Rec_Dat_to_EEp_f(DEV_NOM_VOUT);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
@@ -221,24 +221,24 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==BATT_SHORT) {
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_HIGH_LIM_add) {
 	EpD[VRECT_DC_HIGH_LIM_add][0].V1=EpD[VRECT_DC_HIGH_LIM_add][1].V1;
-	update_VDC_high_low_lim_fc();
+//	update_VDC_high_low_lim_fc();
+	set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
 	Rec_Dat_to_EEp_f(VRECT_DC_HIGH_LIM_add);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 	EpD[VRECT_DC_LOW_LIM_add][0].V1=EpD[VRECT_DC_LOW_LIM_add][1].V1;
-	update_VDC_high_low_lim_fc();
+//	update_VDC_high_low_lim_fc();
+	set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
 	Rec_Dat_to_EEp_f(VRECT_DC_LOW_LIM_add);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_high_lim_add) {
 	EpD[dropp_reg_high_lim_add][0].V1=EpD[dropp_reg_high_lim_add][1].V1;
-	dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+(EpD[dropp_reg_high_lim_add][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
-	dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-(EpD[dropp_reg_low_lim_sub][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
+	set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 	Rec_Dat_to_EEp_f(dropp_reg_high_lim_add);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
 	EpD[dropp_reg_low_lim_sub][0].V1=EpD[dropp_reg_low_lim_sub][1].V1;
-	dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+(EpD[dropp_reg_high_lim_add][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
-	dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-(EpD[dropp_reg_low_lim_sub][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
+	set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
 	Rec_Dat_to_EEp_f(dropp_reg_low_lim_sub);
 }
 		}
@@ -246,20 +246,32 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
     else if (currentPage == DROPPER_pg) {
     	dropper_edit_mode ^= 1;
 
+//		if (selected_DROPPER_PG_line==0) {
+//	    	dropper_edit_mode ^= 1;
+//		} else  {
+//	    	dropper_edit_mode ^= 1;
+//		}
 		if (dropper_edit_mode) {
-			if (selected_DROPPER == 0) {
+			if (selected_DROPPER_PG_line == 1) {
+				EpD[SET_DROPPER_MANOTO][1].V1=EpD[SET_DROPPER_MANOTO][0].V1;
+			}
+			if (selected_DROPPER_PG_line == 1) {
 				EpD[SET_DROPPER_K1][1].V1=EpD[SET_DROPPER_K1][0].V1;
 			}
-			else if (selected_DROPPER == 1) {
+			else if (selected_DROPPER_PG_line == 2) {
 				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
 			}
 		} else if (!dropper_edit_mode) {
-			if (selected_DROPPER == 0) {
+			if (selected_DROPPER_PG_line == 0) {
+				EpD[SET_DROPPER_MANOTO][0].V1 = EpD[SET_DROPPER_MANOTO][1].V1;
+				dropper_control_man_oto=EpD[SET_DROPPER_MANOTO][0].V1;
+				Rec_Dat_to_EEp_f(SET_DROPPER_MANOTO);
+			} else if (selected_DROPPER_PG_line == 1) {
 				EpD[SET_DROPPER_K1][0].V1 = EpD[SET_DROPPER_K1][1].V1;
 				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
 				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
 				Rec_Dat_to_EEp_f(SET_DROPPER_K1);
-			} else if (selected_DROPPER == 1) {
+			} else if (selected_DROPPER_PG_line == 2) {
 				EpD[SET_DROPPER_K2][0].V1 = EpD[SET_DROPPER_K2][1].V1;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
 				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);

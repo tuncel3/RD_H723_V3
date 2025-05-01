@@ -2,11 +2,11 @@
 #include "_benter.h"
 
 void bleft_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
+    if (currentPage == HOME_PAGE_pg) {
     	if (thy_drv_en==0 && user_wants_allows_thy_drv==0) {
     		user_wants_allows_thy_drv=1;
     		thy_drv_en_req=1;
-    		sprintf(DUB,"User req START rectf"); prfm(DUB);
+    		PRF_GEN("User req START rectf");
     	}
     }
     else if (currentPage == CHARGE_SETT_pg) {
@@ -127,8 +127,8 @@ void bleft_fnc(void) {
 			}
     	}
     }
-    else if (currentPage == DROPPER_pg) {
-    	selected_DROPPER=(selected_DROPPER-1+2) % 2;
+    else if (currentPage == DROPPER_pg) { // LEFT
+    	selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
     }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
@@ -185,13 +185,15 @@ void bleft_fnc(void) {
 }
 
 void bright_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) {
+    if (currentPage == HOME_PAGE_pg) {
     	if (thy_drv_en == 1 && user_wants_allows_thy_drv==1) {
     		thy_drv_en=0;
+        	sfsta_op_phase = S_SFSTA_NONE;
+        	blm_op_phase = B_RESTRT_AFTR_DELAY;
     		user_wants_allows_thy_drv=0;
     		apply_state_changes_f(STOP_FC, 1);
     		apply_state_changes_f(START_FC, 0);
-    		sprintf(DUB,"User req STOP rectf"); prfm(DUB);
+    		PRF_GEN("User req STOP rectf");
     	}
     }
     else if (currentPage == CHARGE_SETT_pg) {
@@ -298,8 +300,8 @@ void bright_fnc(void) {
 			}
     	}
     }
-    else if (currentPage == DROPPER_pg) {
-    	selected_DROPPER=(selected_DROPPER+1) % 2;
+    else if (currentPage == DROPPER_pg) { // RIGHT
+    	selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1) % 3;
     }
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT+1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
@@ -481,18 +483,16 @@ if (!chg_setting_edit_mode) {
 	}
 }
     }
-    else if (currentPage == DROPPER_pg) {
+    else if (currentPage == DROPPER_pg) { // UP
     	if (dropper_edit_mode == 0) {
-    		selected_DROPPER=(selected_DROPPER+1) % 2;
+    		selected_DROPPER_PG_line=(selected_DROPPER_PG_line-1+3) % 3;
 		} else if (dropper_edit_mode == 1) {
-			if (selected_DROPPER == 0) {
-				if (EpD[SET_DROPPER_K1][1].V1==1) {
-					EpD[SET_DROPPER_K1][1].V1=0;
-				} else { EpD[SET_DROPPER_K1][1].V1=1;}
-			} else if (selected_DROPPER == 1) {
-				if (EpD[SET_DROPPER_K2][1].V1==1) {
-					EpD[SET_DROPPER_K2][1].V1=0;
-				} else { EpD[SET_DROPPER_K2][1].V1=1;}
+			if (selected_DROPPER_PG_line == 0) {
+			    EpD[SET_DROPPER_MANOTO][1].V1 = (float)(((int)(EpD[SET_DROPPER_MANOTO][1].V1)) ^ 1);
+			} else if (selected_DROPPER_PG_line == 1) {
+			    EpD[SET_DROPPER_K1][1].V1 = (float)(((int)(EpD[SET_DROPPER_K1][1].V1)) ^ 1);
+			} else if (selected_DROPPER_PG_line == 2) {
+			    EpD[SET_DROPPER_K2][1].V1 = (float)(((int)(EpD[SET_DROPPER_K2][1].V1)) ^ 1);
 			}
 		}
     }
@@ -838,18 +838,16 @@ if (!chg_setting_edit_mode) {
 	}
 }
     }
-    else if (currentPage == DROPPER_pg) {
+    else if (currentPage == DROPPER_pg) { // DOWN
 		if (dropper_edit_mode == 0) {
-			selected_DROPPER=(selected_DROPPER-1+2) % 2;
+			selected_DROPPER_PG_line=(selected_DROPPER_PG_line+1+3) % 3;
 		} else if (dropper_edit_mode == 1) {
-			if (selected_DROPPER == 0) {
-				if (EpD[SET_DROPPER_K1][1].V1==1) {
-					EpD[SET_DROPPER_K1][1].V1=0;
-				} else { EpD[SET_DROPPER_K1][1].V1=1;}
-			} else if (selected_DROPPER == 1) {
-				if (EpD[SET_DROPPER_K2][1].V1==1) {
-					EpD[SET_DROPPER_K2][1].V1=0;
-				} else { EpD[SET_DROPPER_K2][1].V1=1;}
+			if (selected_DROPPER_PG_line == 0) {
+			    EpD[SET_DROPPER_MANOTO][1].V1 = (float)(((int)(EpD[SET_DROPPER_MANOTO][1].V1)) ^ 1);
+			} else if (selected_DROPPER_PG_line == 1) {
+			    EpD[SET_DROPPER_K1][1].V1 = (float)(((int)(EpD[SET_DROPPER_K1][1].V1)) ^ 1);
+			} else if (selected_DROPPER_PG_line == 2) {
+			    EpD[SET_DROPPER_K2][1].V1 = (float)(((int)(EpD[SET_DROPPER_K2][1].V1)) ^ 1);
 			}
 		}
 	}
@@ -1144,8 +1142,19 @@ void besc_fnc(void) {
     		currentPage = MAIN_MENU_pg;
     	}
     }
-    else if (currentPage == DROPPER_pg) {
-        currentPage = MAIN_MENU_pg;
+    else if (currentPage == DROPPER_pg) { // ESC
+        if (dropper_edit_mode) {
+        	dropper_edit_mode=0;
+    		if (selected_DROPPER_PG_line==0) {
+    			EpD[SET_DROPPER_MANOTO][1].V1=EpD[SET_DROPPER_MANOTO][0].V1;
+    		} else if (selected_DROPPER_PG_line==1) {
+    			EpD[SET_DROPPER_K1][1].V1=EpD[SET_DROPPER_K1][0].V1;
+    		} else if (selected_DROPPER_PG_line==2) {
+				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
+	    	}
+        } else {
+        	currentPage = MAIN_MENU_pg;
+        }
     }
     else if (currentPage == RELAY_ORDER_pg) {
         if (rel_disp_mode) {

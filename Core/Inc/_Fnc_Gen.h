@@ -1,14 +1,13 @@
 volatile void prfm(char *string);
-void extern umsg(uint32_t msg_group, char *string);
 void delay_1ms(uint32_t num1);
 inline void delayA_1ms(uint32_t ms);
 inline void delayA_1us(uint32_t us);
 inline void delayA_100ns(uint32_t us);
 void printFaultCodes(void);
-void inline extern set_variables_from_EEP_fc(void);
+void inline extern set_variables_from_EEP_fc(uint8_t scope);
 void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
-void inline extern update_VDC_high_low_lim_fc(void);
+//void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 static inline uint8_t is_state_active(State_Codes state_code);
 void inline extern actions_after_charge_voltage_change();
@@ -145,38 +144,6 @@ void extern prfm(char *string)
     }
 }
 
-void extern umsg(uint32_t msg_group, char *string)
-{
-    // Check if the message group is enabled
-    if (!(enabled_message_groups & msg_group)) {
-        return; // Skip printing if the group is disabled
-    }
-
-    // Copy string to DMA buffer safely
-    snprintf(dma_uart_buffer[buffer_head], MAX_STRING_LENGTH, "%s\n\r", string);
-
-    // Move buffer head
-    buffer_head = (buffer_head + 1) % BUFFER_SIZE;
-
-    // Check for buffer overflow
-    if (buffer_head == buffer_tail) {
-        buffer_tail = (buffer_tail + 1) % BUFFER_SIZE; // Discard oldest data
-    }
-
-    // Start DMA transmission if not busy
-    if (!dma_busy) {
-        dma_busy = 1;
-        size_t string_length = strlen(dma_uart_buffer[buffer_tail]);
-        LL_DMA_SetDataLength(DMA1, LL_DMA_STREAM_0, string_length);
-        LL_DMA_ConfigAddresses(DMA1, LL_DMA_STREAM_0,
-                               (uint32_t)dma_uart_buffer[buffer_tail],
-                               LL_USART_DMA_GetRegAddr(UART5, LL_USART_DMA_REG_DATA_TRANSMIT),
-                               LL_DMA_DIRECTION_MEMORY_TO_PERIPH);
-//        set_(UART1_DE);
-        LL_DMA_EnableStream(DMA1, LL_DMA_STREAM_0);
-    }
-}
-
 
 void extern uart_debug_cnt()
 {
@@ -222,11 +189,11 @@ void disb_uart_msg_group(uint32_t group)
 
 
 void printBinary(uint8_t num) {
-    sprintf(DUB,"0b"); prfm(DUB);
+    PRF_GEN("0b");
     for (int i = 7; i >= 0; i--) { // Loop through each bit
-        sprintf(DUB,"%d", (num >> i) & 1); prfm(DUB);
+        PRF_GEN("%d", (num >> i) & 1);
     }
-    sprintf(DUB,"\n"); prfm(DUB);
+    PRF_GEN("\n");
 }
 
 
@@ -360,7 +327,7 @@ inline extern void short_circ_monitor_f(void) {
 		if (IRECT_Short_Acc_cnt >= IRECT_Short_Acc_per) {
 			IRECT_Short_Acc_cnt=0;
 			apply_state_changes_f(RECT_SHORT_FC, 1);
-			sprintf(DUB,"DC SH %f", IRECT_smp_sc); prfm(DUB);
+			PRF_GEN("DC SH %f", IRECT_smp_sc);
 		}
 	} else { IRECT_Short_Acc_per=0; }
 	if (IRECT_smp_sc <= EpD[RECT_SHORT][0].V1 && is_state_active(RECT_SHORT_FC)) {
@@ -377,7 +344,7 @@ inline extern void short_circ_monitor_f(void) {
 		if (IBAT_Short_Acc_cnt >= IBAT_Short_Acc_per) {
 			IBAT_Short_Acc_cnt=0;
 			apply_state_changes_f(BATT_SHORT_FC, 1);
-			sprintf(DUB,"BT SH %f", IBAT_smp_sc); prfm(DUB);
+			PRF_GEN("BT SH %f", IBAT_smp_sc);
 		}
 	} else { IBAT_Short_Acc_cnt=0; }
 	if (IBAT_smp_sc <= IBAT_Short_Lim && is_state_active(BATT_SHORT_FC)) {
@@ -766,46 +733,51 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
-Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
-Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
-Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar aralığı
-Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
-
-// D.A. gerilim regülasyonu (dropping diyot)
-// limitler şartnamede anma geriliminin yüzdesi olarak belirtilmiş.
-//if (scope==dropper_limits) {
-//Vdc_drop_in_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu giriş gerilimi
-//Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
-dropp_reg_high_lim=EpD[DEV_NOM_VOUT][0].V1*(1+(EpD[dropp_reg_high_lim_add][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
-dropp_reg_low_lim=EpD[DEV_NOM_VOUT][0].V1*(1-(EpD[dropp_reg_low_lim_sub][0].V1/100)); // D.A. gerilim regülasyonu çıkış gerilimi
-//}
-
-// D.A. çıkış akım ayarı
-Irect_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Toplam çıkış
-Irect_min=EpD[DEV_NOM_IOUT][0].V1*0.01; // Toplam çıkış
-Ibat_max=EpD[DEV_NOM_IOUT][0].V1*1.0; // Akümülatör çıkış // release_chg -> EpD[DEV_NOM_IOUT][0].V1*1.0;
-Ibat_min=EpD[DEV_NOM_IOUT][0].V1*0.1; // Akümülatör çıkış // release_chg -> EpD[DEV_NOM_IOUT][0].V1*0.1;
-Vbat_flt=EpD[DEV_NOM_VOUT][0].V1*0.1;
-
-VAC_Hg_Lim=VAC_Nom*(1+0.1); // Giriş voltajı monitör
-VAC_Lo_Lim=VAC_Nom*(1-0.12); // Giriş voltajı monitör
-
-blm_I_step_05perc=EpD[DEV_NOM_IOUT][0].V1*0.005;
-blm_I_step_075perc=EpD[DEV_NOM_IOUT][0].V1*0.0075;
-blm_I_step_10perc=EpD[DEV_NOM_IOUT][0].V1*0.010;
-blm_V_step_05perc=EpD[DEV_NOM_VOUT][0].V1*0.005;
-blm_V_step_15perc=EpD[DEV_NOM_VOUT][0].V1*0.015;
+    if (scope & SCOPE_VOLTAGE_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+    	Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
+    	Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
+    	Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar aralığı
+    	Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
+    }
+    if (scope & SCOPE_DROPPER_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+    	// D.A. gerilim regülasyonu (dropping diyot)
+    	// limitler şartnamede anma geriliminin yüzdesi olarak belirtilmiş.
+    	//if (scope==dropper_limits) {
+    	//Vdc_drop_in_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu giriş gerilimi
+    	//Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
+        dropp_reg_high_lim = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[dropp_reg_high_lim_add][0].V1 / 100));
+        dropp_reg_low_lim  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[dropp_reg_low_lim_sub][0].V1 / 100));
+    }
+    if (scope & SCOPE_CURRENT_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+        Irect_max = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
+        Irect_min = EpD[DEV_NOM_IOUT][0].V1 * 0.01;
+        Ibat_max  = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
+        Ibat_min  = EpD[DEV_NOM_IOUT][0].V1 * 0.1;
+    }
+    if (scope & SCOPE_BLM_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+        blm_I_step_05perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.005;
+        blm_I_step_075perc = EpD[DEV_NOM_IOUT][0].V1 * 0.0075;
+        blm_I_step_10perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.010;
+        blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
+        blm_V_step_10perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.010;
+        blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;
+    }
+    if (scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+        Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
+        VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
+        VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
+    }
+    if (scope == SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+    	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
+    	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
+    	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
+    	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
+    }
 }
 
-void inline extern update_VDC_high_low_lim_fc(void) {
-	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
-	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
-	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
-	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
-}
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
-	update_VDC_high_low_lim_fc();
+	set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
 }
 
 void inline extern actions_after_charge_voltage_change() {
@@ -831,7 +803,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		sprintf(DUB,"FLOAT charge mode %d", num); prfm(DUB);
+		PRF_GEN("FLOAT charge mode %d", num);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
@@ -841,7 +813,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		sprintf(DUB,"BOOST charge mode %d", num); prfm(DUB);
+		PRF_GEN("BOOST charge mode %d", num);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
@@ -853,7 +825,6 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 			timed_mode_actions_do_once=1; // timed a geçiş yapıldığında bir kez uygulanacak. tekrar uygulanabilmesi için başka moda geçilmesi lazım.
 			timed_mode_time_ended=0; // timed mod sayacı sıfırla. sayaç sonunda float a geçilecek
 			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
-
 		}
 	}
 }
@@ -870,10 +841,12 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data |= REL8_bit; }  // activate REL 8 if required
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
-        	LED_16_Data |= (1U << GENERAL_FAULT_FC); } // activate general fault LED if associated
+        	LED_16_Data |= (1U << GENERAL_FAULT_FC);
+        	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 1); } // activate general fault LED if associated
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) {  // stop thy drv if fault requires
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
+        	blm_op_phase = B_RESTRT_AFTR_DELAY;
             thy_stop_fault_hold_bits |= fault_bit;
         	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
@@ -895,13 +868,14 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data &= ~REL8_bit; }  // deactivate REL 8 if required
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
-        	LED_16_Data &= ~(1U << GENERAL_FAULT_FC); }
+        	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
+        	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 0); }
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
     }
-		sprintf(DUB,"     state_code %d %s set %d", state_code, state_list[state_code].name, set); prfm(DUB);
+		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// OUT RELAY ACTIVATE DEACTIVATE ////////////////////////////////////////////////////////////////////////////////
@@ -998,7 +972,7 @@ int tmp144_init_and_assign(void)
 
 void print_REL_OUT_Table() {
     for (int i = 0; i < 16; i++) {
-		sprintf(DUB,"Order %d %s", rel_ord_tb[i].rel_ord_nm, rel_ord_tb[i].rel_ord_desc); prfm(DUB);
+		PRF_GEN("Order %d %s", rel_ord_tb[i].rel_ord_nm, rel_ord_tb[i].rel_ord_desc);
 		delay_1ms(10);
     }
 }
@@ -1082,15 +1056,16 @@ void generate_REL_24Bit_Data_fc(void) {
         uint8_t order = rel_ord_tb[i].rel_ord_order;
         uint8_t val = rel_ord_tb[i].rel_ord_val;
 
-        if (order < 16) {
+        // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
+        int reverse_order = 16 - order; // Yani, 16->1, 15->2, 14->3, ...
+
             if (val) {
-                rel_out_16Bit_Data |= (1 << order);
+                rel_out_16Bit_Data |= (1 << reverse_order);  // Eğer 'val' 1 ise, ters sıradaki 'reverse_order' bitini 1 yap.
             } else {
-                rel_out_16Bit_Data &= ~(1 << order);
+                rel_out_16Bit_Data &= ~(1 << reverse_order);  // Eğer 'val' 0 ise, ters sıradaki 'reverse_order' bitini 0 yap.
             }
-        	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
-        }
     }
+        	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 }
 
 void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val)
@@ -1137,25 +1112,36 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 //	blm_corr_buf_index = 0;
 //}
 
-void inline extern bring_vtarg_back_skip_delay(void) {
-	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
-	} else {
-		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-		blm_op_phase = 0;
-	}
-}
+//void inline extern bring_vtarg_back_skip_delay(void) {
+//	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
+//		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
+//	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
+//		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
+//	} else {
+//		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
+//		blm_op_phase = 0; PRF_BLM("blm_op_phase 0");
+//	}
+//}
 
-void inline extern bring_vtarg_back_goto_delay(void) {
+//void inline extern bring_vtarg_back_goto_delay(void) {
+//	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
+//		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
+//	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
+//		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
+//	} else {
+//		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
+//		blm_op_phase = 9; PRF_BLM("blm_op_phase 9");
+//	}
+//}
+
+void inline extern bring_vtarg_back_to_chrgV(uint8_t num) {
 	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
 	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
 	} else {
 		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-		blm_op_phase = 9;
+		blm_op_phase = num;
 	}
 }
 
@@ -1210,13 +1196,21 @@ void blm_set_up_down_vtarg_limits(void) {
 	blm_vtarg_move_dn_targ=blm_stable_v_vrect-blm_V_step_05perc*5;
 	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
 	blm_vtarg_move_dn_min=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
+
+	if (blm_vtarg_move_up_max <= blm_vtarg_move_up_targ) {
+		blm_vtarg_move_up_max = blm_vtarg_move_up_targ;
+	}
+	if (blm_vtarg_move_dn_min >= blm_vtarg_move_dn_targ) {
+		blm_vtarg_move_dn_min = blm_vtarg_move_dn_targ;
+	}
 }
 
 
 float calculate_blm_op(void);
+float calculate_blm_op2(void);
 float calculate_blm_op(void) {
     if (blm_corr_buf_index < 2) {
-        // En az 2 örnek olmalı
+    	discard_corr_result=1;
         return -1;
     }
 
@@ -1225,8 +1219,8 @@ float calculate_blm_op(void) {
     float sum_vi = 0.0f;
 
     for (uint16_t i = 0; i < blm_corr_buf_index; i++) {
-        float v = vrect_buf[i];
-        float ib = ibat_buf[i];
+    	float v = vrect_buf[i];
+    	float ib = ibat_buf[i];
 
         sum_v += v;
         sum_i += ib;
@@ -1242,9 +1236,11 @@ float calculate_blm_op(void) {
     float var_i = sum_i2 - blm_corr_buf_index * mean_i * mean_i;
     float cov_vi = sum_vi - blm_corr_buf_index * mean_v * mean_i;
 
-    if (var_v <= 0.0f || var_i <= 0.0f)
-        return -2;
 
+    	if (var_v <= 0.0f || var_i <= 0.0f) {
+    		discard_corr_result=1;
+			return -2;
+    	}
     float corr = cov_vi / sqrtf(var_v * var_i);
 
     if (corr > 1.0f) corr = 1.0f;
@@ -1254,7 +1250,4 @@ float calculate_blm_op(void) {
     return corr;
 }
 
-int is_float_equal(float a, float b) {
-    return fabs(a - b) < 0.0001f;
-}
 
