@@ -82,8 +82,6 @@ inline extern void delayA_1us_g(uint32_t us)
 
 #include "glcd_bsrr_tables.h"
 
-  cpu_cycle_counter_init();
-
 static inline void GLCD_WriteCommand(uint8_t d) {
 	SET_MODE_COMMAND_WRITE;
 	GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA		// PA15/12/11/10
