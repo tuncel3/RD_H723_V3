@@ -24,8 +24,7 @@
 //#define DBG21	set_(DBG2_P);
 //#define DBG20	res_(DBG2_P);
 
-
-//#define UART1_DE GPIOA, LL_GPIO_PIN_11
+#define BUZZ_P(x)  ((x) ? LL_GPIO_SetOutputPin(GPIOE, LL_GPIO_PIN_1) : LL_GPIO_ResetOutputPin(GPIOE, LL_GPIO_PIN_1))
 
 // FP BUTTONS
 #define TC_3_1_P GPIOB, LL_GPIO_PIN_4
@@ -131,8 +130,12 @@ uint32_t besc_down_cnt=0;
 uint32_t thy_stop_fault_hold_bits=0b0;
 uint32_t LED_16_Data=0b0;
 uint32_t LED_7_Data=0b0;
-uint8_t  REL_MB_8Bit_Data=0b0;
 uint32_t REL_24Bit_Data=0b0;
+uint32_t REL_24Bit_Data_h=0b0;
+uint32_t LED_16_Data_h=0b0;
+uint32_t LED_7_Data_h=0b0;
+uint32_t rel_out_16Bit_Data_h=0b0;
+uint8_t  REL_MB_8Bit_Data=0b0;
 uint16_t rel_out_16Bit_Data=0b0;
 // LED SHIFT REGISTER
 ///////////////////////////////////////////////////////////////////////////

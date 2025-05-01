@@ -16,8 +16,10 @@ void benter_fnc(void) {
 		} else if (selected_MAIN_MENU == 3) {
 			currentPage = DROPPER_pg;
 		} else if (selected_MAIN_MENU == 4) {
+			currentPage = FANS_TEMP_pg;
+		} else if (selected_MAIN_MENU == 5) {
 			currentPage = RELAY_ORDER_pg;
-        } else if (selected_MAIN_MENU == 5) {
+        } else if (selected_MAIN_MENU == 6) {
 			currentPage = MANAGEMENT_pg;
         }
     }
@@ -133,15 +135,6 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][0].V1;
 }
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-	EpD[SET_OVTM_ALRM_LIM][1].V1=EpD[SET_OVTM_ALRM_LIM][0].V1;
-}
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-	EpD[SET_OVTM_OPEN_DUR][1].V1=EpD[SET_OVTM_OPEN_DUR][0].V1;
-}
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-	EpD[SET_OVTM_OPEN_LIM][1].V1=EpD[SET_OVTM_OPEN_LIM][0].V1;
-}
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 	EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][0].V1;
 }
@@ -163,12 +156,6 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_HIGH_LIM_add) {
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 	EpD[VRECT_DC_LOW_LIM_add][1].V1=EpD[VRECT_DC_LOW_LIM_add][0].V1;
 }
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_high_lim_add) {
-	EpD[dropp_reg_high_lim_add][1].V1=EpD[dropp_reg_high_lim_add][0].V1;
-}
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
-	EpD[dropp_reg_low_lim_sub][1].V1=EpD[dropp_reg_low_lim_sub][0].V1;
-}
 		} else if (!dev_setting_edit_mode) {
 if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==999) {
 	EpD[SET_CHARGE_MODE][0].V1=EpD[SET_CHARGE_MODE][1].V1;
@@ -186,18 +173,6 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][0].V1=EpD[DEV_NOM_VOUT][1].V1;
 	set_variables_from_EEP_fc(SCOPE_DEV_NOM_VOUT_EEP);
 	Rec_Dat_to_EEp_f(DEV_NOM_VOUT);
-}
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_ALRM_LIM) {
-	EpD[SET_OVTM_ALRM_LIM][0].V1=EpD[SET_OVTM_ALRM_LIM][1].V1;
-	Rec_Dat_to_EEp_f(SET_OVTM_ALRM_LIM);
-}
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_DUR) {
-	EpD[SET_OVTM_OPEN_DUR][0].V1=EpD[SET_OVTM_OPEN_DUR][1].V1;
-	Rec_Dat_to_EEp_f(SET_OVTM_OPEN_DUR);
-}
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_OVTM_OPEN_LIM) {
-	EpD[SET_OVTM_OPEN_LIM][0].V1=EpD[SET_OVTM_OPEN_LIM][1].V1;
-	Rec_Dat_to_EEp_f(SET_OVTM_OPEN_LIM);
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {
 	EpD[IRECT_LIM_RT_][0].V1=EpD[IRECT_LIM_RT_][1].V1;
@@ -231,35 +206,26 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 	set_variables_from_EEP_fc(SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP);
 	Rec_Dat_to_EEp_f(VRECT_DC_LOW_LIM_add);
 }
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_high_lim_add) {
-	EpD[dropp_reg_high_lim_add][0].V1=EpD[dropp_reg_high_lim_add][1].V1;
-	set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
-	Rec_Dat_to_EEp_f(dropp_reg_high_lim_add);
-}
-else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
-	EpD[dropp_reg_low_lim_sub][0].V1=EpD[dropp_reg_low_lim_sub][1].V1;
-	set_variables_from_EEP_fc(SCOPE_DROPPER_LIMITS_FROM_EEP);
-	Rec_Dat_to_EEp_f(dropp_reg_low_lim_sub);
-}
 		}
     }
     else if (currentPage == DROPPER_pg) {
     	dropper_edit_mode ^= 1;
-
-//		if (selected_DROPPER_PG_line==0) {
-//	    	dropper_edit_mode ^= 1;
-//		} else  {
-//	    	dropper_edit_mode ^= 1;
-//		}
 		if (dropper_edit_mode) {
 			if (selected_DROPPER_PG_line == 1) {
 				EpD[SET_DROPPER_MANOTO][1].V1=EpD[SET_DROPPER_MANOTO][0].V1;
 			}
 			if (selected_DROPPER_PG_line == 1) {
 				EpD[SET_DROPPER_K1][1].V1=EpD[SET_DROPPER_K1][0].V1;
-			}
-			else if (selected_DROPPER_PG_line == 2) {
+			} else if (selected_DROPPER_PG_line == 2) {
 				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
+			} else if (selected_DROPPER_PG_line == 3) {
+				dropper_edit_blink=1;
+					set_dropper_l_hg_V_h=set_dropper_l_hg_V;
+					EpD[SET_DROPP_L_HG_PERC][1].V1=EpD[SET_DROPP_L_HG_PERC][0].V1;
+			} else if (selected_DROPPER_PG_line == 4) {
+				dropper_edit_blink=1;
+					set_dropper_l_lw_V_h=set_dropper_l_lw_V;
+					EpD[SET_DROPP_L_LW_PERC][1].V1=EpD[SET_DROPP_L_LW_PERC][0].V1;
 			}
 		} else if (!dropper_edit_mode) {
 			if (selected_DROPPER_PG_line == 0) {
@@ -276,9 +242,52 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
 				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 				Rec_Dat_to_EEp_f(SET_DROPPER_K2);
+			} else if (selected_DROPPER_PG_line == 3) {
+				set_dropper_l_hg_V=set_dropper_l_hg_V_h;
+				EpD[SET_DROPP_L_HG_PERC][0].V1=EpD[SET_DROPP_L_HG_PERC][1].V1;
+				Rec_Dat_to_EEp_f(SET_DROPP_L_HG_PERC);
+			} else if (selected_DROPPER_PG_line == 4) {
+				set_dropper_l_lw_V=set_dropper_l_lw_V_h;
+				EpD[SET_DROPP_L_LW_PERC][0].V1=EpD[SET_DROPP_L_LW_PERC][1].V1;
+				Rec_Dat_to_EEp_f(SET_DROPP_L_LW_PERC);
 			}
 		}
 	}
+    else if (currentPage == FANS_TEMP_pg) {
+    	fan_temp_edit_mode ^= 1;
+		if (fan_temp_edit_mode) {
+			if (selected_FAN_TEMP_PG_line == 0) {
+				EpD[SET_COOL_FAN_TEMP][1].V1 = EpD[SET_COOL_FAN_TEMP][0].V1;
+			} else if (selected_FAN_TEMP_PG_line == 1) {
+				EpD[SET_TRANSF_FAN_TEMP][1].V1 = EpD[SET_TRANSF_FAN_TEMP][0].V1;
+			} else if (selected_FAN_TEMP_PG_line == 2) {
+				EpD[SET_OVERTEMP_ALARM][1].V1 = EpD[SET_OVERTEMP_ALARM][0].V1;
+			} else if (selected_FAN_TEMP_PG_line == 3) {
+				EpD[SET_OVERTEMP_OPEN][1].V1 = EpD[SET_OVERTEMP_OPEN][0].V1;
+			} else if (selected_FAN_TEMP_PG_line == 4) {
+				EpD[SET_OVT_OPEN_DELAY][1].V1 = EpD[SET_OVT_OPEN_DELAY][0].V1;
+				ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
+			}
+			fan_temp_edit_blink=1;
+		} else if (!fan_temp_edit_mode) {
+			if (selected_FAN_TEMP_PG_line == 0) {
+				EpD[SET_COOL_FAN_TEMP][0].V1 = EpD[SET_COOL_FAN_TEMP][1].V1;
+				Rec_Dat_to_EEp_f(SET_COOL_FAN_TEMP);
+			} else if (selected_FAN_TEMP_PG_line == 1) {
+				EpD[SET_TRANSF_FAN_TEMP][0].V1 = EpD[SET_TRANSF_FAN_TEMP][1].V1;
+				Rec_Dat_to_EEp_f(SET_TRANSF_FAN_TEMP);
+			} else if (selected_FAN_TEMP_PG_line == 2) {
+				EpD[SET_OVERTEMP_ALARM][0].V1 = EpD[SET_OVERTEMP_ALARM][1].V1;
+				Rec_Dat_to_EEp_f(SET_OVERTEMP_ALARM);
+			} else if (selected_FAN_TEMP_PG_line == 3) {
+				EpD[SET_OVERTEMP_OPEN][0].V1 = EpD[SET_OVERTEMP_OPEN][1].V1;
+				Rec_Dat_to_EEp_f(SET_OVERTEMP_OPEN);
+			} else if (selected_FAN_TEMP_PG_line == 4) {
+				EpD[SET_OVT_OPEN_DELAY][0].V1 = EpD[SET_OVT_OPEN_DELAY][1].V1;
+				Rec_Dat_to_EEp_f(SET_OVT_OPEN_DELAY);
+			}
+		}
+    }
     else if (currentPage == RELAY_ORDER_pg) {
     	rel_disp_mode ^=1;
     	rel_edit_mode ^=1;
@@ -292,11 +301,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
         	compress_REL_OUT_order_to_parts(); //sıkıştırılmış orderı 20 bitlik parçalara ayır ve eeproma kaydet
         } else if (rel_edit_mode == 1) {
         }
-
-
     }
-
-
 
     else if (currentPage == MANAGEMENT_pg) {
 		if (selected_MANAGEMENT == 0) {
@@ -311,6 +316,9 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
 		if (selected_MANAGEMENT == 3) {
 			currentPage = CALIBRATION_pg;
 			EpD[SET_BATT_DISC_DET][0].V1=0;
+		}
+		if (selected_MANAGEMENT == 4) {
+			currentPage = TEST_pg;
 		}
     }
     else if (currentPage == CALIBRATION_pg) {
@@ -375,6 +383,26 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==dropp_reg_low_lim_sub) {
 					Rec_Dat_to_EEp_f(SET_ACT_OFFS_CAL);
 				}
 			}
+		}
+    }
+    else if (currentPage == TEST_pg) {
+    	test_edit_mode ^=1;
+        if (test_edit_mode) {
+			if (selected_TEST_PG_line==0) {
+				temp_test_thy_1=0;
+			}
+			if (selected_TEST_PG_line==1) {
+				temp_test_trf_2=0;
+			}
+        }
+        if (!test_edit_mode) {
+        	__NOP();
+        }
+		if (selected_TEST_PG_line==2) {
+			buzzer_override^=1;
+		}
+		if (selected_TEST_PG_line==3) {
+			leds_rels_override^=1;
 		}
     }
     else if (currentPage == FAULT_CODES_RESET_pg) {

@@ -1,25 +1,80 @@
 
 
 
+inline extern void TEST_pg_disp(void) {
+    uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
+	char L[32]; static uint8_t lnhg=9;
+    GLCD_PrintString(0, 0, "Test");
 
+	sprintf(L, " %s %3.1f C", TEST_Items[0], tmp_dat_C[0]+temp_test_thy_1); 	GLCD_PrintString(0, 1*lnhg, L);
+	sprintf(L, " %s %3.1f C", TEST_Items[1], tmp_dat_C[1]+temp_test_trf_2); 	GLCD_PrintString(0, 2*lnhg, L);
+	sprintf(L, " %s", TEST_Items[2]); 	GLCD_PrintString(0, 3*lnhg, L);
+	sprintf(L, " %s", TEST_Items[3]); 	GLCD_PrintString(0, 4*lnhg, L);
 
+	GLCD_PrintString(0, (selected_TEST_PG_line+1)*lnhg, ">");
+
+	static uint8_t testLnPic[6] = { 0, 1, 3};
+
+	if (test_edit_mode) {
+		if ((test_edit_blink^=1)==0 && selected_TEST_PG_line <= 1) {
+			x0=48+(testLnPic[test_dig]*6); y0=(selected_TEST_PG_line+2)*lnhg-1; w=4;
+		}
+	}
+	GLCD_Line(x0, y0, x0+w, y0);
+
+	sprintf(L, "%s", AKTFPAS_SEL_Items[buzzer_override]); 	GLCD_PrintString(0+6*7, 3*lnhg, L);
+	sprintf(L, "%s", AKTFPAS_SEL_Items[leds_rels_override]); 	GLCD_PrintString(0+6*7, 4*lnhg, L);
+}
+
+inline extern void FANS_TEMP_pg_disp(void) {
+    uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
+	char L[32]; static uint8_t lnhg=9;
+    GLCD_PrintString(0, 0, "Fanlar Sıcakl Koruma");
+
+	sprintf(L, " %s  %5.0f C", FANS_TEMP_Items[0], EpD[SET_COOL_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 1*lnhg, L);
+	sprintf(L, " %s    %5.0f C", FANS_TEMP_Items[1], EpD[SET_TRANSF_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 2*lnhg, L);
+	sprintf(L, " %s%5.0f C", FANS_TEMP_Items[2], EpD[SET_OVERTEMP_ALARM][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 3*lnhg, L);
+	sprintf(L, " %s %5.0f C", FANS_TEMP_Items[3], EpD[SET_OVERTEMP_OPEN][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 4*lnhg, L);
+	sprintf(L, " %s   %03lu s", FANS_TEMP_Items[4], (uint32_t)EpD[SET_OVT_OPEN_DELAY][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 5*lnhg, L);
+	GLCD_PrintString(0, (selected_FAN_TEMP_PG_line+1)*lnhg, ">");
+
+	if (fan_temp_edit_mode) {
+		if ((fan_temp_edit_blink^=1)==0) {
+			x0=102+(fan_temp_dig*6); y0=(selected_FAN_TEMP_PG_line+2)*lnhg-1; w=4;
+		}
+	}
+	GLCD_Line(x0, y0, x0+w, y0);
+}
 inline extern void DROPPER_pg_disp(void) {
+    uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
     GLCD_PrintString(0, 0, "Dropper");
 	char L[32]; static uint8_t lnhg=9;
 	sprintf(L, " Kontrol   %s", MANUOTO_SEL_Items[(uint32_t)EpD[SET_DROPPER_MANOTO][dropper_edit_mode].V1]); 	GLCD_PrintString(0, 1*lnhg, L);
 	sprintf(L, " Kademe 1 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K1][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 2*lnhg, L);
 	sprintf(L, " Kademe 2 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K2][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 3*lnhg, L);
-	sprintf(L, " Kd 1 V %5.1f %%%4.1f", EpD[SET_DROPPER_K1_V][dropper_edit_mode].V1, set_dropper_k1_v_perc); 	GLCD_PrintString(0, 4*lnhg, L);
-	sprintf(L, " Kd 2 V %5.1f %%%4.1f", EpD[SET_DROPPER_K2_V][dropper_edit_mode].V1, set_dropper_k2_v_perc); 	GLCD_PrintString(0, 5*lnhg, L);
 
-	GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, ">");	// sprintf(L, ">") bu yazılıyor burda
-	if (dropper_edit_mode) {
-		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // batt rect
+	if (!dropper_edit_mode) {
+		sprintf(L, " Üst Lm %5.1fV %4.1f%%", set_dropper_l_hg_V, EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 4*lnhg, L);
+		sprintf(L, " Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V, EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 5*lnhg, L);
+	} else {
+		sprintf(L, " Üst Lm %5.1fV %4.1f%%", set_dropper_l_hg_V_h, EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 4*lnhg, L);
+		sprintf(L, " Alt Lm %5.1fV %4.1f%%", set_dropper_l_lw_V_h, EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1); 	GLCD_PrintString(0, 5*lnhg, L);
 	}
 
+	GLCD_PrintString(0, (selected_DROPPER_PG_line+1)*lnhg, ">");
+	if ((selected_DROPPER_PG_line >= 0 && selected_DROPPER_PG_line <= 2) && dropper_edit_mode) {
+		GLCD_Rect_E(69,(selected_DROPPER_PG_line+1)*9-2,108,(selected_DROPPER_PG_line+2)*9-1); // edit rectangle
+	}
+	static uint8_t dropperLnPic[6] = { 0, 1, 3, 6, 7, 9};
+	if (dropper_edit_mode) {
+		if ((selected_DROPPER_PG_line==3 || selected_DROPPER_PG_line==4) && (dropper_edit_blink^=1)==0) {
+			x0=54+(dropperLnPic[drop_set_dig]*6); y0=(selected_DROPPER_PG_line+2)*lnhg-1; w=4;
+		}
+	}
+	GLCD_Line(x0, y0, x0+w, y0);
 // DIODE ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	static const char *dropperPic[2] = { "->-", "---" };   // 0 → “->-”, 1 → “---”
+	static const char *dropperPic[2] = { "->-", "---" };   // 0 ise “->-”, 1 ise “---”
 	GLCD_PrintString(110, 2 * lnhg, dropperPic[EpD[SET_DROPPER_K1][0].V1 == 0]); // EpD[SET_DROPPER_K1][0].V1==0 ise sonuç 1 oluyor ve dropperPic[1]="---" yazıyor
 	GLCD_PrintString(110, 3 * lnhg, dropperPic[EpD[SET_DROPPER_K2][0].V1 == 0]);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,19 +289,6 @@ inline extern void HOME_PAGE_pg_disp(void) {
 	}
 }
 
-inline extern void MAIN_MENU_pg_disp(void) {
-    GLCD_PrintString(0, 0, "Ana Menü");
-
-    for (uint8_t i = 0; i < NUM_MAIN_MENU_ITEMS; i++) {
-        char L[32];
-        if (i == selected_MAIN_MENU) {
-            sprintf(L, ">%s", MAIN_MENU_Items[i]);
-        } else {
-            sprintf(L, " %s", MAIN_MENU_Items[i]);
-        }
-        GLCD_PrintString(0, (i + 1) * 9, L);
-    }
-}
 inline extern void RELAY_ORDER_pg_disp(void) {
 
 	char L[32];
@@ -358,6 +400,19 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].type == 0 && chg_setting_edit_m
 }
 }
 
+inline extern void MAIN_MENU_pg_disp(void) {
+    GLCD_PrintString(0, 0, "Ana Menü");
+    char L[32];
+//    char M[32];
+    uint8_t main_menu_disp_index_=main_menu_disp_index;
+
+    for (uint8_t i = 0; i < 6; i++) {
+		sprintf(L, " %s ", MAIN_MENU_Items[main_menu_disp_index_]);
+		GLCD_PrintString(0, (i + 1) * 9, L);
+		GLCD_PrintString(0, (main_menu_arrow_loc+1) * 9, ">");
+		main_menu_disp_index_=(main_menu_disp_index_+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
+    }
+}
 inline extern void DEVICE_SETT_pg_disp(void) {
     GLCD_PrintString(0, 0, "Cihaz Ayarları");
         char L[32];
@@ -375,10 +430,10 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_DISC_DET][dev_setting_edit_mode].V1]);
 			GLCD_PrintString(86, (i + 1) * 9, M);
 		}
-		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_OVTM_OPEN_DUR) {
-			sprintf(M, "%03lusn", (uint32_t) EpD[SET_OVTM_OPEN_DUR][dev_setting_edit_mode].V1);
-			GLCD_PrintString(97, (i + 1) * 9, M);
-		}
+//		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_OVTM_OPEN_DUR) {
+//			sprintf(M, "%03lusn", (uint32_t) EpD[SET_OVTM_OPEN_DUR][dev_setting_edit_mode].V1);
+//			GLCD_PrintString(97, (i + 1) * 9, M);
+//		}
 		else if (DEVICE_SETT_Items[dev_set_disp_index_].type == 3) {
 			sprintf(M, "%05.1f", EpD[DEVICE_SETT_Items[dev_set_disp_index_].V1][dev_setting_edit_mode].V1);
 			GLCD_PrintString(98, (i + 1) * 9, M);

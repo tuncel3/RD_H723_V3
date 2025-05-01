@@ -184,10 +184,6 @@ void disb_uart_msg_group(uint32_t group)
     enabled_message_groups &= ~group;
 }
 
-
-
-
-
 void printBinary(uint8_t num) {
     PRF_GEN("0b");
     for (int i = 7; i >= 0; i--) { // Loop through each bit
@@ -197,8 +193,41 @@ void printBinary(uint8_t num) {
 }
 
 
+
+static inline void handleButton(uint8_t pinState,					// n014
+                                volatile uint8_t  *isHeld,
+                                volatile uint16_t *releaseCnt,
+                                volatile uint32_t *holdCnt,
+                                volatile uint32_t *nextRepeatEdge,
+                                volatile uint8_t  *fireFlag)
+{
+    if (!*isHeld && *releaseCnt >= RELEASE_DELAY_T) {            // idle
+        if (pinState) {
+            *isHeld = 1;
+            *holdCnt = 0;
+            *nextRepeatEdge = FIRST_REPEAT_T;
+            *fireFlag = 1;
+        }
+    }
+    else if (*isHeld) {                                          // held
+        if (pinState) {
+            if (++*holdCnt >= *nextRepeatEdge) {
+                *nextRepeatEdge += NEXT_REPEAT_T;
+                *fireFlag = 1;
+            }
+        } else {                                                 // released
+            *isHeld = 0;
+            *releaseCnt = 0;
+        }
+    }
+    else {                                                       // lock
+        (*releaseCnt)++;
+    }
+}
+
+
 void buttonScn(void) {
-	if (ButtScanDelay_cnt > 30) {
+	if (ButtScanDelay_cnt > 2) {
 		ButtScanDelay_cnt=0;
 
 // BLEFT
@@ -244,11 +273,11 @@ if (BLEFT == 0 && BRIGHT == 0 && BUP == 1 && BDOWN == 0 && BENTER == 0 && BESC =
 	if (bup_first_pressed == 0) {
 		bup_first_pressed = 1;
 		bup_fnc();
-		bup_down_cnt++;
+		bup_down_cnt+=1;
 	} else {
-		bup_down_cnt++;
-		if (bup_down_cnt >= 12) {
-			bup_down_cnt = 8;
+		bup_down_cnt+=1;
+		if (bup_down_cnt >= 50) {
+			bup_down_cnt = 0;
 			bup_fnc();
 		}
 	}
@@ -263,11 +292,11 @@ if (BLEFT==0 && BRIGHT==0 && BUP==0 && BDOWN==1 && BENTER==0 && BESC==0) {
 	if (bdown_first_pressed == 0) {
 		bdown_first_pressed = 1;
 		bdown_fnc();
-		bdown_down_cnt++;
+		bdown_down_cnt+=1;
 	} else {
-		bdown_down_cnt++;
-		if (bdown_down_cnt >= 12) {
-			bdown_down_cnt = 8;
+		bdown_down_cnt+=5;
+		if (bdown_down_cnt >= 20) {
+			bdown_down_cnt = 0;
 			bdown_fnc();
 		}
 	}
@@ -394,10 +423,8 @@ inline extern void endOfDMATransfer_f(void) {
 			LL_TIM_EnableCounter(TIM24);
 		}
 	}
-
-
-
 }
+
 inline extern void per_r_dn_avg_m_f(void) { // exti interrupt fnc
 	tm_r_rise=LL_TIM_GetCounter(TIM5);
 	per_r_dn_smp=tm_r_rise-tm_r_fall;
@@ -745,8 +772,14 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     	//if (scope==dropper_limits) {
     	//Vdc_drop_in_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu giriş gerilimi
     	//Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
-        dropp_reg_high_lim = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[dropp_reg_high_lim_add][0].V1 / 100));
-        dropp_reg_low_lim  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[dropp_reg_low_lim_sub][0].V1 / 100));
+        set_dropper_l_hg_V = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[SET_DROPP_L_HG_PERC][0].V1 / 100));
+        set_dropper_l_lw_V  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[SET_DROPP_L_LW_PERC][0].V1 / 100));
+        set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100;
+        set_dropper_l_lw_perc=EpD[SET_DROPP_L_LW_PERC][0].V1 / 100;
+        set_dropper_l_hg_V_h=set_dropper_l_hg_V;
+        EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1=EpD[SET_DROPP_L_HG_PERC][0].V1;
+        set_dropper_l_lw_V_h=set_dropper_l_lw_V;
+        EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1=EpD[SET_DROPP_L_LW_PERC][0].V1;
     }
     if (scope & SCOPE_CURRENT_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
         Irect_max = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
@@ -772,6 +805,9 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
     	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
     	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
+    }
+    if (scope == SCOPE_FAN_TEMP_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+		ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
     }
 }
 
@@ -840,6 +876,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_7_Data |= led7_bit; }  // activate LED 7 if required
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data |= REL8_bit; }  // activate REL 8 if required
+    		REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC);
         	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 1); } // activate general fault LED if associated
@@ -867,6 +904,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_7_Data &= ~led7_bit; }  // deactivate LED 7 if required
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data &= ~REL8_bit; }  // deactivate REL 8 if required
+			REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
         	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 0); }
@@ -975,10 +1013,6 @@ void print_REL_OUT_Table() {
 		PRF_GEN("Order %d %s", rel_ord_tb[i].rel_ord_nm, rel_ord_tb[i].rel_ord_desc);
 		delay_1ms(10);
     }
-}
-
-void calc_REL_24Bit_Data_f(void) {
-	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 }
 
 
@@ -1249,5 +1283,20 @@ float calculate_blm_op(void) {
     blm_corr_buf_index=0;
     return corr;
 }
+
+uint8_t are_all_equal_fc(uint8_t phase) {
+    uint32_t ref = zcr_record_vals[phase][0];
+    for (int i = 1; i < 10; i++) {
+        if (zcr_record_vals[phase][i] != ref) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
+
+
+
 
 

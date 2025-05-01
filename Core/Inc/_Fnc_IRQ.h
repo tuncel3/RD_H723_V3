@@ -274,7 +274,6 @@ void EXTI9_5_IRQHandler(void){
 		LL_TIM_EnableCounter(TIM3);
 		RU_THY=0;
 		RA_THY=0;
-//		DBG10
 		LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_7);
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_7);
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
@@ -297,7 +296,6 @@ void EXTI9_5_IRQHandler(void){
 		LL_TIM_EnableCounter(TIM3);
 		SU_THY=0;
 		SA_THY=0;
-//		DBG10
 		LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_8);
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_8);
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
@@ -319,7 +317,6 @@ void EXTI9_5_IRQHandler(void){
 		LL_TIM_EnableCounter(TIM3);
 		TU_THY=0;
 		TA_THY=0;
-//		DBG10
 		LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_9);
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_9);
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_9)) {
@@ -366,6 +363,27 @@ void TIM7_IRQHandler(void)
 		delay_1ms_cnt++;
 		ButtScanDelay_cnt++;
 
+
+	}
+}
+void TIM1_UP_IRQHandler(void)
+{
+	if (LL_TIM_IsActiveFlag_UPDATE(TIM1)){
+		LL_TIM_ClearFlag_UPDATE(TIM1);
+
+	    uint8_t up_raw = ( BUP && !BDOWN && !BLEFT && !BRIGHT && !BENTER && !BESC);
+	    uint8_t dn_raw = (!BUP &&  BDOWN && !BLEFT && !BRIGHT && !BENTER && !BESC);
+	    uint8_t lf_raw = (!BUP && !BDOWN &&  BLEFT && !BRIGHT && !BENTER && !BESC);
+	    uint8_t rt_raw = (!BUP && !BDOWN && !BLEFT &&  BRIGHT && !BENTER && !BESC);
+	    uint8_t en_raw = (!BUP && !BDOWN && !BLEFT && !BRIGHT &&  BENTER && !BESC);
+	    uint8_t es_raw = (!BUP && !BDOWN && !BLEFT && !BRIGHT && !BENTER &&  BESC);
+
+	    handleButton(up_raw, &upIsHeld, &upReleaseCnt, &upHoldCnt, &upNextRepeatEdge, &upFireFlag);
+	    handleButton(dn_raw, &dnIsHeld, &dnReleaseCnt, &dnHoldCnt, &dnNextRepeatEdge, &dnFireFlag);
+	    handleButton(lf_raw, &lfIsHeld, &lfReleaseCnt, &lfHoldCnt, &lfNextRepeatEdge, &lfFireFlag);
+	    handleButton(rt_raw, &rtIsHeld, &rtReleaseCnt, &rtHoldCnt, &rtNextRepeatEdge, &rtFireFlag);
+	    handleButton(en_raw, &enIsHeld, &enReleaseCnt, &enHoldCnt, &enNextRepeatEdge, &enFireFlag);
+	    handleButton(es_raw, &esIsHeld, &esReleaseCnt, &esHoldCnt, &esNextRepeatEdge, &esFireFlag);
 
 	}
 }
@@ -419,6 +437,8 @@ void SysTick_Handler(void) {	// n009
 			}
 		}
 	}
+
+
 }
 
 void DMA1_Stream0_IRQHandler(void)

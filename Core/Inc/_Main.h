@@ -9,12 +9,7 @@ set_(CS_M95P32);
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
 
-// burası otomatize edilebilir. default değeri 12345 olan bir kayıt olur. bu kayıt eğer açılışta 12345 değil ise default değerler eeprom a yazılır.
 // write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
-// daha sonra bu kayıt 12345 olarak eeprom a yazılacak. şimdi tabloda değişiklik olunca bu kayıt yeri kayacak ondan açıldığında okunamayacak.
-// açıldığında 12345 olmayacak. o yüzden defaultlar yüklenecek. 12345 okursa devam edecek. programlama sırasında yeni kayıt oluşturulursa tabloda kayma
-//olacak ve açılışta bu 12345 okunamayacak.
-
  // programlarken eep table da değişiklik yapılmış ise bu bölümde o değişiklik inceleniyor
 track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8); // tablo sonundaki değer sadece okunuyor. kayma varsa programdaki değerden farklı olacaktır.
 if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
@@ -25,6 +20,8 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
 	PRF_GEN("track_table_change %f", track_table_change);
 } else {
 	PRF_GEN("EEP Table size OK");
+	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
+//	print_Eep_data_f();
 }
 
 actions_after_charge_mode_change(5); // set charge mode values
@@ -153,6 +150,7 @@ if (temp_sens_count == 0) {
 generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
 generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
 
+cpu_cycle_counter_init();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // cihaz ilk açılışta doğrultucuyu direk devreye alacak mı.
@@ -169,23 +167,20 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// fanlar hangi sıcaklıkta devreye grirecek. ayar sayfası lazım.
-// dropper devreye girme voltaj yüzde.
 // zero cross var yok flagı lazım. yoksa ac voltaj ölçümü geçersiz durumda oluyor be lcd de gösterilmemeli. 0 olarak gösterilmeli.
-// 3 - butona basar basmaz tepki olmuyor. bunu hızlandırmak lazım. butonu bırakınca kısa süreliğine butonu disable etmek lazım.
-// 1 - data kayıt için adrese ihtiyaç yok
-// 6 - arıza tekrarladıkça geri dönme süresini uzatma algoritması
 // 4 - eeprom okuma başarısız ise arıza durumu gösterilmeli.
 // 3 - bir anda batarya akımı kesilirse battery inspection hemen başlat.
 // 5 - blm bat bağlı, rect akım sınırı 3.4 ve bat akımı 0 iken blm sistemi kararsız çalışıyor. bat inceleme yöntemi kullanıldı sonuç alınamadığında başka bir yöntem kullanılmalı. mesela hızlı yöntem olan korelasyon yerine yavaş yavaş düşürerek takip edip etmediğine bakma.
 // batarya devreye alındığında DC short hatası oluyor. DC short hatası olmadan batarya devreye alınmalı.
 // bunu yapmak için kısa devre akımındaki değişime bakılabilir. aşağı yönlü bir değişim varsa bunu batarya devreye alma olarak algıla.
 // eeprom kaydetemden önce oku. aynı değer varsa yazma.
+// 6 - arıza tekrarladıkça geri dönme süresini uzatma algoritması
 // çıkış voltajı yokken. yani ne doğrultucu ne de batarya dc vermiyorsa çıkışa, dc kaçak yüzdesi yüksek olabiliyor.
 // böyle bir durumda yanlış dck oluşmaması için çıkış voltajı nominal voltajın %20 altında ve çıkış, doğrultucu ve
 // batarya akımı yoksa dck yüzdesini önemseme
 // rectifier kapalı iken, akü şalter devre dışı iken kaçak voltaj arızası oluşması engellenmeli.
 //short circuit detection için. short circuit akımındaki değişime bakılabilir.
+// 1 - data kayıt için adrese ihtiyaç yok
 
 
 
