@@ -354,7 +354,7 @@ void bright_fnc(void) {
 }
 
 void bup_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 2) {
+    if (currentPage == HOME_PAGE_pg && EpD[HOME_PG_SEL][0].V1 == 2) {
     	asm("NOP");
     }
     else if (currentPage == MAIN_MENU_pg) {
@@ -770,11 +770,13 @@ if (!chg_setting_edit_mode) {
 }
 
 void bdown_fnc(void) {
-    if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 1) { // DOWN
-    	HOME_PAGE_pg_sel = 2;
+    if (currentPage == HOME_PAGE_pg && EpD[HOME_PG_SEL][0].V1 == 1) { // DOWN
+    	EpD[HOME_PG_SEL][0].V1 = 2;
+		Rec_Dat_to_EEp_f(HOME_PG_SEL);
     }
-    else if (currentPage == HOME_PAGE_pg && HOME_PAGE_pg_sel == 2) { // DOWN
-    	HOME_PAGE_pg_sel = 1;
+    else if (currentPage == HOME_PAGE_pg && EpD[HOME_PG_SEL][0].V1 == 2) { // DOWN
+    	EpD[HOME_PG_SEL][0].V1 = 1;
+		Rec_Dat_to_EEp_f(HOME_PG_SEL);
     }
     else if (currentPage == MAIN_MENU_pg) { // DOWN
 		main_menu_disp_index=(main_menu_disp_index+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;

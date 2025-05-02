@@ -324,7 +324,6 @@ typedef enum {
 } MenuPage;
 
 MenuPage currentPage = HOME_PAGE_pg;
-uint8_t HOME_PAGE_pg_sel = 2;
 
 uint8_t fault_codes_reset_req = 0;
 uint8_t device_reset_req = 0;
@@ -472,6 +471,7 @@ typedef enum {
 	VRECT_DC_HIGH_LIM_add,
 	VRECT_DC_LOW_LIM_add,
 	SET_WORK_FREQ,
+	HOME_PG_SEL,
 	TRACK_TABLE_CHANGE,
     NUM_SET_ENUM            // Keeps track of total settings
 } EEPROM_Setting_ID;
@@ -532,6 +532,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {VRECT_DC_HIGH_LIM_add, 10.0}, {VRECT_DC_HIGH_LIM_add, 10.0} },
     { {VRECT_DC_LOW_LIM_add, 10.0}, {VRECT_DC_LOW_LIM_add, 10.0} },
     { {SET_WORK_FREQ, 50.0}, {SET_WORK_FREQ, 50.0} },
+    { {HOME_PG_SEL, 1.0}, {HOME_PG_SEL, 1.0} },
     { {TRACK_TABLE_CHANGE, 1234567.0}, {TRACK_TABLE_CHANGE, 1234567.0} }
 };
 float track_table_change=0;
@@ -593,6 +594,7 @@ const char* Eep_data_Names[] = { // for printing in uart
 	"VRECT_DC_HIGH_LIM_add",
 	"VRECT_DC_LOW_LIM_add",
 	"SET_WORK_FREQ"
+	"HOME_PG_SEL"
 	"TRACK_TABLE_CHANGE"
 };
 

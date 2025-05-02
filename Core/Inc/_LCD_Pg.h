@@ -175,7 +175,7 @@ inline extern void CALIBRATION_pg_disp(void) {
 }
 
 inline extern void HOME_PAGE_pg_disp(void) {
-	if (HOME_PAGE_pg_sel==1) {
+	if (EpD[HOME_PG_SEL][0].V1==1) {
 		char L[32]; char R[32]; char M[32];
 //		sprintf(M, "NORMAL"); 					GLCD_PrintString(0, 0, M);
 		sprintf(L, "VL%6.1f V", VLOAD_pas.a16); 			GLCD_PrintString(0, 9+1+1, L);
@@ -252,7 +252,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 			sprintf(M, "A"); 		GLCD_PrintString(118, 0, M);
 		}
 	}
-	else if (HOME_PAGE_pg_sel==2) {
+	else if (EpD[HOME_PG_SEL][0].V1==2) {
 		char b[8][32];
 		sprintf(b[0], "%5.1f >-D->%5.1f V", VRECT_pas.a16, VLOAD_pas.a16);
 		sprintf(b[1], "%5.1f   |  %5.1f A", IRECT_pas.a16, ILOAD_pas.a16);
