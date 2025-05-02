@@ -166,12 +166,10 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// zero cross var yok flagı lazım. yoksa ac voltaj ölçümü geçersiz durumda oluyor be lcd de gösterilmemeli. 0 olarak gösterilmeli.
 // 4 - eeprom okuma başarısız ise arıza durumu gösterilmeli.
 // 3 - bir anda batarya akımı kesilirse battery inspection hemen başlat.
 // 5 - blm bat bağlı, rect akım sınırı 3.4 ve bat akımı 0 iken blm sistemi kararsız çalışıyor. bat inceleme yöntemi kullanıldı sonuç alınamadığında başka bir yöntem kullanılmalı. mesela hızlı yöntem olan korelasyon yerine yavaş yavaş düşürerek takip edip etmediğine bakma.
-// batarya devreye alındığında DC short hatası oluyor. DC short hatası olmadan batarya devreye alınmalı.
-// bunu yapmak için kısa devre akımındaki değişime bakılabilir. aşağı yönlü bir değişim varsa bunu batarya devreye alma olarak algıla.
+// batarya devreye alma kısa devre hatası veriyor mu. denemek lazım.
 // eeprom kaydetemden önce oku. aynı değer varsa yazma.
 // 6 - arıza tekrarladıkça geri dönme süresini uzatma algoritması
 // çıkış voltajı yokken. yani ne doğrultucu ne de batarya dc vermiyorsa çıkışa, dc kaçak yüzdesi yüksek olabiliyor.
