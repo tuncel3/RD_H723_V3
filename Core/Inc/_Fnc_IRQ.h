@@ -140,6 +140,7 @@ void DMA1_Stream1_IRQHandler(void) {
 				VACR_smp_count=0;
 				VACR_sum_of_sqr_sc=0;
 				VAC_R_rms_roll_per_avg.a64=VAC_R_rms_roll_per_avg.a64*63.0/64.0+VAC_R_rms_sc/64.0;
+				P
 			}
 
 			if(VAC_S_samp_end==1){
