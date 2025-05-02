@@ -98,18 +98,12 @@ extern uint8_t   Busy;
 extern stFonts_t *SelectedFont;
 
 
-
-//inline extern void cpu_cycle_counter_init(void);
-//inline extern void delay_cycles(uint32_t cyc);
-//extern void   GLCD_WriteCommand(uint8_t Command);
-//static inline void GLCD_WriteData(uint8_t Data);
 extern void  GLCD_RefreshGRAM(void);
 extern void GLCD_ClearScreen(uint8_t Fill);
 extern void  GLCD_SetFont(stFonts_t *Font);
 extern void GLCD_Init(void);
 extern void GLCD_Init_while(void);
 
-//extern void GLCD_DisplayChar(uint8_t Xpos, uint8_t Yrow, char Chr, uint8_t Mode);
 extern void GLCD_DisplayString(uint8_t Xpos, uint8_t Yrow, const char *pString);
 extern void GLCD_PrintChar(uint8_t Xpos, uint8_t Ypos, char Chr, uint8_t Mode);
 extern void GLCD_PrintString(uint8_t Xpos, uint8_t Ypos, const char *pString);

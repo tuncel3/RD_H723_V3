@@ -1121,6 +1121,3 @@ if (rtFireFlag) { rtFireFlag = 0;  bright_fnc(); }
 if (enFireFlag) { enFireFlag = 0;  benter_fnc(); }
 if (esFireFlag) { esFireFlag = 0;  besc_fnc();   }
 
-//DELAY_NS(1000000000);
-//PRF_GEN("var1 %lu", var1++);
-//var1++;
