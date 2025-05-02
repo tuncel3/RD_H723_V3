@@ -7,12 +7,11 @@ void printFaultCodes(void);
 void inline extern set_variables_from_EEP_fc(uint8_t scope);
 void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
-//void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
 static inline uint8_t is_state_active(State_Codes state_code);
 void inline extern actions_after_charge_voltage_change();
-//void inline extern blm_cancel_op_return_to_delay(void);
-
+inline extern void cpu_cycle_counter_init(void);
+inline extern void delay_cycles(uint32_t cyc);
 
 void compress_REL_OUT_order_to_parts(void);
 void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void);
@@ -1293,8 +1292,6 @@ uint8_t are_all_equal_fc(uint8_t phase) {
     }
     return 1;
 }
-
-
 
 
 

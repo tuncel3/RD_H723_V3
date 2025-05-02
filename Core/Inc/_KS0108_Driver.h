@@ -98,6 +98,9 @@ extern uint8_t   Busy;
 extern stFonts_t *SelectedFont;
 
 
+
+//inline extern void cpu_cycle_counter_init(void);
+//inline extern void delay_cycles(uint32_t cyc);
 extern  void __delay(void);
 //extern void   GLCD_WriteCommand(uint8_t Command);
 //static inline void GLCD_WriteData(uint8_t Data);
@@ -119,32 +122,20 @@ extern void GLCD_Rect_E(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
 extern void GLCD_RectNEW(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t Colour);
 extern void glcd_text57(uint8_t x, uint8_t y,  char* textptr, uint8_t size, int8_t color);
 
-/* Flash veya RAM */
-//static const uint32_t bsrrA[256] = { /* Python/Excel ile otomatik üret */ };
-//static const uint32_t bsrrC[256] = { /* … */ };
-//static const uint32_t bsrrD[256] = { /* … */ };
-
-//#define NS_TO_CYC(ns)  (uint32_t)(((ns) * 550 + 999) / 1000)  // yuvarla*/
-//#define NS_TO_CYC(ns)  (uint32_t)(((uint64_t)(ns) * SystemCoreClock + 999) / 1000)
 #define NS_TO_CYC(ns)  (uint32_t)(((uint64_t)(ns) * SystemCoreClock + 999999999) / 1000000000)
-
 #define DELAY_NS(ns)   delay_cycles(NS_TO_CYC(ns))
 
-static inline void cpu_cycle_counter_init(void)
+inline extern void cpu_cycle_counter_init(void)
 {
     CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;   // Trace modülü
     DWT->CTRL      |= DWT_CTRL_CYCCNTENA_Msk;         // Sayaç koşsun
 }
 
-static inline void delay_cycles(uint32_t cyc)
+inline extern void delay_cycles(uint32_t cyc)
 {
     uint32_t start = DWT->CYCCNT;
     while ((DWT->CYCCNT - start) < cyc) { __NOP(); }
 }
-
-
-
-
 
 
 
