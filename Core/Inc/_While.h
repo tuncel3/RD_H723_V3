@@ -1121,5 +1121,6 @@ if (rtFireFlag) { rtFireFlag = 0;  bright_fnc(); }
 if (enFireFlag) { enFireFlag = 0;  benter_fnc(); }
 if (esFireFlag) { esFireFlag = 0;  besc_fnc();   }
 
-
+delay_cycles(550000000);
+PRF_BLM("var 1 %lu", var1++);
 
