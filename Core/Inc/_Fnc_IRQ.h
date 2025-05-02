@@ -157,8 +157,6 @@ void DMA1_Stream1_IRQHandler(void) {
 				VAC_T_rms_roll_per_avg.a64=VAC_T_rms_roll_per_avg.a64*63.0/64.0+VAC_T_rms_sc/64.0;
 			}
     }
-
-
 }
 
 void TIM2_IRQHandler(void) {
@@ -288,6 +286,7 @@ void EXTI9_5_IRQHandler(void){
 		per_r_up_avg_m_f();
 	}
 	zero_cross_timeout_R=0;
+	reset_RMS_val_R=0;
     LL_EXTI_LINE_7_reenable_cnt=0;
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_8) != RESET)  {
@@ -310,6 +309,7 @@ void EXTI9_5_IRQHandler(void){
 		per_s_up_avg_m_f();
 	}
 	zero_cross_timeout_S=0;
+	reset_RMS_val_S=0;
     LL_EXTI_LINE_8_reenable_cnt=0;
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_9) != RESET)  {
@@ -332,6 +332,7 @@ void EXTI9_5_IRQHandler(void){
 		per_t_up_avg_m_f();
 	}
 	zero_cross_timeout_T=0;
+	reset_RMS_val_T=0;
 	LL_EXTI_LINE_9_reenable_cnt=0;
   }
 }
@@ -372,15 +373,18 @@ void TIM7_IRQHandler(void)
 
 		if (zero_cross_timeout_R > 500) {
 			zero_cross_timeout_R=501;
-			reset_RMS_val_R=1;
+			reset_RMS_val_R=1;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
+			VAC_R_rms_sc=0;
 		}
 		if (zero_cross_timeout_S > 500) {
 			zero_cross_timeout_S=501;
-			reset_RMS_val_S=1;
+			reset_RMS_val_S=1;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
+			VAC_S_rms_sc=0;
 		}
 		if (zero_cross_timeout_T > 500) {
 			zero_cross_timeout_T=501;
 			reset_RMS_val_T=1;
+			VAC_T_rms_sc=0;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
 		}
 	}
 }
