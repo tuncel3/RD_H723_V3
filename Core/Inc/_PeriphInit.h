@@ -87,3 +87,5 @@ LL_ADC_REG_StartConversion(ADC1);
 ///////////////////////////////////////////////////////////
 
 LL_USART_EnableIT_RXNE(USART10);
+
+cpu_cycle_counter_init();	// lcd kontrol sisteminde ihtiyaç duyuluyor
