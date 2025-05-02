@@ -471,6 +471,7 @@ typedef enum {
 	RECT_ACTV_AT_STARTUP,
 	VRECT_DC_HIGH_LIM_add,
 	VRECT_DC_LOW_LIM_add,
+	SET_WORK_FREQ,
 	TRACK_TABLE_CHANGE,
     NUM_SET_ENUM            // Keeps track of total settings
 } EEPROM_Setting_ID;
@@ -530,6 +531,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {RECT_ACTV_AT_STARTUP, 1.0}, {RECT_ACTV_AT_STARTUP, 1.0} },
     { {VRECT_DC_HIGH_LIM_add, 10.0}, {VRECT_DC_HIGH_LIM_add, 10.0} },
     { {VRECT_DC_LOW_LIM_add, 10.0}, {VRECT_DC_LOW_LIM_add, 10.0} },
+    { {SET_WORK_FREQ, 50.0}, {SET_WORK_FREQ, 50.0} },
     { {TRACK_TABLE_CHANGE, 1234567.0}, {TRACK_TABLE_CHANGE, 1234567.0} }
 };
 float track_table_change=0;
@@ -590,6 +592,7 @@ const char* Eep_data_Names[] = { // for printing in uart
 	"RECT_ACTV_AT_STARTUP",
 	"VRECT_DC_HIGH_LIM_add",
 	"VRECT_DC_LOW_LIM_add",
+	"SET_WORK_FREQ"
 	"TRACK_TABLE_CHANGE"
 };
 

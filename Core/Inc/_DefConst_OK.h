@@ -278,7 +278,6 @@ uint32_t per_t_dn_avg_ind = 0;
 int32_t per_t_dn_avg_m = 0;
 float	  per_t_dn_smp_dev = 0.0;
 float    frq_t_updn_avg_m = 0.0;
-float    frq_all_updn_avg_m = 0.0;
 int32_t per_t_up_smp = 0;
 uint32_t per_t_up_avg_sum = 0;
 uint32_t per_t_up_avg_vect[avging_smpcnt]={0};

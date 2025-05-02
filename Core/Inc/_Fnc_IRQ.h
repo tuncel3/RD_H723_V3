@@ -383,8 +383,7 @@ void TIM7_IRQHandler(void)
 		}
 		if (zero_cross_timeout_T > 500) {
 			zero_cross_timeout_T=501;
-//			no_zero_cross_T=1;
-			VAC_T_rms_roll_per_avg.a64=0;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
+//			no_zero_cross_T=1;		VAC_T_rms_roll_per_avg.a64=0;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
 		}
 	}
 }
