@@ -233,6 +233,11 @@ uint32_t zc_start_delay_300u_psc_16 = 4;
 uint32_t zc_start_delay_300u_arr_16 = 16499;
 uint32_t tim_arr_max = 0;
 
+uint32_t zero_cross_timeout_R = 0;
+uint32_t zero_cross_timeout_S = 0;
+uint32_t zero_cross_timeout_T = 0;
+
+
 int32_t per_r_dn_smp = 0;
 uint32_t per_r_dn_avg_sum = 0;
 uint32_t per_r_dn_avg_vect[avging_smpcnt]={0};

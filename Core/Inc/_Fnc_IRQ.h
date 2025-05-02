@@ -287,6 +287,7 @@ void EXTI9_5_IRQHandler(void){
 		en_t_dely_dn_r=1;
 		per_r_up_avg_m_f();
 	}
+	zero_cross_timeout_R=0;
     LL_EXTI_LINE_7_reenable_cnt=0;
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_8) != RESET)  {
@@ -308,6 +309,7 @@ void EXTI9_5_IRQHandler(void){
 		en_t_dely_dn_s=1;
 		per_s_up_avg_m_f();
 	}
+	zero_cross_timeout_S=0;
     LL_EXTI_LINE_8_reenable_cnt=0;
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_9) != RESET)  {
@@ -329,6 +331,7 @@ void EXTI9_5_IRQHandler(void){
 		en_t_dely_dn_t=1;
 		per_t_up_avg_m_f();
 	}
+	zero_cross_timeout_T=0;
 	LL_EXTI_LINE_9_reenable_cnt=0;
   }
 }
@@ -362,6 +365,16 @@ void TIM7_IRQHandler(void)
 		ms_tick_cnt++;
 		delay_1ms_cnt++;
 		ButtScanDelay_cnt++;
+
+		zero_cross_timeout_R++;
+		zero_cross_timeout_S++;
+		zero_cross_timeout_T++;
+
+//		if (zero_cross_timeout_R > ) {
+//
+//		} else {
+//
+//		}
 
 
 	}
