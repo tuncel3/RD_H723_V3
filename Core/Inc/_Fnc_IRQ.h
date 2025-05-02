@@ -370,13 +370,18 @@ void TIM7_IRQHandler(void)
 		zero_cross_timeout_S++;
 		zero_cross_timeout_T++;
 
-//		if (zero_cross_timeout_R > ) {
-//
-//		} else {
-//
-//		}
-
-
+		if (zero_cross_timeout_R > 500) {
+			zero_cross_timeout_R=501;
+			reset_RMS_val_R=1;
+		}
+		if (zero_cross_timeout_S > 500) {
+			zero_cross_timeout_S=501;
+			reset_RMS_val_S=1;
+		}
+		if (zero_cross_timeout_T > 500) {
+			zero_cross_timeout_T=501;
+			reset_RMS_val_T=1;
+		}
 	}
 }
 void TIM1_UP_IRQHandler(void)

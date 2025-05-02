@@ -236,6 +236,9 @@ uint32_t tim_arr_max = 0;
 uint32_t zero_cross_timeout_R = 0;
 uint32_t zero_cross_timeout_S = 0;
 uint32_t zero_cross_timeout_T = 0;
+uint32_t reset_RMS_val_R = 0;
+uint32_t reset_RMS_val_S = 0;
+uint32_t reset_RMS_val_T = 0;
 
 
 int32_t per_r_dn_smp = 0;
