@@ -88,4 +88,6 @@ LL_ADC_REG_StartConversion(ADC1);
 
 LL_USART_EnableIT_RXNE(USART10);
 
-cpu_cycle_counter_init();	// lcd kontrol sisteminde ihtiyaç duyuluyor
+//cpu_cycle_counter_init();	// lcd kontrol sisteminde ihtiyaç duyuluyor
+CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;   // Trace modülü
+DWT->CTRL      |= DWT_CTRL_CYCCNTENA_Msk;         // Sayaç koşsun

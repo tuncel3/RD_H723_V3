@@ -118,10 +118,9 @@ extern void glcd_text57(uint8_t x, uint8_t y,  char* textptr, uint8_t size, int8
 #define NS_TO_CYC(ns)  (uint32_t)(((uint64_t)(ns) * SystemCoreClock + 999999999) / 1000000000)
 #define DELAY_NS(ns)   delay_cycles(NS_TO_CYC(ns))
 
-static inline void cpu_cycle_counter_init(void) {
-    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;   // Trace modülü
-    DWT->CTRL      |= DWT_CTRL_CYCCNTENA_Msk;         // Sayaç koşsun
-}
+//static inline void cpu_cycle_counter_init(void) {
+//
+//}
 
 static inline void delay_cycles(uint32_t cyc) {
     uint32_t start = DWT->CYCCNT;

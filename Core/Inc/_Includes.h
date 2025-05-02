@@ -6,4 +6,4 @@
 #include <math.h>
 #include <time.h>
 #include <_Fonts.h>
-#include <_KS0108_Driver.h> // bu dosyadaki definiton, fonksiyon veya makrolara ulaşım sağlanıyor.
+//#include <_KS0108_Driver.h> // bu dosyadaki definiton, fonksiyon veya makrolara ulaşım sağlanıyor.

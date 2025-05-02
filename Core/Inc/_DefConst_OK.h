@@ -2,6 +2,7 @@
 #define res_ LL_GPIO_ResetOutputPin
 #define set_ LL_GPIO_SetOutputPin
 #define tog_ LL_GPIO_TogglePin
+#define isSet_ LL_GPIO_IsInputPinSet
 #define isInSet_ LL_GPIO_IsInputPinSet
 #define isOutSet_ LL_GPIO_IsOutputPinSet
 
