@@ -240,6 +240,9 @@ uint32_t reset_RMS_val_R = 0;
 uint32_t reset_RMS_val_S = 0;
 uint32_t reset_RMS_val_T = 0;
 
+uint32_t rms_zc_for_DC_cnt = 0;
+uint32_t rms_zc_for_DC = 0;
+
 
 int32_t per_r_dn_smp = 0;
 uint32_t per_r_dn_avg_sum = 0;

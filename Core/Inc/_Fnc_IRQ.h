@@ -63,8 +63,9 @@ void DMA1_Stream1_IRQHandler(void) {
 		VRECT_sum_sc=VRECT_sum_sc+VRECT_smp_sc;
 		ADC_smp_count++;
 
-		if (EXTI_Zero_crossing == 1) {
-			EXTI_Zero_crossing = 0;
+		if (rms_zc_for_DC == 1) {
+			rms_zc_for_DC_cnt = 0;
+			rms_zc_for_DC = 0;
 			IRECT_pas.a1=IRECT_sum_sc/ADC_smp_count;
 			IRECT_sum_sc=0;
 			IRECT_pas.a64=IRECT_pas.a64*63.0/64.0+IRECT_pas.a1/64.0;
@@ -370,6 +371,11 @@ void TIM7_IRQHandler(void)
 		zero_cross_timeout_R++;
 		zero_cross_timeout_S++;
 		zero_cross_timeout_T++;
+
+		rms_zc_for_DC_cnt++;
+		if (rms_zc_for_DC_cnt >= EpD[SET_WORK_FREQ][0].V1) {
+			rms_zc_for_DC=1;
+		}
 
 		if (zero_cross_timeout_R > 500) {
 			zero_cross_timeout_R=501;
