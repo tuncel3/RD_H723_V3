@@ -8,7 +8,6 @@
 
 #include <_KS0108_Driver.h>
 #include <string.h>
-cpu_cycle_counter_init();
 
 inline extern void delayA_1us_g(uint32_t us)
 {

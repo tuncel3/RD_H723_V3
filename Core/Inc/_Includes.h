@@ -5,5 +5,5 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
-#include <_Fonts.h>  // For strlen
-#include <_KS0108_Driver.h>  // For strlen
+#include <_Fonts.h>
+#include <_KS0108_Driver.h>
