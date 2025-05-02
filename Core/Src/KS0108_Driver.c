@@ -54,7 +54,7 @@ inline extern void delayA_1us_g(uint32_t us)
 //      }
 //
 //      EN1_g;
-////      delayA_1us_g(1); // Add delay if needed
+//  DELAY_NS(100);
 //      EN0_g;
 //  }
 
@@ -76,7 +76,7 @@ inline extern void delayA_1us_g(uint32_t us)
 //      }
 //
 //      EN1_g;
-//      delayA_1us_g(1);
+//  DELAY_NS(100);
 //      EN0_g;
 //  }
 
@@ -87,7 +87,7 @@ static inline void GLCD_WriteCommand(uint8_t d) {
 	GPIOA->BSRR = bsrrA[d];   // bit4-7  → PA		// PA15/12/11/10
 	GPIOC->BSRR = bsrrC[d];   // bit1-3  → PC		// PC12/11/10
 	GPIOD->BSRR = bsrrD[d];   // bit0    → PD		// PD0
-	DELAY_NS(20);
+//	DELAY_NS(20);
 	EN1_g;
 	DELAY_NS(100);
 	EN0_g;
