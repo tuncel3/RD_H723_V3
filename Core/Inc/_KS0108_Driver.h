@@ -124,7 +124,8 @@ extern void glcd_text57(uint8_t x, uint8_t y,  char* textptr, uint8_t size, int8
 //static const uint32_t bsrrC[256] = { /* … */ };
 //static const uint32_t bsrrD[256] = { /* … */ };
 
-#define NS_TO_CYC(ns)  (uint32_t)(((ns) * 550 + 999) / 1000)  // yuvarla
+#define NS_TO_CYC(ns)  (uint32_t)(((ns) * 550 + 999) / 1000)  // yuvarla*/
+#define NS_TO_CYC(ns)  (uint32_t)(((uint64_t)(ns) * SystemCoreClock + 999) / 1000)
 #define DELAY_NS(ns)   delay_cycles(NS_TO_CYC(ns))
 
 static inline void cpu_cycle_counter_init(void)
