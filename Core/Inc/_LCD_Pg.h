@@ -176,6 +176,7 @@ inline extern void CALIBRATION_pg_disp(void) {
 
 inline extern void HOME_PAGE_pg_disp(void) {
 	if (EpD[HOME_PG_SEL][0].V1==1) {
+		static uint8_t rolling_disp_VAC_cnt=0;
 		char L[32]; char R[32]; char M[32];
 //		sprintf(M, "NORMAL"); 					GLCD_PrintString(0, 0, M);
 		sprintf(L, "VL%6.1f V", VLOAD_pas.a16); 			GLCD_PrintString(0, 9+1+1, L);
@@ -190,14 +191,18 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 
-		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) & 3;
+		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) & 2;
 
-		if (rolling_disp_VAC_cnt) {
-
+		if (rolling_disp_VAC_cnt==0) {
+			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+		} else if (rolling_disp_VAC_cnt==1) {
+			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+		} else if (rolling_disp_VAC_cnt==2) {
+			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
 		}
-		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
-		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
-		sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 27, R);
+//		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+//		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
+//		sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 27, R);
 		sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);						GLCD_PrintString(76, 27+3+8, R);
 		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);						GLCD_PrintString(76, 36+3+8, R);
 		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);						GLCD_PrintString(76, 45+3+8, R);
