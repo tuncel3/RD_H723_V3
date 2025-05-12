@@ -1062,7 +1062,7 @@ if (ms_tick_cnt-UART_Debg_t_h >= 100) {
 
 //	uart_debug_cnt();
 
-	PRF_GEN("%f %f %f %f %f", VAC_R_rms_roll_per_avg.a64, VAC_S_rms_roll_per_avg.a64, VAC_T_rms_roll_per_avg.a64, VRECT_pas.a64, IRECT_pas.a64);
+	PRF_GEN("%3.2f %3.2f %3.2f %3.2f %3.2f", VAC_R_rms_roll_per_avg.a64, VAC_S_rms_roll_per_avg.a64, VAC_T_rms_roll_per_avg.a64, VRECT_pas.a64, IRECT_pas.a64);
 
 //	if (var1==3) {
 //		var1=0;
