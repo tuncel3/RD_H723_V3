@@ -1057,12 +1057,12 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	GLCD_RefreshGRAM();
 }
 
-if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
+if (ms_tick_cnt-UART_Debg_t_h >= 100) {
 	UART_Debg_t_h=ms_tick_cnt;
 
 //	uart_debug_cnt();
 
-	PRF_GEN("VAC_R_rms_sc %f", VAC_R_rms_sc);
+	PRF_GEN("VAC_R %f", VAC_R_rms_sc, VAC_S_rms_sc, VAC_T_rms_sc, VRECT_pas.a1, IRECT_pas.a1);
 
 //	if (var1==3) {
 //		var1=0;
