@@ -1488,10 +1488,10 @@ uint8_t zcr_exist_T=0;
 
 
 
-#define DISP_VAC_PHASE_MS  1000  // 1 saniye
-volatile uint16_t disp_VAC_phase_cnt = 0;
-volatile uint8_t  disp_VAC_phase = 0;  // 0:VR, 1:VS, 2:VT
 
+uint8_t rolling_disp_VAC_cnt=0;
+uint8_t disp_VAC_phase_wait =9;
+uint8_t disp_VAC_phase_wait_slice =3;
 
 
 

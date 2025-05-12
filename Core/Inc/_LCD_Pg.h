@@ -190,13 +190,10 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 
-		static uint8_t rolling_disp_VAC_cnt=0;
-		static uint8_t slice =0;
-
-		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) % 6;
-		if (rolling_disp_VAC_cnt < slice) {
+		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) % disp_VAC_phase_wait;
+		if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
 			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);
-		} else if (rolling_disp_VAC_cnt < 2 * slice) {
+		} else if (rolling_disp_VAC_cnt < 2 * disp_VAC_phase_wait_slice) {
 			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);
 		} else {
 			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);
