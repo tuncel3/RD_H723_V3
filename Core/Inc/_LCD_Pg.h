@@ -190,13 +190,17 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 
+		static uint8_t rolling_disp_VAC_cnt=0;
+		static uint8_t disp_VAC_phase_wait =12;
+		static uint8_t disp_VAC_phase_wait_slice =4;
 		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) % disp_VAC_phase_wait;
+
 		if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
-			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);
-		} else if (rolling_disp_VAC_cnt < 2 * disp_VAC_phase_wait_slice) {
-			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);
-		} else {
-			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);
+			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+		} else if (rolling_disp_VAC_cnt >= 2 && rolling_disp_VAC_cnt < (2 * disp_VAC_phase_wait_slice)) {
+			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+		} else if (rolling_disp_VAC_cnt >= 4 && rolling_disp_VAC_cnt < (4 * disp_VAC_phase_wait_slice)) {
+			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
 		}
 //		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
 //		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);

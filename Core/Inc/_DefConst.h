@@ -1489,9 +1489,9 @@ uint8_t zcr_exist_T=0;
 
 
 
-uint8_t rolling_disp_VAC_cnt=0;
-uint8_t disp_VAC_phase_wait =9;
-uint8_t disp_VAC_phase_wait_slice =3;
+//static uint8_t rolling_disp_VAC_cnt=0;
+//static uint8_t disp_VAC_phase_wait =9;
+//static uint8_t disp_VAC_phase_wait_slice =3;
 
 
 
