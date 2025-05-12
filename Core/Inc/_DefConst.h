@@ -1488,6 +1488,9 @@ uint8_t zcr_exist_T=0;
 
 
 
+#define DISP_MS_VR 1000  // 1 saniye
+#define DISP_MS_VS 700   // 0.7 saniye
+#define DISP_MS_VT 1300  // 1.3 saniye
 
 
 
