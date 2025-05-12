@@ -157,22 +157,9 @@ void DMA1_Stream1_IRQHandler(void) {
 				VACT_sum_of_sqr_sc=0;
 				VAC_T_rms_roll_per_avg.a64=VAC_T_rms_roll_per_avg.a64*63.0/64.0+VAC_T_rms_sc/64.0;
 			}
-
-
-
-
-            const float k_cal       = 4.6f;                        // kalibrasyon katsayısı
-            const float SQRT_3      = 1.7320508f;                  // sqrt(3)
-            float VLL               = (VACR_smp_sc + VACS_smp_sc + VACT_smp_sc) / 3.0f;
-            float P_out             = VRECT_smp_sc * IRECT_smp_sc; // DC çıkış gücü
-            float I_phase_est       = k_cal * (P_out / (SQRT_3 * VLL));
-
-            IAC_R_rms_roll_per_avg.a64 = I_phase_est;
-            IAC_S_rms_roll_per_avg.a64 = I_phase_est;
-            IAC_T_rms_roll_per_avg.a64 = I_phase_est;
-
-
-
+			IAC_R_rms_roll_per_avg.a64=IRECT_pas.a64*0.37;
+			IAC_S_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
+			IAC_T_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
     }
 }
 
