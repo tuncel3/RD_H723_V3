@@ -157,9 +157,7 @@ void DMA1_Stream1_IRQHandler(void) {
 				VACT_sum_of_sqr_sc=0;
 				VAC_T_rms_roll_per_avg.a64=VAC_T_rms_roll_per_avg.a64*63.0/64.0+VAC_T_rms_sc/64.0;
 			}
-			IAC_R_rms_roll_per_avg.a64=IRECT_pas.a64*0.37;
-			IAC_S_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
-			IAC_T_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
+
     }
 }
 
