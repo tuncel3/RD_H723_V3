@@ -367,6 +367,7 @@ void TIM7_IRQHandler(void)
 		ms_tick_cnt++;
 		delay_1ms_cnt++;
 		ButtScanDelay_cnt++;
+		rolling_disp_VAC_cnt++;
 
 		zero_cross_timeout_R++;
 		zero_cross_timeout_S++;
@@ -379,17 +380,15 @@ void TIM7_IRQHandler(void)
 
 		if (zero_cross_timeout_R > 500) {
 			zero_cross_timeout_R=501;
-//			no_zero_cross_R=1;
 			VAC_R_rms_roll_per_avg.a64=0;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
 		}
 		if (zero_cross_timeout_S > 500) {
 			zero_cross_timeout_S=501;
-//			no_zero_cross_S=1;
 			VAC_S_rms_roll_per_avg.a64=0;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
 		}
 		if (zero_cross_timeout_T > 500) {
 			zero_cross_timeout_T=501;
-//			no_zero_cross_T=1;		VAC_T_rms_roll_per_avg.a64=0;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
+			VAC_T_rms_roll_per_avg.a64=0;	// zero cross olmadığı için takılı kalmış olan RMS değeri sıfırlanmalı.
 		}
 	}
 }
