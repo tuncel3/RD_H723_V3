@@ -197,17 +197,27 @@ inline extern void HOME_PAGE_pg_disp(void) {
 
 		if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
 			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+			sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
 		} else if (rolling_disp_VAC_cnt >= 2 && rolling_disp_VAC_cnt < (2 * disp_VAC_phase_wait_slice)) {
 			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+			sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
 		} else if (rolling_disp_VAC_cnt >= 4 && rolling_disp_VAC_cnt < (4 * disp_VAC_phase_wait_slice)) {
 			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
+			sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
 		}
+
+
+		sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(71, 34, L);
+		sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(71, 44, L);
+		sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(71, 54, L);
+
+
 //		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
 //		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
 //		sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 27, R);
-		sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);						GLCD_PrintString(76, 27+3+8, R);
-		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);						GLCD_PrintString(76, 36+3+8, R);
-		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);						GLCD_PrintString(76, 45+3+8, R);
+//		sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 27+3+8, R);
+//		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 36+3+8, R);
+//		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 45+3+8, R);
 
 
 
