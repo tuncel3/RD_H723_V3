@@ -1057,7 +1057,7 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	GLCD_RefreshGRAM();
 }
 
-if (ms_tick_cnt-UART_Debg_t_h >= 100) {
+if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 	UART_Debg_t_h=ms_tick_cnt;
 
 //	uart_debug_cnt();
@@ -1065,7 +1065,7 @@ if (ms_tick_cnt-UART_Debg_t_h >= 100) {
 //	PRF_GEN("%3.2f %3.2f %3.2f %3.2f %3.2f", VAC_R_rms_roll_per_avg.a64, VAC_S_rms_roll_per_avg.a64, VAC_T_rms_roll_per_avg.a64, VRECT_pas.a64, IRECT_pas.a64);
 
 
-
+	print_active_states();
 
 //	if (var1==3) {
 //		var1=0;
