@@ -182,6 +182,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		sprintf(L, "IT%6.1f A", IRECT_pas.a16); 			GLCD_PrintString(0, 18+1+1, L);
 		sprintf(L, "VB%6.1f V", VBAT_pas.a16); 				GLCD_PrintString(0, 27+3+1, L);
 		sprintf(L, "IB%6.1f A", IBAT_pas.a16); 			GLCD_PrintString(0, 36+3+1, L);
+
 		if (VDCK_side==1) {
 		sprintf(L, "K+%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
 		}
