@@ -206,10 +206,15 @@ inline extern void HOME_PAGE_pg_disp(void) {
 			sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
 		}
 
+if (temp_sens_count==2) {
+	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(71, 34, L);
+	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(71, 44, L);
 
-		sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(71, 34, L);
-		sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(71, 44, L);
-		sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(71, 54, L);
+} else if (temp_sens_count==3) {
+	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(71, 34, L);
+	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(71, 44, L);
+	sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(71, 54, L);
+}
 
 
 //		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
