@@ -191,7 +191,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 
-		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) & 2;
+		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) % 3;
 
 		if (rolling_disp_VAC_cnt==0) {
 			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
