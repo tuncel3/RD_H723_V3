@@ -367,7 +367,6 @@ void TIM7_IRQHandler(void)
 		ms_tick_cnt++;
 		delay_1ms_cnt++;
 		ButtScanDelay_cnt++;
-		rolling_disp_VAC_cnt++;
 
 		zero_cross_timeout_R++;
 		zero_cross_timeout_S++;

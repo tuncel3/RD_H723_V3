@@ -191,12 +191,13 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 
+		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) % 6;
 
-		if (rolling_disp_VAC_cnt==0) {
+		if (rolling_disp_VAC_cnt < 2) {
 			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
-		} else if (rolling_disp_VAC_cnt==1) {
+		} else if (rolling_disp_VAC_cnt >= 2 && rolling_disp_VAC_cnt < 4) {
 			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
-		} else if (rolling_disp_VAC_cnt==2) {
+		} else if (rolling_disp_VAC_cnt >= 4 && rolling_disp_VAC_cnt < 6) {
 			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
 		}
 //		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
