@@ -189,12 +189,20 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		sprintf(L, "K-%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
 		}
 
+
+		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) & 3;
+
+		if (rolling_disp_VAC_cnt) {
+
+		}
 		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
 		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
 		sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 27, R);
 		sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);						GLCD_PrintString(76, 27+3+8, R);
 		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);						GLCD_PrintString(76, 36+3+8, R);
 		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);						GLCD_PrintString(76, 45+3+8, R);
+
+
 
 		uint32_t x0 = 65; uint32_t y0 = 9;
 		uint32_t x1 = 65; uint32_t y1 = 63;
