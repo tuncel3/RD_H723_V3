@@ -1296,12 +1296,9 @@ uint8_t are_all_equal_fc(uint8_t phase) {
 
 void print_active_states(void)
 {
-	char buf[32];
-
 	for (int i = 0; i < NUM_STATE_NAMES; i++) {
 		if (state_list[i].action & (1 << ACTIVE_enum)) {
-			sprintf(buf, "%s", state_list[i].name);
-			GLCD_PrintString(0, i, buf); // veya terminalde: printf("%s\n", buf);
+			PRF_GEN("%s", state_list[i].name);
 		}
 	}
 }
