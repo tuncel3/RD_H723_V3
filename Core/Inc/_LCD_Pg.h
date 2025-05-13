@@ -248,40 +248,52 @@ if (temp_sens_count==2) {
 		x1 = 65; y1 = 63;
 		GLCD_Line(x0, y0, x1, y1);
 
-		if (device_start_up_delay_completed==0) {
-			sprintf(M, "BAŞLANGIÇ"); GLCD_PrintString(0, 0, M);
-		} else {
+// otomtik rolling display sistemi eklenmeden önceki durum
+//		if (device_start_up_delay_completed==0) {
+//			sprintf(M, "BAŞLANGIÇ"); GLCD_PrintString(0, 0, M);
+//		} else {
+//
+//			if (is_state_active(BATT_LINE_BROKEN_FC)) {
+//				if (SW_BATT_OFF) {
+//					sprintf(M, "AKÜ ANAHTAR OFF"); 		GLCD_PrintString(0, 0, M);
+//				} else if (!SW_BATT_OFF) {
+//					sprintf(M, "AKÜ HATTI KOPUK"); 		GLCD_PrintString(0, 0, M);
+//				}
+//			}
+//			else if (thy_drv_en==1) {
+//				if (sfsta_op_phase == S_SFSTA_REQ && !rectifier_current_limit_accepted && !battery_current_limit_accepted) {
+//					sprintf(M, "SOFT START"); 		GLCD_PrintString(0, 0, M);
+//				} else if (sfsta_op_phase == S_SFSTA_REQ_OK || rectifier_current_limit_accepted || battery_current_limit_accepted) {
+//					sprintf(M, "DOĞRLT AKTİF"); 			GLCD_PrintString(0, 0, M);
+//				}
+//			}
+//			else if (thy_drv_en==0) {
+//				if (thy_drv_en_req == 1) {
+//					if (sfsta_op_phase == S_SFSTA_NONE) {
+//						sprintf(M, "AKTİF EDİLECEK"); // sf_sta_req_cnt++ sayacının sayıldığı anda bu yazıyı yazdır.
+//						GLCD_PrintString(0, 0, M);
+//					}
+//					else if (sfsta_op_phase == S_SFSTA_REQ_OK) {
+//						sprintf(M, "SOFT START");
+//						GLCD_PrintString(0, 0, M);
+//					}
+//				} else if (thy_drv_en_req == 0) {
+//					sprintf(M, "DOĞRLT KAPALI");
+//					GLCD_PrintString(0, 0, M);
+//				}
+//			}
+//		}
+///////////////////////////////////////////////////////////////
 
-			if (is_state_active(BATT_LINE_BROKEN_FC)) {
-				if (SW_BATT_OFF) {
-					sprintf(M, "AKÜ ANAHTAR OFF"); 		GLCD_PrintString(0, 0, M);
-				} else if (!SW_BATT_OFF) {
-					sprintf(M, "AKÜ HATTI KOPUK"); 		GLCD_PrintString(0, 0, M);
-				}
-			}
-			else if (thy_drv_en==1) {
-				if (sfsta_op_phase == S_SFSTA_REQ && !rectifier_current_limit_accepted && !battery_current_limit_accepted) {
-					sprintf(M, "SOFT START"); 		GLCD_PrintString(0, 0, M);
-				} else if (sfsta_op_phase == S_SFSTA_REQ_OK || rectifier_current_limit_accepted || battery_current_limit_accepted) {
-					sprintf(M, "DOĞRLT AKTİF"); 			GLCD_PrintString(0, 0, M);
-				}
-			}
-			else if (thy_drv_en==0) {
-				if (thy_drv_en_req == 1) {
-					if (sfsta_op_phase == S_SFSTA_NONE) {
-						sprintf(M, "AKTİF EDİLECEK"); // sf_sta_req_cnt++ sayacının sayıldığı anda bu yazıyı yazdır.
-						GLCD_PrintString(0, 0, M);
-					}
-					else if (sfsta_op_phase == S_SFSTA_REQ_OK) {
-						sprintf(M, "SOFT START");
-						GLCD_PrintString(0, 0, M);
-					}
-				} else if (thy_drv_en_req == 0) {
-					sprintf(M, "DOĞRLT KAPALI");
-					GLCD_PrintString(0, 0, M);
-				}
-			}
+	for (int i = 0; i < NUM_STATE_NAMES; i++) {
+		if (state_list[i].action & (1 << LCD_roll_enum) && state_list[i].action & (1 << ACTIVE_enum)) {
+			PRF_GEN("%s", state_list[i].name);
+			sprintf(M, "%s", state_list[i].name);
 		}
+	}
+
+
+
 		if (EpD[SET_UNSEEN_FLT][0].V1==1) {
 			sprintf(M, "A"); 		GLCD_PrintString(118, 0, M);
 		}
