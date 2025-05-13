@@ -288,15 +288,19 @@ if (temp_sens_count==2) {
 ///////////////////////////////////////////////////////////////
 
 		static uint8_t son_kal=0;
+		static uint8_t ilerle_cnt=0;
 
 	for (int i = son_kal; i < NUM_STATE_NAMES; i++) {
 		if (state_list[i].action & (1 << LCD_roll_enum) && state_list[i].action & (1 << ACTIVE_enum)) {
 			sprintf(M, "%s", state_list[i].name); GLCD_PrintString(0, 0, M);
+			ilerle_cnt++;
 			break;
 		}
 	}
 
-
+if (ilerle_cnt > NUM_STATE_NAMES) {
+	ilerle_cnt=0;
+}
 
 
 
