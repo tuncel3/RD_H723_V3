@@ -197,14 +197,14 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) % disp_VAC_phase_wait;
 
 		if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
-			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 11, R);
-			sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 20, R);
+			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(74, 11, R);
+			sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(74, 20, R);
 		} else if (rolling_disp_VAC_cnt >= 2 && rolling_disp_VAC_cnt < (2 * disp_VAC_phase_wait_slice)) {
-			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
-			sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
+			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(74, 11, R);
+			sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(74, 20, R);
 		} else if (rolling_disp_VAC_cnt >= 4 && rolling_disp_VAC_cnt < (4 * disp_VAC_phase_wait_slice)) {
-			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
-			sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
+			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(74, 11, R);
+			sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(74, 20, R);
 		}
 
 if (temp_sens_count==2) {
