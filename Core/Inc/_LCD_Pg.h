@@ -208,13 +208,13 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 if (temp_sens_count==2) {
-	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 34, L);
-	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 44, L);
+	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31, L);
+	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40, L);
 
 } else if (temp_sens_count==3) {
-	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 34, L);
-	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 44, L);
-	sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(74, 54, L);
+	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31, L);
+	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40, L);
+	sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(74, 49, L);
 }
 
 
@@ -287,13 +287,17 @@ if (temp_sens_count==2) {
 //		}
 ///////////////////////////////////////////////////////////////
 
-	for (int i = 0; i < NUM_STATE_NAMES; i++) {
+		static uint8_t son_kal=0;
+
+	for (int i = son_kal; i < NUM_STATE_NAMES; i++) {
 		if (state_list[i].action & (1 << LCD_roll_enum) && state_list[i].action & (1 << ACTIVE_enum)) {
-//			PRF_GEN("%s", state_list[i].name);
 			sprintf(M, "%s", state_list[i].name); GLCD_PrintString(0, 0, M);
 			break;
 		}
 	}
+
+
+
 
 
 
