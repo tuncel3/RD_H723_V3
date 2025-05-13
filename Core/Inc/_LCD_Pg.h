@@ -287,8 +287,9 @@ if (temp_sens_count==2) {
 
 	for (int i = 0; i < NUM_STATE_NAMES; i++) {
 		if (state_list[i].action & (1 << LCD_roll_enum) && state_list[i].action & (1 << ACTIVE_enum)) {
-			PRF_GEN("%s", state_list[i].name);
-			sprintf(M, "%s", state_list[i].name);
+//			PRF_GEN("%s", state_list[i].name);
+			sprintf(M, "%s", state_list[i].name); GLCD_PrintString(0, 0, M);
+			break;
 		}
 	}
 
