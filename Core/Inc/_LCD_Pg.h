@@ -301,9 +301,9 @@ tabl_dolas_delay_cnt=(tabl_dolas_delay_cnt+1) % tabl_dolas_delay;
 
 
 
-		if (EpD[SET_UNSEEN_FLT][0].V1==1) {
-			sprintf(M, "A"); 		GLCD_PrintString(118, 0, M);
-		}
+//		if (EpD[SET_UNSEEN_FLT][0].V1==1) {
+//			sprintf(M, "A"); 		GLCD_PrintString(118, 0, M);
+//		}
 	}
 	else if (EpD[HOME_PG_SEL][0].V1==2) {
 		char b[8][32];
