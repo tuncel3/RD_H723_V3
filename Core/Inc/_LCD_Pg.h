@@ -298,7 +298,7 @@ if (temp_sens_count==2) {
 		}
 	}
 
-if (ilerle_cnt > NUM_STATE_NAMES) {
+if (ilerle_cnt == NUM_STATE_NAMES) {
 	ilerle_cnt=0;
 }
 
