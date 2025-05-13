@@ -209,7 +209,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 
 if (temp_sens_count==2) {
 	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31, L);
-	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40, L);
+	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 49, L);
 
 } else if (temp_sens_count==3) {
 	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31, L);
