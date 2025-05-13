@@ -268,24 +268,26 @@ if (temp_sens_count==2) {
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
 
-static uint8_t tabl_dolas=0, son_kal=0;
-
-for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
-	if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-		sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
-		son_kal=tabl_dolas+1;
-		break; // ilk gösterilecek eleman bulundu gösterildi.
-	}
-}
-if (tabl_dolas == NUM_STATE_NAMES) {	// tablo sonuna gelirsek başa dön tara bulursan göster.
-	tabl_dolas=0;
-	son_kal=0;
-
+static uint8_t tabl_dolas=0, son_kal=0, tabl_dolas_delay=4, tabl_dolas_delay_cnt=0;
+tabl_dolas_delay_cnt=(tabl_dolas_delay_cnt+1) % tabl_dolas_delay;
+if (tabl_dolas_delay_cnt==0) {
 	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 			sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
 			son_kal=tabl_dolas+1;
-			break;
+			break; // ilk gösterilecek eleman bulundu gösterildi.
+		}
+	}
+	if (tabl_dolas == NUM_STATE_NAMES) {	// tablo sonuna gelirsek başa dön tara bulursan göster.
+		tabl_dolas=0;
+		son_kal=0;
+
+		for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
+			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
+				sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
+				son_kal=tabl_dolas+1;
+				break;
+			}
 		}
 	}
 }
