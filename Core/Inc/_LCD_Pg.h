@@ -265,6 +265,7 @@ if (temp_sens_count==2) {
 //		}
 ///////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////
 
 	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
@@ -286,6 +287,9 @@ if (tabl_dolas == NUM_STATE_NAMES) {
 		}
 	}
 }
+
+
+
 
 		if (EpD[SET_UNSEEN_FLT][0].V1==1) {
 			sprintf(M, "A"); 		GLCD_PrintString(118, 0, M);
