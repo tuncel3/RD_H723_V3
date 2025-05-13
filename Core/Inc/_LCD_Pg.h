@@ -234,6 +234,8 @@ if (temp_sens_count==2) {
 		x0 = 0; y0 = 9;
 		x1 = 65; y1 = 9;
 		GLCD_Line(x0, y0, x1, y1);
+		x0 = 68; y0 = 9;
+		x1 = 127; y1 = 9;
 		GLCD_Line(x0, y0, x1, y1);
 		x0 = 0; y0 = 27+2;
 		x1 = 65; y1 = 27+2;
@@ -289,7 +291,6 @@ if (temp_sens_count==2) {
 		if (state_list[i].action & (1 << LCD_roll_enum) && state_list[i].action & (1 << ACTIVE_enum)) {
 //			PRF_GEN("%s", state_list[i].name);
 			sprintf(M, "%s", state_list[i].name); GLCD_PrintString(0, 0, M);
-			d
 			break;
 		}
 	}
