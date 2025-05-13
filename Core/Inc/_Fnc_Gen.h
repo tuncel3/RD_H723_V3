@@ -1294,8 +1294,7 @@ uint8_t are_all_equal_fc(uint8_t phase) {
     return 1;
 }
 
-void print_active_states(void)
-{
+void print_active_states(void) {
 	for (int i = 0; i < NUM_STATE_NAMES; i++) {
 		if (state_list[i].action & (1 << LCD_roll_enum) && state_list[i].action & (1 << ACTIVE_enum)) {
 			PRF_GEN("%s", state_list[i].name);
