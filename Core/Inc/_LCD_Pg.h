@@ -291,7 +291,6 @@ if (temp_sens_count==2) {
 	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 			sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
-			ilerle_cnt++;
 			son_kal=tabl_dolas;
 			break;
 		}

@@ -1488,6 +1488,7 @@ uint8_t zcr_exist_T=0;
 
 
 
+uint8_t tabl_dolas=0;
 uint8_t son_kal=0;
 uint8_t ilerle_cnt=0;
 
