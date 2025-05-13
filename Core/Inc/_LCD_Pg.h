@@ -296,8 +296,9 @@ if (temp_sens_count==2) {
 		}
 	}
 
-if (ilerle_cnt == NUM_STATE_NAMES) {
-	ilerle_cnt=0;
+if (tabl_dolas == NUM_STATE_NAMES) {
+	tabl_dolas=0;
+	son_kal=0;
 }
 //if (son_kal == NUM_STATE_NAMES) {
 //	son_kal=0;
