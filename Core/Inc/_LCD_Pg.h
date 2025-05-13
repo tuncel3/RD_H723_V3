@@ -271,11 +271,11 @@ if (temp_sens_count==2) {
 static uint8_t tabl_dolas=0, tabl_dolas_delay=4;
 static uint8_t son_kal=0;
 static uint8_t tabl_dolas_delay_cnt=0;
-tabl_dolas_delay_cnt=(tabl_dolas_delay_cnt+1) % tabl_dolas_delay;
+static char RollBuf[32];
 if (tabl_dolas_delay_cnt==0) {
 	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-			sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
+			sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
 			son_kal=tabl_dolas+1;
 			break; // ilk gösterilecek eleman bulundu gösterildi.
 		}
@@ -286,13 +286,15 @@ if (tabl_dolas_delay_cnt==0) {
 
 		for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
 			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-				sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
+				sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
 				son_kal=tabl_dolas+1;
 				break;
 			}
 		}
 	}
 }
+GLCD_PrintString(0, 0, RollBuf);
+tabl_dolas_delay_cnt=(tabl_dolas_delay_cnt+1) % tabl_dolas_delay;
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
 ///////////////////////////////////////////////////////////////
 
