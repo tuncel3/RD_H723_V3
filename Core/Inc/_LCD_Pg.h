@@ -266,26 +266,54 @@ if (temp_sens_count==2) {
 ///////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////
+// STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
+//for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
+//	if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
+//		sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
+//		son_kal=tabl_dolas+1;
+//		break;
+//	}
+//}
+//if (tabl_dolas == NUM_STATE_NAMES) {
+//	tabl_dolas=0;
+//	son_kal=0;
+//
+//	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
+//		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
+//			sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
+//			son_kal=tabl_dolas+1;
+//			break;
+//		}
+//	}
+//}
+
 
 for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
-	if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-		sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
-		son_kal=tabl_dolas+1;
-		break;
-	}
-}
-if (tabl_dolas == NUM_STATE_NAMES) {
-	tabl_dolas=0;
-	son_kal=0;
+	if ((state_list[tabl_dolas].action & (1 << LCD_roll_enum)) &&
+	    (state_list[tabl_dolas].action & (1 << ACTIVE_enum))) {
 
-	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
-		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-			sprintf(M, "%s", state_list[tabl_dolas].name); GLCD_PrintString(0, 0, M);
-			son_kal=tabl_dolas+1;
-			break;
-		}
+		sprintf(M, "%s", state_list[tabl_dolas].name);
+		GLCD_PrintString(0, 0, M);
+		son_kal = tabl_dolas + 1;
+		return;
 	}
 }
+
+// Başa döner
+for (tabl_dolas = 0; tabl_dolas < son_kal; tabl_dolas++) {
+	if ((state_list[tabl_dolas].action & (1 << LCD_roll_enum)) &&
+	    (state_list[tabl_dolas].action & (1 << ACTIVE_enum))) {
+
+		sprintf(M, "%s", state_list[tabl_dolas].name);
+		GLCD_PrintString(0, 0, M);
+		son_kal = tabl_dolas + 1;
+		return;
+	}
+}
+
+
+// STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
+///////////////////////////////////////////////////////////////
 
 
 
