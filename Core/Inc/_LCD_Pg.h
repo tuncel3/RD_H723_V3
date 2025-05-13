@@ -178,10 +178,10 @@ inline extern void HOME_PAGE_pg_disp(void) {
 	if (EpD[HOME_PG_SEL][0].V1==1) {
 		char L[32]; char R[32]; char M[32];
 //		sprintf(M, "NORMAL"); 					GLCD_PrintString(0, 0, M);
-		sprintf(L, "VY%6.1f V", VLOAD_pas.a16); 			GLCD_PrintString(0, 9+1+1, L);
-		sprintf(L, "IT%6.1f A", IRECT_pas.a16); 			GLCD_PrintString(0, 18+1+1, L);
-		sprintf(L, "VB%6.1f V", VBAT_pas.a16); 				GLCD_PrintString(0, 27+3+1, L);
-		sprintf(L, "IB%6.1f A", IBAT_pas.a16); 			GLCD_PrintString(0, 36+3+1, L);
+		sprintf(L, "VY%6.1f V", VLOAD_pas.a16); 			GLCD_PrintString(0, 11, L);
+		sprintf(L, "IT%6.1f A", IRECT_pas.a16); 			GLCD_PrintString(0, 20, L);
+		sprintf(L, "VB%6.1f V", VBAT_pas.a16); 				GLCD_PrintString(0, 31, L);
+		sprintf(L, "IB%6.1f A", IBAT_pas.a16); 			GLCD_PrintString(0, 40, L);
 
 		if (VDCK_side==1) {
 		sprintf(L, "K+%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
@@ -197,8 +197,8 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) % disp_VAC_phase_wait;
 
 		if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
-			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
-			sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
+			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 11, R);
+			sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 20, R);
 		} else if (rolling_disp_VAC_cnt >= 2 && rolling_disp_VAC_cnt < (2 * disp_VAC_phase_wait_slice)) {
 			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
 			sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
@@ -237,6 +237,9 @@ if (temp_sens_count==2) {
 		GLCD_Line(x0, y0, x1, y1);
 		x0 = 0; y0 = 27+2;
 		x1 = 65; y1 = 27+2;
+		GLCD_Line(x0, y0, x1, y1);
+		x0 = 68; y0 = 27+2;
+		x1 = 127; y1 = 27+2;
 		GLCD_Line(x0, y0, x1, y1);
 		x0 = 0; y0 = 48+1;
 		x1 = 65; y1 = 48+1;
