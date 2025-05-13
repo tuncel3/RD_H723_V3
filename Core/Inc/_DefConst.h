@@ -1032,6 +1032,7 @@ typedef enum {
 	BAT_TEMP_ZERO_FC_REL,
 	BAT_TEMP_50_FC_REL,
 	EMPTY_REL,
+	none_REL,
     NUM_REL_CODES
 } rel_names_t;
 
@@ -1091,7 +1092,7 @@ State_Info state_list[] = {
 	{ LOAD_DC_LW_FC,              0b10011,	"Yük VDC Düşük",       LOAD_DC_LW_FC_REL },
 	{ TIMED_CHARGE,         	  0b00000,	"Zamanlı Şarj",        none_REL },
 	{ MANUAL_CHARGE,         	  0b00000,	"Manuel Şarj",         none_REL },
-	{ AUTO_CHARGE,      	   	  0b00000,	"Oto Şarj",  		       none_REL },
+	{ AUTO_CHARGE,      	   	  0b00000,	"Oto Şarj",  		   none_REL },
 	{ EEPROM_FAULT_FC,            0b00000,	"Kayit Sist Arz",      NUM_REL_CODES },
 	{ RTC_FAULT_FC,               0b00000,	"RTC Arz",             NUM_REL_CODES },
 	{ VAC_R_RMS_HG_FAULT_FC,      0b00000,	"VINR RMS Yüksek",     NUM_REL_CODES },
