@@ -176,7 +176,7 @@ inline extern void CALIBRATION_pg_disp(void) {
 
 inline extern void HOME_PAGE_pg_disp(void) {
 	if (EpD[HOME_PG_SEL][0].V1==1) {
-		char L[32]; char R[32]; char M[32];
+		char L[32]; char R[32];
 //		sprintf(M, "NORMAL"); 					GLCD_PrintString(0, 0, M);
 		sprintf(L, "VY%6.1f V", VLOAD_pas.a16); 			GLCD_PrintString(0, 11, L);
 		sprintf(L, "IT%6.1f A", IRECT_pas.a16); 			GLCD_PrintString(0, 20, L);

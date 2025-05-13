@@ -65,7 +65,7 @@ if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_CHARGE_MODE) {
 	EpD[SET_CHARGE_MODE][0].V1=EpD[SET_CHARGE_MODE][1].V1;
 	Rec_Dat_to_EEp_f(SET_CHARGE_MODE);
 	if (EpD[SET_CHARGE_MODE][0].V1==0) {
-
+		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 	}
     actions_after_charge_mode_change(0);
 }
