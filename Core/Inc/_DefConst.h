@@ -981,6 +981,7 @@ typedef enum {
     DROP_CON2_REL,
 	LOAD_DC_HG_FC,
 	LOAD_DC_LW_FC,
+	TIMED_CHARGE,
 	EEPROM_FAULT_FC,
 	RTC_FAULT_FC,
 	VAC_R_RMS_HG_FAULT_FC,
@@ -1086,7 +1087,7 @@ State_Info state_list[] = {
 	// REL MB 8 BIT7 enum 36
 	{ LOAD_DC_HG_FC,              0b10111,	"Yük VDC Yüksk",       LOAD_DC_HG_FC_REL },
 	{ LOAD_DC_LW_FC,              0b10011,	"Yük VDC Düşük",       LOAD_DC_LW_FC_REL },
-	{ NORMAL_CHARGE,         	  0b00000,	"Normal Şarj",         NORMAL_CHARGE_REL },
+	{ TIMED_CHARGE,         	  0b00000,	"Zamanlı Şarj",        none_REL },
 	{ EEPROM_FAULT_FC,            0b00000,	"Kayit Sist Arz",      NUM_REL_CODES },
 	{ RTC_FAULT_FC,               0b00000,	"RTC Arz",             NUM_REL_CODES },
 	{ VAC_R_RMS_HG_FAULT_FC,      0b00000,	"VINR RMS Yüksek",     NUM_REL_CODES },
