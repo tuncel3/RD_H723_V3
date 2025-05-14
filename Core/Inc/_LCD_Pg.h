@@ -227,8 +227,8 @@ if (temp_sens_count==2) {
 
 static char timed_charge_cnt[12];
 if (charge_mode_timed_time_sec > 0) {
-	sprintf(timed_charge_cnt, "t%04lu", charge_mode_timed_time_sec);
-	GLCD_PrintString(98, 0, timed_charge_cnt);
+	sprintf(timed_charge_cnt, "%04lu", charge_mode_timed_time_sec);
+	GLCD_PrintString(104, 0, timed_charge_cnt);
 }
 
 ///////////////////////////////////////////////////////////////
