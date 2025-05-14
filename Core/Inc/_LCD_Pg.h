@@ -225,45 +225,11 @@ if (temp_sens_count==2) {
 //		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 36+3+8, R);
 //		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 45+3+8, R);
 
-
-
-
-// otomtik rolling display sistemi eklenmeden önceki durum
-//		if (device_start_up_delay_completed==0) {
-//			sprintf(M, "BAŞLANGIÇ"); GLCD_PrintString(0, 0, M);
-//		} else {
-//
-//			if (is_state_active(BATT_LINE_BROKEN_FC)) {
-//				if (SW_BATT_OFF) {
-//					sprintf(M, "AKÜ ANAHTAR OFF"); 		GLCD_PrintString(0, 0, M);
-//				} else if (!SW_BATT_OFF) {
-//					sprintf(M, "AKÜ HATTI KOPUK"); 		GLCD_PrintString(0, 0, M);
-//				}
-//			}
-//			else if (thy_drv_en==1) {
-//				if (sfsta_op_phase == S_SFSTA_REQ && !rectifier_current_limit_accepted && !battery_current_limit_accepted) {
-//					sprintf(M, "SOFT START"); 		GLCD_PrintString(0, 0, M);
-//				} else if (sfsta_op_phase == S_SFSTA_REQ_OK || rectifier_current_limit_accepted || battery_current_limit_accepted) {
-//					sprintf(M, "DOĞRLT AKTİF"); 			GLCD_PrintString(0, 0, M);
-//				}
-//			}
-//			else if (thy_drv_en==0) {
-//				if (thy_drv_en_req == 1) {
-//					if (sfsta_op_phase == S_SFSTA_NONE) {
-//						sprintf(M, "AKTİF EDİLECEK"); // sf_sta_req_cnt++ sayacının sayıldığı anda bu yazıyı yazdır.
-//						GLCD_PrintString(0, 0, M);
-//					}
-//					else if (sfsta_op_phase == S_SFSTA_REQ_OK) {
-//						sprintf(M, "SOFT START");
-//						GLCD_PrintString(0, 0, M);
-//					}
-//				} else if (thy_drv_en_req == 0) {
-//					sprintf(M, "DOĞRLT KAPALI");
-//					GLCD_PrintString(0, 0, M);
-//				}
-//			}
-//		}
-///////////////////////////////////////////////////////////////
+static char timed_charge_cnt[12];
+if (charge_mode_timed_time_sec > 0) {
+	sprintf(timed_charge_cnt, "t%04lu", charge_mode_timed_time_sec);
+	GLCD_PrintString(96, 0, timed_charge_cnt);
+}
 
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
@@ -494,6 +460,13 @@ inline extern void MAIN_MENU_pg_disp(void) {
 		GLCD_PrintString(0, (main_menu_arrow_loc+1) * 9, ">");
 		main_menu_disp_index_=(main_menu_disp_index_+1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
     }
+
+    static char timed_charge_cnt[12];
+    if (charge_mode_timed_time_sec > 0) {
+    	sprintf(timed_charge_cnt, "t%04lu", charge_mode_timed_time_sec);
+    	GLCD_PrintString(96, 0, timed_charge_cnt);
+    }
+
 }
 inline extern void DEVICE_SETT_pg_disp(void) {
     GLCD_PrintString(0, 0, "Cihaz Ayarları");
