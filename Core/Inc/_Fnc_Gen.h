@@ -829,10 +829,6 @@ void inline extern actions_after_charge_voltage_change() {
 	}
 }
 
-if (EpD[SET_CHARGE_MODE][0].V1==0) {
-	apply_state_changes_f(FLOAT_CHARGE_FC, 1);
-}
-
 // does required changes after a charge mode chage
 void inline extern actions_after_charge_mode_change(uint8_t num) {
 	if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
@@ -850,7 +846,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
-		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
+		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0;
@@ -861,6 +857,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
+		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0;
