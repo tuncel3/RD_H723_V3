@@ -254,7 +254,7 @@ if (tabl_dolas_delay_cnt==0) {
 			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 				sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
 				son_kal=tabl_dolas+1;
-				GLCD_PrintString(xloc, 0, RollBuf);
+				GLCD_PrintString(0, 0, RollBuf);
 				break;
 			}
 		}
