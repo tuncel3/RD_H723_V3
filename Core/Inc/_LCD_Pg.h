@@ -178,9 +178,9 @@ inline extern void HOME_PAGE_pg_disp(void) {
 	if (EpD[HOME_PG_SEL][0].V1==1) {
 		char L[32]; char R[32];
 //		sprintf(M, "NORMAL"); 					GLCD_PrintString(0, 0, M);
-		sprintf(L, "VY%6.1f V", VLOAD_pas.a16); 			GLCD_PrintString(0, 11, L);
-		sprintf(L, "IT%6.1f A", IRECT_pas.a16); 			GLCD_PrintString(0, 20, L);
-		sprintf(L, "VB%6.1f V", VBAT_pas.a16); 				GLCD_PrintString(0, 31, L);
+		sprintf(L, "Vo%6.1f V", VLOAD_pas.a16); 			GLCD_PrintString(0, 11, L);
+		sprintf(L, "VB%6.1f V", VBAT_pas.a16); 				GLCD_PrintString(0, 20, L);
+		sprintf(L, "IT%6.1f A", IRECT_pas.a16); 			GLCD_PrintString(0, 31, L);
 		sprintf(L, "IB%6.1f A", IBAT_pas.a16); 			GLCD_PrintString(0, 40, L);
 
 		if (VDCK_side==1) {
@@ -228,7 +228,7 @@ if (temp_sens_count==2) {
 static char timed_charge_cnt[12];
 if (charge_mode_timed_time_sec > 0) {
 	sprintf(timed_charge_cnt, "t%04lu", charge_mode_timed_time_sec);
-	GLCD_PrintString(96, 0, timed_charge_cnt);
+	GLCD_PrintString(98, 0, timed_charge_cnt);
 }
 
 ///////////////////////////////////////////////////////////////
