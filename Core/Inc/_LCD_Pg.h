@@ -218,12 +218,10 @@ if (temp_sens_count==2) {
 }
 
 
-//		sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 9, R);
-//		sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 18, R);
-//		sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 27, R);
-//		sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(76, 27+3+8, R);
-//		sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(76, 36+3+8, R);
-//		sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(76, 45+3+8, R);
+
+
+
+
 
 static char timed_charge_cnt[12];
 if (charge_mode_timed_time_sec > 0) {
