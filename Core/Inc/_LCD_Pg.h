@@ -218,6 +218,13 @@ if (temp_sens_count==2) {
 }
 
 
+if (temp_sens_count==3) {
+	static uint8_t rolling_disp_TEMP_cnt=0;
+	static uint8_t disp_TEMP_phase_wait =12;
+	static uint8_t disp_TEMP_phase_wait_slice =4;
+	rolling_disp_TEMP_cnt=(rolling_disp_TEMP_cnt+1) % disp_TEMP_phase_waitv;
+	if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
+}
 
 
 
