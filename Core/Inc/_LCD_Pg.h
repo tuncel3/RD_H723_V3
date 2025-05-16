@@ -184,10 +184,10 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		sprintf(L, "IB%6.1f A", IBAT_pas.a16); 			GLCD_PrintString(0, 40, L);
 
 		if (VDCK_side==1) {
-		sprintf(L, "K+%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
+		sprintf(L, "K+%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 53, L);
 		}
 		if (VDCK_side==-1) {
-		sprintf(L, "K-%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 45+3+4+1, L);
+		sprintf(L, "K-%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 53, L);
 		}
 
 
@@ -233,6 +233,8 @@ if (temp_sens_count==3) {
 	}
 }
 
+
+sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_edit, rtc_min_edit, rtc_sec_edit); GLCD_PrintString(74, 53, date_time_string);
 
 
 static char timed_charge_cnt[12];
