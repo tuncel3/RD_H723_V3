@@ -207,23 +207,11 @@ inline extern void HOME_PAGE_pg_disp(void) {
 			sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(74, 20, R);
 		}
 
-//if (temp_sens_count==2) {
-//	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31+3, L);
-//	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40+3, L);
-//
-//} else if (temp_sens_count==3) {
-//	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31+3, L);
-//	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40+3, L);
-//	sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(74, 49+3, L);
-//}
-
-
 	static uint8_t rolling_disp_TEMP_cnt=0;
 	static uint8_t disp_TEMP_phase_wait =12;
 	static uint8_t disp_TEMP_phase_wait_slice =4;
 
 if (temp_sens_count==3) {
-	rolling_disp_TEMP_cnt=0;
 	disp_TEMP_phase_wait =12;
 	disp_TEMP_phase_wait_slice =4;
 	rolling_disp_TEMP_cnt=(rolling_disp_TEMP_cnt+1) % disp_TEMP_phase_wait;
@@ -235,7 +223,6 @@ if (temp_sens_count==3) {
 		sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(74, 31+3, L);
 	}
 } else if (temp_sens_count==2) {
-	rolling_disp_TEMP_cnt=0;
 	disp_TEMP_phase_wait =8;
 	disp_TEMP_phase_wait_slice =4;
 	rolling_disp_TEMP_cnt=(rolling_disp_TEMP_cnt+1) % disp_TEMP_phase_wait;
@@ -247,6 +234,7 @@ if (temp_sens_count==3) {
 }
 
 
+sprintf(date_time_string, " %02u.%02u.20%02u %02u:%02u:%02u", rtc_day_edit, rtc_month_edit, rtc_year_edit, rtc_hour_edit, rtc_min_edit, rtc_sec_edit);
 
 
 static char timed_charge_cnt[12];
