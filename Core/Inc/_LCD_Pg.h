@@ -88,9 +88,9 @@ inline extern void CALIBRATION_pg_disp(void) {
     sprintf(L, "VB%7.2f", VBAT_pas.a64); 		GLCD_PrintString(0, 3*lnhg, L);
     sprintf(L, "IR%7.2f", IRECT_pas.a64); 		GLCD_PrintString(0, 4*lnhg, L);
     sprintf(L, "IB%7.2f", IBAT_pas.a64); 		GLCD_PrintString(0, 5*lnhg, L);
-    sprintf(L, "CR%7.2f", VAC_R_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 1*lnhg, L);
-    sprintf(L, "CS%7.2f", VAC_S_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 2*lnhg, L);
-    sprintf(L, "CT%7.2f", VAC_T_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 3*lnhg, L);
+    sprintf(L, "VR%7.2f", VAC_R_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 1*lnhg, L);
+    sprintf(L, "VS%7.2f", VAC_S_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 2*lnhg, L);
+    sprintf(L, "VT%7.2f", VAC_T_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 3*lnhg, L);
 
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
 
