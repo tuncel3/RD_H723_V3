@@ -234,8 +234,6 @@ if (temp_sens_count==3) {
 }
 
 
-sprintf(date_time_string, " %02u.%02u.20%02u %02u:%02u:%02u", rtc_day_edit, rtc_month_edit, rtc_year_edit, rtc_hour_edit, rtc_min_edit, rtc_sec_edit);
-
 
 static char timed_charge_cnt[12];
 if (charge_mode_timed_time_sec > 0) {
