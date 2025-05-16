@@ -505,7 +505,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_ACR_OFFS_CAL, -116.0}, {SET_ACR_OFFS_CAL, -116.0} },
     { {SET_ACS_OFFS_CAL, -129.0}, {SET_ACS_OFFS_CAL, -129.0} },
     { {SET_ACT_OFFS_CAL, -139.0}, {SET_ACT_OFFS_CAL, -139.0} },
-    { {SET_FRQ_CAL, 0.9972}, {SET_FRQ_CAL, 0.9972} },
+    { {SET_FRQ_CAL, 0.9975}, {SET_FRQ_CAL, 0.9975} },
     { {SET_UNSEEN_FLT, 0.0}, {SET_UNSEEN_FLT, 0.0} },
     { {SET_BATT_REV_DET, 1.0}, {SET_BATT_REV_DET, 1.0} },
     { {SET_BATT_DISC_DET, 0.0}, {SET_BATT_DISC_DET, 0.0} },
@@ -1496,7 +1496,7 @@ uint8_t zcr_exist_R=0;
 uint8_t zcr_exist_S=0;
 uint8_t zcr_exist_T=0;
 
-
+float frq_cal_k=0;
 
 
 
