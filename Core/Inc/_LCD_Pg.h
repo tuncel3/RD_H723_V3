@@ -230,6 +230,8 @@ if (temp_sens_count==3) {
 	if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
 
 	} else if (rolling_disp_VAC_cnt >= 2 && rolling_disp_VAC_cnt < (2 * disp_VAC_phase_wait_slice)) {
+
+	}
 }
 
 
