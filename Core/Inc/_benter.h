@@ -314,14 +314,14 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 			currentPage = RECTF_ACTIVE_AT_STARTUP_pg;
 		}
 		if (selected_MANAGEMENT == 3) {
-			currentPage = CALIBRATION_pg;
+			currentPage = CALIBRATION_1_pg;
 			EpD[SET_BATT_DISC_DET][0].V1=0;
 		}
 		if (selected_MANAGEMENT == 4) {
 			currentPage = TEST_pg;
 		}
     }
-    else if (currentPage == CALIBRATION_pg) {
+    else if (currentPage == CALIBRATION_1_pg) {
     	cal_sel_edit_mode=(cal_sel_edit_mode+1)%3;
 
 		if (cal_sel_edit_mode == cal_offset) { // yani enter a basılmış ve gain den offset edit moduna geçilmiş. yani gain değerinin kaydedilmesi lazım.

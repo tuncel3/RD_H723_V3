@@ -131,7 +131,7 @@ void bleft_fnc(void) {
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
-    else if (currentPage == CALIBRATION_pg) {
+    else if (currentPage == CALIBRATION_1_pg) {
     	if (cal_sel_edit_mode == cal_none) {
 			if (cal_sel_col==0) {
 				cal_sel_col=1;
@@ -302,13 +302,13 @@ void bright_fnc(void) {
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
-    else if (currentPage == CALIBRATION_pg) {
+    else if (currentPage == CALIBRATION_1_pg) {
     	if (cal_sel_edit_mode == cal_none) {
 			if (cal_sel_col==0) {
 				cal_sel_col=1;
 			}
 			else if (cal_sel_col==1) {
-				cal_sel_col=0;
+				currentPage == CALIBRATION_2_pg
 			}
     	} else if (cal_sel_edit_mode != cal_none) {
     		cal_sel_digit=(cal_sel_digit-1+2)%2;
@@ -583,7 +583,7 @@ if (!chg_setting_edit_mode) {
     else if (currentPage == MANAGEMENT_pg) { // UP
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
-    else if (currentPage == CALIBRATION_pg) { // UP
+    else if (currentPage == CALIBRATION_1_pg) { // UP
     	if (cal_sel_edit_mode == cal_none) {
 			if (cal_sel_col==0) {
 				cal_sel_item_left=((cal_sel_item_left-1+5)%5);
@@ -999,7 +999,7 @@ if (!chg_setting_edit_mode) {
     else if (currentPage == MANAGEMENT_pg) { // DOWN
     	selected_MANAGEMENT=(selected_MANAGEMENT+1) % NUM_MANAGEMENT_ITEMS;
     }
-    else if (currentPage == CALIBRATION_pg) {
+    else if (currentPage == CALIBRATION_1_pg) {
     	if (cal_sel_edit_mode == cal_none) {
 			if (cal_sel_col==0) {
 				cal_sel_item_left=(cal_sel_item_left+1)%5;
@@ -1305,7 +1305,7 @@ void besc_fnc(void) {
     else if (currentPage == MANAGEMENT_pg) { // ESC
         currentPage = MAIN_MENU_pg;
     }
-    else if (currentPage == CALIBRATION_pg) { // ESC
+    else if (currentPage == CALIBRATION_1_pg) { // ESC
         currentPage = MANAGEMENT_pg;
 		bat_inspection_allowed=1;
     }

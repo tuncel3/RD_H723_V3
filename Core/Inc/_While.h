@@ -1046,7 +1046,7 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
         case DEVICE_RESET_pg:
         	DEVICE_RESET_pg_disp();
             break;
-        case CALIBRATION_pg:
+        case CALIBRATION_1_pg:
         	CALIBRATION_pg_disp();
             break;
         case DATE_TIME_pg:
