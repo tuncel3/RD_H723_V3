@@ -80,7 +80,7 @@ inline extern void DROPPER_pg_disp(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-inline extern void CALIBRATION_pg_disp(void) {
+inline extern void CALIBRATION_1_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon pg1");
 	char L[32]; static uint8_t lnhg=11;
     sprintf(L, "VR%7.2f", VRECT_pas.a64); 		GLCD_PrintString(0, 1*lnhg, L);
