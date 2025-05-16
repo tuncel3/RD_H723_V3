@@ -1066,7 +1066,7 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 //	PRF_GEN("%3.2f %3.2f %3.2f %3.2f %3.2f", VAC_R_rms_roll_per_avg.a64, VAC_S_rms_roll_per_avg.a64, VAC_T_rms_roll_per_avg.a64, VRECT_pas.a64, IRECT_pas.a64);
 
 
-	print_active_states();
+//	print_active_states();
 
 //	if (var1==3) {
 //		var1=0;
