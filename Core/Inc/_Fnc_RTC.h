@@ -125,12 +125,13 @@ uint8_t Write_RTC_Time_Data_With_Oscillator(void)
 
     PRF_GEN("s5");
     timeout = 5500000;  // Reset timeout
-    while (LL_I2C_IsActiveFlag_STOP(I2C2) && timeout--);
+    while (!LL_I2C_IsActiveFlag_STOP(I2C2) && timeout--);
     if (timeout == 0)
     {
         return 0;  // Timeout error
     }
     LL_I2C_ClearFlag_STOP(I2C2);
+
 
     PRF_GEN("s6");
     // Step 2: Write 7 elements (minute to year) with special handling for weekday/config
@@ -173,12 +174,13 @@ uint8_t Write_RTC_Time_Data_With_Oscillator(void)
 
     PRF_GEN("s10");
     timeout = 5500000;  // Reset timeout
-    while (LL_I2C_IsActiveFlag_STOP(I2C2) && timeout--);
+    while (!LL_I2C_IsActiveFlag_STOP(I2C2) && timeout--);
     if (timeout == 0)
     {
         return 0;  // Timeout error
     }
     LL_I2C_ClearFlag_STOP(I2C2);
+
 
     PRF_GEN("s11");
     // Step 3: Re-enable oscillator and set the seconds value
