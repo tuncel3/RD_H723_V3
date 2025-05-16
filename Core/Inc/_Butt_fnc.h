@@ -54,7 +54,7 @@ void bleft_fnc(void) {
     		}
     	}
     }
-    else if (currentPage == DEVICE_SETT_pg) {
+    else if (currentPage == DEVICE_SETT_pg) {	// LEFT
 
     	if (!dev_setting_edit_mode) {
     		if (dev_set_arrow_loc > 1) {
