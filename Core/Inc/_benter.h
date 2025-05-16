@@ -462,7 +462,9 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
     }
     else if (currentPage == DATE_TIME_pg && DATE_TIME_edit_mode == 1) {
     	DATE_TIME_edit_mode = 0;
+    	PRF_GEN("Send datetime to RTC IC");
     	Write_RTC_Time_Data_With_Oscillator();
+    	PRF_GEN("Completed");
     }
     SHOW_MENU_NOW
 }
