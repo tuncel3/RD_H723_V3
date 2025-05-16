@@ -207,30 +207,41 @@ inline extern void HOME_PAGE_pg_disp(void) {
 			sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(74, 20, R);
 		}
 
-if (temp_sens_count==2) {
-	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31+3, L);
-	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40+3, L);
+//if (temp_sens_count==2) {
+//	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31+3, L);
+//	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40+3, L);
+//
+//} else if (temp_sens_count==3) {
+//	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31+3, L);
+//	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40+3, L);
+//	sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(74, 49+3, L);
+//}
 
-} else if (temp_sens_count==3) {
-	sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31+3, L);
-	sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 40+3, L);
-	sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(74, 49+3, L);
-}
 
-
-if (temp_sens_count==3) {
 	static uint8_t rolling_disp_TEMP_cnt=0;
 	static uint8_t disp_TEMP_phase_wait =12;
 	static uint8_t disp_TEMP_phase_wait_slice =4;
+
+if (temp_sens_count==3) {
+	rolling_disp_TEMP_cnt=0;
+	disp_TEMP_phase_wait =12;
+	disp_TEMP_phase_wait_slice =4;
 	rolling_disp_TEMP_cnt=(rolling_disp_TEMP_cnt+1) % disp_TEMP_phase_wait;
 	if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
 
+	} else if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
+
+	} else if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
+
 	}
 } else if (temp_sens_count==2) {
-	if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
-
-	} else if (rolling_disp_VAC_cnt >= 2 && rolling_disp_VAC_cnt < (2 * disp_VAC_phase_wait_slice)) {
-
+	rolling_disp_TEMP_cnt=0;
+	disp_TEMP_phase_wait =8;
+	disp_TEMP_phase_wait_slice =4;
+	if (rolling_disp_TEMP_cnt < disp_VAC_phase_wait_slice) {
+		sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31+3, L);
+	} else if (rolling_disp_TEMP_cnt >= 2 && rolling_disp_VAC_cnt < (2 * disp_TEMP_phase_wait_slice)) {
+		sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 31+3, L);
 	}
 }
 
