@@ -234,7 +234,7 @@ if (temp_sens_count==3) {
 }
 
 
-sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_edit, rtc_min_edit, rtc_sec_edit); GLCD_PrintString(74, 53, date_time_string);
+sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(74, 53, date_time_string);
 
 
 static char timed_charge_cnt[12];
