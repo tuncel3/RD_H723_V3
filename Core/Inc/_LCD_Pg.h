@@ -241,7 +241,7 @@ if (temp_sens_count==3) {
 	rolling_disp_TEMP_cnt=(rolling_disp_TEMP_cnt+1) % disp_TEMP_phase_wait;
 	if (rolling_disp_TEMP_cnt < disp_VAC_phase_wait_slice) {
 		sprintf(L, "Soğt%5.1f", tmp_dat_C[0]); 		GLCD_PrintString(74, 31+3, L);
-	} else if (rolling_disp_TEMP_cnt >= 2 && rolling_disp_VAC_cnt < (2 * disp_TEMP_phase_wait_slice)) {
+	} else if (rolling_disp_VAC_cnt < 2 * disp_TEMP_phase_wait_slice) {
 		sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 31+3, L);
 	}
 }
