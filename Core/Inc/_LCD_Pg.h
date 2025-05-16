@@ -232,7 +232,7 @@ if (temp_sens_count==3) {
 	} else if (rolling_disp_VAC_cnt < 2 * disp_VAC_phase_wait_slice) {
 		sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 31+3, L);
 	} else if (rolling_disp_VAC_cnt < 4 * disp_VAC_phase_wait_slice) {
-		sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(74, 49+3, L);
+		sprintf(L, "Akü %5.1f", tmp_dat_C[2]); 		GLCD_PrintString(74, 31+3, L);
 	}
 } else if (temp_sens_count==2) {
 	rolling_disp_TEMP_cnt=0;
