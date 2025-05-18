@@ -199,7 +199,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 		sprintf(L, "Frq %5.2f", frq_r_updn_avg_m); GLCD_PrintString(74, 43, L);
-		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(74, 53, date_time_string);
+		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(78, 53, date_time_string);
 
 
 		static uint8_t rolling_disp_VAC_cnt=0;
