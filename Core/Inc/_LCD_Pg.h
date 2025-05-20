@@ -255,9 +255,9 @@ if (charge_mode_timed_time_sec > 0) {
 
 static char start_stop_str[7];
 if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
-	sprintf(start_stop_str, "%s", state_list[START_FC].name); GLCD_PrintString(97, 0, start_stop_str);
+	sprintf(start_stop_str, "%s", state_list[START_FC].name); GLCD_PrintString(98, 0, start_stop_str);
 } else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
-	sprintf(start_stop_str, "%s", state_list[STOP_FC].name); GLCD_PrintString(97, 0, start_stop_str);
+	sprintf(start_stop_str, "%s", state_list[STOP_FC].name); GLCD_PrintString(98, 0, start_stop_str);
 }
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
