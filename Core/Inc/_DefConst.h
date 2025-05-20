@@ -1068,7 +1068,7 @@ State_Info state_list[] = {
 	{ VAC_ON_FC,                  0b00000,	"VAC ON",              VAC_ON_FC_REL },
 	// LED 16 BIT15	enum 15
 	// LED 7 BIT0 enum 16
-	{ LOAD_FUSE_OFF_FC,      	  0b10010,	"Çıkış Sigrt Atık",    LOAD_FUSE_OFF_FC_REL },
+	{ LOAD_FUSE_OFF_FC,      	  0b10010,	"Çıkş Sigrt Atık",    LOAD_FUSE_OFF_FC_REL },
 	{ DROPPER2_BYP_FC,      	  0b00000,	"Dropper 2 Bypass",    NUM_REL_CODES },
 	{ DROPPER1_BYP_FC,      	  0b00000,	"Dropper 1 Bypass",    NUM_REL_CODES },
 	{ BATT_FUSE_OFF_FC,           0b10010,	"Akü Sigorta Atık",    BATT_FUSE_OFF_FC_REL },
