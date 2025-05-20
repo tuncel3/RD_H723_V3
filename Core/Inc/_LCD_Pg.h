@@ -198,7 +198,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		sprintf(L, "K-%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 53, L);
 		}
 
-		sprintf(L, "Frq %5.2f", frq_r_updn_avg_m); GLCD_PrintString(74, 43, L);
+//		sprintf(L, "Frq %5.2f", frq_r_updn_avg_m); GLCD_PrintString(74, 43, L);
 		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(78, 53, date_time_string);
 
 
