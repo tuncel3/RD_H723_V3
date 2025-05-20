@@ -1062,8 +1062,8 @@ State_Info state_list[] = {
 	{ RECT_DC_HG_FC,              0b10111,	"Doğr VDC Yüksk",      RECT_DC_HG_FC_REL },
 	{ VAC_LO_FC,                  0b10110,	"Şebeke Düşük",        VAC_LO_FC_REL },
 	{ VAC_HG_FC,                  0b10110,	"Şebeke Yüksek",       VAC_HG_FC_REL },
-	{ STOP_FC,                    0b00010,	"Manuel Durdur",       NUM_REL_CODES },
-	{ START_FC,                   0b00000,	"Başlat",              NUM_REL_CODES },
+	{ STOP_FC,                    0b00010,	"Stop",   		       NUM_REL_CODES },
+	{ START_FC,                   0b00000,	"Start",               NUM_REL_CODES },
 	{ VAC_OFF_FC,                 0b10110,	"VAC OFF",             VAC_OFF_FC_REL },
 	{ VAC_ON_FC,                  0b00000,	"VAC ON",              VAC_ON_FC_REL },
 	// LED 16 BIT15	enum 15

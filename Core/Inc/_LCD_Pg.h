@@ -253,8 +253,9 @@ if (charge_mode_timed_time_sec > 0) {
 	GLCD_PrintString(104, 0, timed_charge_cnt);
 }
 
-if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
-
+static char start_stop_str[12];
+if (state_list[START_FC].action & (1 << ACTIVE_enum) || state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
+	sprintf(start_stop_str, "%s", state_list[tabl_dolas].name);
 }
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
