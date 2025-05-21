@@ -289,6 +289,34 @@ tabl_dolas_delay_cnt=(tabl_dolas_delay_cnt+1) % tabl_dolas_delay;
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
 ///////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////
+// HOMEPAGE HÜCRELEME ÇİZGİLERİ
+	uint32_t x0 = 65; uint32_t y0 = 9;
+	uint32_t x1 = 65; uint32_t y1 = 63;
+	GLCD_Line(x0, y0, x1, y1);
+	GLCD_Line(x0+3, y0, x1+3, y1);
+	x0 = 0; y0 = 9;
+	x1 = 65; y1 = 9;
+	GLCD_Line(x0, y0, x1, y1);
+//	x0 = 95; y0 = 0;
+//	x1 = 95; y1 = 9;
+//	GLCD_Line(x0, y0, x1, y1);
+	x0 = 68; y0 = 9;
+	x1 = 127; y1 = 9;
+	GLCD_Line(x0, y0, x1, y1);
+	x0 = 0; y0 = 27+2;
+	x1 = 65; y1 = 27+2;
+	GLCD_Line(x0, y0, x1, y1);
+	x0 = 68; y0 = 27+2;
+	x1 = 127; y1 = 27+2;
+	GLCD_Line(x0, y0, x1, y1);
+	x0 = 0; y0 = 48+1;
+	x1 = 65; y1 = 48+1;
+	GLCD_Line(x0, y0, x1, y1);
+	x0 = 0; y0 = 63;
+	x1 = 65; y1 = 63;
+	GLCD_Line(x0, y0, x1, y1);
+////////////////////////////////////////////////
 
 
 
@@ -332,34 +360,6 @@ tabl_dolas_delay_cnt=(tabl_dolas_delay_cnt+1) % tabl_dolas_delay;
 			GLCD_Rect_E(x0,y0,x0+w,y0+h); // sıcaklık rect
 	}
 
-////////////////////////////////////////////////
-// HOMEPAGE HÜCRELEME ÇİZGİLERİ
-	uint32_t x0 = 65; uint32_t y0 = 9;
-	uint32_t x1 = 65; uint32_t y1 = 63;
-	GLCD_Line(x0, y0, x1, y1);
-	GLCD_Line(x0+3, y0, x1+3, y1);
-	x0 = 0; y0 = 9;
-	x1 = 65; y1 = 9;
-	GLCD_Line(x0, y0, x1, y1);
-//	x0 = 95; y0 = 0;
-//	x1 = 95; y1 = 9;
-//	GLCD_Line(x0, y0, x1, y1);
-	x0 = 68; y0 = 9;
-	x1 = 127; y1 = 9;
-	GLCD_Line(x0, y0, x1, y1);
-	x0 = 0; y0 = 27+2;
-	x1 = 65; y1 = 27+2;
-	GLCD_Line(x0, y0, x1, y1);
-	x0 = 68; y0 = 27+2;
-	x1 = 127; y1 = 27+2;
-	GLCD_Line(x0, y0, x1, y1);
-	x0 = 0; y0 = 48+1;
-	x1 = 65; y1 = 48+1;
-	GLCD_Line(x0, y0, x1, y1);
-	x0 = 0; y0 = 63;
-	x1 = 65; y1 = 63;
-	GLCD_Line(x0, y0, x1, y1);
-////////////////////////////////////////////////
 
 
 
