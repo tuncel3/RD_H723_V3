@@ -246,15 +246,11 @@ if (temp_sens_count==3) {
 	}
 }
 
-
-
-
-
 static char start_stop_str[7];
 if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
-	sprintf(start_stop_str, "%s", state_list[START_FC].name); GLCD_PrintString(98, 1, start_stop_str);
+	sprintf(start_stop_str, ":%s", state_list[START_FC].name); GLCD_PrintString(93, 0, start_stop_str);
 } else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
-	sprintf(start_stop_str, "%s", state_list[STOP_FC].name); GLCD_PrintString(98, 1, start_stop_str);
+	sprintf(start_stop_str, ":%s", state_list[STOP_FC].name); GLCD_PrintString(93, 0, start_stop_str);
 }
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
@@ -345,9 +341,9 @@ tabl_dolas_delay_cnt=(tabl_dolas_delay_cnt+1) % tabl_dolas_delay;
 	x0 = 0; y0 = 9;
 	x1 = 65; y1 = 9;
 	GLCD_Line(x0, y0, x1, y1);
-	x0 = 95; y0 = 0;
-	x1 = 95; y1 = 9;
-	GLCD_Line(x0, y0, x1, y1);
+//	x0 = 95; y0 = 0;
+//	x1 = 95; y1 = 9;
+//	GLCD_Line(x0, y0, x1, y1);
 	x0 = 68; y0 = 9;
 	x1 = 127; y1 = 9;
 	GLCD_Line(x0, y0, x1, y1);
