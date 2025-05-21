@@ -82,11 +82,6 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		boost_of_auto_mode_active=0;
 		EpD[SET_CHARGE_MODE][0].V1=FLOAT; EpD[SET_CHARGE_MODE][1].V1=FLOAT; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
 		actions_after_charge_mode_change(34);
-		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
-		LED_7_Data &= !BOOST_CHARGE_LED;
-		LED_7_Data |= FLOAT_CHARGE_LED;
 		PRF_GEN("AUTO switch to FLOAT %f", IBAT_pas.a1);
 	}
 }
