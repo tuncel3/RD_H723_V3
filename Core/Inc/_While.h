@@ -60,21 +60,13 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		switch_to_auto_mode_completed=1; // başka bir moddan auto moda geçildi.
 		boost_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
 		float_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
-		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
-		LED_7_Data &= !BOOST_CHARGE_LED;
-		LED_7_Data |= FLOAT_CHARGE_LED;
 		PRF_GEN("switch_to_auto_mode_completed");
 	}
 	else if (IBAT_pas.a1 > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
 		float_of_auto_mode_active=0;
 		boost_of_auto_mode_active=1;
-		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
-		LED_7_Data &= !FLOAT_CHARGE_LED;
-		LED_7_Data |= BOOST_CHARGE_LED;
+		EpD[SET_CHARGE_MODE][0].V1=BOOST; EpD[SET_CHARGE_MODE][1].V1=BOOST; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
+		actions_after_charge_mode_change(33);
 		PRF_GEN("AUTO switch to BOOST %f", IBAT_pas.a1);
 	}
 	else if (IBAT_pas.a1 < EpD[I_LIM_TO_FLOAT][0].V1 && float_of_auto_mode_active==0) {
