@@ -172,8 +172,6 @@ inline extern void DROPPER_pg_disp(void) {
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
 
-
-
     if (cal_sel_edit_mode==cal_gain) {
     	GLCD_PrintString(96, 0, "GAIN");
     } else if (cal_sel_edit_mode==cal_offset) {
@@ -197,8 +195,6 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		if (VDCK_side==-1) {
 		sprintf(L, "K-%6.1f %%", VDCK_perc); 		GLCD_PrintString(0, 53, L);
 		}
-
-//		sprintf(L, "Frq %5.2f", frq_r_updn_avg_m); GLCD_PrintString(74, 43, L);
 
 		static char timed_charge_cnt[12];
 		if (charge_mode_timed_time_sec > 0) {
@@ -256,9 +252,9 @@ if (temp_sens_count==3) {
 
 static char start_stop_str[7];
 if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
-	sprintf(start_stop_str, "%s", state_list[START_FC].name); GLCD_PrintString(98, 0, start_stop_str);
+	sprintf(start_stop_str, "%s", state_list[START_FC].name); GLCD_PrintString(98, 1, start_stop_str);
 } else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
-	sprintf(start_stop_str, "%s", state_list[STOP_FC].name); GLCD_PrintString(98, 0, start_stop_str);
+	sprintf(start_stop_str, "%s", state_list[STOP_FC].name); GLCD_PrintString(98, 1, start_stop_str);
 }
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
