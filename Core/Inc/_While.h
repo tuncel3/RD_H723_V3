@@ -80,6 +80,8 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 	else if (IBAT_pas.a1 < EpD[I_LIM_TO_FLOAT][0].V1 && float_of_auto_mode_active==0) {
 		float_of_auto_mode_active=1;
 		boost_of_auto_mode_active=0;
+		EpD[SET_CHARGE_MODE][0].V1=FLOAT; EpD[SET_CHARGE_MODE][1].V1=FLOAT; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
+		actions_after_charge_mode_change(34);
 		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
