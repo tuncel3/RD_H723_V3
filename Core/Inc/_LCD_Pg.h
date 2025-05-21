@@ -199,7 +199,13 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		}
 
 //		sprintf(L, "Frq %5.2f", frq_r_updn_avg_m); GLCD_PrintString(74, 43, L);
-		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(78, 53, date_time_string);
+
+		static char timed_charge_cnt[12];
+		if (charge_mode_timed_time_sec > 0) {
+			sprintf(timed_charge_cnt, "%04lu", charge_mode_timed_time_sec);
+			GLCD_PrintString(104, 44, timed_charge_cnt);
+		}
+		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(80, 53, date_time_string);
 
 
 		static uint8_t rolling_disp_VAC_cnt=0;
@@ -247,11 +253,6 @@ if (temp_sens_count==3) {
 
 
 
-static char timed_charge_cnt[12];
-if (charge_mode_timed_time_sec > 0) {
-	sprintf(timed_charge_cnt, "%04lu", charge_mode_timed_time_sec);
-	GLCD_PrintString(104, 44, timed_charge_cnt);
-}
 
 static char start_stop_str[7];
 if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
