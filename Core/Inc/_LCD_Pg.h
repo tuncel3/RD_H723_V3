@@ -204,6 +204,13 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(80, 53, date_time_string);
 
 
+static char start_stop_str[7];
+if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
+	sprintf(start_stop_str, ":%s", state_list[START_FC].name); GLCD_PrintString(92, 0, start_stop_str);
+} else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
+	sprintf(start_stop_str, ":%s", state_list[STOP_FC].name); GLCD_PrintString(92, 0, start_stop_str);
+}
+
 		static uint8_t rolling_disp_VAC_cnt=0;
 		static uint8_t disp_VAC_phase_wait =12;
 		static uint8_t disp_VAC_phase_wait_slice =4;
@@ -244,13 +251,6 @@ if (temp_sens_count==3) {
 	} else if (rolling_disp_TEMP_cnt < 2 * disp_TEMP_phase_wait_slice) {
 		sprintf(L, "Traf%5.1f", tmp_dat_C[1]); 		GLCD_PrintString(74, 31+2, L);
 	}
-}
-
-static char start_stop_str[7];
-if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
-	sprintf(start_stop_str, ":%s", state_list[START_FC].name); GLCD_PrintString(92, 0, start_stop_str);
-} else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
-	sprintf(start_stop_str, ":%s", state_list[STOP_FC].name); GLCD_PrintString(92, 0, start_stop_str);
 }
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
