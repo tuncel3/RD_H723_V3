@@ -203,7 +203,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		static char timed_charge_cnt[12];
 		if (charge_mode_timed_time_sec > 0) {
 			sprintf(timed_charge_cnt, "%04lu", charge_mode_timed_time_sec);
-			GLCD_PrintString(104, 44, timed_charge_cnt);
+			GLCD_PrintString(104, 43, timed_charge_cnt);
 		}
 		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(80, 53, date_time_string);
 
