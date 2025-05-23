@@ -209,6 +209,8 @@ if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
 	sprintf(start_stop_str, ":%s", state_list[START_FC].name); GLCD_PrintString(92, 0, start_stop_str);
 } else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
 	sprintf(start_stop_str, ":%s", state_list[STOP_FC].name); GLCD_PrintString(92, 0, start_stop_str);
+} else if (state_list[SFT S].action & (1 << ACTIVE_enum)) {
+	sprintf(start_stop_str, ":%s", state_list[SFT S].name); GLCD_PrintString(92, 0, start_stop_str);
 }
 
 		static uint8_t rolling_disp_VAC_cnt=0;
