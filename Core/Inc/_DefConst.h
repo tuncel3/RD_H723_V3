@@ -1097,6 +1097,7 @@ State_Info state_list[] = {
 	{ TIMED_CHARGE,         	  0b00000,	"Zamanlı Şarj",        none_REL },
 	{ MANUAL_CHARGE,         	  0b00000,	"Manuel Şarj",         none_REL },
 	{ AUTO_CHARGE,      	   	  0b00000,	"Oto Şarj",  		   none_REL },
+	{ SOFT_START_ST,      	   	  0b00000,	"SFT S",  		       none_REL },
 	{ EEPROM_FAULT_FC,            0b00000,	"Kayit Sist Arz",      NUM_REL_CODES },
 	{ RTC_FAULT_FC,               0b00000,	"RTC Arz",             NUM_REL_CODES },
 	{ VAC_R_RMS_HG_FAULT_FC,      0b00000,	"VINR RMS Yüksek",     NUM_REL_CODES },
