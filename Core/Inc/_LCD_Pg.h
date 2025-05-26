@@ -264,11 +264,11 @@ static char RollBuf[32];
 if (tabl_dolas_delay_cnt==0) {
 	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-			if (state_list[tabl_dolas].code==FLOAT_CHARGE_FC && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
+			if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(O)");
-			} else if (state_list[tabl_dolas].code==FLOAT_CHARGE_FC && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
-				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(T)");
-			} else if (state_list[tabl_dolas].code==FLOAT_CHARGE_FC) {
+			} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
+				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Z)");
+			} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(M)");
 			} else {
 				sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
@@ -283,11 +283,11 @@ if (tabl_dolas_delay_cnt==0) {
 
 		for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) { // üstteki for döngüsü ile aynı. yazma işlemi üstteki loopta yapılıyor. üstteki loop bir şey bulamaıp tablo sonuna geldi diyelim. bu durumda birşey bulunamadığı için bu döngüde boş satır yazılacak. bunu engellemek için aynı loop buraya da koyuluyor.
 			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-				if (state_list[tabl_dolas].code==FLOAT_CHARGE_FC && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
+				if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(O)");
-				} else if (state_list[tabl_dolas].code==FLOAT_CHARGE_FC && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
-					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(T)");
-				} else if (state_list[tabl_dolas].code==FLOAT_CHARGE_FC) {
+				} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
+					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Z)");
+				} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(M)");
 				} else {
 					sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
