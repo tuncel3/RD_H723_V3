@@ -37,6 +37,7 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 			set_V_targ_con_sy(5);
 			apply_state_changes_f(STOP_FC, 0);
 			apply_state_changes_f(START_FC, 1);
+			apply_state_changes_f(SOFT_START_ST, 1);
 			thy_drv_en=1;
 			sfsta_op_phase=S_SFSTA_REQ;
 			thy_drv_en_req=0;
