@@ -837,6 +837,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		set_V_targ_con_sy(Current_charge_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
+		apply_state_changes_f(TIMED_CHARGE, 0);
+		apply_state_changes_f(MANUAL_CHARGE, 1);
+		apply_state_changes_f(AUTO_CHARGE, 0);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
 		LED_7_Data |= FLOAT_CHARGE_LED;
 		switch_to_auto_mode_completed=0;
@@ -849,6 +852,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		set_V_targ_con_sy(Current_charge_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
+		apply_state_changes_f(TIMED_CHARGE, 0);
+		apply_state_changes_f(MANUAL_CHARGE, 0);
+		apply_state_changes_f(AUTO_CHARGE, 1);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0;
@@ -861,6 +867,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		set_V_targ_con_sy(Current_charge_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
+		apply_state_changes_f(TIMED_CHARGE, 1);
+		apply_state_changes_f(MANUAL_CHARGE, 0);
+		apply_state_changes_f(AUTO_CHARGE, 0);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0;
@@ -870,7 +879,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
 		}
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
-
+		apply_state_changes_f(TIMED_CHARGE, 0);
+		apply_state_changes_f(MANUAL_CHARGE, 0);
+		apply_state_changes_f(AUTO_CHARGE, 1);
 	}
 }
 
