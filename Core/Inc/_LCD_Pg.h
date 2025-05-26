@@ -210,7 +210,7 @@ if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
 } else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
 	sprintf(start_stop_str, ":%s", state_list[STOP_FC].name); GLCD_PrintString(92, 0, start_stop_str);
 }
-if (state_list[SOFT_START_ST].action & (1 << ACTIVE_enum)) {
+if (sfsta_op_phase=S_SFSTA_REQ)) {
 	sprintf(start_stop_str, "S"); GLCD_PrintString(92, 0, start_stop_str);
 }
 
