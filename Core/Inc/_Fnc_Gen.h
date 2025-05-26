@@ -869,6 +869,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 			timed_mode_time_ended=0; // timed mod sayacı sıfırla. sayaç sonunda float a geçilecek
 			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
 		}
+	} else if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
+
 	}
 }
 

@@ -56,28 +56,28 @@ if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
-if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
-	if (switch_to_auto_mode_completed==0) {
-		switch_to_auto_mode_completed=1; // başka bir moddan auto moda geçildi.
-		boost_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
-		float_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
-		PRF_GEN("switch_to_auto_mode_completed");
-	}
-	else if (IBAT_pas.a1 > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
-		float_of_auto_mode_active=0;
-		boost_of_auto_mode_active=1;
-		EpD[SET_CHARGE_MODE][0].V1=BOOST; EpD[SET_CHARGE_MODE][1].V1=BOOST; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
-		actions_after_charge_mode_change(33);
-		PRF_GEN("AUTO switch to BOOST %f", IBAT_pas.a1);
-	}
-	else if (IBAT_pas.a1 < EpD[I_LIM_TO_FLOAT][0].V1 && float_of_auto_mode_active==0) {
-		float_of_auto_mode_active=1;
-		boost_of_auto_mode_active=0;
-		EpD[SET_CHARGE_MODE][0].V1=FLOAT; EpD[SET_CHARGE_MODE][1].V1=FLOAT; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
-		actions_after_charge_mode_change(34);
-		PRF_GEN("AUTO switch to FLOAT %f", IBAT_pas.a1);
-	}
-}
+//if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
+//	if (switch_to_auto_mode_completed==0) {
+//		switch_to_auto_mode_completed=1; // başka bir moddan auto moda geçildi.
+//		boost_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
+//		float_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
+//		PRF_GEN("switch_to_auto_mode_completed");
+//	}
+//	else if (IBAT_pas.a1 > EpD[I_LIM_TO_BOOST][0].V1 && boost_of_auto_mode_active==0) {
+//		float_of_auto_mode_active=0;
+//		boost_of_auto_mode_active=1;
+//		EpD[SET_CHARGE_MODE][0].V1=BOOST; EpD[SET_CHARGE_MODE][1].V1=BOOST; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
+//		actions_after_charge_mode_change(33);
+//		PRF_GEN("AUTO switch to BOOST %f", IBAT_pas.a1);
+//	}
+//	else if (IBAT_pas.a1 < EpD[I_LIM_TO_FLOAT][0].V1 && float_of_auto_mode_active==0) {
+//		float_of_auto_mode_active=1;
+//		boost_of_auto_mode_active=0;
+//		EpD[SET_CHARGE_MODE][0].V1=FLOAT; EpD[SET_CHARGE_MODE][1].V1=FLOAT; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
+//		actions_after_charge_mode_change(34);
+//		PRF_GEN("AUTO switch to FLOAT %f", IBAT_pas.a1);
+//	}
+//}
 ////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
