@@ -76,10 +76,10 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
-		switch_to_auto_mode_completed=0;
+//		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		PRF_GEN("BOOST charge mode %d", num);
+		PRF_GEN("BOOST charge mode");
 
 		PRF_GEN("AUTO switch to BOOST %f", IBAT_pas.a1);
 	}
@@ -96,10 +96,10 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
 		LED_7_Data |= FLOAT_CHARGE_LED;
-		switch_to_auto_mode_completed=0;
+//		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
-		PRF_GEN("FLOAT charge mode %d", num);
+		PRF_GEN("FLOAT charge mode");
 
 		PRF_GEN("AUTO switch to FLOAT %f", IBAT_pas.a1);
 	}
