@@ -437,12 +437,12 @@ inline extern void CHARGE_SETT_pg_disp(void) {
 	GLCD_PrintString(0, (i + 1) * 9, L);
 
 	if (switch_to_auto_mode_completed==1) {
-		sprintf(M, "%s", CH_MOD_SEL_Items[(uint32_t)EpD[SET_CHARGE_MODE][chg_setting_edit_mode].V1]);
+		sprintf(M, "   Oto  ");
 	}
 
-	if (CHARGE_SETT_Items[chg_set_disp_index_].V1 == SET_CHARGE_MODE) {
-	sprintf(M, "%s", CH_MOD_SEL_Items[(uint32_t)EpD[SET_CHARGE_MODE][chg_setting_edit_mode].V1]);
-	GLCD_PrintString(80, (i + 1) * 9, M);
+	else if (CHARGE_SETT_Items[chg_set_disp_index_].V1 == SET_CHARGE_MODE) {
+		sprintf(M, "%s", CH_MOD_SEL_Items[(uint32_t)EpD[SET_CHARGE_MODE][chg_setting_edit_mode].V1]);
+		GLCD_PrintString(80, (i + 1) * 9, M);
 	}
 	else if (CHARGE_SETT_Items[chg_set_disp_index_].V1 == SET_BOOST_TIME) {
 	sprintf(M, "%02lu dk", (uint32_t) EpD[SET_BOOST_TIME][chg_setting_edit_mode].V1);
