@@ -204,7 +204,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(80, 53, date_time_string);
 
 
-if (sfsta_op_phase=S_SFSTA_REQ) {
+if (sfsta_op_phase==S_SFSTA_REQ) {
 	GLCD_PrintString(92, 0, "S");
 }
 static char start_stop_str[7];
