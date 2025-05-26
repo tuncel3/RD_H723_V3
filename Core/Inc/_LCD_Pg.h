@@ -256,7 +256,6 @@ if (temp_sens_count==3) {
 }
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
-
 static uint8_t tabl_dolas=0, tabl_dolas_delay=4;
 static uint8_t son_kal=0;
 static uint8_t tabl_dolas_delay_cnt=0;
