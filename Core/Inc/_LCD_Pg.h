@@ -205,7 +205,7 @@ inline extern void HOME_PAGE_pg_disp(void) {
 
 
 if (sfsta_op_phase==S_SFSTA_REQ) {
-	GLCD_PrintString(92, 0, "S");
+	GLCD_PrintString(98, 0, "SoftS");
 }
 static char start_stop_str[7];
 if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
@@ -284,11 +284,11 @@ if (tabl_dolas_delay_cnt==0) {
 		for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) { // üstteki for döngüsü ile aynı. yazma işlemi üstteki loopta yapılıyor. üstteki loop bir şey bulamaıp tablo sonuna geldi diyelim. bu durumda birşey bulunamadığı için bu döngüde boş satır yazılacak. bunu engellemek için aynı loop buraya da koyuluyor.
 			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 				if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
-					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(O)");
+					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
 				} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
-					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Z)");
+					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Zmn)");
 				} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
-					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(M)");
+					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Man)");
 				} else {
 					sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
 				}
