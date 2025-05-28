@@ -204,12 +204,12 @@ inline extern void HOME_PAGE_pg_disp(void) {
 		sprintf(date_time_string, "%02u:%02u:%02u", rtc_hour_recv, rtc_min_recv, rtc_sec_recv); GLCD_PrintString(80, 53, date_time_string);
 
 
-if (sfsta_op_phase==S_SFSTA_REQ) {
-	GLCD_PrintString(98, 0, "SoftS");
-}
 static char start_stop_str[7];
 if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
 	sprintf(start_stop_str, "%s", state_list[START_FC].name); GLCD_PrintString(98, 0, start_stop_str);
+	if (sfsta_op_phase==S_SFSTA_REQ) {
+		GLCD_PrintString(98, 0, "SoftS");
+	}
 } else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
 	sprintf(start_stop_str, "%s", state_list[STOP_FC].name); GLCD_PrintString(98, 0, start_stop_str);
 }
