@@ -87,6 +87,9 @@ inline extern void DROPPER_pg_disp(void) {
 	    sprintf(L, "frqS%7.3f", frq_s_updn_avg_m); 		GLCD_PrintString(0, 2*lnhg, L);
 	    sprintf(L, "frqT%7.3f", frq_t_updn_avg_m); 		GLCD_PrintString(0, 3*lnhg, L);
 
+	    uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
+
+
 	}
 	inline extern void CALIBRATION_1_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon pg1");
