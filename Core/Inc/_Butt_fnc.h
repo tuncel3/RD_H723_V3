@@ -308,7 +308,7 @@ void bright_fnc(void) {
 				cal_sel_col=1;
 			}
 			else if (cal_sel_col==1) {
-//				currentPage == CALIBRATION_2_pg
+				currentPage == CALIBRATION_2_pg
 			}
     	} else if (cal_sel_edit_mode != cal_none) {																// RIGHT
     		cal_sel_digit=(cal_sel_digit-1+2)%2;
