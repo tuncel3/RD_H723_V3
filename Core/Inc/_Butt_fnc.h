@@ -1009,7 +1009,7 @@ if (!chg_setting_edit_mode) {
 			}
     	}
 
-    	if (cal_sel_col==0) {
+    	if (cal_sel_col==0) { // DOWN
 			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==0 && cal_sel_digit==0) {
 				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1/1.0002;
 				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
@@ -1054,23 +1054,23 @@ if (!chg_setting_edit_mode) {
 				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1-1;
 				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==2 && cal_sel_digit==1) {
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==2 && cal_sel_digit==1) { // DOWN
 				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1-10;
 				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==0) {
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==0) { // DOWN
 				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1/1.0002;
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==1) {
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==1) { // DOWN
 				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1/1.005;
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==0) {
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==0) { // DOWN
 				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1-1;
 				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==1) {
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==1) { // DOWN
 				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1-10;
 				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
 			}
