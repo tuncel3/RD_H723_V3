@@ -1054,23 +1054,23 @@ if (!chg_setting_edit_mode) {
 				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1-1;
 				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==2 && cal_sel_digit==1) { // DOWN
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==2 && cal_sel_digit==1) { 			// DOWN
 				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1-10;
 				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==0) { // DOWN
+			if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==0) { 					// DOWN
 				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1/1.0002;
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==1) { // DOWN
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_left==3 && cal_sel_digit==1) { 				// DOWN
 				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1/1.005;
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==0) { // DOWN
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==0) { 			// DOWN
 				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1-1;
 				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==1) { // DOWN
+			else if (cal_sel_edit_mode == cal_offset && cal_sel_item_left==3 && cal_sel_digit==1) { 			// DOWN
 				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1-10;
 				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
 			}
@@ -1112,7 +1112,7 @@ if (!chg_setting_edit_mode) {
 				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1/1.0002;
 				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==1 && cal_sel_digit==1) {				// DOWN
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==1 && cal_sel_digit==1) {					// DOWN
 				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1/1.005;
 				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
 			}
@@ -1128,7 +1128,7 @@ if (!chg_setting_edit_mode) {
 				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1/1.0002;
 				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==2 && cal_sel_digit==1) {				// DOWN
+			else if (cal_sel_edit_mode == cal_gain && cal_sel_item_right==2 && cal_sel_digit==1) {					// DOWN
 				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1/1.005;
 				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
 			}
@@ -1275,11 +1275,11 @@ void besc_fnc(void) {
 				EpD[SET_DROPPER_K2][1].V1=EpD[SET_DROPPER_K2][0].V1;
 			} else if (selected_DROPPER_PG_line == 3) {
 				if (drop_set_dig==0) {
-					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;						// ESC
+					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;									// ESC
 				} else if (drop_set_dig==1) {
-					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;						// ESC
+					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;									// ESC
 				} else if (drop_set_dig==2) {
-					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;						// ESC
+					set_dropper_l_hg_V_h=EpD[SET_DROPP_L_LW_PERC][0].V1;									// ESC
 				} else if (drop_set_dig==3) {
 					EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1=EpD[SET_DROPP_L_HG_PERC][0].V1;			// ESC
 				} else if (drop_set_dig==4) {
@@ -1318,7 +1318,7 @@ void besc_fnc(void) {
 		while_LCD_delay_per=while_LCD_delay_normal_per;
 		while_RTC_delay_per=while_RTC_delay_normal_per;
 	}
-    else if (currentPage == FAULT_CODES_RESET_pg) {						// ESC
+    else if (currentPage == FAULT_CODES_RESET_pg) {											// ESC
         if (fault_codes_reset_completed) {
         	fault_codes_reset_completed = 0;
         	fault_codes_reset_req = 0;
@@ -1333,7 +1333,7 @@ void besc_fnc(void) {
         	currentPage = MANAGEMENT_pg;
         }
     }
-    else if (currentPage == RECTF_ACTIVE_AT_STARTUP_pg) {						// ESC
+    else if (currentPage == RECTF_ACTIVE_AT_STARTUP_pg) {									// ESC
         currentPage = MANAGEMENT_pg;
     }
     else if (currentPage == DEVICE_RESET_pg) {
