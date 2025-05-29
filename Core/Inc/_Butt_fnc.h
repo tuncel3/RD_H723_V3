@@ -1307,7 +1307,7 @@ void besc_fnc(void) {
     }
     else if (currentPage == CALIBRATION_1_pg) { // ESC
         currentPage = MANAGEMENT_pg;
-		bat_inspection_allowed=1;
+		EpD[SET_BATT_DISC_DET][0].V1=1;
     }
     else if (currentPage == FAULT_CODES_REPORT_pg) { // ESC
         currentPage = MAIN_MENU_pg;

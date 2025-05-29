@@ -796,7 +796,6 @@ float cont_sys_vbatt_diff = 0;
 uint32_t baslangic_gercek_fark_cok = 0;
 uint32_t hedef_gercek_fark_az = 0;
 uint32_t start_bat_inspection_req = 0;
-uint32_t bat_inspection_allowed = 1;
 uint32_t bat_inspection_canceled = 1;
 uint32_t insp_loop_delay_h = 0;
 uint32_t insp_loop_delay_per = 20;
