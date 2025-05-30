@@ -679,17 +679,11 @@ typedef enum {
 	cal_offset
 } cal_edit_mode;
 
-uint32_t cal_pg1_sel_col=0;
-uint32_t cal_pg1_sel_item_left=0;
-uint32_t cal_pg1_sel_item_right=0;
-uint32_t cal_pg1_sel_digit=0;
-uint32_t cal_pg1_sel_edit_mode=0;
-
-uint32_t cal_pg2_sel_col=0;
-uint32_t cal_pg2_sel_item_left=0;
-uint32_t cal_pg2_sel_item_right=0;
-uint32_t cal_pg2_sel_digit=0;
-uint32_t cal_pg2_sel_edit_mode=0;
+uint32_t cal_sel_col=0;
+uint32_t cal_sel_item_left=0;
+uint32_t cal_sel_item_right=0;
+uint32_t cal_sel_digit=0;
+uint32_t cal_sel_edit_mode=0;
 
 uint8_t rectf_active_at_startup_req_right = 0;
 
@@ -1078,8 +1072,8 @@ State_Info state_list[] = {
 	{ DROPPER2_BYP_FC,      	  0b00000,	"Dropper 2 Bypass",    NUM_REL_CODES },
 	{ DROPPER1_BYP_FC,      	  0b00000,	"Dropper 1 Bypass",    NUM_REL_CODES },
 	{ BATT_FUSE_OFF_FC,           0b10010,	"Akü Sigrta Atık",    BATT_FUSE_OFF_FC_REL },
-	{ BOOST_CHARGE_FC,      	  0b10000,	"Hızl Şarj",          BOOST_CHARGE_FC_REL },
-	{ FLOAT_CHARGE_FC,      	  0b10000,	"Norm Şarj",         FLOAT_CHARGE_FC_REL },
+	{ BOOST_CHARGE_FC,      	  0b10000,	"Hızlı Şarj",          BOOST_CHARGE_FC_REL },
+	{ FLOAT_CHARGE_FC,      	  0b10000,	"Normal Şarj",         FLOAT_CHARGE_FC_REL },
 	{ LINE_FUSE_OFF_FC,      	  0b10110,	"Girş Sigrt Atık",    LINE_FUSE_OFF_FC_REL },
 	// LED 7 BIT6 enum 22
 	{ RECT_SHORT_FC,              0b00110,	"DC Kısa Devre",       NUM_REL_CODES },
@@ -1161,8 +1155,8 @@ rel_dat_stru rel_dat_tb[] = {
 	{ GENERAL_FAULT_FC_REL,      0, REL_NO, "Genel Arıza" },
 	{ VAC_OFF_FC_REL,            0, REL_NO, "Şebeke Yok" },
 	{ VAC_ON_FC_REL,             0, REL_NO, "Şebeke Var" },
-	{ BOOST_CHARGE_FC_REL,       0, REL_NO, "Hızlı Şarj" },
-	{ FLOAT_CHARGE_FC_REL,       0, REL_NO, "Normal Şarj" },
+	{ BOOST_CHARGE_FC_REL,       0, REL_NO, "Hızl Şarj" },
+	{ FLOAT_CHARGE_FC_REL,       0, REL_NO, "Norm Şarj" },
 	{ RECT_DC_HG_FC_REL,         0, REL_NO, "Doğr VDC Yüksk" },
 	{ RECT_DC_LW_FC_REL,         0, REL_NO, "Doğr VDC Düşük" },
 	{ OVERTEMP_OPEN_FC_REL,      0, REL_NO, "Aşrı Sıck Açma" },
@@ -1505,8 +1499,6 @@ uint8_t zcr_exist_S=0;
 uint8_t zcr_exist_T=0;
 
 float frq_cal_k=0;
-uint32_t trim_val=0;
-uint32_t lnhg=0;
 
 
 
