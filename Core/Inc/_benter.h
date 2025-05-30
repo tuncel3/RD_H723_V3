@@ -331,6 +331,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 				}
 
 			}
+		}
     }
     else if (currentPage == CALIBRATION_1_pg) {
     	cal_pg1_sel_edit_mode=(cal_pg1_sel_edit_mode+1)%3;
