@@ -32,7 +32,7 @@ delay_1ms(100);
 GLCD_Init();
 delay_1ms(10);
 GLCD_ClearScreen(0x00);
-GLCD_PrintString(0, 0, "POWER ELEKTRONIK");
+GLCD_PrintString(16, 25, "POWER ELEKTRONIK");
 GLCD_RefreshGRAM();
 
 swap_scr_lines(&SCR_R, &SCR_T); // faz sıralamasına göre değşim gerekiyorsa bu fonksiyon kullanılacak.

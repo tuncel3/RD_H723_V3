@@ -322,64 +322,64 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 		}
     }
     else if (currentPage == CALIBRATION_1_pg) {
-    	cal_sel_edit_mode=(cal_sel_edit_mode+1)%3;
+    	cal_pg1_sel_edit_mode=(cal_pg1_sel_edit_mode+1)%3;
 
-		if (cal_sel_edit_mode == cal_offset) { // yani enter a basılmış ve gain den offset edit moduna geçilmiş. yani gain değerinin kaydedilmesi lazım.
-			if (cal_sel_col==0) {
-				if (cal_sel_item_left==0) {
+		if (cal_pg1_sel_edit_mode == cal_offset) { // yani enter a basılmış ve gain den offset edit moduna geçilmiş. yani gain değerinin kaydedilmesi lazım.
+			if (cal_pg1_sel_col==0) {
+				if (cal_pg1_sel_item_left==0) {
 					Rec_Dat_to_EEp_f(SET_VRECT_CAL);
 				}
-				else if (cal_sel_item_left==1) {
+				else if (cal_pg1_sel_item_left==1) {
 					Rec_Dat_to_EEp_f(SET_VLOAD_CAL);
 				}
-				else if (cal_sel_item_left==2) {
+				else if (cal_pg1_sel_item_left==2) {
 					Rec_Dat_to_EEp_f(SET_VBAT_CAL);
 				}
-				else if (cal_sel_item_left==3) {
+				else if (cal_pg1_sel_item_left==3) {
 					Rec_Dat_to_EEp_f(SET_IRECT_CAL);
 				}
-				else if (cal_sel_item_left==4) {
+				else if (cal_pg1_sel_item_left==4) {
 					Rec_Dat_to_EEp_f(SET_IBAT_CAL);
 				}
 			}
-			if (cal_sel_col==1) {
-				if (cal_sel_item_right==0) {
+			if (cal_pg1_sel_col==1) {
+				if (cal_pg1_sel_item_right==0) {
 					Rec_Dat_to_EEp_f(SET_ACR_CAL);
 				}
-				else if (cal_sel_item_right==1) {
+				else if (cal_pg1_sel_item_right==1) {
 					Rec_Dat_to_EEp_f(SET_ACS_CAL);
 				}
-				else if (cal_sel_item_right==2) {
+				else if (cal_pg1_sel_item_right==2) {
 					Rec_Dat_to_EEp_f(SET_ACT_CAL);
 				}
 			}
 		}
-		if (cal_sel_edit_mode == cal_none) { // yani enter a basılmış ve offset den no edit moduna geçilmiş. yani offset değerinin kaydedilmesi lazım.
-			if (cal_sel_col==0) {
-				if (cal_sel_item_left==0) {
+		if (cal_pg1_sel_edit_mode == cal_none) { // yani enter a basılmış ve offset den no edit moduna geçilmiş. yani offset değerinin kaydedilmesi lazım.
+			if (cal_pg1_sel_col==0) {
+				if (cal_pg1_sel_item_left==0) {
 					Rec_Dat_to_EEp_f(SET_VRECT_OFFS_CAL);
 				}
-				else if (cal_sel_item_left==1) {
+				else if (cal_pg1_sel_item_left==1) {
 					Rec_Dat_to_EEp_f(SET_VLOAD_OFFS_CAL);
 				}
-				else if (cal_sel_item_left==2) {
+				else if (cal_pg1_sel_item_left==2) {
 					Rec_Dat_to_EEp_f(SET_VBAT_OFFS_CAL);
 				}
-				else if (cal_sel_item_left==3) {
+				else if (cal_pg1_sel_item_left==3) {
 					Rec_Dat_to_EEp_f(SET_IRECT_OFFS_CAL);
 				}
-				else if (cal_sel_item_left==4) {
+				else if (cal_pg1_sel_item_left==4) {
 					Rec_Dat_to_EEp_f(SET_IBAT_OFFS_CAL);
 				}
 			}
-			if (cal_sel_col==1) {
-				if (cal_sel_item_right==0) {
+			if (cal_pg1_sel_col==1) {
+				if (cal_pg1_sel_item_right==0) {
 					Rec_Dat_to_EEp_f(SET_ACR_OFFS_CAL);
 				}
-				else if (cal_sel_item_right==1) {
+				else if (cal_pg1_sel_item_right==1) {
 					Rec_Dat_to_EEp_f(SET_ACS_OFFS_CAL);
 				}
-				else if (cal_sel_item_right==2) {
+				else if (cal_pg1_sel_item_right==2) {
 					Rec_Dat_to_EEp_f(SET_ACT_OFFS_CAL);
 				}
 			}
