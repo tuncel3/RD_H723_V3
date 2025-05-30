@@ -1505,6 +1505,7 @@ uint8_t zcr_exist_S=0;
 uint8_t zcr_exist_T=0;
 
 float frq_cal_k=0;
+uint32_t trim_val=0;
 
 
 
