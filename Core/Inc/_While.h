@@ -1010,6 +1010,7 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
+//	LL_RCC_HSI_SetCalibTrimming(trim_val);
 
 	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
 		while_LCD_reinit_per=ms_tick_cnt;

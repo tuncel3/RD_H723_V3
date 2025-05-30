@@ -89,6 +89,15 @@ inline extern void DROPPER_pg_disp(void) {
 
 	    uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
 
+	    if (cal_pg2_sel_edit_mode==cal_none) {
+			if (cal_pg2_sel_col==0) {
+				x0=13; y0=9+(cal_pg2_sel_item_left*11); w=41;
+				GLCD_Rect_E(x0,y0,x0+w,y0+h);
+			} else if (cal_pg2_sel_col==1) {
+				x0=77; y0=9+(cal_pg2_sel_item_right*11); w=41;
+				GLCD_Rect_E(x0,y0,x0+w,y0+h);
+			}
+	    }
 
 	}
 	inline extern void CALIBRATION_1_pg_disp(void) {
@@ -106,78 +115,78 @@ inline extern void DROPPER_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
 
 
-    if (cal_sel_edit_mode==cal_none) {
-		if (cal_sel_col==0) {
-			x0=13; y0=9+(cal_sel_item_left*11); w=41;
+    if (cal_pg1_sel_edit_mode==cal_none) {
+		if (cal_pg1_sel_col==0) {
+			x0=13; y0=9+(cal_pg1_sel_item_left*11); w=41;
 			GLCD_Rect_E(x0,y0,x0+w,y0+h);
-		} else if (cal_sel_col==1) {
-			x0=77; y0=9+(cal_sel_item_right*11); w=41;
+		} else if (cal_pg1_sel_col==1) {
+			x0=77; y0=9+(cal_pg1_sel_item_right*11); w=41;
 			GLCD_Rect_E(x0,y0,x0+w,y0+h);
 		}
     }
 
-	if (cal_sel_col == 0) {
-		if (cal_sel_item_left==0) {
-		    if (cal_sel_edit_mode != cal_none) {y0=19;}
+	if (cal_pg1_sel_col == 0) {
+		if (cal_pg1_sel_item_left==0) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {y0=19;}
 		    sprintf(L, "%9.8f", EpD[SET_VRECT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 			sprintf(L, "%6.0f", EpD[SET_VRECT_OFFS_CAL][0].V1); 	GLCD_PrintString(64, 5*lnhg, L);
 		}
-		if (cal_sel_item_left==1) {
-		    if (cal_sel_edit_mode != cal_none) {y0=30;}
+		if (cal_pg1_sel_item_left==1) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {y0=30;}
 			sprintf(L, "%9.8f", EpD[SET_VLOAD_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 			sprintf(L, "%6.0f", EpD[SET_VLOAD_OFFS_CAL][0].V1); 	GLCD_PrintString(64, 5*lnhg, L);
 		}
-		if (cal_sel_item_left==2) {
-		    if (cal_sel_edit_mode != cal_none) {y0=41;}
+		if (cal_pg1_sel_item_left==2) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {y0=41;}
 			sprintf(L, "%9.8f", EpD[SET_VBAT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 			sprintf(L, "%6.0f", EpD[SET_VBAT_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
 		}
-		if (cal_sel_item_left==3) {
-		    if (cal_sel_edit_mode != cal_none) {y0=52;}
+		if (cal_pg1_sel_item_left==3) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {y0=52;}
 			sprintf(L, "%9.8f", EpD[SET_IRECT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 			sprintf(L, "%6.0f", EpD[SET_IRECT_OFFS_CAL][0].V1); 	GLCD_PrintString(64, 5*lnhg, L);
 		}
-		if (cal_sel_item_left==4) {
-		    if (cal_sel_edit_mode != cal_none) {y0=63;}
+		if (cal_pg1_sel_item_left==4) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {y0=63;}
 			sprintf(L, "%9.8f", EpD[SET_IBAT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 			sprintf(L, "%6.0f", EpD[SET_IBAT_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
 		}
-		if (cal_sel_digit==0) {
-		    if (cal_sel_edit_mode != cal_none) {x0=48; w=4;}
+		if (cal_pg1_sel_digit==0) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {x0=48; w=4;}
 
 		}
-		if (cal_sel_digit==1) {
-		    if (cal_sel_edit_mode != cal_none) {x0=42; w=4;}
+		if (cal_pg1_sel_digit==1) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {x0=42; w=4;}
 		}
 	}
-	else if (cal_sel_col == 1) {
-		if (cal_sel_item_right==0) {
-		    if (cal_sel_edit_mode != cal_none) {y0=19;}
+	else if (cal_pg1_sel_col == 1) {
+		if (cal_pg1_sel_item_right==0) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {y0=19;}
 			sprintf(L, "%9.8f", EpD[SET_ACR_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 			sprintf(L, "%6.0f", EpD[SET_ACR_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
 		}
-		if (cal_sel_item_right==1) {
-		    if (cal_sel_edit_mode != cal_none) {y0=30;}
+		if (cal_pg1_sel_item_right==1) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {y0=30;}
 			sprintf(L, "%9.8f", EpD[SET_ACS_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 			sprintf(L, "%6.0f", EpD[SET_ACS_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
 		}
-		if (cal_sel_item_right==2) {
-		    if (cal_sel_edit_mode != cal_none) {y0=41;}
+		if (cal_pg1_sel_item_right==2) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {y0=41;}
 			sprintf(L, "%9.8f", EpD[SET_ACT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 			sprintf(L, "%6.0f", EpD[SET_ACT_OFFS_CAL][0].V1); 		GLCD_PrintString(64, 5*lnhg, L);
 		}
-		if (cal_sel_digit==0) {
-		    if (cal_sel_edit_mode != cal_none) {x0=48+64; w=4;}
+		if (cal_pg1_sel_digit==0) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {x0=48+64; w=4;}
 		}
-		if (cal_sel_digit==1) {
-		    if (cal_sel_edit_mode != cal_none) {x0=42+64; w=4;}
+		if (cal_pg1_sel_digit==1) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {x0=42+64; w=4;}
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
 
-    if (cal_sel_edit_mode==cal_gain) {
+    if (cal_pg1_sel_edit_mode==cal_gain) {
     	GLCD_PrintString(96, 0, "GAIN");
-    } else if (cal_sel_edit_mode==cal_offset) {
+    } else if (cal_pg1_sel_edit_mode==cal_offset) {
     	GLCD_PrintString(91, 0, "OFFST");
 	}
 
@@ -422,8 +431,8 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		GLCD_PrintString(0, (rel_dat_arrow_loc+1) * 9, ">");
 
 		uint8_t x0=0; uint8_t y0=0; uint8_t w=100; uint8_t h=10;
-		if (cal_sel_edit_mode==cal_none) {
-			if (cal_sel_col==0) {
+		if (cal_pg1_sel_edit_mode==cal_none) {
+			if (cal_pg1_sel_col==0) {
 				x0=6; y0=(rel_dat_arrow_loc+1) * 9-2;
 				GLCD_Rect_E(x0,y0,x0+w,y0+h);
 			}
