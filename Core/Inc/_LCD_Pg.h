@@ -3,7 +3,7 @@
 
 inline extern void TEST_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
-	char L[32]; static uint8_t lnhg=9;
+	char L[32]; lnhg=9;
     GLCD_PrintString(0, 0, "Test");
 
 	sprintf(L, " %s %3.1f C", TEST_Items[0], tmp_dat_C[0]+temp_test_thy_1); 	GLCD_PrintString(0, 1*lnhg, L);
@@ -28,7 +28,7 @@ inline extern void TEST_pg_disp(void) {
 
 inline extern void FANS_TEMP_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
-	char L[32]; static uint8_t lnhg=9;
+	char L[32]; lnhg=9;
     GLCD_PrintString(0, 0, "Fanlar Sıcakl Koruma");
 
 	sprintf(L, " %s  %5.0f C", FANS_TEMP_Items[0], EpD[SET_COOL_FAN_TEMP][fan_temp_edit_mode].V1);	GLCD_PrintString(0, 1*lnhg, L);
@@ -48,7 +48,7 @@ inline extern void FANS_TEMP_pg_disp(void) {
 inline extern void DROPPER_pg_disp(void) {
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0;
     GLCD_PrintString(0, 0, "Dropper");
-	char L[32]; static uint8_t lnhg=9;
+	char L[32]; lnhg=9;
 	sprintf(L, " Kontrol   %s", MANUOTO_SEL_Items[(uint32_t)EpD[SET_DROPPER_MANOTO][dropper_edit_mode].V1]); 	GLCD_PrintString(0, 1*lnhg, L);
 	sprintf(L, " Kademe 1 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K1][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 2*lnhg, L);
 	sprintf(L, " Kademe 2 %s", DROPNORM_SEL_Items[(uint32_t)EpD[SET_DROPPER_K2][dropper_edit_mode].V1]); 		GLCD_PrintString(0, 3*lnhg, L);
@@ -82,7 +82,7 @@ inline extern void DROPPER_pg_disp(void) {
 
 //inline extern void CALIBRATION_2_pg_disp(void) {
 //	GLCD_PrintString(0, 0, "Kalibrasyon pg2");
-//	char L[32]; static uint8_t lnhg=11;
+//	char L[32]; lnhg=11;
 //	sprintf(L, "frqR%7.3f", frq_r_updn_avg_m); 		GLCD_PrintString(0, 1*lnhg, L);
 //	sprintf(L, "frqS%7.3f", frq_s_updn_avg_m); 		GLCD_PrintString(0, 2*lnhg, L);
 //	sprintf(L, "frqT%7.3f", frq_t_updn_avg_m); 		GLCD_PrintString(0, 3*lnhg, L);
@@ -102,7 +102,7 @@ inline extern void DROPPER_pg_disp(void) {
 //}
 inline extern void CALIBRATION_1_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon pg1");
-	char L[32]; static uint8_t lnhg=11;
+	char L[32]; lnhg=11;
     sprintf(L, "VR%7.2f", VRECT_pas.a64); 		GLCD_PrintString(0, 1*lnhg, L);
     sprintf(L, "VL%7.2f", VLOAD_pas.a64); 		GLCD_PrintString(0, 2*lnhg, L);
     sprintf(L, "VB%7.2f", VBAT_pas.a64); 		GLCD_PrintString(0, 3*lnhg, L);
