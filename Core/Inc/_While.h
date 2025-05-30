@@ -1010,6 +1010,7 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
+	MODIFY_REG(RCC->CR, RCC_CR_HSITRIM, trim_val << RCC_CR_HSITRIM_Pos);
 
 	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
 		while_LCD_reinit_per=ms_tick_cnt;
