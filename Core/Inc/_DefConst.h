@@ -679,10 +679,10 @@ typedef enum {
 	cal_offset
 } cal_edit_mode;
 
-uint32_t cal_sel_col=0;
-uint32_t cal_sel_item_left=0;
-uint32_t cal_sel_item_right=0;
-uint32_t cal_sel_digit=0;
+uint32_t cal_pg1_sel_col=0;
+uint32_t cal_pg1_sel_item_left=0;
+uint32_t cal_pg1_sel_item_right=0;
+uint32_t cal_pg1_sel_digit=0;
 uint32_t cal_sel_edit_mode=0;
 
 uint8_t rectf_active_at_startup_req_right = 0;
