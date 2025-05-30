@@ -1011,7 +1011,6 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
 
-
 	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
 		while_LCD_reinit_per=ms_tick_cnt;
 		GLCD_Init_while();
