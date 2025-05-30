@@ -3,7 +3,7 @@ cd /d "D:\aaa\CubeMX2\RD_H723_V3"
 
 :: Show the last 10 commits
 echo Listing last 100 commits:
-git --no-pager log --oneline -n 500
+git --no-pager log --oneline -n 50
 echo.
 
 :: Get the commit hash for the 2nd previous backup
