@@ -309,6 +309,6 @@ float tm_r_rise_tm_s_fall_2 = 0;
 float tm_r_rise_tm_t_fall_2 = 0;
 float per6_dist_int_sum = 0;
 
-uint32_t trim_val=0;
+
 
 

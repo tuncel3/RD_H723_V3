@@ -521,7 +521,7 @@ inline extern void per_t_up_avg_m_f(void) {
 	per_rst_6_avg_m=per_rst_up_or_dn_avg_m/3;
 }
 
-//#include "_LCD_Pg.h"		////////////////////////////////////////////////////////
+#include "_LCD_Pg.h"		////////////////////////////////////////////////////////
 
 
 void processShiftRegister_LED_7(uint32_t data) {
