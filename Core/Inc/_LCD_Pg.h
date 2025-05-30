@@ -91,7 +91,7 @@ inline extern void CALIBRATION_2_pg_disp(void) {
 
 	if (cal_pg2_sel_edit_mode==cal_none) {
 		if (cal_pg2_sel_col==0) {
-			x0=13; y0=9+(cal_pg2_sel_item_left*11); w=41;
+			x0=25; y0=9+(cal_pg2_sel_item_left*11); w=41;
 			GLCD_Rect_E(x0,y0,x0+w,y0+h);
 		} else if (cal_pg2_sel_col==1) {
 			x0=77; y0=9+(cal_pg2_sel_item_right*11); w=41;
