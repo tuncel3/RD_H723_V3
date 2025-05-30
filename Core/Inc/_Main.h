@@ -33,6 +33,7 @@ GLCD_Init();
 delay_1ms(10);
 GLCD_ClearScreen(0x00);
 GLCD_RefreshGRAM();
+sprintf(timed_charge_cnt, "%04lu", charge_mode_timed_time_sec); GLCD_PrintString(104, 43, timed_charge_cnt);
 
 swap_scr_lines(&SCR_R, &SCR_T); // faz sıralamasına göre değşim gerekiyorsa bu fonksiyon kullanılacak.
 
