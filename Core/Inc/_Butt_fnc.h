@@ -132,18 +132,18 @@ void bleft_fnc(void) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;			// LEFT
     }
     else if (currentPage == CALIBRATION_1_pg) {
-    	if (cal_sel_edit_mode == cal_none) {
+    	if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {
 				cal_pg1_sel_col=1;
 			}
 			else if (cal_pg1_sel_col==1) {
 				cal_pg1_sel_col=0;
 			}
-    	} else if (cal_sel_edit_mode != cal_none) {
+    	} else if (cal_pg1_sel_edit_mode != cal_none) {
     		cal_pg1_sel_digit=(cal_pg1_sel_digit+1)%2;
     	}
 
-		if (cal_sel_edit_mode == cal_none) {
+		if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {	// üstte cal sel col belirleniyor. burada da ona uygun olarak dikdörgenin yeri belirleniyor.
 				cal_pg1_sel_item_left=cal_pg1_sel_item_right;	// soldaki neyse sağa geçince de o olmasını sağlıyor.
 			}
@@ -303,18 +303,18 @@ void bright_fnc(void) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;				// RIGHT
     }
     else if (currentPage == CALIBRATION_1_pg) {
-    	if (cal_sel_edit_mode == cal_none) {
+    	if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {
 				cal_pg1_sel_col=1;
 			}
 			else if (cal_pg1_sel_col==1) {
 				currentPage = CALIBRATION_2_pg;
 			}
-    	} else if (cal_sel_edit_mode != cal_none) {																// RIGHT
+    	} else if (cal_pg1_sel_edit_mode != cal_none) {																// RIGHT
     		cal_pg1_sel_digit=(cal_pg1_sel_digit-1+2)%2;
     	}
 
-		if (cal_sel_edit_mode == cal_none) {
+		if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {	// üstte cal sel col belirleniyor. burada da ona uygun olarak dikdörgenin yeri belirleniyor.
 				cal_pg1_sel_item_left=cal_pg1_sel_item_right;	// soldaki neyse sağa geçince de o olmasını sağlıyor.
 			}
@@ -584,7 +584,7 @@ if (!chg_setting_edit_mode) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
     else if (currentPage == CALIBRATION_1_pg) { 														// UP
-    	if (cal_sel_edit_mode == cal_none) {
+    	if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {
 				cal_pg1_sel_item_left=((cal_pg1_sel_item_left-1+5)%5);
 			}
@@ -593,133 +593,133 @@ if (!chg_setting_edit_mode) {
 			}
     	}
     	if (cal_pg1_sel_col==0) {
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {			// UP
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {			// UP
 				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1*1.0002;
 				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==1) {
 				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1*1.005;
 				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {		// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {		// UP
 				EpD[SET_VRECT_OFFS_CAL][0].V1=EpD[SET_VRECT_OFFS_CAL][0].V1+1;
 				EpD[SET_VRECT_OFFS_CAL][1].V1=EpD[SET_VRECT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==1) {
 				EpD[SET_VRECT_OFFS_CAL][0].V1=EpD[SET_VRECT_OFFS_CAL][0].V1+10;
 				EpD[SET_VRECT_OFFS_CAL][1].V1=EpD[SET_VRECT_OFFS_CAL][0].V1;						// UP
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==0) {
 				EpD[SET_VLOAD_CAL][0].V1=EpD[SET_VLOAD_CAL][0].V1*1.0002;
 				EpD[SET_VLOAD_CAL][1].V1=EpD[SET_VLOAD_CAL][0].V1;						// UP
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==1) {		// UP
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==1) {		// UP
 				EpD[SET_VLOAD_CAL][0].V1=EpD[SET_VLOAD_CAL][0].V1*1.005;
 				EpD[SET_VLOAD_CAL][1].V1=EpD[SET_VLOAD_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==0) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==0) {
 				EpD[SET_VLOAD_OFFS_CAL][0].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1+1;
 				EpD[SET_VLOAD_OFFS_CAL][1].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1;						// UP
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==1) {		// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==1) {		// UP
 				EpD[SET_VLOAD_OFFS_CAL][0].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1+10;
 				EpD[SET_VLOAD_OFFS_CAL][1].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==0) {
 				EpD[SET_VBAT_CAL][0].V1=EpD[SET_VBAT_CAL][0].V1*1.0002;						// UP
 				EpD[SET_VBAT_CAL][1].V1=EpD[SET_VBAT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==1) {		// UP
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==1) {		// UP
 				EpD[SET_VBAT_CAL][0].V1=EpD[SET_VBAT_CAL][0].V1*1.005;						// UP
 				EpD[SET_VBAT_CAL][1].V1=EpD[SET_VBAT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==0) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==0) {
 				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1+1;
 				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;						// UP
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==1) {		// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==1) {		// UP
 				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1+10;
 				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==0) {
 				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1*1.0002;
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;						// UP
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==1) {		// UP
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==1) {		// UP
 				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1*1.005;
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;						// UP
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==0) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==0) {
 				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1+1;
 				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==1) {		// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==1) {		// UP
 				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1+10;
 				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;						// UP
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==0) {
 				EpD[SET_IBAT_CAL][0].V1=EpD[SET_IBAT_CAL][0].V1*1.0002;
 				EpD[SET_IBAT_CAL][1].V1=EpD[SET_IBAT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==1) {
 				EpD[SET_IBAT_CAL][0].V1=EpD[SET_IBAT_CAL][0].V1*1.005;
 				EpD[SET_IBAT_CAL][1].V1=EpD[SET_IBAT_CAL][0].V1;						// UP
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==0) {		// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==0) {		// UP
 				EpD[SET_IBAT_OFFS_CAL][0].V1=EpD[SET_IBAT_OFFS_CAL][0].V1+1;
 				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;						// UP
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==1) {
 				EpD[SET_IBAT_OFFS_CAL][0].V1=EpD[SET_IBAT_OFFS_CAL][0].V1+10;
 				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
 			}
     	}
     	else if (cal_pg1_sel_col==1) { // UP
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1*1.0002;						// UP
 				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==1) {
 				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1*1.005;						// UP
 				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==0) {	// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==0) {	// UP
 				EpD[SET_ACR_OFFS_CAL][0].V1=EpD[SET_ACR_OFFS_CAL][0].V1+1;						// UP
 				EpD[SET_ACR_OFFS_CAL][1].V1=EpD[SET_ACR_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==1) {	// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==1) {	// UP
 				EpD[SET_ACR_OFFS_CAL][0].V1=EpD[SET_ACR_OFFS_CAL][0].V1+10;						// UP
 				EpD[SET_ACR_OFFS_CAL][1].V1=EpD[SET_ACR_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1*1.0002;						// UP
 				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==1) {
 				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1*1.005;						// UP
 				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==0) {	// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==0) {	// UP
 				EpD[SET_ACS_OFFS_CAL][0].V1=EpD[SET_ACS_OFFS_CAL][0].V1+1;						// UP
 				EpD[SET_ACS_OFFS_CAL][1].V1=EpD[SET_ACS_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==1) {	// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==1) {	// UP
 				EpD[SET_ACS_OFFS_CAL][0].V1=EpD[SET_ACS_OFFS_CAL][0].V1+10;						// UP
 				EpD[SET_ACS_OFFS_CAL][1].V1=EpD[SET_ACS_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1*1.0002;						// UP
 				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==1) {
 				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1*1.005;						// UP
 				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==0) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACT_OFFS_CAL][0].V1=EpD[SET_ACT_OFFS_CAL][0].V1+1;
 				EpD[SET_ACT_OFFS_CAL][1].V1=EpD[SET_ACT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==1) {	// UP
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==1) {	// UP
 				EpD[SET_ACT_OFFS_CAL][0].V1=EpD[SET_ACT_OFFS_CAL][0].V1+10;
 				EpD[SET_ACT_OFFS_CAL][1].V1=EpD[SET_ACT_OFFS_CAL][0].V1;
 			}
@@ -1000,7 +1000,7 @@ if (!chg_setting_edit_mode) {
     	selected_MANAGEMENT=(selected_MANAGEMENT+1) % NUM_MANAGEMENT_ITEMS;							// DOWN
     }
     else if (currentPage == CALIBRATION_1_pg) {
-    	if (cal_sel_edit_mode == cal_none) {
+    	if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {
 				cal_pg1_sel_item_left=(cal_pg1_sel_item_left+1)%5;
 			}
@@ -1010,133 +1010,133 @@ if (!chg_setting_edit_mode) {
     	}
 
     	if (cal_pg1_sel_col==0) { // DOWN
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {		// DOWN
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {		// DOWN
 				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1/1.0002;
 				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==1) {
 				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1/1.005;
 				EpD[SET_VRECT_CAL][1].V1=EpD[SET_VRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {	// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {	// DOWN
 				EpD[SET_VRECT_OFFS_CAL][0].V1=EpD[SET_VRECT_OFFS_CAL][0].V1-1;
 				EpD[SET_VRECT_OFFS_CAL][1].V1=EpD[SET_VRECT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==1) {
 				EpD[SET_VRECT_OFFS_CAL][0].V1=EpD[SET_VRECT_OFFS_CAL][0].V1-10;
 				EpD[SET_VRECT_OFFS_CAL][1].V1=EpD[SET_VRECT_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==0) {		// DOWN
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==0) {		// DOWN
 				EpD[SET_VLOAD_CAL][0].V1=EpD[SET_VLOAD_CAL][0].V1/1.0002;
 				EpD[SET_VLOAD_CAL][1].V1=EpD[SET_VLOAD_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==1) {
 				EpD[SET_VLOAD_CAL][0].V1=EpD[SET_VLOAD_CAL][0].V1/1.005;
 				EpD[SET_VLOAD_CAL][1].V1=EpD[SET_VLOAD_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==0) {	// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==0) {	// DOWN
 				EpD[SET_VLOAD_OFFS_CAL][0].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1-1;
 				EpD[SET_VLOAD_OFFS_CAL][1].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==1 && cal_pg1_sel_digit==1) {
 				EpD[SET_VLOAD_OFFS_CAL][0].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1-10;
 				EpD[SET_VLOAD_OFFS_CAL][1].V1=EpD[SET_VLOAD_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==0) {		// DOWN
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==0) {		// DOWN
 				EpD[SET_VBAT_CAL][0].V1=EpD[SET_VBAT_CAL][0].V1/1.0002;
 				EpD[SET_VBAT_CAL][1].V1=EpD[SET_VBAT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==1) {
 				EpD[SET_VBAT_CAL][0].V1=EpD[SET_VBAT_CAL][0].V1/1.005;
 				EpD[SET_VBAT_CAL][1].V1=EpD[SET_VBAT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==0) {	// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==0) {	// DOWN
 				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1-1;
 				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==1) { // DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==2 && cal_pg1_sel_digit==1) { // DOWN
 				EpD[SET_VBAT_OFFS_CAL][0].V1=EpD[SET_VBAT_OFFS_CAL][0].V1-10;
 				EpD[SET_VBAT_OFFS_CAL][1].V1=EpD[SET_VBAT_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==0) { 		// DOWN
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==0) { 		// DOWN
 				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1/1.0002;
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==1) { 	// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==1) { 	// DOWN
 				EpD[SET_IRECT_CAL][0].V1=EpD[SET_IRECT_CAL][0].V1/1.005;
 				EpD[SET_IRECT_CAL][1].V1=EpD[SET_IRECT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==0) { // DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==0) { // DOWN
 				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1-1;
 				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==1) { // DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==3 && cal_pg1_sel_digit==1) { // DOWN
 				EpD[SET_IRECT_OFFS_CAL][0].V1=EpD[SET_IRECT_OFFS_CAL][0].V1-10;
 				EpD[SET_IRECT_OFFS_CAL][1].V1=EpD[SET_IRECT_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==0) {
 				EpD[SET_IBAT_CAL][0].V1=EpD[SET_IBAT_CAL][0].V1/1.0002;
 				EpD[SET_IBAT_CAL][1].V1=EpD[SET_IBAT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==1) {
 				EpD[SET_IBAT_CAL][0].V1=EpD[SET_IBAT_CAL][0].V1/1.005;
 				EpD[SET_IBAT_CAL][1].V1=EpD[SET_IBAT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==0) {	// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==0) {	// DOWN
 				EpD[SET_IBAT_OFFS_CAL][0].V1=EpD[SET_IBAT_OFFS_CAL][0].V1-1;
 				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==1) {	// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_left==4 && cal_pg1_sel_digit==1) {	// DOWN
 				EpD[SET_IBAT_OFFS_CAL][0].V1=EpD[SET_IBAT_OFFS_CAL][0].V1-10;
 				EpD[SET_IBAT_OFFS_CAL][1].V1=EpD[SET_IBAT_OFFS_CAL][0].V1;
 			}
     	}
     	else if (cal_pg1_sel_col==1) { // DOWN
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1/1.0002;
 				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==1) {
 				EpD[SET_ACR_CAL][0].V1=EpD[SET_ACR_CAL][0].V1/1.005;
 				EpD[SET_ACR_CAL][1].V1=EpD[SET_ACR_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==0) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACR_OFFS_CAL][0].V1=EpD[SET_ACR_OFFS_CAL][0].V1-1;
 				EpD[SET_ACR_OFFS_CAL][1].V1=EpD[SET_ACR_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==1) {	// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==0 && cal_pg1_sel_digit==1) {	// DOWN
 				EpD[SET_ACR_OFFS_CAL][0].V1=EpD[SET_ACR_OFFS_CAL][0].V1-10;
 				EpD[SET_ACR_OFFS_CAL][1].V1=EpD[SET_ACR_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1/1.0002;
 				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==1) {		// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==1) {		// DOWN
 				EpD[SET_ACS_CAL][0].V1=EpD[SET_ACS_CAL][0].V1/1.005;
 				EpD[SET_ACS_CAL][1].V1=EpD[SET_ACS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==0) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACS_OFFS_CAL][0].V1=EpD[SET_ACS_OFFS_CAL][0].V1-1;
 				EpD[SET_ACS_OFFS_CAL][1].V1=EpD[SET_ACS_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==1) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==1 && cal_pg1_sel_digit==1) {
 				EpD[SET_ACS_OFFS_CAL][0].V1=EpD[SET_ACS_OFFS_CAL][0].V1-10;
 				EpD[SET_ACS_OFFS_CAL][1].V1=EpD[SET_ACS_OFFS_CAL][0].V1;
 			}
-			if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==0) {
+			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1/1.0002;
 				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==1) {		// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==1) {		// DOWN
 				EpD[SET_ACT_CAL][0].V1=EpD[SET_ACT_CAL][0].V1/1.005;
 				EpD[SET_ACT_CAL][1].V1=EpD[SET_ACT_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==0) {
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==0) {
 				EpD[SET_ACT_OFFS_CAL][0].V1=EpD[SET_ACT_OFFS_CAL][0].V1-1;
 				EpD[SET_ACT_OFFS_CAL][1].V1=EpD[SET_ACT_OFFS_CAL][0].V1;
 			}
-			else if (cal_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==1) {	// DOWN
+			else if (cal_pg1_sel_edit_mode == cal_offset && cal_pg1_sel_item_right==2 && cal_pg1_sel_digit==1) {	// DOWN
 				EpD[SET_ACT_OFFS_CAL][0].V1=EpD[SET_ACT_OFFS_CAL][0].V1-10;
 				EpD[SET_ACT_OFFS_CAL][1].V1=EpD[SET_ACT_OFFS_CAL][0].V1;
 			}
