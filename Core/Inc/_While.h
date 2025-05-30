@@ -620,9 +620,9 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 
 // FREQUENCY (50ms loop)
 	frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
-	frq_r_updn_avg_m=frq_cal_k / (float) per_r_updn_avg_m;
-	frq_s_updn_avg_m=frq_cal_k / (float) per_s_updn_avg_m;
-	frq_t_updn_avg_m=frq_cal_k / (float) per_t_updn_avg_m;
+//	frq_r_updn_avg_m=frq_cal_k / (float) per_r_updn_avg_m;
+//	frq_s_updn_avg_m=frq_cal_k / (float) per_s_updn_avg_m;
+//	frq_t_updn_avg_m=frq_cal_k / (float) per_t_updn_avg_m;
 	frq_rst_updn_avg_m=frq_cal_k / (float) (per_r_updn_avg_m + per_s_updn_avg_m + per_t_updn_avg_m);
 
 // half cycle duration stability
