@@ -323,13 +323,18 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
     }
     else if (currentPage == CALIBRATION_2_pg) {
     	cal_pg2_sel_edit_mode=(cal_pg2_sel_edit_mode+1)%3;
-
 		if (cal_pg2_sel_edit_mode == cal_offset) { // yani enter a basılmış ve gain den offset edit moduna geçilmiş. yani gain değerinin kaydedilmesi lazım.
 			if (cal_pg2_sel_col==0) {
 				if (cal_pg2_sel_item_left==0) {
-					Rec_Dat_to_EEp_f(SET_VRECT_CAL);
+					Rec_Dat_to_EEp_f(SET_FRQ_CAL);
 				}
-
+			}
+		}
+		if (cal_pg2_sel_edit_mode == cal_none) { // yani enter a basılmış ve offset den no edit moduna geçilmiş. yani offset değerinin kaydedilmesi lazım.
+			if (cal_pg2_sel_col==0) {
+				if (cal_pg2_sel_item_left==0) {
+					Rec_Dat_to_EEp_f(SET_FRQ_CAL);
+				}
 			}
 		}
     }
