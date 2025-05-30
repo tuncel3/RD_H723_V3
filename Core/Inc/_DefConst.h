@@ -324,7 +324,7 @@ typedef enum {
     NUM_PAGES
 } MenuPage;
 
-MenuPage currentPage = HOME_PAGE_pg;
+MenuPage currentPage = CALIBRATION_2_pg;
 
 uint8_t fault_codes_reset_req = 0;
 uint8_t device_reset_req = 0;

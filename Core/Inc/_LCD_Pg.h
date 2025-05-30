@@ -82,23 +82,23 @@ inline extern void DROPPER_pg_disp(void) {
 
 inline extern void CALIBRATION_2_pg_disp(void) {
 	GLCD_PrintString(0, 0, "Kalibrasyon pg2");
-//	char L[32]; lnhg=11;
-//	sprintf(L, "frqR%7.3f", frq_r_updn_avg_m); 		GLCD_PrintString(0, 1*lnhg, L);
-//	sprintf(L, "frqS%7.3f", frq_s_updn_avg_m); 		GLCD_PrintString(0, 2*lnhg, L);
-//	sprintf(L, "frqT%7.3f", frq_t_updn_avg_m); 		GLCD_PrintString(0, 3*lnhg, L);
-//
-//	uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
-//
-//	if (cal_pg2_sel_edit_mode==cal_none) {
-//		if (cal_pg2_sel_col==0) {
-//			x0=13; y0=9+(cal_pg2_sel_item_left*11); w=41;
-//			GLCD_Rect_E(x0,y0,x0+w,y0+h);
-//		} else if (cal_pg2_sel_col==1) {
-//			x0=77; y0=9+(cal_pg2_sel_item_right*11); w=41;
-//			GLCD_Rect_E(x0,y0,x0+w,y0+h);
-//		}
-//	}
-//
+	char L[32]; lnhg=11;
+	sprintf(L, "frqR%7.3f", frq_r_updn_avg_m); 		GLCD_PrintString(0, 1*lnhg, L);
+	sprintf(L, "frqS%7.3f", frq_s_updn_avg_m); 		GLCD_PrintString(0, 2*lnhg, L);
+	sprintf(L, "frqT%7.3f", frq_t_updn_avg_m); 		GLCD_PrintString(0, 3*lnhg, L);
+
+	uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
+
+	if (cal_pg2_sel_edit_mode==cal_none) {
+		if (cal_pg2_sel_col==0) {
+			x0=13; y0=9+(cal_pg2_sel_item_left*11); w=41;
+			GLCD_Rect_E(x0,y0,x0+w,y0+h);
+		} else if (cal_pg2_sel_col==1) {
+			x0=77; y0=9+(cal_pg2_sel_item_right*11); w=41;
+			GLCD_Rect_E(x0,y0,x0+w,y0+h);
+		}
+	}
+
 }
 inline extern void CALIBRATION_1_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon pg1");
