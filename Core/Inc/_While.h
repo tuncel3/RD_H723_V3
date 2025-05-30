@@ -623,7 +623,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 //	frq_r_updn_avg_m=frq_cal_k / (float) per_r_updn_avg_m;
 //	frq_s_updn_avg_m=frq_cal_k / (float) per_s_updn_avg_m;
 //	frq_t_updn_avg_m=frq_cal_k / (float) per_t_updn_avg_m;
-	frq_rst_updn_avg_m=frq_cal_k / (float) (per_r_updn_avg_m + per_s_updn_avg_m + per_t_updn_avg_m);
+	frq_rst_updn_avg_m=frq_cal_k*3 / (float) (per_r_updn_avg_m + per_s_updn_avg_m + per_t_updn_avg_m);
 
 // half cycle duration stability
 	per_stable_all_val=(per_r_dn_stable_fl<<5)+(per_r_up_stable_fl<<4)+(per_s_dn_stable_fl<<3)+
