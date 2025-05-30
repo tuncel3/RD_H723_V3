@@ -99,6 +99,11 @@ inline extern void CALIBRATION_2_pg_disp(void) {
 		}
 	}
 
+    if (cal_pg1_sel_edit_mode==cal_gain) {
+    	GLCD_PrintString(96, 0, "GAIN");
+    } else if (cal_pg1_sel_edit_mode==cal_offset) {
+    	GLCD_PrintString(91, 0, "OFFST");
+	}
 }
 inline extern void CALIBRATION_1_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon pg1");
