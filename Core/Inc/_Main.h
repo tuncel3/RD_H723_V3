@@ -180,5 +180,4 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 //short circuit detection için. short circuit akımındaki değişime bakılabilir.
 // 1 - data kayıt için adrese ihtiyaç yok
 
-trim_val=LL_RCC_HSI_GetCalibTrimming();
 
