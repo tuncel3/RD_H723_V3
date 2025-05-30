@@ -592,6 +592,9 @@ if (!chg_setting_edit_mode) {
 				cal_pg2_sel_item_right=((cal_pg2_sel_item_right-1+3)%3);
 			}
     	}
+    	if (cal_pg1_sel_col==0) {
+
+    	}
     }
     else if (currentPage == CALIBRATION_1_pg) { 														// UP
     	if (cal_pg1_sel_edit_mode == cal_none) {
