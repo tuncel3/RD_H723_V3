@@ -605,6 +605,7 @@ if (!chg_setting_edit_mode) {
 				cal_pg1_sel_item_right=((cal_pg1_sel_item_right-1+3)%3);
 			}
     	}
+
     	if (cal_pg1_sel_col==0) {
 			if (cal_pg1_sel_edit_mode == cal_gain && cal_pg1_sel_item_left==0 && cal_pg1_sel_digit==0) {			// UP
 				EpD[SET_VRECT_CAL][0].V1=EpD[SET_VRECT_CAL][0].V1*1.0002;
