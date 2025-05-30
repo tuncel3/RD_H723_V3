@@ -583,6 +583,16 @@ if (!chg_setting_edit_mode) {
     else if (currentPage == MANAGEMENT_pg) { 															// UP
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;
     }
+    else if (currentPage == CALIBRATION_2_pg) { 														// UP
+    	if (cal_pg2_sel_edit_mode == cal_none) {
+			if (cal_pg2_sel_col==0) {
+				cal_pg2_sel_item_left=((cal_pg2_sel_item_left-1+5)%5);
+			}
+			else if (cal_pg2_sel_col==1) {
+				cal_pg2_sel_item_right=((cal_pg2_sel_item_right-1+3)%3);
+			}
+    	}
+    }
     else if (currentPage == CALIBRATION_1_pg) { 														// UP
     	if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {
