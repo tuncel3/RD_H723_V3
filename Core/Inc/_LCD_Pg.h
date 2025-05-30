@@ -80,8 +80,8 @@ inline extern void DROPPER_pg_disp(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-//inline extern void CALIBRATION_2_pg_disp(void) {
-//	GLCD_PrintString(0, 0, "Kalibrasyon pg2");
+inline extern void CALIBRATION_2_pg_disp(void) {
+	GLCD_PrintString(0, 0, "Kalibrasyon pg2");
 //	char L[32]; lnhg=11;
 //	sprintf(L, "frqR%7.3f", frq_r_updn_avg_m); 		GLCD_PrintString(0, 1*lnhg, L);
 //	sprintf(L, "frqS%7.3f", frq_s_updn_avg_m); 		GLCD_PrintString(0, 2*lnhg, L);
@@ -99,7 +99,7 @@ inline extern void DROPPER_pg_disp(void) {
 //		}
 //	}
 //
-//}
+}
 inline extern void CALIBRATION_1_pg_disp(void) {
     GLCD_PrintString(0, 0, "Kalibrasyon pg1");
 	char L[32]; lnhg=11;
