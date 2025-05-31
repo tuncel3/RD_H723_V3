@@ -105,11 +105,11 @@ inline extern void CALIBRATION_2_pg_disp(void) {
 		    sprintf(L, "%9.8f", EpD[SET_FRQ_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 		}
 		if (cal_pg2_sel_digit==0) {
-		    if (cal_pg2_sel_edit_mode != cal_none) {x0=48; w=4;}
+		    if (cal_pg2_sel_edit_mode != cal_none) {x0=54; w=4;}
 
 		}
 		if (cal_pg2_sel_digit==1) {
-		    if (cal_pg2_sel_edit_mode != cal_none) {x0=42; w=4;}
+		    if (cal_pg2_sel_edit_mode != cal_none) {x0=48; w=4;}
 		}
 	}
 	GLCD_Line(x0, y0, x0+w, y0);
