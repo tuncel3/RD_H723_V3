@@ -621,16 +621,16 @@ if (!chg_setting_edit_mode) {
         /* -------------  LEFT COLUMN ( cal_pg1_sel_col == 0 ) ------------- */
         if (cal_pg2_sel_edit_mode == cal_gain && cal_pg2_sel_col == 0) {
             if (cal_pg2_sel_digit == 0) {                                                // UP
-                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 *= 1.0002; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // UP
+                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 *= 1.0001; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // UP
             } else if (cal_pg2_sel_digit == 1) {                                         // UP
-                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 *= 1.005; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // UP
+                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 *= 1.0004; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // UP
             }
         }
         else if (cal_pg2_sel_edit_mode == cal_offset && cal_pg2_sel_col == 0) {
             if (cal_pg2_sel_digit == 0) {                                                // UP
-                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 *= 1.0002; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // UP
+                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 *= 1.0001; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // UP
             } else if (cal_pg2_sel_digit == 1) {                                         // UP
-                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 *= 1.005; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // UP
+                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 *= 1.0004; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // UP
             }
         }
     }
@@ -981,32 +981,19 @@ if (!chg_setting_edit_mode) {
                 cal_pg2_sel_item_right = (cal_pg2_sel_item_right + 1) % 3;                // DOWN
             }
         }
-
-        /* -------------  LEFT COLUMN ( cal_pg2_sel_col == 0 ) ------------- */
+        /* -------------  LEFT COLUMN ( cal_pg1_sel_col == 0 ) ------------- */
         if (cal_pg2_sel_edit_mode == cal_gain && cal_pg2_sel_col == 0) {
-            if (cal_pg2_sel_digit == 0) {                                                 // DOWN
-                if (cal_pg2_sel_item_left == 0) {                                         // DOWN
-                    EpD[SET_FRQ_CAL][0].V1 /= 1.0002;
-                    EpD[SET_FRQ_CAL][1].V1  = EpD[SET_FRQ_CAL][0].V1;
-                }
-            } else if (cal_pg2_sel_digit == 1) {                                          // DOWN
-                if (cal_pg2_sel_item_left == 0) {                                         // DOWN
-                    EpD[SET_FRQ_CAL][0].V1 /= 1.005;
-                    EpD[SET_FRQ_CAL][1].V1  = EpD[SET_FRQ_CAL][0].V1;
-                }
+            if (cal_pg2_sel_digit == 0) {                                                // DOWN
+                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 /= 1.0001; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // DOWN
+            } else if (cal_pg2_sel_digit == 1) {                                         // DOWN
+                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 /= 1.0004; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // DOWN
             }
         }
         else if (cal_pg2_sel_edit_mode == cal_offset && cal_pg2_sel_col == 0) {
-            if (cal_pg2_sel_digit == 0) {                                                 // DOWN
-                if (cal_pg2_sel_item_left == 0) {                                         // DOWN
-                    EpD[SET_FRQ_CAL][0].V1 -= 1;
-                    EpD[SET_FRQ_CAL][1].V1  = EpD[SET_FRQ_CAL][0].V1;
-                }
-            } else if (cal_pg2_sel_digit == 1) {                                          // DOWN
-                if (cal_pg2_sel_item_left == 0) {                                         // DOWN
-                    EpD[SET_FRQ_CAL][0].V1 -= 10;
-                    EpD[SET_FRQ_CAL][1].V1  = EpD[SET_FRQ_CAL][0].V1;
-                }
+            if (cal_pg2_sel_digit == 0) {                                                // DOWN
+                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 /= 1.0001; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // DOWN
+            } else if (cal_pg2_sel_digit == 1) {                                         // DOWN
+                if      (cal_pg2_sel_item_left == 0) { EpD[SET_FRQ_CAL][0].V1 /= 1.0004; EpD[SET_FRQ_CAL][1].V1 = EpD[SET_FRQ_CAL][0].V1; } // DOWN
             }
         }
     }
