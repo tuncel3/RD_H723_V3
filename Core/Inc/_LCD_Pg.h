@@ -99,12 +99,19 @@ inline extern void CALIBRATION_2_pg_disp(void) {
 		}
 	}
 
-	if (cal_pg1_sel_col == 0) {
-		if (cal_pg1_sel_item_left==0) {
-		    if (cal_pg1_sel_edit_mode != cal_none) {y0=19;}
-		    sprintf(L, "%9.8f", EpD[SET_VRECT_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
-			sprintf(L, "%6.0f", EpD[SET_VRECT_OFFS_CAL][0].V1); 	GLCD_PrintString(64, 5*lnhg, L);
+	if (cal_pg2_sel_col == 0) {
+		if (cal_pg2_sel_item_left==0) {
+		    if (cal_pg2_sel_edit_mode != cal_none) {y0=19;}
+		    sprintf(L, "%9.8f", EpD[SET_FRQ_CAL][0].V1); 			GLCD_PrintString(64, 4*lnhg, L);
 		}
+		if (cal_pg1_sel_digit==0) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {x0=48; w=4;}
+
+		}
+		if (cal_pg1_sel_digit==1) {
+		    if (cal_pg1_sel_edit_mode != cal_none) {x0=42; w=4;}
+		}
+	}
 
     if (cal_pg2_sel_edit_mode==cal_gain) {
     	GLCD_PrintString(96, 0, "GAIN");
