@@ -146,6 +146,7 @@ void bleft_fnc(void) {
     	if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {
 				cal_pg2_sel_col=1;
+				currentPage = CALIBRATION_2_pg;
 			}
 			else if (cal_pg1_sel_col==1) {
 				cal_pg1_sel_col=0;
