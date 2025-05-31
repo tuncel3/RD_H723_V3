@@ -323,6 +323,8 @@ void bright_fnc(void) {
 				currentPage = CALIBRATION_1_pg;
 				cal_pg1_sel_col=0;
 			}
+    	} else if (cal_pg2_sel_edit_mode != cal_none) {																// RIGHT
+    		cal_pg2_sel_digit=(cal_pg2_sel_digit-1+2)%2;
     	}
     }
     else if (currentPage == CALIBRATION_1_pg) {
