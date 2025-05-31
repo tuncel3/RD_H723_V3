@@ -131,10 +131,21 @@ void bleft_fnc(void) {
     else if (currentPage == MANAGEMENT_pg) {
     	selected_MANAGEMENT=(selected_MANAGEMENT-1+NUM_MANAGEMENT_ITEMS) % NUM_MANAGEMENT_ITEMS;			// LEFT
     }
+    else if (currentPage == CALIBRATION_2_pg) {
+    	if (cal_pg2_sel_edit_mode == cal_none) {
+			if (cal_pg2_sel_col==0) {
+				currentPage = CALIBRATION_1_pg;
+				cal_pg1_sel_col=1;
+			}
+			else if (cal_pg2_sel_col==1) {
+				cal_pg2_sel_col=0;
+			}
+    	}
+    }
     else if (currentPage == CALIBRATION_1_pg) {
     	if (cal_pg1_sel_edit_mode == cal_none) {
 			if (cal_pg1_sel_col==0) {
-				cal_pg1_sel_col=1;
+				cal_pg2_sel_col=1;
 			}
 			else if (cal_pg1_sel_col==1) {
 				cal_pg1_sel_col=0;
