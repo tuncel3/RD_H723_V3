@@ -324,7 +324,7 @@ typedef enum {
     NUM_PAGES
 } MenuPage;
 
-MenuPage currentPage = CALIBRATION_2_pg;
+MenuPage currentPage = HOME_PAGE_pg;
 
 uint8_t fault_codes_reset_req = 0;
 uint8_t device_reset_req = 0;
@@ -470,7 +470,7 @@ typedef enum {
 	REL_OUT_3,
 	REL_OUT_4,
 	RECT_ACTV_AT_STARTUP,
-	VRECT_DC_HIGH_LIM_add,
+	VRECT_DC_HIGH_LIM_add, // blm bunun üzerine çıkaramaz voltajı
 	VRECT_DC_LOW_LIM_add,
 	SET_WORK_FREQ,
 	HOME_PG_SEL,
@@ -1328,7 +1328,7 @@ float i_rec_max_stb=0;
 float i_rec_min_stb=0;
 float i_bat_max_stb=0;
 float i_bat_min_stb=0;
-float blm_stable_v_vrect=0;
+float baslangic_v_stbl=0;
 
 uint32_t vrect_stable_cnt = 0;
 uint8_t  vrect_stable     = 0;
@@ -1337,7 +1337,6 @@ uint8_t  irect_stable     = 0;
 uint32_t ibat_stable_cnt = 0;
 uint8_t  ibat_stable     = 0;
 uint8_t  blm_can_start_inspection = 0;
-uint8_t  blm_set_up_down_vtarg_limits_completed = 0;
 uint8_t  blm_wait_at_low_lim_completed = 0;
 uint8_t  vtarg_VRECT_diff_high_while_reduce = 0;
 uint8_t  vtarg_VRECT_diff_high_without_touch = 0;
@@ -1355,6 +1354,12 @@ volatile float blm_vtarg_move_up_targ   = 0.0f;
 volatile float blm_vtarg_move_dn_targ   = 0.0f;
 volatile float blm_vtarg_move_up_max   = 0.0f;
 volatile float blm_vtarg_move_dn_min   = 0.0f;
+//volatile float blm_vtarg_move_up_dist   = 0.0f;
+//volatile float blm_vtarg_move_dn_dist   = 0.0f;
+volatile float blm_V_move_up_set   = 0.0f;
+volatile float blm_V_move_dn_set   = 0.0f;
+volatile float blm_V_move_up_dist   = 0.0f;
+volatile float blm_V_move_dn_dist   = 0.0f;
 
 uint8_t  FFFF_blm_req_increase_vtarg           = 0;
 uint8_t  GGGG_blm_increasing_vtarg_completed   = 0;
@@ -1382,11 +1387,11 @@ uint16_t blm_vtarg_min_ind = 0;
 uint8_t blm_VRECT_changed = 0;
 uint8_t check_vrect_vtarg_e_asagi_gitti = 1;
 uint8_t check_vrect_vtarg_e_yukari_gitti = 1;
-float vrect_vtarg_fark = 0;
-float vrect_vsta_fark = 0;
-float vtarg_vsta_fark = 0;
-float vrect_position_dn = 0;
-float vrect_position_up = 0;
+float hedef_suan_fark = 0;
+float hedef_baslng_fark = 0;
+float hedefe_yaklasma_yuzde_dn = 0;
+float hedefe_yaklasma_yuzde_up = 0;
+float hedef_baslngc_fark = 0;
 float blm_vrect_max = 0;
 float blm_vrect_min = 1000;
 float blm_vtarg_max = 0;
@@ -1413,8 +1418,8 @@ uint32_t blm_corr_op_start_delay_per = 80;
 uint8_t blm_phase_switch_delay_cnt = 0;
 uint8_t blm_enable_collect_samples = 0;
 uint8_t blm_phase_switch_delay_bck_per = 4;
-uint8_t blm_phase_switch_delay_dn_per = 100;
-uint8_t blm_phase_switch_delay_up_per = 10;
+uint8_t blm_phase_switch_delay_dn_per = 200;
+uint8_t blm_phase_switch_delay_up_per = 200;
 float blm_vi_change_mult = 0.005f;
 uint8_t discard_corr_result = 0;
 uint8_t blm_restart_after_return = 0;

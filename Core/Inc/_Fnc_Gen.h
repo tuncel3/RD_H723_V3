@@ -794,8 +794,10 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
         blm_V_step_10perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.010;
         blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;
+        blm_V_move_up_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
+        blm_V_move_dn_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
     }
-    if (scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+    if (scope == SCOPE_VAR_ALL_FROM_EEP) {
         Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
         VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
         VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
@@ -1153,41 +1155,6 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
     return numerator / denominator;
 }
 
-
-//void inline extern blm_discard_corr_restart_skip_delay(void) {
-//	blm_op_phase = 100;
-//	blm_enable_collect_samples = 0;
-//	blm_corr_buf_index = 0;
-//}
-//void inline extern blm_cancel_op_return_to_delay(void) {
-//	blm_op_phase = 101;
-//	blm_corr_op_start_delay_cnt = 0;
-//	blm_enable_collect_samples = 0;
-//	blm_corr_buf_index = 0;
-//}
-
-//void inline extern bring_vtarg_back_skip_delay(void) {
-//	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
-//		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-//	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
-//		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
-//	} else {
-//		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-//		blm_op_phase = 0; PRF_BLM("blm_op_phase 0");
-//	}
-//}
-
-//void inline extern bring_vtarg_back_goto_delay(void) {
-//	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
-//		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-//	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
-//		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
-//	} else {
-//		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
-//		blm_op_phase = 9; PRF_BLM("blm_op_phase 9");
-//	}
-//}
-
 void inline extern bring_vtarg_back_to_chrgV(uint8_t num) {
 	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
@@ -1245,20 +1212,21 @@ void stability_ibat_fc(void) {
 
 
 void blm_set_up_down_vtarg_limits(void) {
-	blm_stable_v_vrect=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
-	blm_vtarg_move_up_targ=blm_stable_v_vrect+blm_V_step_05perc*5;
-	blm_vtarg_move_dn_targ=blm_stable_v_vrect-blm_V_step_05perc*5;
-	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
-	blm_vtarg_move_dn_min=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
+	baslangic_v_stbl=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
+	blm_vtarg_move_up_targ=baslangic_v_stbl+blm_V_move_up_set;
+	blm_vtarg_move_dn_targ=baslangic_v_stbl-blm_V_move_dn_set;
+	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01); // ayarlanan vdc rect max değerinden yüzde 1 aşağısı hesaplanıyor burada
+	blm_vtarg_move_dn_min=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)+0.01); // VRECT_DC_LOW_LIM_add demek ayarlanan dc rect voltajından ne kadar aşağıya inmesine izin veriliyor rect voltajın
 
-	if (blm_vtarg_move_up_max <= blm_vtarg_move_up_targ) {
-		blm_vtarg_move_up_max = blm_vtarg_move_up_targ;
+	if (blm_vtarg_move_up_targ > blm_vtarg_move_up_max) {// targete kadar gidebilir ancak target minimumun altındaysa minimuma kadar gidebilir.
+		blm_vtarg_move_up_targ = blm_vtarg_move_up_max;
 	}
-	if (blm_vtarg_move_dn_min >= blm_vtarg_move_dn_targ) {
-		blm_vtarg_move_dn_min = blm_vtarg_move_dn_targ;
+	if (blm_vtarg_move_dn_targ < blm_vtarg_move_dn_min) {
+		blm_vtarg_move_dn_targ = blm_vtarg_move_dn_min;
 	}
+	blm_V_move_up_dist = blm_vtarg_move_up_targ-baslangic_v_stbl; // for debug only
+	blm_V_move_dn_dist = baslangic_v_stbl-blm_vtarg_move_dn_targ;
 }
-
 
 float calculate_blm_op(void);
 float calculate_blm_op2(void);

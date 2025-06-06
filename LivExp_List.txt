@@ -1,6 +1,6 @@
 req_reset_db
 Current_charge_voltage
-blm_stable_v_vrect
+baslangic_v_stbl
 blm_corr
 blm_corr_buf_index
 aaa
@@ -9,7 +9,7 @@ V_targ_con_sy
 VRECT_pas.a1
 blm_vtarg_move_dn_targ
 blm_op_phase
-vrect_position_dn
+hedefe_yaklasma_yuzde_dn
 
 
 

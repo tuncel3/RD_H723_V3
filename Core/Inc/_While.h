@@ -882,8 +882,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		PRF_BLM("start changing voltage");
 		blm_op_phase = 3;
 	} else if (blm_op_phase == 3) { // Vtarg’ı düşür
-		if (V_targ_con_sy > blm_vtarg_move_dn_targ && V_targ_con_sy > blm_vtarg_move_dn_min) {
-			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
+		if (V_targ_con_sy > blm_vtarg_move_dn_targ) {
+			set_V_targ_con_sy(V_targ_con_sy / (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 4;
@@ -893,18 +893,16 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_dn_per) {
 			blm_op_phase = 5;
 		}
-	} else if (blm_op_phase == 5) { // Vtarg’ı yükselt
+	} else if (blm_op_phase == 5) {
 		if (check_vrect_vtarg_e_asagi_gitti) {
 			check_vrect_vtarg_e_asagi_gitti=0;
-			vrect_vtarg_fark=fabs(VRECT_pas.a16-V_targ_con_sy);
-			vrect_vsta_fark=fabs(blm_stable_v_vrect-VRECT_pas.a16);
-			vtarg_vsta_fark=fabs(blm_stable_v_vrect-V_targ_con_sy);
-			vrect_position_dn=vrect_vtarg_fark/vtarg_vsta_fark;
-			PRF_BLM("asag fark. %f %f", vtarg_vsta_fark, vrect_position_dn);
+			hedef_suan_fark=fabs(V_targ_con_sy-VRECT_pas.a16); // çıkarılmak istenen değer ile şu anki gerçek değer arası fark.
+			hedef_baslng_fark=fabs(V_targ_con_sy-baslangic_v_stbl); // çıkarılmak istenen değer ile başlangıç arası fark.
+			hedefe_yaklasma_yuzde_dn=hedef_suan_fark/hedef_baslng_fark;
+			hedef_baslngc_fark=fabs(baslangic_v_stbl-V_targ_con_sy); // başlangıç volt ile hedef volt farkı
+			PRF_BLM("asag hdf-suan hdf-basl hdf_yakl_yuzde. %f %f %f", hedef_suan_fark, hedef_baslngc_fark, hedefe_yaklasma_yuzde_dn); // hedef voltaj ile stabil voltaj arası fark
 		}
-
-//		blm_vtarg_move_up_max=47;											//	**************
-		if (V_targ_con_sy < blm_vtarg_move_up_targ && V_targ_con_sy < blm_vtarg_move_up_max) {
+		if (V_targ_con_sy < blm_vtarg_move_up_targ) { // Vtarg’ı artır
 			set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
@@ -915,14 +913,13 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		if (blm_phase_switch_delay_cnt >= blm_phase_switch_delay_up_per) {
 			blm_op_phase = 7;
 		}
-	} else if (blm_op_phase == 7) { // Vtarg’ı tekrar düşür
+	} else if (blm_op_phase == 7) {
 		if (check_vrect_vtarg_e_yukari_gitti) {
 			check_vrect_vtarg_e_yukari_gitti=0;
-			vrect_vtarg_fark=fabs(VRECT_pas.a16-V_targ_con_sy);
-			vrect_vsta_fark=fabs(blm_stable_v_vrect-VRECT_pas.a16);
-			vtarg_vsta_fark=fabs(blm_stable_v_vrect-V_targ_con_sy);
-			vrect_position_up=vrect_vtarg_fark/vtarg_vsta_fark;
-			PRF_BLM("yuka fark. %f %f", vtarg_vsta_fark, vrect_position_up);
+			hedef_suan_fark=fabs(V_targ_con_sy-VRECT_pas.a16); // indirilmek istenen değer ile şu anki gerçek değer arası fark.
+			hedef_baslng_fark=fabs(V_targ_con_sy-baslangic_v_stbl); // indirilmek istenen değer ile başlangıç arası fark.
+			hedefe_yaklasma_yuzde_up=hedef_suan_fark/hedef_baslngc_fark;
+			PRF_BLM("yukr hdf-suan hdf-basl hdf_yakl_yuzde. %f %f %f", hedef_suan_fark, hedef_baslngc_fark, hedefe_yaklasma_yuzde_up); // hedef voltaj ile stabil voltaj arası fark
 		}
 		if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
@@ -946,10 +943,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 				} else if (blm_corr >= 0.85 && blm_corr_p >= 0.85) { // son ikisi 0.85 üstü ise corr ok
 					blm_req_corr_batt_connected=1;
 					PRF_BLM("corr good. 2x0.85 batt connected.");
-				} else if (blm_corr < 0.6 && blm_corr_p < 0.6 && !is_state_active(BATT_LINE_BROKEN_FC) && vrect_position_dn <= 0.2) { // iki kez üst üste 0.6 altı olmuşsa corr yok.
-					blm_req_corr_batt_connected=0; 												// vrect_position_dn, ne kadar düşükse o kadar vrect vtarg ı takip etmiş
+				} else if (blm_corr < 0.6 && blm_corr_p < 0.6 && !is_state_active(BATT_LINE_BROKEN_FC) && hedefe_yaklasma_yuzde_dn <= 0.4) { // iki kez üst üste 0.6 altı olmuşsa corr yok.
+					blm_req_corr_batt_connected=0; 												// hedefe_yaklasma_yuzde_dn, ne kadar düşükse o kadar vrect vtarg ı takip etmiş
 					PRF_BLM("corr low. batt broken.");
-				} else if (blm_corr < 0.25 && !is_state_active(BATT_LINE_BROKEN_FC) && vrect_position_dn <= 0.2) { // 0.25 altı olmuşsa corr yok.
+				} else if (blm_corr < 0.25 && !is_state_active(BATT_LINE_BROKEN_FC) && hedefe_yaklasma_yuzde_dn <= 0.4) { // 0.25 altı olmuşsa corr yok.
 					blm_req_corr_batt_connected=0;
 					PRF_BLM("corr low. batt broken.");
 				} else  {
@@ -987,10 +984,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);
 	}
 } // if (sfsta_op_phase == S_SFSTA_REQ_OK) {
-//blm_stable_v_vrect						|
+//baslangic_v_stbl						|
 //											|
-//VRECT_pas.a16		  |		vtarg_vsta_fark |
-//	vrect_vtarg_fark  |						|
+//VRECT_pas.a16		  |		hedef_baslngc_fark |
+//	hedef_suan_fark  |						|
 //V_targ_con_sy		  |						|
 ////// BATT LINE MONITORING /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

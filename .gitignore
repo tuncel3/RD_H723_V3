@@ -1,8 +1,5 @@
 # Ignore build and temporary files
 
-*.bin
-*.hex
-*.elf
 *.map
 *.list
 *.log
