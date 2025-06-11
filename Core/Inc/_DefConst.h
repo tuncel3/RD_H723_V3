@@ -1074,7 +1074,7 @@ State_Info state_list[] = {
 	{ LOAD_FUSE_OFF_FC,      	  0b10010,	"Çıkş Sigrt Atık",    LOAD_FUSE_OFF_FC_REL },
 	{ DROPPER2_BYP_FC,      	  0b00000,	"Dropper 2 Bypass",    NUM_REL_CODES },
 	{ DROPPER1_BYP_FC,      	  0b00000,	"Dropper 1 Bypass",    NUM_REL_CODES },
-	{ BATT_FUSE_OFF_FC,           0b10010,	"Akü Sigrta Atık",    BATT_FUSE_OFF_FC_REL },
+	{ BATT_FUSE_OFF_FC,           0b10010,	"AKÜ SİGRTA ATIK",    BATT_FUSE_OFF_FC_REL },
 	{ BOOST_CHARGE_FC,      	  0b10000,	"Hızl Şarj",          BOOST_CHARGE_FC_REL },
 	{ FLOAT_CHARGE_FC,      	  0b10000,	"Norm Şarj",         FLOAT_CHARGE_FC_REL },
 	{ LINE_FUSE_OFF_FC,      	  0b10110,	"Girş Sigrt Atık",    LINE_FUSE_OFF_FC_REL },
