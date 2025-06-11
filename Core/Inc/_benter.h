@@ -173,6 +173,8 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 	EpD[DEV_NOM_VOUT][0].V1=EpD[DEV_NOM_VOUT][1].V1;
+	EpD[VBAT_FLOAT][0].V1=EpD[DEV_NOM_VOUT][1].V1*1.1;
+	EpD[VBAT_BOOST][0].V1=EpD[DEV_NOM_VOUT][1].V1*1.15;
 	set_variables_from_EEP_fc(SCOPE_DEV_NOM_VOUT_EEP);
 	Rec_Dat_to_EEp_f(DEV_NOM_VOUT);
 }
