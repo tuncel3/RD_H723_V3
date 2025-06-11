@@ -1085,7 +1085,7 @@ State_Info state_list[] = {
 	{ RECT_SHORT_FC,              0b00110,	"DC Kısa Devre",       NUM_REL_CODES },
 	{ BATT_SHORT_FC,              0b00110,	"Akü Kısa Devre",      NUM_REL_CODES },
 	{ BATT_REVERSE_FC,            0b10010,	"Akü Ters",            BATT_REVERSE_FC_REL },
-	{ BATT_LINE_BROKEN_FC,        0b10010,	"Akü Hattı Kopuk",     BATT_LINE_BROKEN_FC_REL },
+	{ BATT_LINE_BROKEN_FC,        0b10011,	"Akü Hattı Kopuk",     BATT_LINE_BROKEN_FC_REL },
 	{ BAT_TEMP_ZERO_FC,           0b10011,	"Akü Sıcklk Sıfr",    BAT_TEMP_ZERO_FC_REL },
 	{ BAT_TEMP_50_FC,          	  0b10111,	"Akü Sıcklk 50 C",    BAT_TEMP_50_FC_REL },
 	// REL MB 8 BIT0 enum 31
