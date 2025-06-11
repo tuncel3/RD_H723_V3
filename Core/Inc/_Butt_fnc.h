@@ -472,7 +472,7 @@ if (!chg_setting_edit_mode) {
 		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_max)
 			EpD[SET_IBAT_BOOST][1].V1=Ibat_max;
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_FLOAT) {
-		if (EpD[I_LIM_TO_FLOAT][1].V1 <= EpD[DEV_NOM_IOUT][1].V1-0.3) { // 0.2 altında tut. boost bunun 0.1 üstü olacak.
+		if (EpD[I_LIM_TO_FLOAT][1].V1 <= EpD[IRECT_LIM_RT_][1].V1-0.3) { // 0.2 altında tut. boost bunun 0.1 üstü olacak.
 			EpD[I_LIM_TO_FLOAT][1].V1=EpD[I_LIM_TO_FLOAT][1].V1+0.1;
 		}
 		if (EpD[I_LIM_TO_FLOAT][1].V1 >= EpD[I_LIM_TO_BOOST][1].V1-0.1) { // boostu geçmemesi için boost u otomatik artır
@@ -480,8 +480,8 @@ if (!chg_setting_edit_mode) {
 		}
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_BOOST) {
 		EpD[I_LIM_TO_BOOST][1].V1=EpD[I_LIM_TO_BOOST][1].V1+0.1;
-		if (EpD[I_LIM_TO_BOOST][1].V1 >= EpD[DEV_NOM_IOUT][1].V1) {
-			EpD[I_LIM_TO_BOOST][1].V1=EpD[DEV_NOM_IOUT][1].V1;
+		if (EpD[I_LIM_TO_BOOST][1].V1 >= EpD[IRECT_LIM_RT_][1].V1) {
+			EpD[I_LIM_TO_BOOST][1].V1=EpD[IRECT_LIM_RT_][1].V1;
 		}
 	}
 }
