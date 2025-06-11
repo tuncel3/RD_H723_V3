@@ -228,13 +228,13 @@ void bright_fnc(void) {
     		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_max)
     			EpD[SET_IBAT_BOOST][1].V1=Ibat_max;
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_FLOAT) {								// RIGHT
-    		if (EpD[I_LIM_TO_FLOAT][1].V1 <= EpD[DEV_NOM_IOUT][1].V1-1.2) { // 0.2 altında tut. boost bunun 0.1 üstü olacak.
+    		if (EpD[I_LIM_TO_FLOAT][1].V1 <= EpD[IRECT_LIM_RT_][1].V1-1.2) { // 0.2 altında tut. boost bunun 0.1 üstü olacak.
     			EpD[I_LIM_TO_FLOAT][1].V1=EpD[I_LIM_TO_FLOAT][1].V1+1;
     		}
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_BOOST) {								// RIGHT
     		EpD[I_LIM_TO_BOOST][1].V1=EpD[I_LIM_TO_BOOST][1].V1+1.0;
-    		if (EpD[I_LIM_TO_BOOST][1].V1 >= EpD[DEV_NOM_IOUT][1].V1)
-    			EpD[I_LIM_TO_BOOST][1].V1=EpD[DEV_NOM_IOUT][1].V1;
+    		if (EpD[I_LIM_TO_BOOST][1].V1 >= EpD[IRECT_LIM_RT_][1].V1)
+    			EpD[I_LIM_TO_BOOST][1].V1=EpD[IRECT_LIM_RT_][1].V1;
     	}
     }
     else if (currentPage == DEVICE_SETT_pg) {

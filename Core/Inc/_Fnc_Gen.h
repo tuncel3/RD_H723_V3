@@ -782,15 +782,15 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         EpD[SET_DROPP_L_LW_PERC][dropper_edit_mode].V1=EpD[SET_DROPP_L_LW_PERC][0].V1;
     }
     if (scope & SCOPE_CURRENT_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
-        Irect_max = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
-        Irect_min = EpD[DEV_NOM_IOUT][0].V1 * 0.01;
-        Ibat_max  = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
-        Ibat_min  = EpD[DEV_NOM_IOUT][0].V1 * 0.1;
+        Irect_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
+        Irect_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
+        Ibat_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
+        Ibat_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1;
     }
     if (scope & SCOPE_BLM_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_DEV_NOM_VOUT_EEP) {
-        blm_I_step_05perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.005;
-        blm_I_step_075perc = EpD[DEV_NOM_IOUT][0].V1 * 0.0075;
-        blm_I_step_10perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.010;
+        blm_I_step_05perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.005;
+        blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075;
+        blm_I_step_10perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.010;
         blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
         blm_V_step_10perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.010;
         blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;

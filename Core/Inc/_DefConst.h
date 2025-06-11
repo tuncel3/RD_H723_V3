@@ -425,7 +425,7 @@ typedef enum {
     VBAT_BOOST,          // Boost Voltage
     SET_IBAT_FLOAT,          // Float Current
     SET_IBAT_BOOST,          // Boost Current
-	IRECT_LIM_RT_,
+	IRECT_LIM_RT_,		// DEV_NOM_VOUT un akım hali
 	I_LIM_TO_FLOAT,
 	I_LIM_TO_BOOST,
 	SET_VRECT_CAL,
@@ -459,7 +459,6 @@ typedef enum {
 	SET_OVERTEMP_OPEN,
 	SET_OVT_OPEN_DELAY,
 	DEV_NOM_VOUT, 		// Cihaz Nom VDC
-	DEV_NOM_IOUT, 		// Cihaz Nom IDC rect out
 	BATT_NOM_IOUT,
 	DC_KAC_POS, 			// DC kaçak pozitif
 	DC_KAC_NEG, 			// DC kaçak negatif
@@ -521,7 +520,6 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_OVERTEMP_OPEN, 85.0}, {SET_OVERTEMP_OPEN, 85.0} },
     { {SET_OVT_OPEN_DELAY, 10.0}, {SET_OVT_OPEN_DELAY, 10.0} },
     { {DEV_NOM_VOUT, 48.0}, {DEV_NOM_VOUT, 48.0} }, // Cihaz Nom VDC
-    { {DEV_NOM_IOUT, 40.0}, {DEV_NOM_IOUT, 40.0} },
     { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} }, //
     { {DC_KAC_POS, 20.0}, {DC_KAC_POS, 20.0} }, // DC kaçak pozitif
     { {DC_KAC_NEG, 20.0}, {DC_KAC_NEG, 20.0} }, // DC kaçak negatif
@@ -584,7 +582,6 @@ const char* Eep_data_Names[] = { // for printing in uart
     "SET_OVTM_OPEN_DUR",
     "SET_OVTM_OPEN_LIM",
     "DEV_NOM_VOUT", // Cihaz Nom VDC
-    "DEV_NOM_IOUT",
     "BATT_NOM_IOUT",
     "DC_KAC_POS",	 	// DC kaçak pozitif
     "DC_KAC_NEG", 		// DC kaçak negatif
