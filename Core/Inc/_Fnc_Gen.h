@@ -760,13 +760,13 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
-    if (scope & SCOPE_VOLTAGE_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+    if (scope & SCOPE_VOLTAGE_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_DEV_NOM_VOUT_EEP) {
     	Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
     	Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
     	Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar aralığı
     	Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
     }
-    if (scope & SCOPE_DROPPER_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+    if (scope & SCOPE_DROPPER_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_DEV_NOM_VOUT_EEP) {
     	// D.A. gerilim regülasyonu (dropping diyot)
     	// limitler şartnamede anma geriliminin yüzdesi olarak belirtilmiş.
     	//if (scope==dropper_limits) {
@@ -787,7 +787,7 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         Ibat_max  = EpD[DEV_NOM_IOUT][0].V1 * 1.0;
         Ibat_min  = EpD[DEV_NOM_IOUT][0].V1 * 0.1;
     }
-    if (scope & SCOPE_BLM_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
+    if (scope & SCOPE_BLM_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_DEV_NOM_VOUT_EEP) {
         blm_I_step_05perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.005;
         blm_I_step_075perc = EpD[DEV_NOM_IOUT][0].V1 * 0.0075;
         blm_I_step_10perc  = EpD[DEV_NOM_IOUT][0].V1 * 0.010;
@@ -797,7 +797,7 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         blm_V_move_up_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
         blm_V_move_dn_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
     }
-    if (scope == SCOPE_VAR_ALL_FROM_EEP) {
+    if (scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_DEV_NOM_VOUT_EEP) {
         Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
         VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
         VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
