@@ -1073,6 +1073,13 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	GLCD_RefreshGRAM();
 }
 
+
+
+IAC_R_rms_roll_per_avg.a64=IRECT_pas.a64*0.37;
+IAC_S_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
+IAC_T_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
+
+
 if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 	UART_Debg_t_h=ms_tick_cnt;
 
