@@ -201,10 +201,8 @@ uint32_t LL_EXTI_LINE_9_reenable_cnt=0;
 #define			  avging_shift 4
 
 int32_t  timx_trg_num = 2800000;
-float  alpha_rad = 0.0f;
-float  factor = 0.0f;
-float  i_ac_rms = 0.0f;
-float  scl_IAC_R_rms_sc = 0.37f;
+float  power_out = 0.0f;
+float  power_in = 0.0f;
 
 uint8_t per_dev_perc_max = 10;
 
