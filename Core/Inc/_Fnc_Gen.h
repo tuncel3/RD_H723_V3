@@ -115,7 +115,7 @@ inline void delayA_100ns(uint32_t us)
 void extern prfm(char *string)
 {
     // Move to a new line before sending a new message
-    snprintf(dma_uart_buffer[buffer_head], MAX_STRING_LENGTH, "\n\r%s", string);
+    snprintf(dma_uart_buffer[buffer_head], MAX_STRING_LENGTH, "\n%s", string);
 
     // Move buffer head
     buffer_head = (buffer_head + 1) % BUFFER_SIZE;
