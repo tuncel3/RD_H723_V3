@@ -161,7 +161,6 @@ void DMA1_Stream1_IRQHandler(void) {
 }
 
 void TIM2_IRQHandler(void) {
-	TIM2_interrupt_at=LL_TIM_GetCounter(TIM2);
 	LL_TIM_DisableCounter(TIM2);
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM2)) {
 		LL_TIM_ClearFlag_UPDATE(TIM2);
@@ -193,7 +192,6 @@ void TIM23_IRQHandler(void) {
 	}
 }
 void TIM24_IRQHandler(void) {
-	TIM24_interrupt_at=LL_TIM_GetCounter(TIM24);
 	LL_TIM_DisableCounter(TIM24);
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM24)) {
 		LL_TIM_ClearFlag_UPDATE(TIM24);
@@ -236,7 +234,6 @@ void TIM3_IRQHandler(void) {
 			SU_THY=0;
 			SA_THY=0;
 //			DBG10
-			TIM23_interrupt_at=LL_TIM_GetCounter(TIM23);
 			LL_TIM_EnableCounter(TIM23);
 		}
 		if (en_t_dely_dn_s==1 && thy_drv_en==1) {
@@ -246,7 +243,6 @@ void TIM3_IRQHandler(void) {
 			SU_THY=0;
 			SA_THY=0;
 //			DBG10
-			TIM23_interrupt_at=LL_TIM_GetCounter(TIM23);
 			LL_TIM_EnableCounter(TIM23);
 		}
 		if (en_t_dely_up_t==1 && thy_drv_en==1) {
@@ -272,7 +268,6 @@ void TIM3_IRQHandler(void) {
 void EXTI9_5_IRQHandler(void){
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_7) != RESET)  {
 		LL_TIM_DisableCounter(TIM2);
-		TIM2_stopped_at=LL_TIM_GetCounter(TIM2);
 		LL_TIM_SetCounter(TIM2, 0);
 		LL_TIM_SetCounter(TIM3, 0);
 		LL_TIM_EnableCounter(TIM3);
@@ -306,6 +301,7 @@ void EXTI9_5_IRQHandler(void){
 		LL_EXTI_DisableIT_0_31(LL_EXTI_LINE_8);
 		LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_8);
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
+		TIM23_interrupt_at=TIM23_stopped_at;
 		en_t_dely_up_s=1;
 		en_t_dely_dn_s=0;
 		VAC_S_samp_end=1;
@@ -321,7 +317,6 @@ void EXTI9_5_IRQHandler(void){
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_9) != RESET)  {
 		LL_TIM_DisableCounter(TIM24);
-		TIM24_stopped_at=LL_TIM_GetCounter(TIM24);
 		LL_TIM_SetCounter(TIM24, 0);
 		LL_TIM_SetCounter(TIM3, 0);
 		LL_TIM_EnableCounter(TIM3);
