@@ -1023,7 +1023,7 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 
 	timx_rat=  ((float) (timx_trg_num+zc_start_delay_300u_arr_32))/tim_arr_max;
 	/* Ölçülen / hesaplanan tüm degerleri tek satirda yaz */
-	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f\r\n",
+	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f",
 	        VRECT_pas.a1,        /* VoutDC           */
 	        IRECT_pas.a1,        /* IoutDC           */
 	        VAC_R_rms_sc.a1,     /* Vin R-S          */
