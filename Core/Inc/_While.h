@@ -1023,15 +1023,23 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 
 	timx_rat=  ((float) (timx_trg_num+zc_start_delay_300u_arr_32))/tim_arr_max;
 	/* Ölçülen / hesaplanan tüm degerleri tek satirda yaz */
-	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f",
-	        VRECT_pas.a1,        /* VoutDC           */
-	        IRECT_pas.a1,        /* IoutDC           */
-	        VAC_R_rms_sc.a1,     /* Vin R-S          */
-	        VAC_S_rms_sc.a1,     /* Vin S-T          */
-	        VAC_T_rms_sc.a1,     /* Vin T-R          */
-	        timx_rat,            /* tetikleme %      */
-	        IAC_R_rms_sc.a1,     /* gercek I_R (ölçüm) */
-	        I_R_est);            /* empirik I_R      */
+	double I_R_est =  1.6943
+	                - 0.01622  * (V_avg - 400.8)
+	                - 0.003952 * (V_DC  - 110.0)
+	                + 0.22113  * I_DC
+	                - 2.34272  * timx_rat
+	                + 0.18055  * I_DC * timx_rat;
+
+	/* logla */
+	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f\r\n",
+	        VRECT_pas.a1,
+	        IRECT_pas.a1,
+	        VAC_R_rms_sc.a1,
+	        VAC_S_rms_sc.a1,
+	        VAC_T_rms_sc.a1,
+			timx_rat,
+	        IAC_R_rms_sc.a1,   /* gerçek ölçüm        */
+	        I_R_est);          /* tahmin              */
 
 
 //	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f", VRECT_pas.a1, IRECT_pas.a1, VAC_R_rms_sc.a1, VAC_S_rms_sc.a1, VAC_T_rms_sc.a1, timx_rat, IAC_R_rms_sc.a1);
