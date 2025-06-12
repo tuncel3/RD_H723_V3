@@ -161,8 +161,8 @@ void DMA1_Stream1_IRQHandler(void) {
 }
 
 void TIM2_IRQHandler(void) {
-	LL_TIM_DisableCounter(TIM2);
 	TIM2_interrupt_at=LL_TIM_GetCounter(TIM2);
+	LL_TIM_DisableCounter(TIM2);
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM2)) {
 		LL_TIM_ClearFlag_UPDATE(TIM2);
 		if (en_t_thy_up_r==1) {
@@ -178,8 +178,8 @@ void TIM2_IRQHandler(void) {
 	}
 }
 void TIM23_IRQHandler(void) {
-	LL_TIM_DisableCounter(TIM23);
 	TIM23_interrupt_at=LL_TIM_GetCounter(TIM23);
+	LL_TIM_DisableCounter(TIM23);
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM23)) {
 		LL_TIM_ClearFlag_UPDATE(TIM23);
 		if (en_t_thy_up_s==1) {
@@ -194,8 +194,8 @@ void TIM23_IRQHandler(void) {
 	}
 }
 void TIM24_IRQHandler(void) {
-	LL_TIM_DisableCounter(TIM24);
 	TIM24_interrupt_at=LL_TIM_GetCounter(TIM24);
+	LL_TIM_DisableCounter(TIM24);
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM24)) {
 		LL_TIM_ClearFlag_UPDATE(TIM24);
 		if (en_t_thy_up_t==1) {
