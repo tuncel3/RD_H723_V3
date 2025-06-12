@@ -1009,8 +1009,8 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 
 
 	V_avg   = (VAC_R_rms_sc.a1 + VAC_S_rms_sc.a1 + VAC_T_rms_sc.a1) / 3.0f;   /* ort. hat-hat RMS  */
-	V_DC    = VRECT_pas.a1;                                                   /* cikis DC gerilimi */
-	I_DC    = IRECT_pas.a1;                                                   /* cikis DC akimi    */
+	V_DC    = VRECT_pas.a16;                                                   /* cikis DC gerilimi */
+	I_DC    = IRECT_pas.a16;                                                   /* cikis DC akimi    */
 	AcilPct = timx_rat;                                                       /* tetikleme % (0-1) */
 
 	/* Empirik I_R kestirimi */
@@ -1032,8 +1032,8 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 
 	/* logla */
 	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f\r\n",
-	        VRECT_pas.a1,
-	        IRECT_pas.a1,
+	        VRECT_pas.a16,
+	        IRECT_pas.a16,
 	        VAC_R_rms_sc.a1,
 	        VAC_S_rms_sc.a1,
 	        VAC_T_rms_sc.a1,
