@@ -239,6 +239,9 @@ uint32_t tim_arr_max = 0;
 uint32_t TIM2_stopped_at = 0;
 uint32_t TIM23_stopped_at = 0;
 uint32_t TIM24_stopped_at = 0;
+uint32_t TIM2_interrupt_at = 0;
+uint32_t TIM23_interrupt_at = 0;
+uint32_t TIM24_interrupt_at = 0;
 
 uint32_t zero_cross_timeout_R = 0;
 uint32_t zero_cross_timeout_S = 0;
