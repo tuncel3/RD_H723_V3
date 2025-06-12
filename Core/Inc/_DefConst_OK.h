@@ -203,6 +203,7 @@ uint32_t LL_EXTI_LINE_9_reenable_cnt=0;
 int32_t  timx_trg_num = 2800000;
 float  power_out = 0.0f;
 float  power_in = 0.0f;
+float  verim = 0.75f;
 
 uint8_t per_dev_perc_max = 10;
 
