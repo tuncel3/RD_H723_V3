@@ -994,6 +994,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
+timx_trg_num64=timx_trg_num64*63.0/64.0+timx_trg_num/64.0;
+
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
 
@@ -1021,7 +1023,7 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	              - 1.469142 * AcilPct
 	              - 0.212183 * I_DC * AcilPct;
 
-	timx_rat=  ((float) (timx_trg_num+zc_start_delay_300u_arr_32))/tim_arr_max;
+	timx_rat=  ((float) (timx_trg_num64+zc_start_delay_300u_arr_32))/tim_arr_max;
 	/* Ölçülen / hesaplanan tüm degerleri tek satirda yaz */
 	double I_R_est =  1.6943
 	                - 0.01622  * (V_avg - 400.8)
