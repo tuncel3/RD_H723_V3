@@ -1015,33 +1015,25 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	I_DC    = IRECT_pas.a16;                                                   /* cikis DC akimi    */
 	AcilPct = timx_rat;                                                       /* tetikleme % (0-1) */
 
-	/* Empirik I_R kestirimi */
-	I_R_est = 1.188464
-	              + 0.251688 * (V_avg - 400.8f)
-	              + 0.571725 * (V_DC  - 110.0f)
-	              + 0.404878 * I_DC
-	              - 1.469142 * AcilPct
-	              - 0.212183 * I_DC * AcilPct;
 
 	timx_rat=  ((float) (timx_trg_num64+zc_start_delay_300u_arr_32))/tim_arr_max;
 	/* Ölçülen / hesaplanan tüm degerleri tek satirda yaz */
-	double I_R_est =  1.6943
-	                - 0.01622  * (V_avg - 400.8)
-	                - 0.003952 * (V_DC  - 110.0)
-	                + 0.22113  * I_DC
-	                - 2.34272  * timx_rat
-	                + 0.18055  * I_DC * timx_rat;
+	double I_R_est =  1.621104
+	                + 0.00594067 * (V_avg - 403.0)
+	                + 0.05659171 * I_DC
+	                - 2.133883   * timx_rat
+	                + 0.44554034 * I_DC * timx_rat;
 
-	/* logla */
-	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f",
-	        VRECT_pas.a16,
-	        IRECT_pas.a16,
-	        VAC_R_rms_sc.a1,
-	        VAC_S_rms_sc.a1,
-	        VAC_T_rms_sc.a1,
-			timx_rat,
-	        IAC_R_rms_sc.a1,   /* gerçek ölçüm        */
-	        I_R_est);          /* tahmin              */
+	/* --- Konsola / UART’a tek satır log ------------------------------ */
+	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f\r\n",
+	        V_DC,                 /* VoutDC (82 V civarı)      */
+	        I_DC,                 /* IoutDC                    */
+	        VAC_R_rms_sc.a1,      /* Vin R-S                   */
+	        VAC_S_rms_sc.a1,      /* Vin S-T                   */
+	        VAC_T_rms_sc.a1,      /* Vin T-R                   */
+			timx_rat,                    /* tetikleme yüzdesi         */
+	        IAC_R_rms_sc.a1,      /* gerçek faz-R akımı        */
+	        I_R_est);             /* empirik tahmin            */
 
 
 //	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f", VRECT_pas.a1, IRECT_pas.a1, VAC_R_rms_sc.a1, VAC_S_rms_sc.a1, VAC_T_rms_sc.a1, timx_rat, IAC_R_rms_sc.a1);
