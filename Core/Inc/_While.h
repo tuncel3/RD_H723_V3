@@ -1004,7 +1004,7 @@ power_in=power_out/verim;
 IAC_R_rms_sc.a64=power_in/VAC_S_rms_sc.a64;
 timx_rat=  ((float) (timx_trg_num+zc_start_delay_300u_arr_32))/tim_arr_max;
 
-
+PRF_GEN("%f %f %f %f %f %f", VRECT_pas.a1, IRECT_pas.a1, VAC_R_rms_sc.a1, VAC_S_rms_sc.a1, VAC_T_rms_sc.a1, timx_rat);
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
