@@ -198,6 +198,7 @@ void TIM24_IRQHandler(void) {
 		if (en_t_thy_up_t==1) {
 			en_t_thy_up_t=0;
 			TU_THY=1;
+		TIM24_stopped1_at=LL_TIM_GetCounter(TIM24);
 		}
 		if (en_t_thy_dn_t==1) {
 			en_t_thy_dn_t=0;
@@ -268,9 +269,6 @@ void TIM3_IRQHandler(void) {
 void EXTI9_5_IRQHandler(void){
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_7) != RESET)  {
 		LL_TIM_DisableCounter(TIM2);
-		TIM2_stopped1_at=LL_TIM_GetCounter(TIM2);
-		TIM23_stopped1_at=LL_TIM_GetCounter(TIM23);
-		TIM24_stopped1_at=LL_TIM_GetCounter(TIM24);
 		LL_TIM_SetCounter(TIM2, 0);
 		LL_TIM_SetCounter(TIM3, 0);
 		LL_TIM_EnableCounter(TIM3);
@@ -295,9 +293,6 @@ void EXTI9_5_IRQHandler(void){
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_8) != RESET)  {
 		LL_TIM_DisableCounter(TIM23);
-		TIM2_interrupt_at=LL_TIM_GetCounter(TIM2);
-		TIM23_interrupt_at=LL_TIM_GetCounter(TIM23);
-		TIM24_interrupt_at=LL_TIM_GetCounter(TIM24);
 		LL_TIM_SetCounter(TIM23, 0);
 		LL_TIM_SetCounter(TIM3, 0);
 		LL_TIM_EnableCounter(TIM3);
@@ -321,9 +316,6 @@ void EXTI9_5_IRQHandler(void){
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_9) != RESET)  {
 		LL_TIM_DisableCounter(TIM24);
-		TIM2_stopped_at=LL_TIM_GetCounter(TIM2);
-		TIM23_stopped_at=LL_TIM_GetCounter(TIM23);
-		TIM24_stopped_at=LL_TIM_GetCounter(TIM24);
 		LL_TIM_SetCounter(TIM24, 0);
 		LL_TIM_SetCounter(TIM3, 0);
 		LL_TIM_EnableCounter(TIM3);
