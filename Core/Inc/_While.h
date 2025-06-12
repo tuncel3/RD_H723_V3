@@ -994,7 +994,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 alpha_rad =  (timx_trg_num * (M_PI / 3300000));
-
+factor = (M_PI - alpha_rad + 0.5f * sinf(2.0f * alpha_rad)) / M_PI;
 
 IAC_R_rms_sc.a64=IRECT_pas.a64*0.37;
 //IAC_S_rms_sc.a64=calc_phase_rms_current(IRECT_pas.a64, timx_trg_num);
