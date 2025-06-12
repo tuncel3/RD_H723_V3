@@ -1018,10 +1018,11 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 
 	timx_rat=  ((float) (timx_trg_num64+zc_start_delay_300u_arr_32))/tim_arr_max;
 	/* Ölçülen / hesaplanan tüm degerleri tek satirda yaz */
-	double I_R_est =  0.11428
-	                + 0.34211   * I_DC
-	                + 0.00228   * I_DC * I_DC
-	                + 0.03019   * (V_avg - 403.56);
+	double I_R_est =  1.621104
+	                + 0.00594067 * (V_avg - 403.0)
+	                + 0.05659171 * I_DC
+	                - 2.133883   * timx_rat
+	                + 0.44554034 * I_DC * timx_rat;
 
 	/* --- Konsola / UART’a tek satır log ------------------------------ */
 	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f\r\n",
