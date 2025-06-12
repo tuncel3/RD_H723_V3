@@ -1446,7 +1446,7 @@ typedef enum {
 	B_RESTRT_AFTR_DELAY=101
 }BLM_STATE;
 BLM_STATE blm_op_phase = 0;
-
+uint8_t blm_pause=0;
 
 #define FIRST_REPEAT_T     500u   // 500 ms
 #define NEXT_REPEAT_T      200u   // 100 ms
