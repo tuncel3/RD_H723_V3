@@ -995,6 +995,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 
 
 power_out=VRECT_pas.a64*IRECT_pas.a64;
+power_in=power_out/0.8;
 IAC_R_rms_sc.a64=power_in/VAC_S_rms_sc.a64;
 
 //IAC_R_rms_sc.a64=IRECT_pas.a64*scl_IAC_R_rms_sc-VRECT_pas.a64*;
