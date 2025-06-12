@@ -1031,7 +1031,7 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	                + 0.18055  * I_DC * timx_rat;
 
 	/* logla */
-	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f\r\n",
+	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f",
 	        VRECT_pas.a16,
 	        IRECT_pas.a16,
 	        VAC_R_rms_sc.a1,
