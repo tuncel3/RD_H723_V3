@@ -198,9 +198,6 @@ void TIM24_IRQHandler(void) {
 		if (en_t_thy_up_t==1) {
 			en_t_thy_up_t=0;
 			TU_THY=1;
-		TIM2_stopped1_at=LL_TIM_GetCounter(TIM2);
-		TIM23_stopped1_at=LL_TIM_GetCounter(TIM23);
-		TIM24_stopped1_at=LL_TIM_GetCounter(TIM24);
 		}
 		if (en_t_thy_dn_t==1) {
 			en_t_thy_dn_t=0;
