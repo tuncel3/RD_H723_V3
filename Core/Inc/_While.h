@@ -390,7 +390,7 @@ if (VRECT_pas.a1 >= vrect_dc_low_lim_ret && is_state_active(RECT_DC_LW_FC)) {
 
 // AC VOLTAGE MONITORING >>>>>>>>>>>>>>>>>>>
 // RRRRRRRRRRRRRRRRRRR
-if (VAC_R_rms_sc < VAC_0_LIM && VAC_R_Off_fc==0) {
+if (VAC_R_rms_sc.a1 < VAC_0_LIM && VAC_R_Off_fc==0) {
 	VAC_R_0_Acc_cnt++; // S 0
 	if (VAC_R_0_Acc_cnt >= VAC_R_0_Acc_per) {
 		VAC_R_0_Acc_cnt=0;
@@ -398,7 +398,7 @@ if (VAC_R_rms_sc < VAC_0_LIM && VAC_R_Off_fc==0) {
 	}
 } else {VAC_R_0_Acc_cnt=0;}
 
-if (VAC_R_rms_sc > VAC_Hg_Lim && VAC_R_Hg_fc==0) {
+if (VAC_R_rms_sc.a1 > VAC_Hg_Lim && VAC_R_Hg_fc==0) {
 	VAC_R_Hg_Acc_cnt++; // S HIGH
 	if (VAC_R_Hg_Acc_cnt >= VAC_R_Hg_Acc_per) {
 		VAC_R_Hg_Acc_cnt=0;
@@ -406,7 +406,7 @@ if (VAC_R_rms_sc > VAC_Hg_Lim && VAC_R_Hg_fc==0) {
 	}
 } else {VAC_R_Hg_Acc_cnt=0;}
 
-if (VAC_R_rms_sc < VAC_Lo_Lim && VAC_R_Lo_fc==0 && VAC_R_Off_fc==0) {
+if (VAC_R_rms_sc.a1 < VAC_Lo_Lim && VAC_R_Lo_fc==0 && VAC_R_Off_fc==0) {
 	VAC_R_Lo_Acc_cnt++; // S LOW
 	if (VAC_R_Lo_Acc_cnt >= VAC_R_Lo_Acc_per) {
 		VAC_R_Lo_Acc_cnt=0;
@@ -414,7 +414,7 @@ if (VAC_R_rms_sc < VAC_Lo_Lim && VAC_R_Lo_fc==0 && VAC_R_Off_fc==0) {
 	}
 } else {VAC_R_Lo_Acc_cnt=0;}
 
-if (VAC_R_rms_sc >= VAC_0_RET_LIM && VAC_R_Off_fc == 1) {
+if (VAC_R_rms_sc.a1 >= VAC_0_RET_LIM && VAC_R_Off_fc == 1) {
 	VAC_R_0_Ret_Acc_cnt++; // S 0 RET
 	if (VAC_R_0_Ret_Acc_cnt >= VAC_R_0_Ret_Acc_per) {
 		VAC_R_0_Ret_Acc_cnt=0;
@@ -422,7 +422,7 @@ if (VAC_R_rms_sc >= VAC_0_RET_LIM && VAC_R_Off_fc == 1) {
 	}
 } else {VAC_R_0_Ret_Acc_cnt=0;}
 
-if (VAC_R_rms_sc <= VAC_HG_RET_LIM && VAC_R_Hg_fc == 1) {
+if (VAC_R_rms_sc.a1 <= VAC_HG_RET_LIM && VAC_R_Hg_fc == 1) {
 	VAC_R_Hg_Ret_Acc_cnt++; // S HIGH RET
 	if (VAC_R_Hg_Ret_Acc_cnt >= VAC_R_Hg_Ret_Acc_per) {
 		VAC_R_Hg_Ret_Acc_cnt=0;
@@ -430,7 +430,7 @@ if (VAC_R_rms_sc <= VAC_HG_RET_LIM && VAC_R_Hg_fc == 1) {
 	}
 } else {VAC_R_Hg_Ret_Acc_cnt=0;}
 
-if (VAC_R_rms_sc >= VAC_LW_RET_LIM && VAC_R_Lo_fc == 1) {
+if (VAC_R_rms_sc.a1 >= VAC_LW_RET_LIM && VAC_R_Lo_fc == 1) {
 	VAC_R_Lo_Ret_Acc_cnt++; // S LOW RET
 	if (VAC_R_Lo_Ret_Acc_cnt >= VAC_R_Lo_Ret_Acc_per) {
 		VAC_R_Lo_Ret_Acc_cnt=0;
@@ -439,7 +439,7 @@ if (VAC_R_rms_sc >= VAC_LW_RET_LIM && VAC_R_Lo_fc == 1) {
 } else {VAC_R_Lo_Ret_Acc_cnt=0;}
 // RRRRRRRRRRRRRRRRRRR
 // SSSSSSSSSSSSSSSSSSS
-if (VAC_S_rms_sc < VAC_0_LIM && VAC_S_Off_fc==0) {
+if (VAC_S_rms_sc.a1 < VAC_0_LIM && VAC_S_Off_fc==0) {
 	VAC_S_0_Acc_cnt++; // S 0
 	if (VAC_S_0_Acc_cnt >= VAC_S_0_Acc_per) {
 		VAC_S_0_Acc_cnt=0;
@@ -447,7 +447,7 @@ if (VAC_S_rms_sc < VAC_0_LIM && VAC_S_Off_fc==0) {
 	}
 } else {VAC_S_0_Acc_cnt=0;}
 
-if (VAC_S_rms_sc > VAC_Hg_Lim && VAC_S_Hg_fc==0) {
+if (VAC_S_rms_sc.a1 > VAC_Hg_Lim && VAC_S_Hg_fc==0) {
 	VAC_S_Hg_Acc_cnt++; // S HIGH
 	if (VAC_S_Hg_Acc_cnt >= VAC_S_Hg_Acc_per) {
 		VAC_S_Hg_Acc_cnt=0;
@@ -455,7 +455,7 @@ if (VAC_S_rms_sc > VAC_Hg_Lim && VAC_S_Hg_fc==0) {
 	}
 } else {VAC_S_Hg_Acc_cnt=0;}
 
-if (VAC_S_rms_sc < VAC_Lo_Lim && VAC_S_Lo_fc==0 && VAC_S_Off_fc==0) {
+if (VAC_S_rms_sc.a1 < VAC_Lo_Lim && VAC_S_Lo_fc==0 && VAC_S_Off_fc==0) {
 	VAC_S_Lo_Acc_cnt++; // S LOW
 	if (VAC_S_Lo_Acc_cnt >= VAC_S_Lo_Acc_per) {
 		VAC_S_Lo_Acc_cnt=0;
@@ -463,7 +463,7 @@ if (VAC_S_rms_sc < VAC_Lo_Lim && VAC_S_Lo_fc==0 && VAC_S_Off_fc==0) {
 	}
 } else {VAC_S_Lo_Acc_cnt=0;}
 
-if (VAC_S_rms_sc >= VAC_0_RET_LIM && VAC_S_Off_fc == 1) {
+if (VAC_S_rms_sc.a1 >= VAC_0_RET_LIM && VAC_S_Off_fc == 1) {
 	VAC_S_0_Ret_Acc_cnt++; // S 0 RET
 	if (VAC_S_0_Ret_Acc_cnt >= VAC_S_0_Ret_Acc_per) {
 		VAC_S_0_Ret_Acc_cnt=0;
@@ -471,7 +471,7 @@ if (VAC_S_rms_sc >= VAC_0_RET_LIM && VAC_S_Off_fc == 1) {
 	}
 } else {VAC_S_0_Ret_Acc_cnt=0;}
 
-if (VAC_S_rms_sc <= VAC_HG_RET_LIM && VAC_S_Hg_fc == 1) {
+if (VAC_S_rms_sc.a1 <= VAC_HG_RET_LIM && VAC_S_Hg_fc == 1) {
 	VAC_S_Hg_Ret_Acc_cnt++; // S HIGH RET
 	if (VAC_S_Hg_Ret_Acc_cnt >= VAC_S_Hg_Ret_Acc_per) {
 		VAC_S_Hg_Ret_Acc_cnt=0;
@@ -479,7 +479,7 @@ if (VAC_S_rms_sc <= VAC_HG_RET_LIM && VAC_S_Hg_fc == 1) {
 	}
 } else {VAC_S_Hg_Ret_Acc_cnt=0;}
 
-if (VAC_S_rms_sc >= VAC_LW_RET_LIM && VAC_S_Lo_fc == 1) {
+if (VAC_S_rms_sc.a1 >= VAC_LW_RET_LIM && VAC_S_Lo_fc == 1) {
 	VAC_S_Lo_Ret_Acc_cnt++; // S LOW RET
 	if (VAC_S_Lo_Ret_Acc_cnt >= VAC_S_Lo_Ret_Acc_per) {
 		VAC_S_Lo_Ret_Acc_cnt=0;
@@ -488,7 +488,7 @@ if (VAC_S_rms_sc >= VAC_LW_RET_LIM && VAC_S_Lo_fc == 1) {
 } else {VAC_S_Lo_Ret_Acc_cnt=0;}
 // SSSSSSSSSSSSSSSSSSS
 // TTTTTTTTTTTTTTTTTTT
-if (VAC_T_rms_sc < VAC_0_LIM && VAC_T_Off_fc==0) {
+if (VAC_T_rms_sc.a1 < VAC_0_LIM && VAC_T_Off_fc==0) {
 	VAC_T_0_Acc_cnt++; // S 0
 	if (VAC_T_0_Acc_cnt >= VAC_T_0_Acc_per) {
 		VAC_T_0_Acc_cnt=0;
@@ -496,7 +496,7 @@ if (VAC_T_rms_sc < VAC_0_LIM && VAC_T_Off_fc==0) {
 	}
 } else {VAC_T_0_Acc_cnt=0;}
 
-if (VAC_T_rms_sc > VAC_Hg_Lim && VAC_T_Hg_fc==0) {
+if (VAC_T_rms_sc.a1 > VAC_Hg_Lim && VAC_T_Hg_fc==0) {
 	VAC_T_Hg_Acc_cnt++; // S HIGH
 	if (VAC_T_Hg_Acc_cnt >= VAC_T_Hg_Acc_per) {
 		VAC_T_Hg_Acc_cnt=0;
@@ -504,7 +504,7 @@ if (VAC_T_rms_sc > VAC_Hg_Lim && VAC_T_Hg_fc==0) {
 	}
 } else {VAC_T_Hg_Acc_cnt=0;}
 
-if (VAC_T_rms_sc < VAC_Lo_Lim && VAC_T_Lo_fc==0 && VAC_T_Off_fc==0) {
+if (VAC_T_rms_sc.a1 < VAC_Lo_Lim && VAC_T_Lo_fc==0 && VAC_T_Off_fc==0) {
 	VAC_T_Lo_Acc_cnt++; // S LOW
 	if (VAC_T_Lo_Acc_cnt >= VAC_T_Lo_Acc_per) {
 		VAC_T_Lo_Acc_cnt=0;
@@ -512,7 +512,7 @@ if (VAC_T_rms_sc < VAC_Lo_Lim && VAC_T_Lo_fc==0 && VAC_T_Off_fc==0) {
 	}
 } else {VAC_T_Lo_Acc_cnt=0;}
 
-if (VAC_T_rms_sc >= VAC_0_RET_LIM && VAC_T_Off_fc == 1) {
+if (VAC_T_rms_sc.a1 >= VAC_0_RET_LIM && VAC_T_Off_fc == 1) {
 	VAC_T_0_Ret_Acc_cnt++; // S 0 RET
 	if (VAC_T_0_Ret_Acc_cnt >= VAC_T_0_Ret_Acc_per) {
 		VAC_T_0_Ret_Acc_cnt=0;
@@ -520,7 +520,7 @@ if (VAC_T_rms_sc >= VAC_0_RET_LIM && VAC_T_Off_fc == 1) {
 	}
 } else {VAC_T_0_Ret_Acc_cnt=0;}
 
-if (VAC_T_rms_sc <= VAC_HG_RET_LIM && VAC_T_Hg_fc == 1) {
+if (VAC_T_rms_sc.a1 <= VAC_HG_RET_LIM && VAC_T_Hg_fc == 1) {
 	VAC_T_Hg_Ret_Acc_cnt++; // S HIGH RET
 	if (VAC_T_Hg_Ret_Acc_cnt >= VAC_T_Hg_Ret_Acc_per) {
 		VAC_T_Hg_Ret_Acc_cnt=0;
@@ -528,7 +528,7 @@ if (VAC_T_rms_sc <= VAC_HG_RET_LIM && VAC_T_Hg_fc == 1) {
 	}
 } else {VAC_T_Hg_Ret_Acc_cnt=0;}
 
-if (VAC_T_rms_sc >= VAC_LW_RET_LIM && VAC_T_Lo_fc == 1) {
+if (VAC_T_rms_sc.a1 >= VAC_LW_RET_LIM && VAC_T_Lo_fc == 1) {
 	VAC_T_Lo_Ret_Acc_cnt++; // S LOW RET
 	if (VAC_T_Lo_Ret_Acc_cnt >= VAC_T_Lo_Ret_Acc_per) {
 		VAC_T_Lo_Ret_Acc_cnt=0;
@@ -1078,7 +1078,7 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 //	uart_debug_cnt();
 
-//	PRF_GEN("%3.2f %3.2f %3.2f %3.2f %3.2f", VAC_R_rms_roll_per_avg.a64, VAC_S_rms_roll_per_avg.a64, VAC_T_rms_roll_per_avg.a64, VRECT_pas.a64, IRECT_pas.a64);
+//	PRF_GEN("%3.2f %3.2f %3.2f %3.2f %3.2f", VAC_R_rms_sc.a64, VAC_S_rms_sc.a64, VAC_T_rms_sc.a64, VRECT_pas.a64, IRECT_pas.a64);
 
 
 //	print_active_states();

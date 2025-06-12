@@ -128,9 +128,9 @@ inline extern void CALIBRATION_1_pg_disp(void) {
     sprintf(L, "VB%7.2f", VBAT_pas.a64); 		GLCD_PrintString(0, 3*lnhg, L);
     sprintf(L, "IR%7.2f", IRECT_pas.a64); 		GLCD_PrintString(0, 4*lnhg, L);
     sprintf(L, "IB%7.2f", IBAT_pas.a64); 		GLCD_PrintString(0, 5*lnhg, L);
-    sprintf(L, "VR%7.2f", VAC_R_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 1*lnhg, L);
-    sprintf(L, "VS%7.2f", VAC_S_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 2*lnhg, L);
-    sprintf(L, "VT%7.2f", VAC_T_rms_roll_per_avg.a64); 		GLCD_PrintString(64, 3*lnhg, L);
+    sprintf(L, "VR%7.2f", VAC_R_rms_sc.a64); 		GLCD_PrintString(64, 1*lnhg, L);
+    sprintf(L, "VS%7.2f", VAC_S_rms_sc.a64); 		GLCD_PrintString(64, 2*lnhg, L);
+    sprintf(L, "VT%7.2f", VAC_T_rms_sc.a64); 		GLCD_PrintString(64, 3*lnhg, L);
 
     uint8_t x0=0; uint8_t y0=0; uint8_t w=0; uint8_t h=10;
 
@@ -252,13 +252,13 @@ if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
 		rolling_disp_VAC_cnt=(rolling_disp_VAC_cnt+1) % disp_VAC_phase_wait;
 
 		if (rolling_disp_VAC_cnt < disp_VAC_phase_wait_slice) {
-			sprintf(R, "VR%6.1f", VAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(74, 11, R);
+			sprintf(R, "VR%6.1f", VAC_R_rms_sc.a64);	GLCD_PrintString(74, 11, R);
 			sprintf(R, "IR%6.1f", IAC_R_rms_roll_per_avg.a64);	GLCD_PrintString(74, 20, R);
 		} else if (rolling_disp_VAC_cnt < (2 * disp_VAC_phase_wait_slice)) {
-			sprintf(R, "VS%6.1f", VAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(74, 11, R);
+			sprintf(R, "VS%6.1f", VAC_S_rms_sc.a64);	GLCD_PrintString(74, 11, R);
 			sprintf(R, "IS%6.1f", IAC_S_rms_roll_per_avg.a64);	GLCD_PrintString(74, 20, R);
 		} else if (rolling_disp_VAC_cnt < (4 * disp_VAC_phase_wait_slice)) {
-			sprintf(R, "VT%6.1f", VAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(74, 11, R);
+			sprintf(R, "VT%6.1f", VAC_T_rms_sc.a64);	GLCD_PrintString(74, 11, R);
 			sprintf(R, "IT%6.1f", IAC_T_rms_roll_per_avg.a64);	GLCD_PrintString(74, 20, R);
 		}
 
