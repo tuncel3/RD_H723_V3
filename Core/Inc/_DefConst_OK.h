@@ -70,7 +70,7 @@ typedef struct {
     GPIO_PinDef A;
     GPIO_PinDef U;
 } SCR_Line;
-
+				 //bu kısım A         //  //bu kısım U         //
 SCR_Line SCR_R = {{GPIOC, LL_GPIO_PIN_8}, {GPIOC, LL_GPIO_PIN_7}};
 SCR_Line SCR_S = {{GPIOC, LL_GPIO_PIN_6}, {GPIOD, LL_GPIO_PIN_15}};
 SCR_Line SCR_T = {{GPIOD, LL_GPIO_PIN_14}, {GPIOD, LL_GPIO_PIN_13}};
