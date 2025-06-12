@@ -194,12 +194,12 @@ RollingAverage VBAT_pas;
 RollingAverage VAC_R_rms_sc;
 RollingAverage VAC_S_rms_sc;
 RollingAverage VAC_T_rms_sc;
-RollingAverage VAC_R_rms_roll_per_avg;
-RollingAverage VAC_S_rms_roll_per_avg;
-RollingAverage VAC_T_rms_roll_per_avg;
-RollingAverage IAC_R_rms_roll_per_avg;
-RollingAverage IAC_S_rms_roll_per_avg;
-RollingAverage IAC_T_rms_roll_per_avg;
+//RollingAverage VAC_R_rms_roll_per_avg;
+//RollingAverage VAC_S_rms_roll_per_avg;
+//RollingAverage VAC_T_rms_roll_per_avg;
+//RollingAverage IAC_R_rms_roll_per_avg;
+//RollingAverage IAC_S_rms_roll_per_avg;
+//RollingAverage IAC_T_rms_roll_per_avg;
 
 float blm_smp_buff_sum_ = 0;
 

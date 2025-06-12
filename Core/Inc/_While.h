@@ -993,11 +993,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-calc_phase_rms_current(IRECT_pas.a64, timx_trg_num)
 
-IAC_R_rms_roll_per_avg.a64=IRECT_pas.a64*0.37;
-IAC_S_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
-IAC_T_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
+VAC_R_rms_sc.a64=IRECT_pas.a64*0.37;
+VAC_S_rms_sc.a64=calc_phase_rms_current(IRECT_pas.a64, timx_trg_num);
+VAC_T_rms_sc.a64=VAC_R_rms_sc.a64;
 
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
