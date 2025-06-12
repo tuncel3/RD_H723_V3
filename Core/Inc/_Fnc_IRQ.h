@@ -268,6 +268,9 @@ void TIM3_IRQHandler(void) {
 void EXTI9_5_IRQHandler(void){
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_7) != RESET)  {
 		LL_TIM_DisableCounter(TIM2);
+		TIM2_stopped1_at=LL_TIM_GetCounter(TIM2);
+		TIM23_stopped1_at=LL_TIM_GetCounter(TIM23);
+		TIM24_stopped1_at=LL_TIM_GetCounter(TIM24);
 		LL_TIM_SetCounter(TIM2, 0);
 		LL_TIM_SetCounter(TIM3, 0);
 		LL_TIM_EnableCounter(TIM3);
