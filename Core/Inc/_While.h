@@ -994,7 +994,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-alpha_rad =  (timx_trg_num * (M_PI / tim_arr_max));
+alpha_rad =  (timx_trg_num * (M_PI / (tim_arr_max+tim_arr_max_c)));
 factor = (M_PI - alpha_rad + 0.5f * sinf(2.0f * alpha_rad)) / M_PI;
 i_ac_rms = (IRECT_pas.a64 / sqrtf(3.0f)) * sqrtf(factor) * verim;
 
