@@ -178,7 +178,6 @@ void TIM2_IRQHandler(void) {
 	}
 }
 void TIM23_IRQHandler(void) {
-	TIM23_interrupt_at=LL_TIM_GetCounter(TIM23);
 	LL_TIM_DisableCounter(TIM23);
 	if (LL_TIM_IsActiveFlag_UPDATE(TIM23)) {
 		LL_TIM_ClearFlag_UPDATE(TIM23);
@@ -237,6 +236,7 @@ void TIM3_IRQHandler(void) {
 			SU_THY=0;
 			SA_THY=0;
 //			DBG10
+			TIM23_interrupt_at=LL_TIM_GetCounter(TIM23);
 			LL_TIM_EnableCounter(TIM23);
 		}
 		if (en_t_dely_dn_s==1 && thy_drv_en==1) {
@@ -246,6 +246,7 @@ void TIM3_IRQHandler(void) {
 			SU_THY=0;
 			SA_THY=0;
 //			DBG10
+			TIM23_interrupt_at=LL_TIM_GetCounter(TIM23);
 			LL_TIM_EnableCounter(TIM23);
 		}
 		if (en_t_dely_up_t==1 && thy_drv_en==1) {
