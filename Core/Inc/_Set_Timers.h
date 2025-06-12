@@ -99,7 +99,7 @@ LL_TIM_EnableCounter(TIM16);
 ////////////////////////////////////////////
 // TIM2			THY TRIG TIME R
 LL_TIM_SetPrescaler(TIM2, 0);
-LL_TIM_SetAutoReload(TIM2, 3299999);
+LL_TIM_SetAutoReload(TIM2, 3299999);	// 275MHz de 12ms
 LL_TIM_OC_SetCompareCH1(TIM2, 100);
 LL_TIM_EnableIT_UPDATE(TIM2);
 LL_TIM_EnableCounter(TIM2);
