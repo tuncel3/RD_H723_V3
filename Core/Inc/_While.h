@@ -994,6 +994,12 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+float alpha_rad = alpha_deg * (M_PI / 180.0f); // derece → rad
+float factor = (M_PI - alpha_rad + 0.5f * sinf(2.0f * alpha_rad)) / M_PI;
+float i_ac_rms = (i_dc / sqrtf(3.0f)) * sqrtf(factor);
+return i_ac_rms;
+
+
 IAC_R_rms_roll_per_avg.a64=IRECT_pas.a64*0.37;
 IAC_S_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
 IAC_T_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;

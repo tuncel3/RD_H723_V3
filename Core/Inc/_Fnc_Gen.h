@@ -1300,6 +1300,18 @@ uint8_t are_all_equal_fc(uint8_t phase) {
 //	}
 //}
 
+//#include <math.h>
+
+// alpha_deg: derece cinsinden tetikleme açısı
+// i_dc: çıkış DC akımı (IRECT_pas.a64)
+// dönüş: giriş faz RMS akımı
+float calc_phase_rms_current(float i_dc, float alpha_deg)
+{
+    float alpha_rad = alpha_deg * (M_PI / 10000.0f); // derece → rad
+    float factor = (M_PI - alpha_rad + 0.5f * sinf(2.0f * alpha_rad)) / M_PI;
+    float i_ac_rms = (i_dc / sqrtf(3.0f)) * sqrtf(factor);
+    return i_ac_rms;
+}
 
 
 
