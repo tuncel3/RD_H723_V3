@@ -994,6 +994,9 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+IAC_R_rms_roll_per_avg.a64=IRECT_pas.a64*0.37;
+IAC_S_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
+IAC_T_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
 
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
@@ -1075,9 +1078,6 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 
 
 
-IAC_R_rms_roll_per_avg.a64=IRECT_pas.a64*0.37;
-IAC_S_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
-IAC_T_rms_roll_per_avg.a64=IAC_R_rms_roll_per_avg.a64;
 
 
 if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
