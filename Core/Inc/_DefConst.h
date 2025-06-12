@@ -6,7 +6,7 @@
 #define DEBUG_MODE 1
 
 volatile uint8_t dbg_gen = 1;
-volatile uint8_t dbg_blm = 1;
+volatile uint8_t dbg_blm = 0;
 
 #if DEBUG_MODE
     // Debug açıkken runtime flag ile kontrol
@@ -508,7 +508,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_FRQ_CAL, 0.9975}, {SET_FRQ_CAL, 0.9975} },
     { {SET_UNSEEN_FLT, 0.0}, {SET_UNSEEN_FLT, 0.0} },
     { {SET_BATT_REV_DET, 1.0}, {SET_BATT_REV_DET, 1.0} },
-    { {SET_BATT_DISC_DET, 0.0}, {SET_BATT_DISC_DET, 0.0} },
+    { {SET_BATT_DISC_DET, 1.0}, {SET_BATT_DISC_DET, 1.0} },
     { {SET_DROPPER_MANOTO, 1.0}, {SET_DROPPER_MANOTO, 1.0} },
     { {SET_DROPPER_K1, 0.0}, {SET_DROPPER_K1, 0.0} },
     { {SET_DROPPER_K2, 0.0}, {SET_DROPPER_K2, 0.0} },
