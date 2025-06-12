@@ -994,17 +994,6 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-//alpha_rad =  (timx_trg_num * (M_PI / (tim_arr_max+tim_arr_max_c)));
-//factor = (M_PI - alpha_rad + 0.5f * sinf(2.0f * alpha_rad)) / M_PI;
-//i_ac_rms = (IRECT_pas.a64 / sqrtf(3.0f)) * sqrtf(factor) * verim;
-
-
-//power_out=VRECT_pas.a1*IRECT_pas.a1;
-//power_in=power_out/verim;
-//IAC_R_rms_sc.a1=power_in/VAC_S_rms_sc.a64;
-timx_rat=  ((float) (timx_trg_num+zc_start_delay_300u_arr_32))/tim_arr_max;
-
-
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
 
@@ -1018,7 +1007,34 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
 
-	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f", VRECT_pas.a1, IRECT_pas.a1, VAC_R_rms_sc.a1, VAC_S_rms_sc.a1, VAC_T_rms_sc.a1, timx_rat, IAC_R_rms_sc.a1);
+
+	V_avg   = (VAC_R_rms_sc.a1 + VAC_S_rms_sc.a1 + VAC_T_rms_sc.a1) / 3.0f;   /* ort. hat-hat RMS  */
+	V_DC    = VRECT_pas.a1;                                                   /* cikis DC gerilimi */
+	I_DC    = IRECT_pas.a1;                                                   /* cikis DC akimi    */
+	AcilPct = timx_rat;                                                       /* tetikleme % (0-1) */
+
+	/* Empirik I_R kestirimi */
+	I_R_est = 1.188464f
+	              + 0.251688f * (V_avg - 400.8f)
+	              + 0.571725f * (V_DC  - 110.0f)
+	              + 0.404878f * I_DC
+	              - 1.469142f * AcilPct
+	              - 0.212183f * I_DC * AcilPct;
+
+	timx_rat=  ((float) (timx_trg_num+zc_start_delay_300u_arr_32))/tim_arr_max;
+	/* Ölçülen / hesaplanan tüm degerleri tek satirda yaz */
+	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f\r\n",
+	        VRECT_pas.a1,        /* VoutDC           */
+	        IRECT_pas.a1,        /* IoutDC           */
+	        VAC_R_rms_sc.a1,     /* Vin R-S          */
+	        VAC_S_rms_sc.a1,     /* Vin S-T          */
+	        VAC_T_rms_sc.a1,     /* Vin T-R          */
+	        timx_rat,            /* tetikleme %      */
+	        IAC_R_rms_sc.a1,     /* gercek I_R (ölçüm) */
+	        I_R_est);            /* empirik I_R      */
+
+
+//	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f", VRECT_pas.a1, IRECT_pas.a1, VAC_R_rms_sc.a1, VAC_S_rms_sc.a1, VAC_T_rms_sc.a1, timx_rat, IAC_R_rms_sc.a1);
 
 	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
 		while_LCD_reinit_per=ms_tick_cnt;

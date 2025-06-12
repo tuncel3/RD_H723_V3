@@ -209,6 +209,11 @@ float  power_in = 0.0f;
 float  verim = 0.75f;
 int  tim_arr_max_c = 100;
 float  timx_rat = 0.0f;
+float  V_avg = 0.0f;
+float  V_DC = 0.0f;
+float  I_DC = 0.0f;
+float  AcilPct = 0.0f;
+float  I_R_est = 0.0f;
 
 uint8_t per_dev_perc_max = 10;
 
