@@ -997,7 +997,7 @@ alpha_rad =  (timx_trg_num * (M_PI / 3300000));
 factor = (M_PI - alpha_rad + 0.5f * sinf(2.0f * alpha_rad)) / M_PI;
 i_ac_rms = (IRECT_pas.a64 / sqrtf(3.0f)) * sqrtf(factor) * 0.87;
 
-IAC_R_rms_sc.a64=IRECT_pas.a64*0.37;
+IAC_R_rms_sc.a64=IRECT_pas.a64*scl_IAC_R_rms_sc;
 //IAC_S_rms_sc.a64=calc_phase_rms_current(IRECT_pas.a64, timx_trg_num);
 //IAC_T_rms_sc.a64=IAC_R_rms_sc.a64;
 
