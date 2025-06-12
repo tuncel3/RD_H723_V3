@@ -201,13 +201,12 @@ uint32_t LL_EXTI_LINE_9_reenable_cnt=0;
 #define			  avging_shift 4
 
 int32_t  timx_trg_num = 2800000;
-int  tim_arr_max_c = 100;
-double  timx_rat = 0.0f;
-double  V_avg = 0.0f;
-double  V_DC = 0.0f;
-double  I_DC = 0.0f;
-double  AcilPct = 0.0f;
-double  I_R_est = 0.0f;
+double  timx_rat = 0.0;
+double  V_avg = 0.0;
+double  V_DC = 0.0;
+double  I_DC = 0.0;
+double  AcilPct = 0.0;
+double  I_R_est = 0.0;
 
 uint8_t per_dev_perc_max = 10;
 

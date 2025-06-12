@@ -1014,12 +1014,12 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	AcilPct = timx_rat;                                                       /* tetikleme % (0-1) */
 
 	/* Empirik I_R kestirimi */
-	I_R_est = 1.188464f
-	              + 0.251688f * (V_avg - 400.8f)
-	              + 0.571725f * (V_DC  - 110.0f)
-	              + 0.404878f * I_DC
-	              - 1.469142f * AcilPct
-	              - 0.212183f * I_DC * AcilPct;
+	I_R_est = 1.188464
+	              + 0.251688 * (V_avg - 400.8f)
+	              + 0.571725 * (V_DC  - 110.0f)
+	              + 0.404878 * I_DC
+	              - 1.469142 * AcilPct
+	              - 0.212183 * I_DC * AcilPct;
 
 	timx_rat=  ((float) (timx_trg_num+zc_start_delay_300u_arr_32))/tim_arr_max;
 	/* Ölçülen / hesaplanan tüm degerleri tek satirda yaz */
