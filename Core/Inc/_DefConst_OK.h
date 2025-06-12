@@ -204,7 +204,7 @@ int32_t  timx_trg_num = 2800000;
 float  power_out = 0.0f;
 float  power_in = 0.0f;
 float  verim = 0.75f;
-float  timx_rat = 0.75f;
+float  timx_rat = 0.0f;
 
 uint8_t per_dev_perc_max = 10;
 

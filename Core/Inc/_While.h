@@ -997,7 +997,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 power_out=VRECT_pas.a64*IRECT_pas.a64;
 power_in=power_out/verim;
 IAC_R_rms_sc.a64=power_in/VAC_S_rms_sc.a64;
-timx_rat=float (timx_trg_num/3300000);
+timx_rat= (float) timx_trg_num/3300000;
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
