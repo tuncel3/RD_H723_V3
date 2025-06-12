@@ -1033,14 +1033,15 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	                + 0.18055  * I_DC * timx_rat;
 
 	/* logla */
-	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f",
+	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f %.3f",
 	        VRECT_pas.a16,
 	        IRECT_pas.a16,
 	        VAC_R_rms_sc.a1,
 	        VAC_S_rms_sc.a1,
 	        VAC_T_rms_sc.a1,
 			timx_rat,
-	        IAC_R_rms_sc.a1);
+	        IAC_R_rms_sc.a1,   /* gerçek ölçüm        */
+	        I_R_est);          /* tahmin              */
 
 
 //	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f", VRECT_pas.a1, IRECT_pas.a1, VAC_R_rms_sc.a1, VAC_S_rms_sc.a1, VAC_T_rms_sc.a1, timx_rat, IAC_R_rms_sc.a1);
