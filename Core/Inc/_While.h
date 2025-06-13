@@ -1016,15 +1016,10 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	P_DC    = VRECT_pas.a16*IRECT_pas.a16;                                                   /* cikis DC gerilimi */
 	IAC=P_DC/VAC_avg;
 	IAC_est =
-	      0.00369463 * IAC * IAC * IAC    /* a3·x³ */
-	    - 0.05588933 * IAC * IAC          /* a2·x² */
-	    + 1.19303552 * IAC                /* a1·x  */
-	    + 0.27978617;                     /* a0    */
-//	PRF_GEN("%.3f %.3f %.3f",
-//			IAC,                 // hesaplanan
-//			IAC_real,            // gerçek ölçüm
-//			IAC_est             // regresyon sonuc
-//	);
+	      0.00369463 * IAC * IAC * IAC
+	    - 0.05588933 * IAC * IAC
+	    + 1.19303552 * IAC
+	    + 0.27978617;
 // ESTIMATE AC INPUT CURRENT
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
