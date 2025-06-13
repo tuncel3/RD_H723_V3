@@ -1,5 +1,5 @@
 void benter_fnc(void) {
-	secret_menu_cnt=0;
+	secret_menu_en_cnt=0;
     if (currentPage == HOME_PAGE_pg) {
         currentPage = MAIN_MENU_pg;
     }
