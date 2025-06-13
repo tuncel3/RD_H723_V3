@@ -1,6 +1,6 @@
 void benter_fnc(void) {
-	secret_menu_en_cnt=0;
-	secret_menu_dis_cnt=0;
+	management_menu_en_cnt=0;
+	management_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg) {
         currentPage = MAIN_MENU_pg;
     }
@@ -21,7 +21,7 @@ void benter_fnc(void) {
 			currentPage = FANS_TEMP_pg;
 		} else if (selected_MAIN_MENU == 5) {
 			currentPage = RELAY_ORDER_pg;
-        } else if (selected_MAIN_MENU == 6) {
+        } else if (selected_MAIN_MENU == 6 && management_menu_en) {
 			currentPage = MANAGEMENT_pg;
         }
     }

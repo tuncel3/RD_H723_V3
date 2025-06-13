@@ -533,7 +533,7 @@ inline extern void MAIN_MENU_pg_disp(void) {
     	if (main_menu_disp_index_!=6) {
     		GLCD_PrintString(0, (i + 1) * 9, L);
     	}
-    	else if (main_menu_disp_index_==6 && secret_menu_en) {
+    	else if (main_menu_disp_index_==6 && management_menu_en) {
     		GLCD_PrintString(0, (i + 1) * 9, L);
     	}
 		GLCD_PrintString(0, (main_menu_arrow_loc+1) * 9, ">");
