@@ -1015,11 +1015,12 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 
 	timx_rat=  ((float) (timx_trg_num64+zc_start_delay_300u_arr_32))/tim_arr_max;  /* tetikleme % (0-1) */
 
-	IAC_est = -0.009385*IAC*IAC +1.047011*IAC +0.346590;
-//	IAC_est = -0.01291744f * IAC * IAC
-//	                  + 1.08515792f * IAC
-//	                  + 0.26f;
-//	if (IAC_est < 0.0f) IAC_est = 0.0f;
+	const double a = 8.071285;
+	const double b = 0.285517;
+	const double c = 0.277764;
+
+	/* Üstel düzeltme: IAC_real tahmini */
+	IAC_est = c + a * (1.0 - exp(-b * IAC));
 
 	/* --- Konsola / UART’a tek satır log ------------------------------ */
 	PRF_GEN("%.3f %.3f %.3f",
