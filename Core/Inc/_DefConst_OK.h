@@ -202,12 +202,12 @@ uint32_t LL_EXTI_LINE_9_reenable_cnt=0;
 
 int32_t timx_trg_num = 2800000;
 int32_t timx_trg_num64 = 2800000;
-double  timx_rat = 0.0;
-double  VAC_avg = 0.0;
-double  P_DC = 0.0;
-double  IAC = 0.0;
-double  IAC_real = 0.0;
-double  IAC_est = 0.0;
+float  timx_rat = 0.0;
+float  VAC_avg = 0.0;
+float  P_DC = 0.0;
+float  IAC = 0.0;
+float  IAC_real = 0.0;
+float  IAC_est = 0.0;
 
 uint8_t per_dev_perc_max = 10;
 
