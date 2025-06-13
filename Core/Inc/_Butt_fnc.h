@@ -2,7 +2,8 @@
 #include "_benter.h"
 
 void bleft_fnc(void) {
-	secret_menu_cnt=0;
+	secret_menu_en_cnt=0;
+	secret_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg) {
     	if (thy_drv_en==0 && user_wants_allows_thy_drv==0) {
     		user_wants_allows_thy_drv=1;
@@ -123,10 +124,16 @@ void bleft_fnc(void) {
     	}
     }
     else if (currentPage == RELAY_ORDER_pg) { // LEFT
-    	if (secret_menu_cnt < 5) {
-    		secret_menu_cnt++;
-			if (secret_menu_cnt == 5) {
+    	if (secret_menu_en_cnt < 5 && secret_menu_en==0) {
+    		secret_menu_en_cnt++;
+			if (secret_menu_en_cnt == 5) {
 				secret_menu_en=1;
+			}
+    	}
+    	else if (secret_menu_dis_cnt < 5 && secret_menu_en==1) {
+    		secret_menu_dis_cnt++;
+			if (secret_menu_dis_cnt == 5) {
+				secret_menu_en=0;
 			}
     	}
     }
@@ -204,7 +211,8 @@ void bleft_fnc(void) {
 }
 
 void bright_fnc(void) {
-	secret_menu_cnt=0;
+	secret_menu_en_cnt=0;
+	secret_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg) {
     	if (thy_drv_en == 1 && user_wants_allows_thy_drv==1) {								// RIGHT
     		thy_drv_en=0;
@@ -390,7 +398,8 @@ void bright_fnc(void) {
 }
 
 void bup_fnc(void) {
-	secret_menu_cnt=0;
+	secret_menu_en_cnt=0;
+	secret_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg && EpD[HOME_PG_SEL][0].V1 == 2) {											// UP
     	asm("NOP");
     }
@@ -755,7 +764,8 @@ if (!chg_setting_edit_mode) {
 }
 
 void bdown_fnc(void) {
-	secret_menu_cnt=0;
+	secret_menu_en_cnt=0;
+	secret_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg && EpD[HOME_PG_SEL][0].V1 == 1) { 						// DOWN
     	EpD[HOME_PG_SEL][0].V1 = 2;
 		Rec_Dat_to_EEp_f(HOME_PG_SEL);
@@ -1127,7 +1137,8 @@ if (!chg_setting_edit_mode) {
 
 
 void besc_fnc(void) {
-	secret_menu_cnt=0;
+	secret_menu_en_cnt=0;
+	secret_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg) { // ESC
     	asm("NOP");
     }

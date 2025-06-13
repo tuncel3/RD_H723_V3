@@ -325,6 +325,7 @@ MenuPage currentPage = HOME_PAGE_pg;
 
 uint8_t secret_menu_en = 0;
 uint8_t secret_menu_en_cnt = 0;
+uint8_t secret_menu_dis_cnt = 0;
 uint8_t fault_codes_reset_req = 0;
 uint8_t device_reset_req = 0;
 uint8_t fault_codes_reset_req_right = 0;
