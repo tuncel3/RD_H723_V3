@@ -125,6 +125,9 @@ void bleft_fnc(void) {
     else if (currentPage == RELAY_ORDER_pg) { // LEFT
     	if (secret_menu_cnt < 5) {
     		secret_menu_cnt++;
+			if (secret_menu_cnt == 5) {
+				secret_menu_en=1;
+			}
     	}
     }
     else if (currentPage == TEST_pg) { 		// LEFT
