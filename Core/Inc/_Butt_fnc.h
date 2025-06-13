@@ -8,6 +8,7 @@ void bleft_fnc(void) {
     		thy_drv_en_req=1;
     		PRF_GEN("User req START rectf");
     	}
+    	secret_menu_cnt++;
     }
     else if (currentPage == CHARGE_SETT_pg) {
     	if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_CHARGE_MODE) {
