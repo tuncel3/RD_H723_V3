@@ -1008,26 +1008,27 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
 
-
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+// ESTIMATE AC INPUT CURRENT
 	VAC_avg   = (VAC_R_rms_sc.a1 + VAC_S_rms_sc.a1 + VAC_T_rms_sc.a1) / 3.0f;   /* ort. hat-hat RMS  */
 	P_DC    = VRECT_pas.a16*IRECT_pas.a16;                                                   /* cikis DC gerilimi */
 	IAC=P_DC/VAC_avg;
-
-	timx_rat=  ((float) (timx_trg_num64+zc_start_delay_300u_arr_32))/tim_arr_max;  /* tetikleme % (0-1) */
-
 	IAC_est =
 	      0.00369463 * IAC * IAC * IAC    /* a3·x³ */
 	    - 0.05588933 * IAC * IAC          /* a2·x² */
 	    + 1.19303552 * IAC                /* a1·x  */
 	    + 0.27978617;                     /* a0    */
-
-	/* --- Konsola / UART’a tek satır log ------------------------------ */
-	PRF_GEN("%.3f %.3f %.3f",
-			IAC,                 // hesaplanan
-			IAC_real,            // gerçek ölçüm
-			IAC_est             // regresyon sonuc
-	);
-
+//	PRF_GEN("%.3f %.3f %.3f",
+//			IAC,                 // hesaplanan
+//			IAC_real,            // gerçek ölçüm
+//			IAC_est             // regresyon sonuc
+//	);
+// ESTIMATE AC INPUT CURRENT
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
 		while_LCD_reinit_per=ms_tick_cnt;
