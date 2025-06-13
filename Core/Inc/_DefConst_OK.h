@@ -204,10 +204,7 @@ int32_t timx_trg_num = 2800000;
 int32_t timx_trg_num64 = 2800000;
 double  timx_rat = 0.0;
 double  VAC_avg = 0.0;
-double  V_DC = 0.0;
-double  I_DC = 0.0;
-double  AcilPct = 0.0;
-double  I_R_est = 0.0;
+double  P_DC = 0.0;
 
 uint8_t per_dev_perc_max = 10;
 

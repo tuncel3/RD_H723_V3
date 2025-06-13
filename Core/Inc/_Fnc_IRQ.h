@@ -54,6 +54,8 @@ void DMA1_Stream1_IRQHandler(void) {
 
 		short_circ_monitor_f();
 
+		timx_trg_num64=timx_trg_num64*127.0/128.0+timx_trg_num/128.0;
+
 		IRECT_sum_sc=IRECT_sum_sc+IRECT_smp_sc;
 		IBAT_sum_sc=IBAT_sum_sc+IBAT_smp_sc;
 		VBAT_sum_sc=VBAT_sum_sc+VBAT_smp_sc;
