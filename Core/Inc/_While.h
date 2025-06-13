@@ -1010,25 +1010,17 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
 
 
-	V_avg   = (VAC_R_rms_sc.a1 + VAC_S_rms_sc.a1 + VAC_T_rms_sc.a1) / 3.0f;   /* ort. hat-hat RMS  */
+	VAC_avg   = (VAC_R_rms_sc.a1 + VAC_S_rms_sc.a1 + VAC_T_rms_sc.a1) / 3.0f;   /* ort. hat-hat RMS  */
 	V_DC    = VRECT_pas.a16;                                                   /* cikis DC gerilimi */
 	I_DC    = IRECT_pas.a16;                                                   /* cikis DC akimi    */
 
 	timx_rat=  ((float) (timx_trg_num64+zc_start_delay_300u_arr_32))/tim_arr_max;  /* tetikleme % (0-1) */
-	/* Ölçülen / hesaplanan tüm degerleri tek satirda yaz */
-//	double I_R_est =  1.621104
-//	                + 0.00594067 * (V_avg - 403.0)
-//	                + 0.05659171 * I_DC
-//	                - 2.133883   * timx_rat
-//	                + 0.44554034 * I_DC * timx_rat;
 
 	/* --- Konsola / UART’a tek satır log ------------------------------ */
-	PRF_GEN("%.3f %.3f %.3f %.3f %.3f %.3f %.3f",
+	PRF_GEN("%.3f %.3f %.3f %.3f %.3f",
 	        V_DC,                 /* VoutDC (82 V civarı)      */
 	        I_DC,                 /* IoutDC                    */
-	        VAC_R_rms_sc.a1,      /* Vin R-S                   */
-	        VAC_S_rms_sc.a1,      /* Vin S-T                   */
-	        VAC_T_rms_sc.a1,      /* Vin T-R                   */
+			VAC_avg,      /* Vin R-S                   */
 			timx_rat,             /* tetikleme yüzdesi         */
 	        IAC_R_rms_sc.a1       /* gerçek faz-R akımı        */);
 
