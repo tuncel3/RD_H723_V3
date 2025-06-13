@@ -2,8 +2,6 @@
 #include "_benter.h"
 
 void bleft_fnc(void) {
-	secret_menu_en_cnt=0;
-	secret_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg) {
     	if (thy_drv_en==0 && user_wants_allows_thy_drv==0) {
     		user_wants_allows_thy_drv=1;
