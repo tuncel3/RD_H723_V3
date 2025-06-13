@@ -8,7 +8,6 @@ void bleft_fnc(void) {
     		thy_drv_en_req=1;
     		PRF_GEN("User req START rectf");
     	}
-    	secret_menu_cnt++;
     }
     else if (currentPage == CHARGE_SETT_pg) {
     	if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_CHARGE_MODE) {
@@ -120,6 +119,11 @@ void bleft_fnc(void) {
     		selected_FAN_TEMP_PG_line=(selected_FAN_TEMP_PG_line-1+NUM_FANS_TEMP_ITEMS) % NUM_FANS_TEMP_ITEMS;
     	} else if (fan_temp_edit_mode) {
     		fan_temp_dig=(fan_temp_dig-1+2) % 2;
+    	}
+    }
+    else if (currentPage == RELAY_ORDER_pg) { // LEFT
+    	if (secret_menu_cnt < 5) {
+    		secret_menu_cnt++;
     	}
     }
     else if (currentPage == TEST_pg) { 		// LEFT
@@ -1224,6 +1228,7 @@ void besc_fnc(void) {
         if (rel_disp_mode) {
         	rel_disp_mode = 1;
         	rel_edit_mode = 0;
+        	secret_menu_cnt=0;
         	currentPage = MAIN_MENU_pg;
         } else if (rel_edit_mode) {
         	rel_disp_mode = 1;
