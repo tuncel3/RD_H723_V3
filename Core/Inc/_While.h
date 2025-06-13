@@ -1016,15 +1016,12 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	timx_rat=  ((float) (timx_trg_num64+zc_start_delay_300u_arr_32))/tim_arr_max;  /* tetikleme % (0-1) */
 
 	/* --- Konsola / UART’a tek satır log ------------------------------ */
-	PRF_GEN("%.3f %.3f %.3f %.3f %.3f",
+	PRF_GEN("%.3f %.3f %.3f",
 			IAC,                 // hesaplanan
-			IAC_est,             // regresyon sonuc    /* IoutDC                    */
-			VAC_avg,      /* Vin R-S                   */
-			timx_rat,             /* tetikleme yüzdesi         */
-	        IAC_R_rms_sc.a1       /* gerçek faz-R akımı        */);
+			IAC_real,            // gerçek ölçüm
+			IAC_est             // regresyon sonuc
+	);
 
-
-//	PRF_GEN("%5.3f %5.3f %5.3f %5.3f %5.3f %5.3f %5.3f", VRECT_pas.a1, IRECT_pas.a1, VAC_R_rms_sc.a1, VAC_S_rms_sc.a1, VAC_T_rms_sc.a1, timx_rat, IAC_R_rms_sc.a1);
 
 	if (ms_tick_cnt-while_LCD_reinit_h >= while_LCD_reinit_per) {
 		while_LCD_reinit_per=ms_tick_cnt;

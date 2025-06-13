@@ -205,6 +205,9 @@ int32_t timx_trg_num64 = 2800000;
 double  timx_rat = 0.0;
 double  VAC_avg = 0.0;
 double  P_DC = 0.0;
+double  IAC = 0.0;
+double  IAC_real = 0.0;
+double  IAC_est = 0.0;
 
 uint8_t per_dev_perc_max = 10;
 
