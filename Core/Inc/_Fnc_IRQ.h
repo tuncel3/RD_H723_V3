@@ -104,8 +104,6 @@ void DMA1_Stream1_IRQHandler(void) {
 			VRECT_pas.a64=VRECT_pas.a64*63.0/64.0+VRECT_pas.a1/64.0;
 			VRECT_pas.a16=VRECT_pas.a16*15.0/16.0+VRECT_pas.a1/16.0;
 			ADC_smp_count=0;
-
-
 		}
 
 		VDCKP_per_avg_roll_perc=VDCKP_per_avg_roll/(VDCKP_per_avg_roll+VDCKN_per_avg_roll)*VRECT_pas.a64; // VDCKP nin VRECT e oranlanmış hali.
