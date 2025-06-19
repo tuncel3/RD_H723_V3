@@ -64,6 +64,10 @@ uint8_t req_reset_db = 0;
 #define ZCRENDELY 475
 float zcrendely_R_U = 0.0f;
 float zcrendely_R_D = 0.0f;
+float zcrendely_S_U = 0.0f;
+float zcrendely_S_D = 0.0f;
+float zcrendely_T_U = 0.0f;
+float zcrendely_T_D = 0.0f;
 float VRECT_smp_sc = 0.0f;
 float VLOAD_smp_sc = 0.0f;
 //float VLOAD_pas = 0.0f;
