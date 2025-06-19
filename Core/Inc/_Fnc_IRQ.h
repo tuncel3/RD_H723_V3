@@ -415,16 +415,16 @@ void TIM1_UP_IRQHandler(void)
 
 void SysTick_Handler(void) {	// n009
 	if (LL_EXTI_LINE_7_reenable_cnt < ZCRENDELY) {
-		LL_EXTI_LINE_7_up_reenable_cnt++;
-		LL_EXTI_LINE_7_dn_reenable_cnt++;
+		LL_EXTI_LINE_7_rise_reenable_cnt++;
+		LL_EXTI_LINE_7_fall_reenable_cnt++;
 		if (LL_EXTI_LINE_7_reenable_cnt == ZCRENDELY) {
 			LL_EXTI_LINE_7_reenable_cnt=ZCRENDELY+1;
-			if (LL_EXTI_LINE_7_up_reenable_cnt == zcrendely_R_fall && LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
+			if (LL_EXTI_LINE_7_rise_reenable_cnt == zcrendely_R_rise && LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
 				LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 			}
-			else if (LL_EXTI_LINE_7_reenable_cnt == zcrendely_R_rise && LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_7)) {
+			else if (LL_EXTI_LINE_7_fall_reenable_cnt == zcrendely_R_fall && LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_7)) {
 				LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);

@@ -191,9 +191,12 @@ uint8_t DATE_TIME_edit_digit=11;
 
 
 // ZCR
-uint32_t LL_EXTI_LINE_7_reenable_cnt=0;
-uint32_t LL_EXTI_LINE_8_reenable_cnt=0;
-uint32_t LL_EXTI_LINE_9_reenable_cnt=0;
+uint32_t LL_EXTI_LINE_7_rise_reenable_cnt=0;
+uint32_t LL_EXTI_LINE_8_rise_reenable_cnt=0;
+uint32_t LL_EXTI_LINE_9_rise_reenable_cnt=0;
+uint32_t LL_EXTI_LINE_7_fall_reenable_cnt=0;
+uint32_t LL_EXTI_LINE_8_fall_reenable_cnt=0;
+uint32_t LL_EXTI_LINE_9_fall_reenable_cnt=0;
 
 
 // PER AVERAGING
