@@ -434,56 +434,40 @@ void SysTick_Handler(void) {	// n009
 	}
 	if (LL_EXTI_LINE_8_rise_reenable_cnt < zcrendely_S_rise) {
 		LL_EXTI_LINE_8_rise_reenable_cnt++;
-		if (LL_EXTI_LINE_8_rise_reenable_cnt == zcrendely_R_rise && LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
-			LL_EXTI_LINE_8_rise_reenable_cnt=zcrendely_R_rise+1;
-			LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);
-			LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7);
-			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
+		if (LL_EXTI_LINE_8_rise_reenable_cnt == zcrendely_S_rise && LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
+			LL_EXTI_LINE_8_rise_reenable_cnt=zcrendely_S_rise+1;
+			LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_8);
+			LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_8);
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_8);
 		}
 	}
 	if (LL_EXTI_LINE_8_rise_reenable_cnt < zcrendely_S_rise) {
 		LL_EXTI_LINE_8_rise_reenable_cnt++;
-		if (LL_EXTI_LINE_8_fall_reenable_cnt == zcrendely_R_fall && LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_8)) {
-			LL_EXTI_LINE_8_fall_reenable_cnt=zcrendely_R_fall+1;
+		if (LL_EXTI_LINE_8_fall_reenable_cnt == zcrendely_S_fall && LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_8)) {
+			LL_EXTI_LINE_8_fall_reenable_cnt=zcrendely_S_fall+1;
 			LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_7);
 			LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_7);
 			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 		}
 	}
-	if (LL_EXTI_LINE_8_reenable_cnt < ZCRENDELY) {
-		LL_EXTI_LINE_8_reenable_cnt++;
-		if (LL_EXTI_LINE_8_reenable_cnt == ZCRENDELY) {
-			if (LL_EXTI_LINE_8_reenable_cnt == zcrendely_S_D && LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
-				LL_EXTI_LINE_8_reenable_cnt=zcrendely_R_D+1;
-				LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_8);
-				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_8);
-				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_8);
-			}
-			else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_8)) {
-				LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_8);
-				LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_8);
-				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_8);
-			}
+	if (LL_EXTI_LINE_8_rise_reenable_cnt < zcrendely_S_rise) {
+		LL_EXTI_LINE_8_rise_reenable_cnt++;
+		if (LL_EXTI_LINE_8_rise_reenable_cnt == zcrendely_S_rise && LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
+			LL_EXTI_LINE_8_rise_reenable_cnt=zcrendely_S_rise+1;
+			LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_8);
+			LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_8);
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_8);
 		}
 	}
-	if (LL_EXTI_LINE_9_reenable_cnt < ZCRENDELY) {
-		LL_EXTI_LINE_9_reenable_cnt++;
-		if (LL_EXTI_LINE_9_reenable_cnt == ZCRENDELY) {
-			LL_EXTI_LINE_9_reenable_cnt=ZCRENDELY+1;
-			if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_9)) {
-				LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_9);
-				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_9);
-				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_9);
-			}
-			else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_9)) {
-				LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_9);
-				LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_9);
-				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_9);
-			}
+	if (LL_EXTI_LINE_8_rise_reenable_cnt < zcrendely_S_rise) {
+		LL_EXTI_LINE_8_rise_reenable_cnt++;
+		if (LL_EXTI_LINE_8_fall_reenable_cnt == zcrendely_S_fall && LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_8)) {
+			LL_EXTI_LINE_8_fall_reenable_cnt=zcrendely_S_fall+1;
+			LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_7);
+			LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_7);
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 		}
 	}
-
-
 }
 
 void DMA1_Stream0_IRQHandler(void)
