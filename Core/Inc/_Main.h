@@ -23,6 +23,7 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
 	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //	print_Eep_data_f();
 }
+frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 
 actions_after_charge_mode_change(5); // set charge mode values
 set_variables_from_EEP_fc(SCOPE_VAR_ALL_FROM_EEP);
