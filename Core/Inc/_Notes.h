@@ -50,7 +50,7 @@ systick interrupt'ı 20us
 9.5ms/20us = 475 artım sonunda sıradaki exti interrupt'ı enable ediyor.
 bir sonraki sıfır geçişi için.
 // SysTick->LOAD  = 10999; 20us
-//#define ZCRENDELY 475
+//#define exti_reen_delay 475
 
 n010
 bloke etmeden shift register sürme işlemi.
