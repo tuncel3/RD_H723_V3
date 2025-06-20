@@ -414,14 +414,7 @@ void TIM1_UP_IRQHandler(void)
 void SysTick_Handler(void) {	// n009
 
 	zcrendely1=zcrendely;
-//	zcrendely2=zcrendely;
-//	zcrendely3=zcrendely;
-//	if (zcrendely1==zcrendely1 && zcrendely1==zcrendely2 && zcrendely2==zcrendely3) {
 		zcrendely_ok=zcrendely1;
-//		zcrendely_ok_cnt++;
-//	} else {
-//		zcrendely_ok_no_cnt++;
-//	}
 	if (LL_EXTI_LINE_7_reenable_cnt < zcrendely_ok) {
 		LL_EXTI_LINE_7_reenable_cnt++;
 		if (LL_EXTI_LINE_7_reenable_cnt >= zcrendely_ok) {
