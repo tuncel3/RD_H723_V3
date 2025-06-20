@@ -428,7 +428,7 @@ void SysTick_Handler(void) {	// n009
 		if (exti_7R_fall_en_cnt < exti_7R_fall_en_per) {
 			exti_7R_fall_en_cnt++;
 			if (exti_7R_fall_en_cnt == exti_7R_fall_en_per) {
-				exti_7R_fall_en_cnt=exti_7R_fall_en_per+1;
+				exti_7R_fall_en_cnt=exti_7R_fall_en_per << 3;
 				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 			}
