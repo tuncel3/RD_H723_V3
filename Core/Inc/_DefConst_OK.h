@@ -192,7 +192,7 @@ uint8_t DATE_TIME_edit_digit=11;
 uint32_t LL_EXTI_LINE_7_reenable_cnt=0;
 uint32_t LL_EXTI_LINE_8_reenable_cnt=0;
 uint32_t LL_EXTI_LINE_9_reenable_cnt=0;
-//#define exti_en_delay 475
+#define exti_en_delay 475
 uint32_t exti_7R_rise_en_cnt  = 0;
 uint32_t exti_7R_fall_en_cnt  = 0;
 uint32_t exti_7R_rise_en_per  = 400;

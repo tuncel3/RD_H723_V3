@@ -617,8 +617,8 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 // FREQUENCY (50ms loop)
 	frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 	frq_rst_updn_avg_m=frq_cal_k*3 / (float) (per_r_updn_avg_m + per_s_updn_avg_m + per_t_updn_avg_m);
-	exti_rise_R_en_delay=round((((1/frq_cal_k)*per_r_dn_smp)/20e-6)*0.96);
-	exti_fall_R_en_delay=round((((1/frq_cal_k)*per_r_up_smp)/20e-6)*0.96); // üst cycle periyotta iken
+	exti_7R_rise_en_per=round((((1/frq_cal_k)*per_r_dn_smp)/20e-6)*0.96);
+	exti_7R_fall_en_per=round((((1/frq_cal_k)*per_r_up_smp)/20e-6)*0.96); // üst cycle periyotta iken
 	exti_rise_S_en_delay=round((((1/frq_cal_k)*per_s_dn_smp)/20e-6)*0.96);
 	exti_fall_S_en_delay=round((((1/frq_cal_k)*per_s_up_smp)/20e-6)*0.96);
 	exti_rise_T_en_delay=round((((1/frq_cal_k)*per_t_dn_smp)/20e-6)*0.96);
