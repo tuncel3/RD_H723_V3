@@ -67,6 +67,7 @@ volatile uint32_t zcrendely1 = 0;
 volatile uint32_t zcrendely2 = 0;
 volatile uint32_t zcrendely3 = 0;
 volatile uint32_t zcrendely_ok = 50;
+volatile uint32_t zcrendely_cnt_en = 0;
 volatile uint32_t zcrendely_ok_cnt = 0;
 volatile uint32_t zcrendely_ok_no_cnt = 0;
 volatile uint32_t zcrendely_R_rise = 475;
