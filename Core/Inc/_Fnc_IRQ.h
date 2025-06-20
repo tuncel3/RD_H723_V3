@@ -424,12 +424,12 @@ void TIM1_UP_IRQHandler(void)
 }
 
 void SysTick_Handler(void) {	// n009
-	if (!LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_7)) {
-		if (exti_7R_fall_en_cnt < exti_7R_fall_en_per) {
+	if (!LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_7)) {   // falling enabled değil
+		if (exti_7R_fall_en_cnt < exti_7R_fall_en_per) {	    // saymaya devam et
 			exti_7R_fall_en_cnt++;
-			if (exti_7R_fall_en_cnt == exti_7R_fall_en_per) {
+			if (exti_7R_fall_en_cnt == exti_7R_fall_en_per) {   // sayma tamam
 				exti_7R_fall_en_cnt=exti_7R_fall_en_per << 3;
-				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7);
+				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7); // falling enable et
 				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 			}
 		}
@@ -442,13 +442,6 @@ void SysTick_Handler(void) {	// n009
 				LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 			}
-		}
-	}
-	if (LL_EXTI_LINE_7_reenable_cnt < exti_en_delay) {
-		LL_EXTI_LINE_7_reenable_cnt++;
-		if (LL_EXTI_LINE_7_reenable_cnt == exti_en_delay) {
-			LL_EXTI_LINE_7_reenable_cnt=exti_en_delay+1;
-			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 		}
 	}
 	if (LL_EXTI_LINE_8_reenable_cnt < exti_en_delay) {
