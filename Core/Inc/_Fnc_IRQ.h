@@ -278,7 +278,6 @@ void EXTI9_5_IRQHandler(void){
 	if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
 		en_t_dely_up_r=1;
 		en_t_dely_dn_r=0;
-		EXTI_Zero_crossing=1;
 		VAC_R_samp_end=1;
 		per_r_dn_avg_m_f();
 		LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);
@@ -448,9 +447,6 @@ void SysTick_Handler(void) {	// n009
 			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_9);
 		}
 	}
-
-
-
 }
 
 void DMA1_Stream0_IRQHandler(void)

@@ -168,7 +168,6 @@ uint8_t batt_line_broken = 0;
 // CONTROL SYSTEM
 ///////////////////////////////////////////////////////////////////////////
 
-uint32_t EXTI_Zero_crossing = 0;
 float IRECT_sum_sc = 0;
 float IRECT_avg_sc = 0;
 float IRECT_lim = 15;
