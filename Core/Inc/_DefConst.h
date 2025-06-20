@@ -62,12 +62,12 @@ uint32_t there_is_past_unseen_fault=0;
 uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
 #define exti_reen_delay 475
-float exti_reen_delay_R_rise = 475.0f;
-float exti_reen_delay_R_fall = 475.0f;
-float exti_reen_delay_S_rise = 475.0f;
-float exti_reen_delay_S_fall = 475.0f;
-float exti_reen_delay_T_rise = 475.0f;
-float exti_reen_delay_T_fall = 475.0f;
+float exti_rise_R_reen_delay = 475.0f;
+float exti_fall_R_reen_delay = 475.0f;
+float exti_rise_S_reen_delay = 475.0f;
+float exti_fall_S_reen_delay = 475.0f;
+float exti_rise_T_reen_delay = 475.0f;
+float exti_fall_T_reen_delay = 475.0f;
 float VRECT_smp_sc = 0.0f;
 float VLOAD_smp_sc = 0.0f;
 //float VLOAD_pas = 0.0f;
