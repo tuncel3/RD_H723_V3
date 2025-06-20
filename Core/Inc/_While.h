@@ -624,9 +624,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 	zcrendely_T_rise=round((((1/frq_cal_k)*per_t_dn_smp)/20e-6)*0.96);
 	zcrendely_T_fall=round((((1/frq_cal_k)*per_t_up_smp)/20e-6)*0.96);
 
-	if (zcrendely_R_rise < 400 || zcrendely_R_rise > 500) {
 		PRF_GEN("zcrendely_R_rise %lu", zcrendely_R_rise);
-	}
 
 // half cycle duration stability
 	per_stable_all_val=(per_r_dn_stable_fl<<5)+(per_r_up_stable_fl<<4)+(per_s_dn_stable_fl<<3)+
