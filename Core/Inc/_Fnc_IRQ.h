@@ -438,7 +438,7 @@ void SysTick_Handler(void) {	// n009
 		if (exti_7R_rise_en_cnt < exti_7R_rise_en_per) {
 			exti_7R_rise_en_cnt++;
 			if (exti_7R_rise_en_cnt == exti_7R_rise_en_per) {
-				LL_EXTI_LINE_7_reenable_cnt=exti_en_delay+1;
+				LL_EXTI_LINE_7_reenable_cnt=exti_7R_rise_en_per+1;
 				LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 			}
