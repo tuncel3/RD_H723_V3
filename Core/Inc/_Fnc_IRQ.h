@@ -283,6 +283,7 @@ void EXTI9_5_IRQHandler(void){
 		LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);
 		LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7);
 		LL_EXTI_LINE_7_reenable_cnt=0;
+		exti_7R_fall_reen_cnt=0;
 	} else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_7)) {
 		en_t_dely_up_r=0;
 		en_t_dely_dn_r=1;
@@ -426,6 +427,13 @@ void TIM1_UP_IRQHandler(void)
 }
 
 void SysTick_Handler(void) {	// n009
+	if (exti_7R_fall_reen_cnt < exti_reen_delay) {
+		exti_7R_fall_reen_cnt++;
+		if (exti_7R_fall_reen_cnt == exti_7R_fall_reen_per) {
+			LL_EXTI_LINE_7_reenable_cnt=exti_reen_delay+1;
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
+		}
+	}
 	if (LL_EXTI_LINE_7_reenable_cnt < exti_reen_delay) {
 		LL_EXTI_LINE_7_reenable_cnt++;
 		if (LL_EXTI_LINE_7_reenable_cnt == exti_reen_delay) {
