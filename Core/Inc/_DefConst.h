@@ -62,12 +62,12 @@ uint32_t there_is_past_unseen_fault=0;
 uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
 #define ZCRENDELY 475
-uint32_t zcrendely_R_rise = 475.0f;
-uint32_t zcrendely_R_fall = 475.0f;
-uint32_t zcrendely_S_rise = 475.0f;
-uint32_t zcrendely_S_fall = 475.0f;
-uint32_t zcrendely_T_rise = 475.0f;
-uint32_t zcrendely_T_fall = 475.0f;
+uint32_t zcrendely_R_rise = 475;
+uint32_t zcrendely_R_fall = 475;
+uint32_t zcrendely_S_rise = 475;
+uint32_t zcrendely_S_fall = 475;
+uint32_t zcrendely_T_rise = 475;
+uint32_t zcrendely_T_fall = 475;
 float VRECT_smp_sc = 0.0f;
 float VLOAD_smp_sc = 0.0f;
 //float VLOAD_pas = 0.0f;
