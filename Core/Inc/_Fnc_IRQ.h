@@ -408,7 +408,6 @@ void TIM1_UP_IRQHandler(void)
 	    handleButton(rt_raw, &rtIsHeld, &rtReleaseCnt, &rtHoldCnt, &rtNextRepeatEdge, &rtFireFlag);
 	    handleButton(en_raw, &enIsHeld, &enReleaseCnt, &enHoldCnt, &enNextRepeatEdge, &enFireFlag);
 	    handleButton(es_raw, &esIsHeld, &esReleaseCnt, &esHoldCnt, &esNextRepeatEdge, &esFireFlag);
-
 	}
 }
 
