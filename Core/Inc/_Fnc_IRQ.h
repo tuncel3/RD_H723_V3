@@ -425,9 +425,9 @@ void TIM1_UP_IRQHandler(void)
 
 void SysTick_Handler(void) {	// n009
 	if (!LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_7)) {   // falling enabled değil
-		if (exti_7R_fall_en_cnt < exti_7R_fall_en_per) {	    // saymaya devam et
+		if (exti_7R_fall_en_cnt < 450) {	    // saymaya devam et
 			exti_7R_fall_en_cnt++;
-			if (exti_7R_fall_en_cnt == exti_7R_fall_en_per) {   // sayma tamam
+			if (exti_7R_fall_en_cnt == 450) {   // sayma tamam
 				exti_7R_fall_en_cnt=99999;
 				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7); // falling enable et
 				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
@@ -435,9 +435,9 @@ void SysTick_Handler(void) {	// n009
 		}
 	}
 	if (!LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
-		if (exti_7R_rise_en_cnt < exti_7R_rise_en_per) {
+		if (exti_7R_rise_en_cnt < 450) {
 			exti_7R_rise_en_cnt++;
-			if (exti_7R_rise_en_cnt == exti_7R_rise_en_per) {
+			if (exti_7R_rise_en_cnt == 450) {
 				exti_7R_rise_en_cnt=99999;
 				LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
