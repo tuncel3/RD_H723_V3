@@ -188,19 +188,13 @@ char date_time_string[64]={0};
 uint8_t DATE_TIME_edit_mode=0;
 uint8_t DATE_TIME_edit_digit=11;
 
+
+
 // ZCR
 uint32_t LL_EXTI_LINE_7_reenable_cnt=0;
 uint32_t LL_EXTI_LINE_8_reenable_cnt=0;
 uint32_t LL_EXTI_LINE_9_reenable_cnt=0;
-#define exti_en_delay 475
-uint32_t exti_7R_rise_en_cnt  = 0;
-uint32_t exti_7R_fall_en_cnt  = 0;
-uint32_t exti_7R_rise_en_per  = 400;
-uint32_t exti_7R_fall_en_per  = 400;
-uint32_t exti_rise_S_en_delay = 400;
-uint32_t exti_fall_S_en_delay = 400;
-uint32_t exti_rise_T_en_delay = 400;
-uint32_t exti_fall_T_en_delay = 400;
+
 
 // PER AVERAGING
 #define 		  avging_smpcnt 16

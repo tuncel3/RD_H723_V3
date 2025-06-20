@@ -61,6 +61,13 @@ uint32_t there_is_past_unseen_fault=0;
 
 uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
+#define ZCRENDELY 475
+float zcrendely_R_rise = 475.0f;
+float zcrendely_R_fall = 475.0f;
+float zcrendely_S_rise = 475.0f;
+float zcrendely_S_fall = 475.0f;
+float zcrendely_T_rise = 475.0f;
+float zcrendely_T_fall = 475.0f;
 float VRECT_smp_sc = 0.0f;
 float VLOAD_smp_sc = 0.0f;
 //float VLOAD_pas = 0.0f;
@@ -161,6 +168,7 @@ uint8_t batt_line_broken = 0;
 // CONTROL SYSTEM
 ///////////////////////////////////////////////////////////////////////////
 
+uint32_t EXTI_Zero_crossing = 0;
 float IRECT_sum_sc = 0;
 float IRECT_avg_sc = 0;
 float IRECT_lim = 15;
