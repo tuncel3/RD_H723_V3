@@ -260,6 +260,7 @@ uint32_t rms_zc_for_DC_cnt = 0;
 uint32_t rms_zc_for_DC = 0;
 
 float frq_rst_updn_avg_m=0;
+float frq_rst_updn_avg_m2=0;
 
 int32_t per_r_dn_smp = 0;
 uint32_t per_r_dn_avg_sum = 0;
