@@ -61,6 +61,7 @@ uint32_t there_is_past_unseen_fault=0;
 
 uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
+volatile uint32_t ZCRENDELY = 475;
 volatile uint32_t exti_7R_endely_per = 475;
 volatile uint32_t zcrendely1 = 0;
 volatile uint32_t zcrendely2 = 0;
