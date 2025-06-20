@@ -413,10 +413,10 @@ void TIM1_UP_IRQHandler(void)
 }
 
 void SysTick_Handler(void) {	// n009
-	if (LL_EXTI_LINE_7_reenable_cnt < 475) {
+	if (LL_EXTI_LINE_7_reenable_cnt < zcrendely_R_rise) {
 		LL_EXTI_LINE_7_reenable_cnt++;
-		if (LL_EXTI_LINE_7_reenable_cnt == 475) {
-			LL_EXTI_LINE_7_reenable_cnt=475 << 3;
+		if (LL_EXTI_LINE_7_reenable_cnt >= zcrendely_R_rise) {
+			LL_EXTI_LINE_7_reenable_cnt=zcrendely_R_rise << 3;
 			if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
 				LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);
 				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7);
