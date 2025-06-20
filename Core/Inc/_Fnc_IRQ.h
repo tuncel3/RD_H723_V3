@@ -287,7 +287,7 @@ void EXTI9_5_IRQHandler(void){
 	}
 	zero_cross_timeout_R=0;
 	reset_RMS_val_R=0;
-	zcrendely_cnt_en=1;
+	exti_7R_endely_cnt_en=1;
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_8) != RESET)  {
 		LL_TIM_DisableCounter(TIM23);
@@ -413,10 +413,10 @@ void TIM1_UP_IRQHandler(void)
 
 void SysTick_Handler(void) {	// n009
 
-	LL_EXTI_LINE_7_reenable_cnt=LL_EXTI_LINE_7_reenable_cnt+zcrendely_cnt_en;
+	LL_EXTI_LINE_7_reenable_cnt=LL_EXTI_LINE_7_reenable_cnt+exti_7R_endely_cnt_en;
 	if (LL_EXTI_LINE_7_reenable_cnt >= zcrendely) {
 		LL_EXTI_LINE_7_reenable_cnt=0;
-		zcrendely_cnt_en=0;
+		exti_7R_endely_cnt_en=0;
 		if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
 			LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);
 			LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7);
