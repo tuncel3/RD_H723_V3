@@ -617,12 +617,12 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 // FREQUENCY (50ms loop)
 	frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 	frq_rst_updn_avg_m=frq_cal_k*3 / (float) (per_r_updn_avg_m + per_s_updn_avg_m + per_t_updn_avg_m);
-	zcrendely_R_rise=round((((1/frq_cal_k)*per_r_dn_smp)/20e-6)*0.96);
-	zcrendely_R_fall=round((((1/frq_cal_k)*per_r_up_smp)/20e-6)*0.96); // üst cycle periyotta iken
-	zcrendely_S_rise=round((((1/frq_cal_k)*per_s_dn_smp)/20e-6)*0.96);
-	zcrendely_S_fall=round((((1/frq_cal_k)*per_s_up_smp)/20e-6)*0.96);
-	zcrendely_T_rise=round((((1/frq_cal_k)*per_t_dn_smp)/20e-6)*0.96);
-	zcrendely_T_fall=round((((1/frq_cal_k)*per_t_up_smp)/20e-6)*0.96);
+	zcrendely_R_rise=round((((1/frq_cal_k)*per_r_dn_smp)/20e-6)*0.95);
+	zcrendely_R_fall=round((((1/frq_cal_k)*per_r_up_smp)/20e-6)*0.95); // üst cycle periyotta iken
+	zcrendely_S_rise=round((((1/frq_cal_k)*per_s_dn_smp)/20e-6)*0.95);
+	zcrendely_S_fall=round((((1/frq_cal_k)*per_s_up_smp)/20e-6)*0.95);
+	zcrendely_T_rise=round((((1/frq_cal_k)*per_t_dn_smp)/20e-6)*0.95);
+	zcrendely_T_fall=round((((1/frq_cal_k)*per_t_up_smp)/20e-6)*0.95);
 
 		PRF_GEN("zcrendely_R_rise %lu", zcrendely_R_rise);
 
