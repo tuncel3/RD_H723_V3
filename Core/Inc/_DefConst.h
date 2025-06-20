@@ -62,7 +62,8 @@ uint32_t there_is_past_unseen_fault=0;
 uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
 uint32_t ZCRENDELY = 200;
-uint32_t zcrendely = 475;
+uint32_t zcrendely_i = 0;
+uint32_t zcrendely[10] = {475};
 uint32_t zcrendely_R_rise = 475;
 uint32_t zcrendely_R_fall = 475;
 uint32_t zcrendely_S_rise = 475;
