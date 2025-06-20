@@ -413,6 +413,7 @@ void TIM1_UP_IRQHandler(void)
 
 void SysTick_Handler(void) {	// n009
 
+	lock
 	zcrendely_i_r=(zcrendely_i+5) % 10;
 	zcrendely_h=zcrendely[zcrendely_i_r];
 	if (LL_EXTI_LINE_7_reenable_cnt < ZCRENDELY) {
