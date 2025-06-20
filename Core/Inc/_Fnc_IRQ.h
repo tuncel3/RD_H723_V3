@@ -280,14 +280,14 @@ void EXTI9_5_IRQHandler(void){
 		en_t_dely_dn_r=0;
 		VAC_R_samp_end=1;
 		per_r_dn_avg_m_f();
-		LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);
-		exti_7R_fall_en_cnt=0;
+		LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);  // disable rise
+		exti_7R_rise_en_cnt=0;							 // reset rise enable timer
 	} else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_7)) {
 		en_t_dely_up_r=0;
 		en_t_dely_dn_r=1;
 		per_r_up_avg_m_f();
-		LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_7);
-		exti_7R_rise_en_cnt=0;
+		LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_7);  // disable fall
+		exti_7R_fall_en_cnt=0;							  // reset fall enable timer
 	}
 	zero_cross_timeout_R=0;
 	reset_RMS_val_R=0;
