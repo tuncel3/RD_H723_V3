@@ -310,7 +310,7 @@ void EXTI9_5_IRQHandler(void){
 	}
 	zero_cross_timeout_S=0;
 	reset_RMS_val_S=0;
-    LL_EXTI_LINE_8_reenable_cnt=0;
+	exti_8S_endely_cnt_en=1;
   }
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_9))  {
 		LL_TIM_DisableCounter(TIM24);
@@ -333,7 +333,7 @@ void EXTI9_5_IRQHandler(void){
 	}
 	zero_cross_timeout_T=0;
 	reset_RMS_val_T=0;
-	LL_EXTI_LINE_9_reenable_cnt=0;
+	exti_9T_endely_cnt_en=1;
   }
 }
 
