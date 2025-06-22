@@ -428,41 +428,36 @@ void SysTick_Handler(void) {	// n009
 			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 		}
 	}
-	if (LL_EXTI_LINE_8_reenable_cnt < ZCRENDELY) {
-		LL_EXTI_LINE_8_reenable_cnt++;
-		if (LL_EXTI_LINE_8_reenable_cnt == ZCRENDELY) {
-			LL_EXTI_LINE_8_reenable_cnt=ZCRENDELY+1;
-			if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
-				LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_8);
-				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_8);
-				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_8);
-			}
-			else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_8)) {
-				LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_8);
-				LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_8);
-				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_8);
-			}
+	exti_8S_endely_cnt=exti_8S_endely_cnt+exti_8S_endely_cnt_en;
+	if (exti_8S_endely_cnt >= exti_8S_endely_per) {
+		exti_8S_endely_cnt=0;
+		exti_8S_endely_cnt_en=0;
+		if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
+			LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_8);
+			LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_8);
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_8);
+		}
+		else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_8)) {
+			LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_8);
+			LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_8);
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_8);
 		}
 	}
-	if (LL_EXTI_LINE_9_reenable_cnt < ZCRENDELY) {
-		LL_EXTI_LINE_9_reenable_cnt++;
-		if (LL_EXTI_LINE_9_reenable_cnt == ZCRENDELY) {
-			LL_EXTI_LINE_9_reenable_cnt=ZCRENDELY+1;
-			if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_9)) {
-				LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_9);
-				LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_9);
-				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_9);
-			}
-			else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_9)) {
-				LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_9);
-				LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_9);
-				LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_9);
-			}
+	exti_9T_endely_cnt=exti_9T_endely_cnt+exti_9T_endely_cnt_en;
+	if (exti_9T_endely_cnt >= exti_9T_endely_per) {
+		exti_9T_endely_cnt=0;
+		exti_9T_endely_cnt_en=0;
+		if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_9)) {
+			LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_9);
+			LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_9);
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_9);
+		}
+		else if (LL_EXTI_IsEnabledFallingTrig_0_31(LL_EXTI_LINE_9)) {
+			LL_EXTI_DisableFallingTrig_0_31(LL_EXTI_LINE_9);
+			LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_9);
+			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_9);
 		}
 	}
-
-
-
 }
 
 void DMA1_Stream0_IRQHandler(void)
