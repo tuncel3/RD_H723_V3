@@ -414,7 +414,7 @@ void TIM1_UP_IRQHandler(void)
 void SysTick_Handler(void) {	// n009
 
 	exti_7R_endely_cnt=exti_7R_endely_cnt+exti_7R_endely_cnt_en;
-	if (exti_7R_endely_cnt >= exti_7R_endely_per) {
+	if (exti_7R_endely_cnt >= exti_int_endely_per) {
 		exti_7R_endely_cnt=0;
 		exti_7R_endely_cnt_en=0;
 		if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
@@ -429,7 +429,7 @@ void SysTick_Handler(void) {	// n009
 		}
 	}
 	exti_8S_endely_cnt=exti_8S_endely_cnt+exti_8S_endely_cnt_en;
-	if (exti_8S_endely_cnt >= exti_8S_endely_per) {
+	if (exti_8S_endely_cnt >= exti_int_endely_per) {
 		exti_8S_endely_cnt=0;
 		exti_8S_endely_cnt_en=0;
 		if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_8)) {
@@ -444,7 +444,7 @@ void SysTick_Handler(void) {	// n009
 		}
 	}
 	exti_9T_endely_cnt=exti_9T_endely_cnt+exti_9T_endely_cnt_en;
-	if (exti_9T_endely_cnt >= exti_9T_endely_per) {
+	if (exti_9T_endely_cnt >= exti_int_endely_per) {
 		exti_9T_endely_cnt=0;
 		exti_9T_endely_cnt_en=0;
 		if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_9)) {

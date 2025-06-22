@@ -618,9 +618,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && is_state_activ
 if (line_sgn_stable) {
 //	frq_rst_updn_avg_m=frq_cal_k*3 / (float) (per_r_updn_avg_m + per_s_updn_avg_m + per_t_updn_avg_m);
 	frq_rst_updn_avg_m=frq_cal_k / per_rst_updn_avg_m;
-	exti_7R_endely_per=(1/frq_rst_updn_avg_m)/40e-6*0.90;
-	exti_8S_endely_per=(1/frq_rst_updn_avg_m)/40e-6*0.90;
-	exti_9T_endely_per=(1/frq_rst_updn_avg_m)/40e-6*0.90;
+	exti_int_endely_per=(1/frq_rst_updn_avg_m)/40e-6*0.90;
 }
 
 // half cycle duration stability
