@@ -412,7 +412,6 @@ void TIM1_UP_IRQHandler(void)
 }
 
 void SysTick_Handler(void) {	// n009
-
 	exti_7R_endely_cnt=exti_7R_endely_cnt+exti_7R_endely_cnt_en;
 	if (exti_7R_endely_cnt >= exti_int_endely_per) {
 		exti_7R_endely_cnt=0;

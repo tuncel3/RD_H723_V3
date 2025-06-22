@@ -189,9 +189,6 @@ uint8_t DATE_TIME_edit_mode=0;
 uint8_t DATE_TIME_edit_digit=11;
 
 
-
-
-
 // PER AVERAGING
 #define 		  avging_smpcnt 16
 #define			  avging_shift 4

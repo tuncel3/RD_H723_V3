@@ -61,22 +61,15 @@ uint32_t there_is_past_unseen_fault=0;
 
 uint8_t req_reset_db = 0;
 // CONTROL SYSTEM
-volatile uint32_t ZCRENDELY = 475;
 volatile uint32_t exti_7R_endely_cnt=0;
 volatile uint32_t exti_8S_endely_cnt=0;
 volatile uint32_t exti_9T_endely_cnt=0;
-volatile uint32_t exti_int_endely_per = 400;
+volatile uint32_t exti_int_endely_per = 325;
 volatile uint32_t exti_7R_endely_cnt_en = 0;
 volatile uint32_t exti_8S_endely_cnt_en = 0;
 volatile uint32_t exti_9T_endely_cnt_en = 0;
 volatile uint32_t zcrendely_ok_cnt = 0;
 volatile uint32_t zcrendely_ok_no_cnt = 0;
-volatile uint32_t zcrendely_R_rise = 475;
-volatile uint32_t zcrendely_R_fall = 475;
-volatile uint32_t zcrendely_S_rise = 475;
-volatile uint32_t zcrendely_S_fall = 475;
-volatile uint32_t zcrendely_T_rise = 475;
-volatile uint32_t zcrendely_T_fall = 475;
 float VRECT_smp_sc = 0.0f;
 float VLOAD_smp_sc = 0.0f;
 //float VLOAD_pas = 0.0f;
