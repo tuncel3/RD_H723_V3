@@ -418,7 +418,7 @@ void SysTick_Handler(void) {	// n009
 		exti_7R_endely_cnt=0;
 		exti_7R_endely_cnt_en=0;
 		if (LL_EXTI_IsEnabledRisingTrig_0_31(LL_EXTI_LINE_7)) {
-			LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);
+			LL_EXTI_DisableRisingTrig_0_31(LL_EXTI_LINE_7);	// burda olmasında sakınca yok. zaten interrupt disabled.
 			LL_EXTI_EnableFallingTrig_0_31(LL_EXTI_LINE_7);
 			LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_7);
 		}
