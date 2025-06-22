@@ -619,6 +619,8 @@ if (line_sgn_stable) {
 //	frq_rst_updn_avg_m=frq_cal_k*3 / (float) (per_r_updn_avg_m + per_s_updn_avg_m + per_t_updn_avg_m);
 	frq_rst_updn_avg_m=frq_cal_k / per_rst_updn_avg_m;
 	exti_7R_endely_per=(1/frq_rst_updn_avg_m)/40e-6*0.95;
+	exti_8S_endely_per=(1/frq_rst_updn_avg_m)/40e-6*0.95;
+	exti_9T_endely_per=(1/frq_rst_updn_avg_m)/40e-6*0.95;
 
 //	zcrendely_R_rise=round((((1/frq_cal_k)*per_r_dn_smp)/20e-6)*0.95);
 //	zcrendely_R_fall=round((((1/frq_cal_k)*per_r_up_smp)/20e-6)*0.95); // üst cycle periyotta iken

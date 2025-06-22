@@ -190,10 +190,6 @@ uint8_t DATE_TIME_edit_digit=11;
 
 
 
-// ZCR
-uint32_t exti_7R_endely_cnt=0;
-uint32_t LL_EXTI_LINE_8_reenable_cnt=0;
-uint32_t LL_EXTI_LINE_9_reenable_cnt=0;
 
 
 // PER AVERAGING
