@@ -49,25 +49,6 @@ if (Read_RTC_Osc_Status() == 0) {
 	PRF_GEN("RTC already started");
 }
 
-DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
-DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
-apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
-
-
-delay_1ms(1000);
-SW_LINE_OFF=!isInSet_(SW_LINE_P);
-SW_BATT_OFF=!isInSet_(SW_BATT_P);
-SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
-if (is_state_active(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
-	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
-}
-if (is_state_active(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
-	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
-}
-if (is_state_active(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
-	apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
-}
 
 delay_1ms(100);
 
@@ -109,8 +90,27 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 printFaultCodes();
 
 
+DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
+DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
+apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 
-en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection
+
+delay_1ms(1000);
+SW_LINE_OFF=!isInSet_(SW_LINE_P);
+SW_BATT_OFF=!isInSet_(SW_BATT_P);
+SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
+if (is_state_active(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
+	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
+}
+if (is_state_active(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
+	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
+}
+if (is_state_active(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
+	apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
+}
+
+//en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection
 //disb_uart_msg_group(pr_btln);
 
 

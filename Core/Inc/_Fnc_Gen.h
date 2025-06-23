@@ -174,15 +174,15 @@ void extern uart_debug_cnt()
     }
 }
 
-void en_uart_msg_group(uint32_t group)
-{
-    enabled_message_groups |= group;
-}
+//void en_uart_msg_group(uint32_t group)
+//{
+//    enabled_message_groups |= group;
+//}
 
-void disb_uart_msg_group(uint32_t group)
-{
-    enabled_message_groups &= ~group;
-}
+//void disb_uart_msg_group(uint32_t group)
+//{
+//    enabled_message_groups &= ~group;
+//}
 
 void printBinary(uint8_t num) {
     PRF_GEN("0b");
