@@ -1259,7 +1259,6 @@ void besc_fnc(void) {
     }
     else if (currentPage == CALIBRATION_1_pg || CALIBRATION_2_pg) { // ESC
         currentPage = MANAGEMENT_pg;
-//		EpD[SET_BATT_DISC_DET][0].V1=1;
 		blm_pause=0;
     }
     else if (currentPage == FAULT_CODES_REPORT_pg) { // ESC
