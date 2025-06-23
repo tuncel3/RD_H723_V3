@@ -400,6 +400,7 @@ void bup_fnc(void) {
 	management_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg && EpD[HOME_PG_SEL][0].V1 == 2) {											// UP
     	asm("NOP");
+    	printFaultCodes();
     }
     else if (currentPage == MAIN_MENU_pg) {
 		main_menu_disp_index=(main_menu_disp_index-1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
