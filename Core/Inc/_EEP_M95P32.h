@@ -521,7 +521,7 @@ void SPI4_ReadDataFaultRegion(uint32_t address, uint32_t nm_fault) {
 		for (uint32_t i = 0; i < nm_fault; i++) {
 			array_fault_data[i][0] = SPI4_ReceiveByte() << 24 | SPI4_ReceiveByte() << 16 | SPI4_ReceiveByte() << 8 | SPI4_ReceiveByte();
 			array_fault_data[i][1] = SPI4_ReceiveByte() << 24 | SPI4_ReceiveByte() << 16 | SPI4_ReceiveByte() << 8 | SPI4_ReceiveByte();
-			PRF_EEPFLT("i %d array_fault_data[i][0] %lu array_fault_data[i][1] %lu", i, array_fault_data[i][0], array_fault_data[i][1]);
+			PRF_EEPFLT("i %lu array_fault_data[i][0] %lu array_fault_data[i][1] %lu", i, array_fault_data[i][0], array_fault_data[i][1]);
 		}
     set_(CS_M95P32);  // Deactivate chip select
 }
