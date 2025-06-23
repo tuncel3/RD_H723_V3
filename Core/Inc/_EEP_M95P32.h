@@ -509,7 +509,6 @@ flt_array_index_next=(flt_array_index_next+1) % NUM_FAULT_RECORD;
 void SPI4_ReadDataFaultRegion(uint32_t address, uint32_t nm_fault) {
     res_(CS_M95P32);  // Activate chip select
     delayA_1us(10);
-    PRF_EEPFLT("%s Bos Kayit", rtc_timestring);
     // Step 1: Send Read Data Single Output Instruction (0x03)
     SPI4_SendByte(CMD_READ);
 
@@ -522,6 +521,7 @@ void SPI4_ReadDataFaultRegion(uint32_t address, uint32_t nm_fault) {
 		for (uint32_t i = 0; i < nm_fault; i++) {
 			array_fault_data[i][0] = SPI4_ReceiveByte() << 24 | SPI4_ReceiveByte() << 16 | SPI4_ReceiveByte() << 8 | SPI4_ReceiveByte();
 			array_fault_data[i][1] = SPI4_ReceiveByte() << 24 | SPI4_ReceiveByte() << 16 | SPI4_ReceiveByte() << 8 | SPI4_ReceiveByte();
+			PRF_EEPFLT("array_fault_data[i][0] %lu array_fault_data[i][1] %lu", array_fault_data[i][0], array_fault_data[i][1]);
 		}
     set_(CS_M95P32);  // Deactivate chip select
 }
