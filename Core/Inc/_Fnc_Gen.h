@@ -817,12 +817,6 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
         VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
         VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
     }
-    if (scope == SCOPE_V_targ_con_sy_VRECT_DC_HIGH_LOW_LIM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
-    	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
-    	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
-    	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
-    	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
-    }
     if (scope == SCOPE_FAN_TEMP_EEP || scope == SCOPE_VAR_ALL_FROM_EEP) {
 		ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
     }
