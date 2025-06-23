@@ -813,10 +813,10 @@ void inline extern startup_get_vars_from_EEP(uint8_t scope) { // n012
 	blm_V_move_up_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
 	blm_V_move_dn_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
 
-	// yüzdeleri al eepromdan. voltaja çevir dev nom vout a göre. zaten yüzdeler kaydedildiğinde
-	set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100; // yüzde olarak değer
+	//  voltaja çevir dev nom vout a göre. zaten yüzdeler kaydedildiğinde
+	set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100; // yüzdeleri al eepromdan.
 	set_dropper_l_lw_perc=EpD[SET_DROPP_L_LW_PERC][0].V1 / 100;
-	set_dropper_l_hg_V = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[SET_DROPP_L_HG_PERC][0].V1 / 100)); // voltaj olarak değer
+	set_dropper_l_hg_V = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[SET_DROPP_L_HG_PERC][0].V1 / 100)); // voltaja çevir. daha önce voltaj aydedildiğinde zaten yüzde de voltaja göre kaydedilmişti. yani şimdi yüzdeyi voltaja dönüştürmenin bir sakıncası yok. daha önce yüzdeye dönüştürülmüş olan voltajı geri bulmuş oluyoruz.
 	set_dropper_l_lw_V  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[SET_DROPP_L_LW_PERC][0].V1 / 100));
 
 	VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
