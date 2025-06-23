@@ -708,7 +708,7 @@ typedef enum {
     SCOPE_VOLTAGE_LIMITS_FROM_EEP   = 0x04,
     SCOPE_BLM_LIMITS_FROM_EEP       = 0x08,
     SCOPE_DEV_NOM_VOUT_EEP          = 0x10,
-	SCOPE_V_targ_con_sy_VRECT_DC_HIGH_LOW_LIM_EEP = 0x20,
+	SCOPE_VRECT_DC_HIGH_LOW_LIM_EEP = 0x20,
 	SCOPE_FAN_TEMP_EEP 				= 0x40,
     SCOPE_VAR_ALL_FROM_EEP          = 0xFF
 } EEP_ScopeFlags;
