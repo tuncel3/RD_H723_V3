@@ -63,11 +63,6 @@ gerçek çıkış voltajı başlangıç voltajından 0.5v uzaklaşmışsa ve kon
 kontrol sistemi çıkış voltajını baya bi değiştirmiş anlamına geliyor.
 batarya bağlı iken, akım yokken kontrol sistemi çıkış votajını düşüremez. bu yüzden batarya bağlı değil.
 
-n012
-nom akım eepte kayıtlı (IRECT_LIM_RT_)
-	Irect_max min, Ibat_max min bu akımdan
-
-
 n013
 	herhangi bir anda akım oluşursa batarya var
 	batarya voltajı  belli bir değerin altındaysa batarya tok
