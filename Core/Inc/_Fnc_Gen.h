@@ -766,6 +766,11 @@ void inline extern DEV_NOM_VOUT_changed_fc(uint8_t scope) {
 	Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar aralığı
 	Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
 	actions_after_charge_voltage_change();
+    	Rec_Dat_to_EEp_f(VBAT_FLOAT);
+    	Rec_Dat_to_EEp_f(VBAT_BOOST);
+		blm_op_phase = B_SKIP_DELAY_RESTART;					// cancel op. bring_vtarg_back_skip_delay
+		blm_enable_collect_samples = 0;
+		blm_corr_buf_index = 0;
 
 }
 
@@ -775,12 +780,6 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     	EpD[VBAT_FLOAT][1].V1=EpD[VBAT_FLOAT][0].V1;
     	EpD[VBAT_BOOST][0].V1=EpD[DEV_NOM_VOUT][0].V1*1.15;
     	EpD[VBAT_BOOST][1].V1=EpD[VBAT_BOOST][0].V1;
-    	Rec_Dat_to_EEp_f(VBAT_FLOAT);
-    	Rec_Dat_to_EEp_f(VBAT_BOOST);
-    	actions_after_charge_voltage_change();
-		blm_op_phase = B_SKIP_DELAY_RESTART;					// cancel op. bring_vtarg_back_skip_delay
-		blm_enable_collect_samples = 0;
-		blm_corr_buf_index = 0;
     }
     if (scope & SCOPE_DROPPER_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_DEV_NOM_VOUT_EEP) {
     	// D.A. gerilim regülasyonu (dropping diyot)
