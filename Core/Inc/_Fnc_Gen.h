@@ -4,7 +4,7 @@ inline void delayA_1ms(uint32_t ms);
 inline void delayA_1us(uint32_t us);
 inline void delayA_100ns(uint32_t us);
 void printFaultCodes(void);
-void inline extern set_variables_from_EEP_fc(uint8_t scope);
+void inline extern startup_get_vars_from_EEP(uint8_t scope);
 void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_V_targ_con_sy(float set_val);
 //void inline extern update_VDC_high_low_lim_fc(void);
@@ -796,7 +796,7 @@ void inline extern IRECT_LIM_RT_changed_fc(void) {
     blm_I_step_10perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.010;
 }
 
-void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
+void inline extern startup_get_vars_from_EEP(uint8_t scope) { // n012
 	Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
 
 	Irect_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
