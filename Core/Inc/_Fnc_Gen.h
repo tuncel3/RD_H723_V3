@@ -830,6 +830,7 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
 
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
+	V_targ_con_sy=Current_charge_voltage;
 	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
 	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
 	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
@@ -840,16 +841,12 @@ void inline extern actions_after_charge_voltage_change() {
 	if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
 		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
-		V_targ_con_sy=Current_charge_voltage;
-		set_variables_from_EEP_fc(uint8_t scope);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
-		V_targ_con_sy=Current_charge_voltage;
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
-		V_targ_con_sy=Current_charge_voltage;
 	}
 }
 
