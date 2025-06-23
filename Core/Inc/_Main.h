@@ -78,7 +78,7 @@ for (int i = 0; i < NUM_FAULT_RECORD; i++) {	// find first record which is ff
 		flt_array_index_next = i;
 		flt_array_index_last=(flt_array_index_next-1+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
 		flt_disp_index=(flt_array_index_last-5+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
-		flt_disp_index=flt_array_index_last;
+		flt_disp_index=flt_array_index_last+1;
 		flt_array_index_found=1;
 		PRF_GEN("st ff found eep location %lu", flt_array_index_next);
 		break;
@@ -94,7 +94,7 @@ if (flt_array_index_found == 0) { // if not found, find first record which is gr
 			flt_array_index_found=1;
 			flt_array_index_last=(flt_array_index_next-1+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
 			flt_disp_index=(flt_array_index_last-5+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
-			flt_disp_index=flt_array_index_last;
+			flt_disp_index=flt_array_index_last+1;
 			PRF_GEN("st n_ff found eep location %lu", flt_array_index_next);
 			break;
 		}
