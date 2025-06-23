@@ -760,19 +760,17 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-void inline extern DEV_NOM_VOUT_changed_fc(uint8_t scope) { // n012
-
-
-
+void inline extern DEV_NOM_VOUT_changed_fc(uint8_t scope) {
+	Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
+	Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
+	Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar aralığı
+	Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
+	actions_after_charge_voltage_change();
 
 }
 
 void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     if (scope & SCOPE_VOLTAGE_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_DEV_NOM_VOUT_EEP) {
-    	Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
-    	Vdc_float_max=EpD[DEV_NOM_VOUT][0].V1*1.15; // Normal şarj rejimi gerilim ayar aralığı
-    	Vdc_boost_min=EpD[DEV_NOM_VOUT][0].V1*1.15; // Tam şarj rejimi gerilim ayar aralığı
-    	Vdc_boost_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // Tam şarj rejimi gerilim ayar aralığı
     	EpD[VBAT_FLOAT][0].V1=EpD[DEV_NOM_VOUT][0].V1*1.1;	// şarj voltajlarını yeni belirlenen cihaz voltajına göre ayarla
     	EpD[VBAT_FLOAT][1].V1=EpD[VBAT_FLOAT][0].V1;
     	EpD[VBAT_BOOST][0].V1=EpD[DEV_NOM_VOUT][0].V1*1.15;

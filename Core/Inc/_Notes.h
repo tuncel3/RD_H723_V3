@@ -64,11 +64,8 @@ kontrol sistemi çıkış voltajını baya bi değiştirmiş anlamına geliyor.
 batarya bağlı iken, akım yokken kontrol sistemi çıkış votajını düşüremez. bu yüzden batarya bağlı değil.
 
 n012
-nom voltaj eepte kayıtlı (DEV_NOM_VOUT)
-	boost float max min ayarları bu voltajdan
 nom akım eepte kayıtlı (IRECT_LIM_RT_)
 	Irect_max min, Ibat_max min bu akımdan
-
 
 
 n013
