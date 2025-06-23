@@ -759,6 +759,14 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+void inline extern DEV_NOM_VOUT_changed_fc(uint8_t scope) { // n012
+
+
+
+
+}
+
 void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     if (scope & SCOPE_VOLTAGE_LIMITS_FROM_EEP || scope == SCOPE_VAR_ALL_FROM_EEP || scope == SCOPE_DEV_NOM_VOUT_EEP) {
     	Vdc_float_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // Normal şarj rejimi gerilim ayar aralığı
