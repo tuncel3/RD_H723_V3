@@ -402,6 +402,7 @@ void bup_fnc(void) {
     	asm("NOP");
     	printFaultCodes();
 		PRF_GEN("bt up");
+		SPI4_ReadDataFaultRegion(FAULT_RECORD_START_ADDRESS, NUM_FAULT_RECORD);
     }
     else if (currentPage == MAIN_MENU_pg) {
 		main_menu_disp_index=(main_menu_disp_index-1+NUM_MAIN_MENU_ITEMS) % NUM_MAIN_MENU_ITEMS;
