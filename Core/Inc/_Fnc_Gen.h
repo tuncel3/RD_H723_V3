@@ -899,11 +899,11 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 	uint32_t REL8_bit = (1U << (state_code-29));
     if (set) {
         if (state_list[state_code].code < 16) {
-        	LED_16_Data |= fault_bit; }  // activate LED if required
+        	LED_16_Data |= fault_bit; }  // 16 lı sıra ledler.
         if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
-        	LED_7_Data |= led7_bit; }  // activate LED 7 if required
+        	LED_7_Data |= led7_bit; }  // 7 li diagram
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
-        	REL_MB_8Bit_Data |= REL8_bit; }  // activate REL 8 if required
+        	REL_MB_8Bit_Data |= REL8_bit; }  // mb röleler.
     		REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC);
