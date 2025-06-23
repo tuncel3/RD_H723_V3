@@ -7,15 +7,18 @@
 
 volatile uint8_t dbg_gen = 1;
 volatile uint8_t dbg_blm = 0;
+volatile uint8_t dbg_eepflt = 1;
 
 #if DEBUG_MODE
     // Debug açıkken runtime flag ile kontrol
-    #define PRF_GEN(...)  if (dbg_gen) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
-    #define PRF_BLM(...)  if (dbg_blm) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+    #define PRF_GEN(...)     if (dbg_gen) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+    #define PRF_BLM(...)     if (dbg_blm) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
+    #define PRF_EEPFLT(...)  if (dbg_eepflt) { sprintf(DUB, __VA_ARGS__); prfm(DUB); }
 #else
     // Release modda debug'ı tamamen kaldır
     #define PRF_GEN(...)
     #define PRF_BLM(...)
+    #define PRF_EEPFLT(...)
 #endif
 //////// DEBUG SYSTEM CONTROL //////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
