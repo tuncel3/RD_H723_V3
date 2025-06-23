@@ -89,6 +89,7 @@ printFaultCodes();
 // eeprom okunduktan sonra kayıtlı şarj moduna göre şarj ve kontrol sisemi voltajını belirle
 actions_after_charge_mode_change(5); // set charge mode values
 set_variables_from_EEP_fc(SCOPE_VAR_ALL_FROM_EEP);
+DEV_NOM_VOUT_changed_fc();
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
 DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);

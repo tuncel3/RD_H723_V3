@@ -760,7 +760,7 @@ void inline extern aku_hatti_kopuk_fc_inl(void) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-void inline extern DEV_NOM_VOUT_changed_fc(uint8_t scope) {
+void inline extern DEV_NOM_VOUT_changed_fc(void) {
 	EpD[VBAT_FLOAT][0].V1=EpD[DEV_NOM_VOUT][0].V1*1.1;	// şarj voltajlarını yeni belirlenen cihaz voltajına göre ayarla
 	EpD[VBAT_BOOST][0].V1=EpD[DEV_NOM_VOUT][0].V1*1.15;
 	Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;

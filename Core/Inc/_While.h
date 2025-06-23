@@ -706,19 +706,19 @@ if (line_sgn_stable) {
 			apply_state_changes_f(OVERTEMP_ALARM_FC, 0);
 		}
 
-//		if (tmp_dat_C[0]+temp_test_thy_1 > EpD[SET_OVERTEMP_OPEN][0].V1 && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp open count
-//			ovtmp_open_cnt++;
-//		} else if (tmp_dat_C[0]+temp_test_thy_1 < EpD[SET_OVERTEMP_OPEN][0].V1-5 && is_state_active(OVERTEMP_OPEN_FC)) { // overtemp open cancel
-//			apply_state_changes_f(OVERTEMP_OPEN_FC, 0);
-//			PRF_GEN("apply_state_changes_f(OVERTEMP_OPEN_FC, 0);");
-//			ovtmp_open_cnt=0;
-//		} else if (ovtmp_open_cnt >= ovtmp_open_per && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp alarm enable
-//			ovtmp_open_cnt=0;
-//			apply_state_changes_f(OVERTEMP_OPEN_FC, 1);
-//			PRF_GEN("apply_state_changes_f(OVERTEMP_OPEN_FC, 1);");
-//		} else {
-//			ovtmp_open_cnt=0;
-//		}
+		if (tmp_dat_C[0]+temp_test_thy_1 > EpD[SET_OVERTEMP_OPEN][0].V1 && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp open count
+			ovtmp_open_cnt++;
+		} else if (tmp_dat_C[0]+temp_test_thy_1 < EpD[SET_OVERTEMP_OPEN][0].V1-5 && is_state_active(OVERTEMP_OPEN_FC)) { // overtemp open cancel
+			apply_state_changes_f(OVERTEMP_OPEN_FC, 0);
+			PRF_GEN("apply_state_changes_f(OVERTEMP_OPEN_FC, 0);");
+			ovtmp_open_cnt=0;
+		} else if (ovtmp_open_cnt >= ovtmp_open_per && !is_state_active(OVERTEMP_OPEN_FC)) { // overtemp alarm enable
+			ovtmp_open_cnt=0;
+			apply_state_changes_f(OVERTEMP_OPEN_FC, 1);
+			PRF_GEN("apply_state_changes_f(OVERTEMP_OPEN_FC, 1);");
+		} else {
+			ovtmp_open_cnt=0;
+		}
 
 		if (tmp_dat_C[0]+temp_test_thy_1 > EpD[SET_COOL_FAN_TEMP][0].V1 && !is_state_active(THY_FAN1_REL)) { // fan enable
 			apply_state_changes_f(THY_FAN1_REL, 1);
