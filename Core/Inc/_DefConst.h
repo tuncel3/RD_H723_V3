@@ -1267,7 +1267,7 @@ uint32_t var1=0;
 
 
 #define NUM_FAULT_RECORD	20
-uint32_t FAULT_RECORD_START_ADDRESS=0x000000;
+uint32_t FAULT_RECORD_START_ADDRESS=0x001000;
 uint32_t array_fault_data[NUM_FAULT_RECORD][2]={{0, 0}};
 uint32_t flt_array_index_next = 0;
 uint32_t flt_array_index_last = 0;
