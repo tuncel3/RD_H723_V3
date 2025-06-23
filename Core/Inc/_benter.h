@@ -327,7 +327,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 		}
     }
     else if (currentPage == CALIBRATION_2_pg) {
-    	cal_pg2_sel_edit_mode=(cal_pg2_sel_edit_mode+1)%3;
+		cal_pg2_sel_edit_mode=(cal_pg2_sel_edit_mode+1)%2;
 		if (cal_pg2_sel_edit_mode == cal_offset) { // yani enter a basılmış ve gain den offset edit moduna geçilmiş. yani gain değerinin kaydedilmesi lazım.
 			if (cal_pg2_sel_col==0) {
 				if (cal_pg2_sel_item_left==0) {

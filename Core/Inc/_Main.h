@@ -23,7 +23,6 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
 	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 //	print_Eep_data_f();
 }
-frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 
 delay_1ms(100);
 
@@ -95,6 +94,7 @@ DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
 DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
 apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
 apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 
 
 delay_1ms(1000);
