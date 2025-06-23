@@ -25,7 +25,7 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
 }
 frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 
-set_variables_from_EEP_fc(SCOPE_VAR_ALL_FROM_EEP);
+//set_variables_from_EEP_fc(SCOPE_VAR_ALL_FROM_EEP);
 //update_VDC_high_low_lim_fc();
 delay_1ms(100);
 
