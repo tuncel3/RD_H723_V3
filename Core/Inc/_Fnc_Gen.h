@@ -781,9 +781,9 @@ void inline extern set_variables_from_EEP_fc(uint8_t scope) { // n012
     	//if (scope==dropper_limits) {
     	//Vdc_drop_in_min=EpD[DEV_NOM_VOUT][0].V1*0.9; // D.A. gerilim regülasyonu giriş gerilimi
     	//Vdc_drop_in_max=EpD[DEV_NOM_VOUT][0].V1*1.3; // D.A. gerilim regülasyonu giriş gerilimi
-        set_dropper_l_hg_V = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[SET_DROPP_L_HG_PERC][0].V1 / 100));
+        set_dropper_l_hg_V = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[SET_DROPP_L_HG_PERC][0].V1 / 100)); // voltaj olarak değer
         set_dropper_l_lw_V  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[SET_DROPP_L_LW_PERC][0].V1 / 100));
-        set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100;
+        set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100; // yüzde olarak değer
         set_dropper_l_lw_perc=EpD[SET_DROPP_L_LW_PERC][0].V1 / 100;
         set_dropper_l_hg_V_h=set_dropper_l_hg_V;
         EpD[SET_DROPP_L_HG_PERC][dropper_edit_mode].V1=EpD[SET_DROPP_L_HG_PERC][0].V1;
