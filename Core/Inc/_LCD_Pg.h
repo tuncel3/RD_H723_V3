@@ -302,7 +302,7 @@ if (tabl_dolas_delay_cnt==0) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 			if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
-			} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
+			} else if ((charge_mode_timed_float || charge_mode_timed_boost) && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Zmn)");
 			} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Man)");
@@ -310,7 +310,7 @@ if (tabl_dolas_delay_cnt==0) {
 				sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
 			}
 			son_kal=tabl_dolas+1;
-			break;
+			break; // ilk gösterilecek eleman bulundu gösterildi.
 		}
 	}
 	if (tabl_dolas == NUM_STATE_NAMES) {	// tablo sonuna gelirsek başa dön tara bulursan göster.
@@ -321,7 +321,7 @@ if (tabl_dolas_delay_cnt==0) {
 			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 				if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
-				} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
+				} else if ((charge_mode_timed_float || charge_mode_timed_boost) && EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Zmn)");
 				} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Man)");
