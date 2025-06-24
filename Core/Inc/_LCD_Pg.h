@@ -598,27 +598,27 @@ inline extern void MANAGEMENT_pg_disp(void) {
 }
 
 inline extern void FAULT_CODES_REPORT_pg_disp(void) {
-	uint8_t line_num = 0;
-	uint8_t disp_index_ = flt_disp_index;
+        uint8_t line_num = 0;
+        uint8_t disp_index_ = flt_disp_index;
     char L[32];
     GLCD_PrintString(0, 0, "Arıza Kod Raporu");
 
     for (uint8_t j = 0; j < 6; j++) {
-    	if (!FAULT_CODES_REPORT_disp_mode) {
+        if (!FAULT_CODES_REPORT_disp_mode) {
 
-    	    if (array_fault_data[disp_index_][1] < NUM_STATE_NAMES) {
-        		sprintf(L, "%03d %s", disp_index_+1, state_list[array_fault_data[disp_index_][1]].name);
-    	    } else {
-        		sprintf(L, "%03d -", disp_index_+1);
-    	    }
+            if (array_fault_data[disp_index_][0] != 0xffffffff && array_fault_data[disp_index_][1] < NUM_STATE_NAMES) {
+                        sprintf(L, "%02u %s", line_num+1, state_list[array_fault_data[disp_index_][1]].name);
+            } else {
+                        sprintf(L, "%02u -", line_num+1);
+            }
 
-    	} else {
-    		convert_timestamp_to_date_string(array_fault_data[disp_index_][0], rtc_timestring, sizeof(rtc_timestring));
-    		sprintf(L, "%03d %s", disp_index_+1, rtc_timestring);
-    	}
-		GLCD_PrintString(0, (line_num + 1) * 9, L);
-		line_num++;
-    	disp_index_=(disp_index_+1+NUM_FAULT_RECORD) % NUM_FAULT_RECORD;
+        } else {
+                convert_timestamp_to_date_string(array_fault_data[disp_index_][0], rtc_timestring, sizeof(rtc_timestring));
+                sprintf(L, "%02u %s", line_num+1, rtc_timestring);
+        }
+                GLCD_PrintString(0, (line_num + 1) * 9, L);
+                line_num++;
+        disp_index_=(disp_index_-1+NUM_FAULT_RECORD) % NUM_FAULT_RECORD;
 
 // LAST FAULT OVER UNDER LINE >>>>>>>>>>>>>>>>>>>>
 		int line1_y = ((((flt_array_index_last+NUM_FAULT_RECORD)-flt_disp_index+1)%NUM_FAULT_RECORD) * 9)-2;
