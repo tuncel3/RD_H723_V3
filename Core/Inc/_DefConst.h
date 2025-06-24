@@ -413,7 +413,8 @@ typedef enum {
 	FLOAT,
     BOOST,
 	AUTO,
-	TIMED
+	TIMED_FLOAT,
+	TIMED_BOOST
 } Charge_Mode_Type;
 
 const char* CH_MOD_SEL_Items[] = {
