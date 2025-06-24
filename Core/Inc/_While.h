@@ -118,9 +118,13 @@ if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
+		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
+		apply_state_changes_f(BOOST_CHARGE_FC, 0);
+		LED_7_Data &= ~BOOST_CHARGE_LED;
+		LED_7_Data |= FLOAT_CHARGE_LED;
 
 		actions_after_charge_mode_change(8);
-		PRF_GEN("Timer mode count down ended. Switch to FLOAT mode");
+		PRF_GEN("Timer mode count down ended. Switch to FLOAT mode settings");
 	}
 }
 ////// MANAGE CHARGE MODE TIMED /////////////////////////////////////////////////////////////////////////////////////
