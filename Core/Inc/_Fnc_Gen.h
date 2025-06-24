@@ -890,6 +890,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		apply_state_changes_f(AUTO_CHARGE, 0);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
+		PRF_GEN("timed mode selected, boost charge values loaded");
 		switch_to_auto_mode_completed=0;
 		if (timed_mode_actions_do_once==0) {
 			timed_mode_actions_do_once=1; // timed a geçiş yapıldığında bir kez uygulanacak. tekrar uygulanabilmesi için başka moda geçilmesi lazım.
