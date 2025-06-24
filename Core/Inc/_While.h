@@ -116,8 +116,8 @@ if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 
 	if (charge_mode_timed_time_cnt == 0 && timed_mode_time_ended==0) {
 		timed_mode_time_ended=1;
-		charge_mode_timed_float=0;
-		charge_mode_timed_boost=1;
+		charge_mode_timed_float=1;
+		charge_mode_timed_boost=0;
 		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
