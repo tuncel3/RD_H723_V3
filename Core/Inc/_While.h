@@ -85,7 +85,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		float_of_auto_mode_active=1;
 		boost_of_auto_mode_active=0;
 //		actions_after_charge_mode_change(34);
-		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
+		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
@@ -114,7 +114,11 @@ if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 
 	if (charge_mode_timed_time_cnt == 0 && timed_mode_time_ended==0) {
 		timed_mode_time_ended=1;
-		EpD[SET_CHARGE_MODE][0].V1=FLOAT;
+
+		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
+		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
+		set_V_targ_con_sy(Current_charge_voltage);
+
 		actions_after_charge_mode_change(8);
 		PRF_GEN("Timer mode count down ended. Switch to FLOAT mode");
 	}
