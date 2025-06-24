@@ -855,7 +855,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		set_V_targ_con_sy(Current_charge_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
-		apply_state_changes_f(TIMED_CHARGE, 0);
+		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
 		apply_state_changes_f(MANUAL_CHARGE, 1);
 		apply_state_changes_f(AUTO_CHARGE, 0);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
