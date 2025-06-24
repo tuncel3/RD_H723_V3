@@ -294,7 +294,11 @@ static uint8_t son_kal=0;
 static uint8_t tabl_dolas_delay_cnt=0;
 static char RollBuf[32];
 if (tabl_dolas_delay_cnt==0) {
-	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
+//		if (tabl_dolas == NUM_STATE_NAMES) {
+//			tabl_dolas=0;
+//			son_kal=0;
+//		}
+	for (tabl_dolas = son_kal; tabl_dolas <= NUM_STATE_NAMES; tabl_dolas++) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 			if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
@@ -313,7 +317,7 @@ if (tabl_dolas_delay_cnt==0) {
 		tabl_dolas=0;
 		son_kal=0;
 
-		for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) { // üstteki for döngüsü ile aynı. yazma işlemi üstteki loopta yapılıyor. üstteki loop bir şey bulamaıp tablo sonuna geldi diyelim. bu durumda birşey bulunamadığı için bu döngüde boş satır yazılacak. bunu engellemek için aynı loop buraya da koyuluyor.
+		for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) { // üstteki for döngüsü ile aynı. yazma işlemi üstteki loopta yapılıyor. üstteki loop bir şey bulamayıp tablo sonuna geldi diyelim. bu durumda birşey bulunamadığı için bu döngüde boş satır yazılacak. bunu engellemek için aynı loop buraya da koyuluyor.
 			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 				if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
