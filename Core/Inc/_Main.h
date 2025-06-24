@@ -83,7 +83,7 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 	flt_array_index_next=0; // next fault to write index 0
 	flt_array_index_found=1;
 }
-printFaultCodes();
+//printFaultCodes();
 
 
 // eeprom okunduktan sonra kayıtlı şarj moduna göre şarj ve kontrol sisemi voltajını belirle
