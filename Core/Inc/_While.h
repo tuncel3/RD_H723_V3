@@ -114,7 +114,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
 
 	if (charge_mode_timed_time_cnt == 0 && timed_mode_time_ended==0) {
 		timed_mode_time_ended=1;
-		EpD[SET_CHARGE_MODE][0].V1=FLOAT; EpD[SET_CHARGE_MODE][1].V1=FLOAT; // button yukarı aşağı seçeneği dışında değiştirildiği için hem [0] hem de [1] olanı değiştiriliyor.
+		EpD[SET_CHARGE_MODE][0].V1=FLOAT;
 		actions_after_charge_mode_change(8);
 		PRF_GEN("Timer mode count down ended. Switch to FLOAT mode");
 	}
