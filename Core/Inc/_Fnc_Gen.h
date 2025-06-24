@@ -827,7 +827,7 @@ void inline extern startup_get_vars_from_EEP(void) { // n012
 
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
-	V_targ_con_sy=Current_charge_voltage;
+//	V_targ_con_sy=Current_charge_voltage;
 	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
 	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
 	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
