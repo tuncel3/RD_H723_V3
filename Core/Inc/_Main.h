@@ -10,7 +10,7 @@ set_(CS_M95P32);
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
 
-// eeprom yükle
+// EEPROM READ
 track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8); // programlarken eep table da değişiklik yapılmış ise değişikliklere göre işlemleri yap
 if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { // tablo sonundaki değer sadece okunuyor. kayma varsa programdaki değerden farklı olacaktır.
 	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
@@ -24,17 +24,17 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { /
 //	print_Eep_data_f();
 }
 
-delay_1ms(100);
-
+// GLCD INIT
 GLCD_Init();
 delay_1ms(10);
 GLCD_ClearScreen(0x00);
 GLCD_PrintString(16, 25, "POWER ELEKTRONIK");
 GLCD_RefreshGRAM();
 
+// FAZ SIRASI
 swap_scr_lines(&SCR_R, &SCR_T); // faz sıralamasına göre değşim gerekiyorsa bu fonksiyon kullanılacak.
 
-// RTC init
+// RTC INIT
 if (Read_RTC_Osc_Status() == 0) {
     Write_To_Register(0, 0b10000000); // osc en
     Write_To_Register(2, 0b00000000); // 12/24_n set
@@ -45,9 +45,7 @@ if (Read_RTC_Osc_Status() == 0) {
 	PRF_GEN("RTC already started");
 }
 
-
-delay_1ms(100);
-
+// EEP READ FAULT RECORDS
 SPI4_ReadDataFaultRegion(FAULT_RECORD_START_ADDRESS, NUM_FAULT_RECORD);
 // find address to write faults
 for (int i = 0; i < NUM_FAULT_RECORD; i++) {	// find first record which is ff
@@ -84,15 +82,44 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 	flt_array_index_found=1;
 }
 //printFaultCodes();
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-
+// USE EEPROM DATA
 // eeprom okunduktan sonra kayıtlı şarj moduna göre şarj ve kontrol sisemi voltajını belirle
 PRF_GEN("Startup eeprom charge mode %f", EpD[SET_CHARGE_MODE][0]);
-	Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-	I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-	LED_7_Data |= FLOAT_CHARGE_LED;
-	LED_7_Data &= ~BOOST_CHARGE_LED;
-startup_get_vars_from_EEP();
+Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
+I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
+LED_7_Data |= FLOAT_CHARGE_LED;
+LED_7_Data &= ~BOOST_CHARGE_LED;
+Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
+
+Irect_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
+Irect_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
+Ibat_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
+Ibat_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1;
+
+blm_I_step_05perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.005;
+blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075;
+blm_I_step_10perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.010;
+blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
+blm_V_step_10perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.010;
+blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;
+blm_V_move_up_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
+blm_V_move_dn_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
+
+//  voltaja çevir dev nom vout a göre. zaten yüzdeler kaydedildiğinde
+set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100; // yüzdeleri al eepromdan.
+set_dropper_l_lw_perc=EpD[SET_DROPP_L_LW_PERC][0].V1 / 100;
+set_dropper_l_hg_V = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[SET_DROPP_L_HG_PERC][0].V1 / 100)); // voltaja çevir. daha önce voltaj aydedildiğinde zaten yüzde de voltaja göre kaydedilmişti. yani şimdi yüzdeyi voltaja dönüştürmenin bir sakıncası yok. daha önce yüzdeye dönüştürülmüş olan voltajı geri bulmuş oluyoruz.
+set_dropper_l_lw_V  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[SET_DROPP_L_LW_PERC][0].V1 / 100));
+
+VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
+VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
+
+ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
 DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);

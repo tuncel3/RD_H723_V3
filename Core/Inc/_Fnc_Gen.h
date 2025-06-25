@@ -797,32 +797,7 @@ void inline extern IRECT_LIM_RT_changed_fc(void) {
 }
 
 void inline extern startup_get_vars_from_EEP(void) { // n012
-	Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
 
-	Irect_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
-	Irect_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
-	Ibat_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
-	Ibat_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1;
-
-	blm_I_step_05perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.005;
-	blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075;
-	blm_I_step_10perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.010;
-	blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
-	blm_V_step_10perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.010;
-	blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;
-	blm_V_move_up_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
-	blm_V_move_dn_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
-
-	//  voltaja çevir dev nom vout a göre. zaten yüzdeler kaydedildiğinde
-	set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100; // yüzdeleri al eepromdan.
-	set_dropper_l_lw_perc=EpD[SET_DROPP_L_LW_PERC][0].V1 / 100;
-	set_dropper_l_hg_V = EpD[DEV_NOM_VOUT][0].V1 * (1 + (EpD[SET_DROPP_L_HG_PERC][0].V1 / 100)); // voltaja çevir. daha önce voltaj aydedildiğinde zaten yüzde de voltaja göre kaydedilmişti. yani şimdi yüzdeyi voltaja dönüştürmenin bir sakıncası yok. daha önce yüzdeye dönüştürülmüş olan voltajı geri bulmuş oluyoruz.
-	set_dropper_l_lw_V  = EpD[DEV_NOM_VOUT][0].V1 * (1 - (EpD[SET_DROPP_L_LW_PERC][0].V1 / 100));
-
-	VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
-	VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
-
-	ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
 }
 
 void inline extern set_V_targ_con_sy(float set_val) {
