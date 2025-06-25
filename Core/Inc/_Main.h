@@ -112,13 +112,6 @@ Ibat_charge_set_limit_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0; // batarya şarj ak
 Ibat_charge_set_limit_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1; // batarya şarj akımı ayar min
 
 
-for (size_t i = 0; i < count; i++) {
-    scaledValues[i] = EpD[DEV_NOM_VOUT][0].V1 * factors[i];
-    // Print the result for debugging purposes
-    PRF_GEN("Factor %f -> Scaled Value: %f", factors[i], scaledValues[i]);
-}
-
-
 blm_I_step_025perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.0025; // ibat_stable da kullanılıyor
 blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075; // iki yerde kullanılıyor
 blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
