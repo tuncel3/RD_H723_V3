@@ -87,7 +87,9 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 
 
 // eeprom okunduktan sonra kayıtlı şarj moduna göre şarj ve kontrol sisemi voltajını belirle
-actions_after_charge_mode_change(5); // set charge mode values
+PRF_GEN("Startup charge mode set", EpD[SET_CHARGE_MODE][0].V1);
+	Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
+	I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
 startup_get_vars_from_EEP();
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
