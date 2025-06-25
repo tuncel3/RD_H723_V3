@@ -1005,7 +1005,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 
 
 	is_state_active(VBAT_FLOAT);
-	LED_7_Data |= (1U << (VBAT_FLOAT-16))
+	LED_7_Data |= (1U << (VBAT_FLOAT-16));
 
 
 
