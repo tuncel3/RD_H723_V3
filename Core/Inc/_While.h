@@ -57,7 +57,7 @@ if (thy_stop_fault_hold_bits==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
-if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
+if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 	if (switch_to_auto_mode_completed==0) {
 		switch_to_auto_mode_completed=1; // başka bir moddan auto moda geçildi.
 		boost_of_auto_mode_active=0; // şimdi aşağıdaki iki moddan birini seç. float ya da boost.
