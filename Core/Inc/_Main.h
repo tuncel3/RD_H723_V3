@@ -57,7 +57,7 @@ for (int i = 0; i < NUM_FAULT_RECORD; i++) {	// find first record which is ff
 		flt_disp_index=(flt_array_index_last-5+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
 		flt_disp_index=flt_array_index_last;
 		flt_array_index_found=1;
-		PRF_GEN(" st ff found eep location (flt_array_index_next) %lu", flt_array_index_next);
+		PRF_GEN(" found flt_array_index_next %lu", flt_array_index_next);
 		break;
 	}
 }
@@ -71,7 +71,7 @@ if (flt_array_index_found == 0) { // if not found, find first record which is gr
 			flt_array_index_found=1;
 			flt_array_index_last=(flt_array_index_next-1+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
 			flt_disp_index=(flt_array_index_last-5+NUM_FAULT_RECORD)%NUM_FAULT_RECORD;
-			PRF_GEN(" st n_ff found eep location (flt_array_index_next) %lu", flt_array_index_next);
+			PRF_GEN(" found flt_array_index_next %lu", flt_array_index_next);
 			break;
 		}
 	}
@@ -81,13 +81,13 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 		SPI4_BlockErase(FAULT_RECORD_START_ADDRESS+i*64); // clear fault records
 	}
 	PRF_GEN(" couldn't find last fault record location.");
+	PRF_GEN(" eeprom clear fault records region.");
 	flt_array_index_next=0; // next fault to write index 0
 	flt_array_index_found=1;
 }
 //printFaultCodes();
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
-
 
 PRF_GEN("USE EEPROM TABLE DATA"); // eeprom okunduktan sonra kayıtlı dataya göre değişkenleri belirle
 PRF_GEN("Startup eeprom charge mode %f", EpD[SET_CHARGE_MODE][0].V1);
