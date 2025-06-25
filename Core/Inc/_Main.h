@@ -5,12 +5,11 @@
 prfm("\033[H");
 prfm("\033[2J");
 
-set_(CS_M95P32);
+set_(CS_M95P32);	//eeprom init
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
 
-// write_Dat_to_EEp_fn(); // write default variables to eep. Can be used when adding new item to Eep data array.
- // programlarken eep table da değişiklik yapılmış ise bu bölümde o değişiklik inceleniyor
+ // programlarken eep table da değişiklik yapılmış ise değişikliklere göre işlemleri yap
 track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8); // tablo sonundaki değer sadece okunuyor. kayma varsa programdaki değerden farklı olacaktır.
 if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) {
 	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
