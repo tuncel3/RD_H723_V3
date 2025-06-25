@@ -858,8 +858,10 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
-		apply_state_changes_f(MANUAL_CHARGE, 1);
-		apply_state_changes_f(AUTO_CHARGE, 0);
+		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 1);
+		apply_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
 		LED_7_Data |= FLOAT_CHARGE_LED;
 		LED_7_Data &= ~BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0;
@@ -874,8 +876,10 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
-		apply_state_changes_f(MANUAL_CHARGE, 1);
-		apply_state_changes_f(AUTO_CHARGE, 0);
+		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(MANUAL_BOOST_CHARGE_FC, 1);
+		apply_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0;
@@ -890,8 +894,10 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 1);
 		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
-		apply_state_changes_f(MANUAL_CHARGE, 0);
-		apply_state_changes_f(AUTO_CHARGE, 0);
+		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
 		LED_7_Data |= FLOAT_CHARGE_LED;
 		LED_7_Data &= ~BOOST_CHARGE_LED;
 		PRF_GEN("timed mode selected, boost charge values loaded");
@@ -909,8 +915,10 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 1);
-		apply_state_changes_f(MANUAL_CHARGE, 0);
-		apply_state_changes_f(AUTO_CHARGE, 0);
+		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 		PRF_GEN("timed mode selected, boost charge values loaded");
@@ -923,8 +931,10 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
-		apply_state_changes_f(MANUAL_CHARGE, 0);
-		apply_state_changes_f(AUTO_CHARGE, 1);
+		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
 	}
 }
 
