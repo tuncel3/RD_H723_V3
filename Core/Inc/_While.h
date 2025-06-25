@@ -1003,15 +1003,15 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-//if (condition) {
-//
-//
-//	LED_7_Data |= led7_bit
-//
-//
-//} else if (condition) {
-//
-//}
+if (condition) {
+
+
+	LED_7_Data |= led7_bit
+
+
+} else if (condition) {
+
+}
 
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
