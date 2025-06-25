@@ -786,15 +786,6 @@ void inline extern DEV_NOM_VOUT_changed_fc(void) {
 	set_dropper_l_lw_perc=EpD[SET_DROPP_L_LW_PERC][0].V1 / 100;
 }
 
-void inline extern IRECT_LIM_RT_changed_fc(void) {
-    Irect_set_limit_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
-    Irect_set_limit_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
-    Ibat_charge_set_limit_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
-    Ibat_charge_set_limit_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1;
-    blm_I_step_025perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.0025;
-    blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075;
-    blm_I_step_10perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.010;
-}
 
 void inline extern set_targ_DC_voltage(float set_val) {
 	targ_DC_voltage=set_val;
@@ -1217,11 +1208,11 @@ void stability_irect_fc(void) {
 		}
 		irect_stable = (irect_stable_cnt >= 150);
 }
-void stability_ibat_fc(void) {
+void stability_ibat_fc(void) { // ibat_stable variable ı burda belirleniyor.
     if (IBAT_pas.a64 > i_bat_max_stb) {
         i_bat_max_stb = IBAT_pas.a64 + blm_I_step_025perc;
         i_bat_min_stb = IBAT_pas.a64 - blm_I_step_025perc;
-        ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
+        ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0; // koşul sağlanmıyorsa sayacı 4 geri çek.
     } else if (IBAT_pas.a64 < i_bat_min_stb) {
         i_bat_max_stb = IBAT_pas.a64 + blm_I_step_025perc;
         i_bat_min_stb = IBAT_pas.a64 - blm_I_step_025perc;
