@@ -22,6 +22,7 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { /
 	PRF_GEN("EEP Table size OK");
 	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 }
+delay_1ms(100);
 
 PRF_GEN("GLCD INIT");
 GLCD_Init();
@@ -43,6 +44,8 @@ if (Read_RTC_Osc_Status() == 0) {
 } else {
 	PRF_GEN("RTC already started");
 }
+
+delay_1ms(100);
 
 PRF_GEN("EEP READ FAULT RECORDS");
 SPI4_ReadDataFaultRegion(FAULT_RECORD_START_ADDRESS, NUM_FAULT_RECORD);
