@@ -802,7 +802,7 @@ void inline extern startup_get_vars_from_EEP(void) { // n012
 
 void inline extern set_V_targ_con_sy(float set_val) {
 	V_targ_con_sy=set_val;
-//	V_targ_con_sy=Current_charge_voltage;
+//	V_targ_con_sy=temp_targ_DC_voltage;
 	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
 	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
 	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
@@ -811,24 +811,24 @@ void inline extern set_V_targ_con_sy(float set_val) {
 
 void inline extern actions_after_charge_voltage_change() {
 	if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
-		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
-		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 	}
 //	else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
-//		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
-//		set_V_targ_con_sy(Current_charge_voltage);
+//		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
+//		set_V_targ_con_sy(temp_targ_DC_voltage);
 //	}
 }
 
 // does required changes after a charge mode chage
 void inline extern actions_after_charge_mode_change(uint8_t num) {
 	if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
-		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
-		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
+		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
@@ -844,9 +844,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
 		PRF_GEN("FLOAT charge mode %d", num);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
-		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
+		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
@@ -862,9 +862,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
 		PRF_GEN("BOOST charge mode %d", num);
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_FLOAT_CHARGE_FC) {
-		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
+		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 1);
@@ -883,9 +883,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
 		}
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_BOOST_CHARGE_FC) {
-		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
+		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
@@ -1182,12 +1182,12 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 }
 
 void inline extern bring_vtarg_back_to_chrgV(uint8_t num) {
-	if (V_targ_con_sy < Current_charge_voltage - blm_V_step_05perc) {
+	if (V_targ_con_sy < temp_targ_DC_voltage - blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-	} else if (V_targ_con_sy > Current_charge_voltage + blm_V_step_05perc) {
+	} else if (V_targ_con_sy > temp_targ_DC_voltage + blm_V_step_05perc) {
 		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
 	} else {
-		set_V_targ_con_sy(Current_charge_voltage); // hedefe ulaşınca sabitle
+		set_V_targ_con_sy(temp_targ_DC_voltage); // hedefe ulaşınca sabitle
 		blm_op_phase = num;
 	}
 }

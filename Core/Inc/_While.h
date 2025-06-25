@@ -3,11 +3,11 @@ if (ms_tick_cnt-sfst_1_t_hold >= 5) { // soft start step. 5ms
 	sfst_1_t_hold=ms_tick_cnt;
 
 	if (sfsta_op_phase == S_SFSTA_REQ && line_sgn_stable && thy_stop_fault_hold_bits==0) {
-		if (V_targ_con_sy <= Current_charge_voltage) {
+		if (V_targ_con_sy <= temp_targ_DC_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy*1.003);
 		}
-		else if (V_targ_con_sy > Current_charge_voltage) {
-			set_V_targ_con_sy(Current_charge_voltage);
+		else if (V_targ_con_sy > temp_targ_DC_voltage) {
+			set_V_targ_con_sy(temp_targ_DC_voltage);
 			sfsta_op_phase=S_SFSTA_REQ_OK;
 			apply_state_changes_f(SOFT_START_ST, 0);
 //			actions_after_charge_mode_change(6);
@@ -32,7 +32,7 @@ if (sta_op_phase == S_STARTUP_DELAY_CNT) {	// delay bekleme state'i.
 }
 // thy_drv_en_req set etmek başlatma işlemi yapmak için yeterli.
 if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
-	if (thy_drv_en==0 && VRECT_pas.a64 <= Current_charge_voltage*1.1 && thy_drv_en_req ==1 && line_sgn_stable && thy_stop_fault_hold_bits==0) {
+	if (thy_drv_en==0 && VRECT_pas.a64 <= temp_targ_DC_voltage*1.1 && thy_drv_en_req ==1 && line_sgn_stable && thy_stop_fault_hold_bits==0) {
 		sf_sta_req_cnt++;
 		if (sf_sta_req_cnt >= 20) {		// delayed soft start trigger
 			set_V_targ_con_sy(5);
@@ -68,9 +68,9 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		float_of_auto_mode_active=0;
 		boost_of_auto_mode_active=1;
 //		actions_after_charge_mode_change(33);
-		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
+		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
@@ -86,9 +86,9 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 		float_of_auto_mode_active=1;
 		boost_of_auto_mode_active=0;
 //		actions_after_charge_mode_change(34);
-		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
+		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
@@ -119,9 +119,9 @@ if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_FLOAT || EpD[SET_CHARGE_MODE][0].V1 == T
 		timed_mode_time_ended=1;
 		charge_mode_timed_float=1;
 		charge_mode_timed_boost=0;
-		Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
-		I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
-		set_V_targ_con_sy(Current_charge_voltage);
+		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
+		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
+		set_V_targ_con_sy(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
@@ -930,7 +930,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			hedefe_yaklasma_yuzde_up=hedef_suan_fark/hedef_baslngc_fark;
 			PRF_BLM("yukr hdf-suan hdf-basl hdf_yakl_yuzde. %f %f %f", hedef_suan_fark, hedef_baslngc_fark, hedefe_yaklasma_yuzde_up); // hedef voltaj ile stabil voltaj arası fark
 		}
-		if (V_targ_con_sy > Current_charge_voltage) {
+		if (V_targ_con_sy > temp_targ_DC_voltage) {
 			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
