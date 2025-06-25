@@ -22,7 +22,7 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { /
 	PRF_GEN("EEP Table size OK");
 	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
 }
-delay_1ms(100);
+//delay_1ms(100);
 
 PRF_GEN("GLCD INIT");
 GLCD_Init();
@@ -139,7 +139,7 @@ apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
 apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
 frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 
-delay_1ms(1000);
+//delay_1ms(100);
 SW_LINE_OFF=!isInSet_(SW_LINE_P);
 SW_BATT_OFF=!isInSet_(SW_BATT_P);
 SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
