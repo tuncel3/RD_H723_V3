@@ -302,8 +302,6 @@ if (tabl_dolas_delay_cnt==0) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 			if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
-			} else if ((state_list[tabl_dolas].code==TIMED_FLOAT_CHARGE_FC || state_list[tabl_dolas].code==TIMED_BOOST_CHARGE_FC)) {
-				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Zmn)");
 			} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Man)");
 			} else {
@@ -321,9 +319,7 @@ if (tabl_dolas_delay_cnt==0) {
 			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 				if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
-				} else if ((state_list[tabl_dolas].code==TIMED_FLOAT_CHARGE_FC || state_list[tabl_dolas].code==TIMED_BOOST_CHARGE_FC)) {
-					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Zmn)");
-				} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
+				}} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Man)");
 				} else {
 					sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
