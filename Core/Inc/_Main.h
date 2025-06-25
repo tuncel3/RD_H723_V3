@@ -104,7 +104,7 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == MANUAL) {
 } else if (EpD[SET_CH_CONT_MODE][0].V1 == TIMED) {
 	set_state_active(TIMED_CHARGE_FC); PRF_GEN("Startup eeprom CHARGE CONTROL MODE TIMED");
 }
-Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1; // Vbat too low.
+Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1; // Vbat too low control. Batt line monitor checks this to determine if battery is connected or not. If voltge is too low
 
 Irect_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
 Irect_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
