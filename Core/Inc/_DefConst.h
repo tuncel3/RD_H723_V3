@@ -411,11 +411,14 @@ float set_dropper_l_lw_V_h = 0.1f;
 
 typedef enum {
 	FLOAT,
-    BOOST,
-	AUTO,
-	TIMED_FLOAT,
-	TIMED_BOOST
+    BOOST
 } Charge_Mode_Type;
+
+typedef enum {
+	MANUAL,
+	AUTO,
+	TIMED
+} Charge_Control_Type;
 
 const char* CH_MOD_SEL_Items[] = {
     "  Normal",
@@ -496,6 +499,7 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SETTING_RECORD_START_ADDRESS, 3145728.0}, {SETTING_RECORD_START_ADDRESS, 3145728.0} },
     { {SET_CHARGE_MODE, 0.0}, {SET_CHARGE_MODE, 0.0} },
     { {SET_BOOST_TIME, 4.0}, {SET_BOOST_TIME, 4.0} },
+    { {SET_CH_CONT_MODE, 0.0}, {SET_CH_CONT_MODE, 0.0} },
     { {VBAT_FLOAT, 52.8}, {VBAT_FLOAT, 52.8} },
     { {VBAT_BOOST, 55.2}, {VBAT_BOOST, 55.2} },
     { {SET_IBAT_FLOAT, 4.0}, {SET_IBAT_FLOAT, 4.0} },

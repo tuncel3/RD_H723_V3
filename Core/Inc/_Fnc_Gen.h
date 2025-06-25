@@ -1332,6 +1332,9 @@ void print_active_states() {
         }
     }
 }
+void set_state_active(State_Codes state) {
+	state_list[state].action |= (1 << ACTIVE_enum);
+}
 uint8_t is_state_active(State_Codes state) {
 	return (state_list[state].action & (1 << ACTIVE_enum)) != 0;
 }
