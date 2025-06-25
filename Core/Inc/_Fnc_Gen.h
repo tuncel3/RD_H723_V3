@@ -902,14 +902,14 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
 //		}
 //	}
-else if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
+//else if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 //		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 //		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
 //		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
 //		apply_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
 //		apply_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
 //		apply_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
-	}
+//	}
 }
 
 void apply_state_changes_f(State_Codes state_code, uint8_t set) {
