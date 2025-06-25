@@ -887,7 +887,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_enable_collect_samples = 1;
 		check_vrect_vtarg_e_asagi_gitti =1;									// will check in phase 5
 		check_vrect_vtarg_e_yukari_gitti =1;								// will check in phase 7
-		blm_set_up_down_vtarg_limits();
+		blm_move_up_down_vtarg_limits();
 		PRF_BLM("start changing voltage");
 		blm_op_phase = 3;
 	} else if (blm_op_phase == 3) { // Vtarg’ı düşür

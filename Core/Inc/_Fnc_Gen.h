@@ -1223,7 +1223,7 @@ void stability_ibat_fc(void) { // ibat_stable variable ı burda belirleniyor.
 }
 
 
-void blm_set_up_down_vtarg_limits(void) {
+void blm_move_up_down_vtarg_limits(void) {
 	baslangic_v_stbl=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
 	blm_vtarg_move_up_targ=baslangic_v_stbl+blm_V_move_up_set;
 	blm_vtarg_move_dn_targ=baslangic_v_stbl-blm_V_move_dn_set;

@@ -116,8 +116,8 @@ blm_I_step_025perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.0025; // ibat_stable
 blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075; // stability_irect_fc ve batt curr detect threshold
 blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005; // bring_vtarg_back_to_chrgV
 blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015; // stability_vrect_fc
-blm_V_move_up_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
-blm_V_move_dn_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
+blm_V_move_up_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02; // blm_move_up_down_vtarg_limits
+blm_V_move_dn_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02; // blm_move_up_down_vtarg_limits
 
 //  voltaja çevir dev nom vout a göre. zaten yüzdeler kaydedildiğinde
 set_dropper_l_hg_perc=EpD[SET_DROPP_L_HG_PERC][0].V1 / 100; // yüzdeleri al eepromdan.
