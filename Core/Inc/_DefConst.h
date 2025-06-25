@@ -1064,7 +1064,6 @@ typedef struct {
     const char *name;
 	rel_names_t rel_dat_nm;
 } State_Info;
-//  status   action   action  action
 //  LCD_ROLL ACTIVE   THYSTOP  SAVE    SET_GEN_F_LED
 State_Info state_list[] = {
 	// LED 16 BIT0 enum 0
@@ -1074,8 +1073,8 @@ State_Info state_list[] = {
 	{ OVERTEMP_OPEN_FC,           0b10111,	"Aşrı Sıckl Açık",     OVERTEMP_OPEN_FC_REL },
 	{ BATTERY_CURRENT_LIMIT_FC,   0b00000,	"Akü Akım Sınırı",     NUM_REL_CODES },
 	{ RECTIFIER_CURRENT_LIMIT_FC, 0b00000,	"Doğrltc Akm Sınr",    NUM_REL_CODES },
-	{ DC_LEAK_NEGATIVE_FC,        0b10010,	"DC Kaçak Negtf",    DC_LEAK_NEGATIVE_FC_REL },
-	{ DC_LEAK_POSITIVE_FC,        0b10010,	"DC Kaçak Poztf",    DC_LEAK_POSITIVE_FC_REL },
+	{ DC_LEAK_NEGATIVE_FC,        0b10010,	"DC Kaçak Negtf",      DC_LEAK_NEGATIVE_FC_REL },
+	{ DC_LEAK_POSITIVE_FC,        0b10010,	"DC Kaçak Poztf",      DC_LEAK_POSITIVE_FC_REL },
 	{ RECT_DC_LW_FC,              0b10011,	"Doğr VDC Düşük",      RECT_DC_LW_FC_REL },
 	{ RECT_DC_HG_FC,              0b10111,	"Doğr VDC Yüksk",      RECT_DC_HG_FC_REL },
 	{ VAC_LO_FC,                  0b10110,	"Şebeke Düşük",        VAC_LO_FC_REL },
