@@ -1003,10 +1003,11 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-if (is_state_active(BOOST_CHARGE_FC)) {
+if (is_state_active(FLOAT_CHARGE_FC)) {
+	LED_7_Data |= (1U << (FLOAT_CHARGE_FC-16));
+} else if (is_state_active(BOOST_CHARGE_FC)) {
 	LED_7_Data |= (1U << (BOOST_CHARGE_FC-16));
 }
-	is_state_active(BOOST_CHARGE_FC);
 
 
 
