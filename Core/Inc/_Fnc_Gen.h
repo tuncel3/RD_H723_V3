@@ -775,7 +775,6 @@ void inline extern DEV_NOM_VOUT_changed_fc(void) {
 
 
     blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;
-    blm_V_step_10perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.010;
     blm_V_step_15perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.015;
     blm_V_move_up_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
     blm_V_move_dn_set  = EpD[DEV_NOM_VOUT][0].V1 * 0.02;
