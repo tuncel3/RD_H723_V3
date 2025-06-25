@@ -9,6 +9,7 @@ if (ms_tick_cnt-sfst_1_t_hold >= 5) { // soft start step. 5ms
 		else if (V_targ_con_sy > Current_charge_voltage) {
 			set_V_targ_con_sy(Current_charge_voltage);
 			sfsta_op_phase=S_SFSTA_REQ_OK;
+			apply_state_changes_f(SOFT_START_ST, 0);
 			actions_after_charge_mode_change(6);
 			PRF_GEN("Soft start request ok");
 		}
