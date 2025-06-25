@@ -437,9 +437,10 @@ typedef struct {
 typedef enum {
 	SETTING_RECORD_START_ADDRESS,
     SET_CHARGE_MODE,    // Charge mode selection
-    SET_BOOST_TIME,		// Boost charge duration
+	SET_CH_CONT_MODE,
     VBAT_FLOAT,          // Float Voltage
     VBAT_BOOST,          // Boost Voltage
+    SET_BOOST_TIME,		// Boost charge duration
     SET_IBAT_FLOAT,          // Float Current
     SET_IBAT_BOOST,          // Boost Current
 	IRECT_LIM_RT_,		// DEV_NOM_VOUT un akım hali
@@ -498,10 +499,10 @@ typedef enum {
 EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SETTING_RECORD_START_ADDRESS, 3145728.0}, {SETTING_RECORD_START_ADDRESS, 3145728.0} },
     { {SET_CHARGE_MODE, 0.0}, {SET_CHARGE_MODE, 0.0} },
-    { {SET_BOOST_TIME, 4.0}, {SET_BOOST_TIME, 4.0} },
     { {SET_CH_CONT_MODE, 0.0}, {SET_CH_CONT_MODE, 0.0} },
     { {VBAT_FLOAT, 52.8}, {VBAT_FLOAT, 52.8} },
     { {VBAT_BOOST, 55.2}, {VBAT_BOOST, 55.2} },
+    { {SET_BOOST_TIME, 4.0}, {SET_BOOST_TIME, 4.0} },
     { {SET_IBAT_FLOAT, 4.0}, {SET_IBAT_FLOAT, 4.0} },
     { {SET_IBAT_BOOST, 10.0}, {SET_IBAT_BOOST, 10.0} },
     { {IRECT_LIM_RT_, 30.0}, {IRECT_LIM_RT_, 30.0} },
@@ -558,9 +559,10 @@ float track_table_change=0;
 const char* Eep_data_Names[] = { // for printing in uart
     "SETTING_RECORD_START_ADDRESS",
     "SET_CHARGE_MODE",
-    "SET_BOOST_TIME",
+    "SET_CH_CONT_MODE",
     "VBAT_FLOAT",
     "VBAT_BOOST",
+    "SET_BOOST_TIME",
     "SET_IBAT_FLOAT",
     "SET_IBAT_BOOST",
     "IRECT_LIM_RT_",
