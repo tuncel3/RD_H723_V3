@@ -89,8 +89,8 @@ PRF_GEN("USE EEPROM TABLE DATA"); // eeprom okunduktan sonra kayıtlı dataya g�
 PRF_GEN("Startup eeprom charge mode %f", EpD[SET_CHARGE_MODE][0]);
 temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
-LED_7_Data |= FLOAT_CHARGE_LED;
-LED_7_Data &= ~BOOST_CHARGE_LED;
+//LED_7_Data |= FLOAT_CHARGE_LED;
+//LED_7_Data &= ~BOOST_CHARGE_LED;
 Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1;
 
 Irect_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
