@@ -1,6 +1,8 @@
 
 Uart ekran temizle
-eeprom init
-eeprom yükle
-
-
+EEPROM INIT
+EEPROM READ
+GLCD INIT
+FAZ SIRASI seçim
+RTC INIT
+EEP REAF FAULT RECORDS
