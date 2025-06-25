@@ -411,11 +411,14 @@ float set_dropper_l_lw_V_h = 0.1f;
 
 typedef enum {
 	FLOAT,
-    BOOST,
-	AUTO,
-	TIMED_FLOAT,
-	TIMED_BOOST
+    BOOST
 } Charge_Mode_Type;
+
+typedef enum {
+	MANUAL,
+	AUTO,
+	TIMED
+} Charge_Control_Type;
 
 const char* CH_MOD_SEL_Items[] = {
     "  Normal",
@@ -434,9 +437,10 @@ typedef struct {
 typedef enum {
 	SETTING_RECORD_START_ADDRESS,
     SET_CHARGE_MODE,    // Charge mode selection
-    SET_BOOST_TIME,		// Boost charge duration
+	SET_CH_CONT_MODE,
     VBAT_FLOAT,          // Float Voltage
     VBAT_BOOST,          // Boost Voltage
+    SET_BOOST_TIME,		// Boost charge duration
     SET_IBAT_FLOAT,          // Float Current
     SET_IBAT_BOOST,          // Boost Current
 	IRECT_LIM_RT_,		// DEV_NOM_VOUT un akım hali
@@ -495,18 +499,19 @@ typedef enum {
 EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SETTING_RECORD_START_ADDRESS, 3145728.0}, {SETTING_RECORD_START_ADDRESS, 3145728.0} },
     { {SET_CHARGE_MODE, 0.0}, {SET_CHARGE_MODE, 0.0} },
-    { {SET_BOOST_TIME, 4.0}, {SET_BOOST_TIME, 4.0} },
+    { {SET_CH_CONT_MODE, 0.0}, {SET_CH_CONT_MODE, 0.0} },
     { {VBAT_FLOAT, 52.8}, {VBAT_FLOAT, 52.8} },
     { {VBAT_BOOST, 55.2}, {VBAT_BOOST, 55.2} },
+    { {SET_BOOST_TIME, 4.0}, {SET_BOOST_TIME, 4.0} },
     { {SET_IBAT_FLOAT, 4.0}, {SET_IBAT_FLOAT, 4.0} },
     { {SET_IBAT_BOOST, 10.0}, {SET_IBAT_BOOST, 10.0} },
     { {IRECT_LIM_RT_, 30.0}, {IRECT_LIM_RT_, 30.0} },
     { {I_LIM_TO_FLOAT, 3.0}, {I_LIM_TO_FLOAT, 3.0} },
     { {I_LIM_TO_BOOST, 4.0}, {I_LIM_TO_BOOST, 4.0} },
-    { {SET_VRECT_CAL, 0.00326439226}, {SET_VRECT_CAL, 0.00326439226} },
-    { {SET_VLOAD_CAL, 0.003243}, {SET_VLOAD_CAL, 0.003243} },
+    { {SET_VRECT_CAL, 0.00326504}, {SET_VRECT_CAL, 0.00326504} },
+    { {SET_VLOAD_CAL, 0.00324560}, {SET_VLOAD_CAL, 0.00324560} },
     { {SET_VBAT_CAL, 0.006696}, {SET_VBAT_CAL, 0.006696} },
-    { {SET_IRECT_CAL, 0.00092}, {SET_IRECT_CAL, 0.00092} },
+    { {SET_IRECT_CAL, 0.00147587}, {SET_IRECT_CAL, 0.00147587} },
     { {SET_IBAT_CAL, 0.001004}, {SET_IBAT_CAL, 0.001004} },
     { {SET_ACR_CAL, 0.021641}, {SET_ACR_CAL, 0.021641} },
     { {SET_ACS_CAL, 0.021758}, {SET_ACS_CAL, 0.021758} },
@@ -514,12 +519,12 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_VRECT_OFFS_CAL, 0.0}, {SET_VRECT_OFFS_CAL, 0.0} },
     { {SET_VLOAD_OFFS_CAL, 0.0}, {SET_VLOAD_OFFS_CAL, 0.0} },
     { {SET_VBAT_OFFS_CAL, -139.0}, {SET_VBAT_OFFS_CAL, -139.0} },
-    { {SET_IRECT_OFFS_CAL, 0.0}, {SET_IRECT_OFFS_CAL, 0.0} },
+    { {SET_IRECT_OFFS_CAL, -149.0}, {SET_IRECT_OFFS_CAL, -149.0} },
     { {SET_IBAT_OFFS_CAL, 0.0}, {SET_IBAT_OFFS_CAL, 0.0} },
     { {SET_ACR_OFFS_CAL, -116.0}, {SET_ACR_OFFS_CAL, -116.0} },
     { {SET_ACS_OFFS_CAL, -129.0}, {SET_ACS_OFFS_CAL, -129.0} },
     { {SET_ACT_OFFS_CAL, -139.0}, {SET_ACT_OFFS_CAL, -139.0} },
-    { {SET_FRQ_CAL, 0.9975}, {SET_FRQ_CAL, 0.9975} },
+    { {SET_FRQ_CAL, 0.99665248}, {SET_FRQ_CAL, 0.99665248} },
     { {SET_UNSEEN_FLT, 0.0}, {SET_UNSEEN_FLT, 0.0} },
     { {SET_BATT_REV_DET, 1.0}, {SET_BATT_REV_DET, 1.0} },
     { {SET_BATT_DISC_DET, 1.0}, {SET_BATT_DISC_DET, 1.0} },
@@ -529,16 +534,16 @@ EEPROM_Data_Type EpD[NUM_SET_ENUM][2] = {
     { {SET_DROPP_L_HG_PERC, 15.0}, {SET_DROPP_L_HG_PERC, 15.0} },
     { {SET_DROPP_L_LW_PERC, 0.0}, {SET_DROPP_L_LW_PERC, 10.0} },
     { {SET_COOL_FAN_TEMP, 55.0}, {SET_COOL_FAN_TEMP, 55.0} },
-    { {SET_TRANSF_FAN_TEMP, 65.0}, {SET_TRANSF_FAN_TEMP, 65.0} },
-    { {SET_OVERTEMP_ALARM, 70.0}, {SET_OVERTEMP_ALARM, 70.0} },
-    { {SET_OVERTEMP_OPEN, 85.0}, {SET_OVERTEMP_OPEN, 85.0} },
+    { {SET_TRANSF_FAN_TEMP, 55.0}, {SET_TRANSF_FAN_TEMP, 55.0} },
+    { {SET_OVERTEMP_ALARM, 65.0}, {SET_OVERTEMP_ALARM, 65.0} },
+    { {SET_OVERTEMP_OPEN, 80.0}, {SET_OVERTEMP_OPEN, 80.0} },
     { {SET_OVT_OPEN_DELAY, 10.0}, {SET_OVT_OPEN_DELAY, 10.0} },
     { {DEV_NOM_VOUT, 48.0}, {DEV_NOM_VOUT, 48.0} }, // Cihaz Nom VDC
-    { {BATT_NOM_IOUT, 40.0}, {BATT_NOM_IOUT, 40.0} }, //
+    { {BATT_NOM_IOUT, 30.0}, {BATT_NOM_IOUT, 30.0} }, //
     { {DC_KAC_POS, 20.0}, {DC_KAC_POS, 20.0} }, // DC kaçak pozitif
     { {DC_KAC_NEG, 20.0}, {DC_KAC_NEG, 20.0} }, // DC kaçak negatif
-    { {RECT_SHORT, 50.0}, {RECT_SHORT, 50.0} }, // RECT short Amp
-    { {BATT_SHORT, 50.0}, {BATT_SHORT, 50.0} }, // BATT short Amp
+    { {RECT_SHORT, 60.0}, {RECT_SHORT, 60.0} }, // RECT short Amp
+    { {BATT_SHORT, 60.0}, {BATT_SHORT, 60.0} }, // BATT short Amp
     { {REL_OUT_1, 657440.0}, {REL_OUT_1, 657440.0} },
     { {REL_OUT_2, 235701.0}, {REL_OUT_2, 235701.0} },
     { {REL_OUT_3, 370984.0}, {REL_OUT_3, 370984.0} },
@@ -554,9 +559,10 @@ float track_table_change=0;
 const char* Eep_data_Names[] = { // for printing in uart
     "SETTING_RECORD_START_ADDRESS",
     "SET_CHARGE_MODE",
-    "SET_BOOST_TIME",
+    "SET_CH_CONT_MODE",
     "VBAT_FLOAT",
     "VBAT_BOOST",
+    "SET_BOOST_TIME",
     "SET_IBAT_FLOAT",
     "SET_IBAT_BOOST",
     "IRECT_LIM_RT_",
@@ -772,10 +778,10 @@ uint8_t prfm_r_counter = 0;  // Counter for uart_debug_cnt()
 uint32_t unexpected_program_state=0;
 
 float I_rect_lim_con_sy = 0;
-float I_batt_targ_con_sy = 0;
-float V_targ_con_sy = 0; // v target cont sys
-//float Current_charge_voltage = 0; // v target soft start
-float Current_charge_voltage = 0; // v target charge mode
+float targ_DC_current = 0;
+float targ_DC_voltage = 0; // v target cont sys
+//float temp_targ_DC_voltage = 0; // v target soft start
+float temp_targ_DC_voltage = 0; // v target charge mode
 uint32_t sfst_1_unexpected_state = 0;
 uint32_t no_result_from_last_reduction = 0;
 uint32_t take_vout_sample_for_batt_insp = 1;
@@ -1001,12 +1007,9 @@ typedef enum {
     DROP_CON2_REL,
 	LOAD_DC_HG_FC,
 	LOAD_DC_LW_FC,
-	TIMED_FLOAT_CHARGE_FC,
-	TIMED_BOOST_CHARGE_FC,
-	MANUAL_FLOAT_CHARGE_FC,
-	MANUAL_BOOST_CHARGE_FC,
-	AUTO_FLOAT_CHARGE_FC,
-	AUTO_BOOST_CHARGE_FC,
+	MANUAL_CHARGE_FC,
+	AUTO_CHARGE_ST,
+	TIMED_CHARGE_FC,
 	SOFT_START_ST,
 	EEPROM_FAULT_FC,
 	RTC_FAULT_FC,
@@ -1113,12 +1116,9 @@ State_Info state_list[] = {
 	// REL MB 8 BIT7 enum 36
 	{ LOAD_DC_HG_FC,              0b10111,	"Yük VDC Yüksk",       LOAD_DC_HG_FC_REL },
 	{ LOAD_DC_LW_FC,              0b10011,	"Yük VDC Düşük",       LOAD_DC_LW_FC_REL },
-	{ TIMED_FLOAT_CHARGE_FC,      0b10000,	"Norm Şarj(Zmn)",        none_REL },
-	{ TIMED_BOOST_CHARGE_FC,      0b10000,	"Hızl Şarj(Zmn)",        none_REL },
-	{ MANUAL_FLOAT_CHARGE_FC,     0b00000,	"Norm Şarj(Man)",       		   none_REL },
-	{ MANUAL_BOOST_CHARGE_FC,     0b00000,	"Hızl Şarj(Man)",       		   none_REL },
-	{ AUTO_FLOAT_CHARGE_FC,       0b00000,	"Norm Şarj(Oto)",  			   none_REL },
-	{ AUTO_BOOST_CHARGE_FC,       0b00000,	"Hızl Şarj(Oto)",  			   none_REL },
+	{ MANUAL_CHARGE_FC,     	  0b00000,	"(Man)",       		   none_REL },
+	{ AUTO_CHARGE_ST,        	  0b00000,	"(Oto)",  			   none_REL },
+	{ TIMED_CHARGE_FC,         	  0b10000,	"(Zmn)",        	   none_REL },
 	{ SOFT_START_ST,      	   	  0b00000,	"SFT S",  		       none_REL },
 	{ EEPROM_FAULT_FC,            0b00000,	"Kayit Sist Arz",      NUM_REL_CODES },
 	{ RTC_FAULT_FC,               0b00000,	"RTC Arz",             NUM_REL_CODES },
@@ -1529,6 +1529,6 @@ float frq_cal_k=0;
 uint32_t trim_val=0;
 uint32_t lnhg=0;
 
-
+uint32_t led7_bit=0;
 
 

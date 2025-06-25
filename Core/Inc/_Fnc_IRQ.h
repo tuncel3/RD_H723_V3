@@ -21,7 +21,7 @@ void DMA1_Stream1_IRQHandler(void) {
 		IBAT_smp_sc= (float) ((32768-IBAT_smp+EpD[SET_IBAT_OFFS_CAL][0].V1)*EpD[SET_IBAT_CAL][0].V1);
 
 		error_i_rect = EpD[IRECT_LIM_RT_][0].V1 - IRECT_smp_sc;
-		error_i_batt = I_batt_targ_con_sy - IBAT_smp_sc;
+		error_i_batt = targ_DC_current - IBAT_smp_sc;
 
 		integral_i_rect += error_i_rect;	if (integral_i_rect > 0) { integral_i_rect = 0; }
 		integral_i_batt += error_i_batt;	if (integral_i_batt > 0) { integral_i_batt = 0; }
@@ -29,7 +29,7 @@ void DMA1_Stream1_IRQHandler(void) {
 		pid_output_i_rect = (Kp_i_rect * error_i_rect) + (Ki_i_rect * integral_i_rect);	if (pid_output_i_rect > 0) { pid_output_i_rect = 0; }
 		pid_output_i_batt = (Kp_i_batt * error_i_batt) + (Ki_i_batt * integral_i_batt);	if (pid_output_i_batt > 0) { pid_output_i_batt = 0; }
 
-		cs_vtarg_vi=pid_output_i_rect+pid_output_i_batt+V_targ_con_sy;
+		cs_vtarg_vi=pid_output_i_rect+pid_output_i_batt+targ_DC_voltage;
 		error_v = cs_vtarg_vi - VRECT_smp_sc;
 
 		integral_v += error_v;
