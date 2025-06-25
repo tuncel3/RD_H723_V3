@@ -973,9 +973,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 
 }
 
-static inline uint8_t is_state_active(State_Codes state_code) {
-    	return (!!(state_list[state_code].action & (1U << ACTIVE_enum))) == 1;
-}
 
 void swap_scr_lines(SCR_Line *line1, SCR_Line *line2) {
     SCR_Line temp = *line1;
@@ -1335,7 +1332,6 @@ void print_active_states() {
         }
     }
 }
-
 uint8_t is_state_active(State_Codes state) {
 	return (state_list[state].action & (1 << ACTIVE_enum)) != 0;
 }
