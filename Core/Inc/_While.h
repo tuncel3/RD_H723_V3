@@ -1003,15 +1003,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-if (condition) {
 
+	is_state_active(VBAT_FLOAT);
+	LED_7_Data |= (1U << (VBAT_FLOAT-16))
 
-	LED_7_Data |= led7_bit
-
-
-} else if (condition) {
-
-}
 
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
