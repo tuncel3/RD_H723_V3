@@ -106,9 +106,9 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == MANUAL) {
 }
 Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1; // Vbat too low control. Batt line monitor checks this to determine if battery is connected or not. If voltge is too low
 
-Irect_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
-Irect_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
-Ibat_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
+Irect_set_limit_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
+Irect_set_limit_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
+Ibat_charge_set_limit_min  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
 Ibat_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1;
 
 blm_I_step_05perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.005;

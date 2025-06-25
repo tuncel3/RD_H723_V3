@@ -787,9 +787,9 @@ void inline extern DEV_NOM_VOUT_changed_fc(void) {
 }
 
 void inline extern IRECT_LIM_RT_changed_fc(void) {
-    Irect_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
-    Irect_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
-    Ibat_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
+    Irect_set_limit_max = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
+    Irect_set_limit_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
+    Ibat_charge_set_limit_min  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
     Ibat_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1;
     blm_I_step_05perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.005;
     blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075;

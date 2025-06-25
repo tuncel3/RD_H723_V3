@@ -37,8 +37,8 @@ void bleft_fnc(void) {
     		}
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==IRECT_LIM_RT_) {						// LEFT
     		EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1-1.0;
-    		if (EpD[IRECT_LIM_RT_][1].V1 <= Irect_min) {
-    			EpD[IRECT_LIM_RT_][1].V1=Irect_min;
+    		if (EpD[IRECT_LIM_RT_][1].V1 <= Irect_set_limit_min) {
+    			EpD[IRECT_LIM_RT_][1].V1=Irect_set_limit_min;
     		}
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_FLOAT) {						// LEFT
     		EpD[I_LIM_TO_FLOAT][1].V1=EpD[I_LIM_TO_FLOAT][1].V1-1.0;
@@ -78,8 +78,8 @@ void bleft_fnc(void) {
 					EpD[DEV_NOM_VOUT][1].V1=0;
 	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {						// LEFT
 	    		EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1-1.0;
-	    		if (EpD[IRECT_LIM_RT_][1].V1 <= Irect_min)
-	    			EpD[IRECT_LIM_RT_][1].V1=Irect_min;
+	    		if (EpD[IRECT_LIM_RT_][1].V1 <= Irect_set_limit_min)
+	    			EpD[IRECT_LIM_RT_][1].V1=Irect_set_limit_min;
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1 == DC_KAC_POS) {						// LEFT
 			    EpD[DC_KAC_POS][1].V1=EpD[DC_KAC_POS][1].V1-1.0;
 				if (EpD[DC_KAC_POS][1].V1 <= 0)
@@ -237,12 +237,12 @@ void bright_fnc(void) {
     			EpD[VBAT_BOOST][1].V1=EpD[VBAT_BOOST][1].V1+1.0;
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_FLOAT) {								// RIGHT
     		EpD[SET_IBAT_FLOAT][1].V1=EpD[SET_IBAT_FLOAT][1].V1+1.0;
-    		if (EpD[SET_IBAT_FLOAT][1].V1 >= Ibat_max)
-    			EpD[SET_IBAT_FLOAT][1].V1=Ibat_max;
+    		if (EpD[SET_IBAT_FLOAT][1].V1 >= Ibat_charge_set_limit_min)
+    			EpD[SET_IBAT_FLOAT][1].V1=Ibat_charge_set_limit_min;
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_BOOST) {
     		EpD[SET_IBAT_BOOST][1].V1=EpD[SET_IBAT_BOOST][1].V1+1.0;
-    		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_max)
-    			EpD[SET_IBAT_BOOST][1].V1=Ibat_max;
+    		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_charge_set_limit_min)
+    			EpD[SET_IBAT_BOOST][1].V1=Ibat_charge_set_limit_min;
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_FLOAT) {								// RIGHT
     		if (EpD[I_LIM_TO_FLOAT][1].V1 <= EpD[IRECT_LIM_RT_][1].V1-1.2) { // 0.2 altında tut. boost bunun 0.1 üstü olacak.
     			EpD[I_LIM_TO_FLOAT][1].V1=EpD[I_LIM_TO_FLOAT][1].V1+1;
@@ -277,8 +277,8 @@ void bright_fnc(void) {
 					EpD[DEV_NOM_VOUT][1].V1=VDC_NOM_MAX;
 	    	} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {								// RIGHT
 	    		EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1+1.0;
-	    		if (EpD[IRECT_LIM_RT_][1].V1 >= Irect_max)
-	    			EpD[IRECT_LIM_RT_][1].V1=Irect_max;
+	    		if (EpD[IRECT_LIM_RT_][1].V1 >= Irect_set_limit_max)
+	    			EpD[IRECT_LIM_RT_][1].V1=Irect_set_limit_max;
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1 == DC_KAC_POS) {								// RIGHT
 			    EpD[DC_KAC_POS][1].V1=EpD[DC_KAC_POS][1].V1+1.0;
 				if (EpD[DC_KAC_POS][1].V1 >= DC_KAC_POS_MAX)
@@ -430,8 +430,8 @@ void bup_fnc(void) {
 					EpD[DEV_NOM_VOUT][1].V1=VDC_NOM_MAX;
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {							// UP
 				EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1+0.1;
-				if (EpD[IRECT_LIM_RT_][1].V1 >= Irect_max)
-					EpD[IRECT_LIM_RT_][1].V1=Irect_max;
+				if (EpD[IRECT_LIM_RT_][1].V1 >= Irect_set_limit_max)
+					EpD[IRECT_LIM_RT_][1].V1=Irect_set_limit_max;
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1 == DC_KAC_POS) {					// UP
 			    EpD[DC_KAC_POS][1].V1=EpD[DC_KAC_POS][1].V1+0.1;
 				if (EpD[DC_KAC_POS][1].V1 >= DC_KAC_POS_MAX)
@@ -484,12 +484,12 @@ if (!chg_setting_edit_mode) {
 		}
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_FLOAT) {
 		EpD[SET_IBAT_FLOAT][1].V1=EpD[SET_IBAT_FLOAT][1].V1+0.1;
-		if (EpD[SET_IBAT_FLOAT][1].V1 >= Ibat_max)
-			EpD[SET_IBAT_FLOAT][1].V1=Ibat_max;
+		if (EpD[SET_IBAT_FLOAT][1].V1 >= Ibat_charge_set_limit_min)
+			EpD[SET_IBAT_FLOAT][1].V1=Ibat_charge_set_limit_min;
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_BOOST) {					// UP
 		EpD[SET_IBAT_BOOST][1].V1=EpD[SET_IBAT_BOOST][1].V1+0.1;
-		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_max)
-			EpD[SET_IBAT_BOOST][1].V1=Ibat_max;
+		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_charge_set_limit_min)
+			EpD[SET_IBAT_BOOST][1].V1=Ibat_charge_set_limit_min;
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_FLOAT) {
 		if (EpD[I_LIM_TO_FLOAT][1].V1 <= EpD[IRECT_LIM_RT_][1].V1-0.3) { // 0.2 altında tut. boost bunun 0.1 üstü olacak.
 			EpD[I_LIM_TO_FLOAT][1].V1=EpD[I_LIM_TO_FLOAT][1].V1+0.1;
@@ -802,8 +802,8 @@ void bdown_fnc(void) {
     				EpD[DEV_NOM_VOUT][1].V1=VDC_NOM_MIN;}
     		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==IRECT_LIM_RT_) {			// DOWN
     			EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1-0.1;
-    			if (EpD[IRECT_LIM_RT_][1].V1 <= Irect_min)
-    				EpD[IRECT_LIM_RT_][1].V1=Irect_min;
+    			if (EpD[IRECT_LIM_RT_][1].V1 <= Irect_set_limit_min)
+    				EpD[IRECT_LIM_RT_][1].V1=Irect_set_limit_min;
     		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1 == DC_KAC_POS) {
 			    EpD[DC_KAC_POS][1].V1=EpD[DC_KAC_POS][1].V1-0.1;
 				if (EpD[DC_KAC_POS][1].V1 <= DC_KAC_POS_MIN)
