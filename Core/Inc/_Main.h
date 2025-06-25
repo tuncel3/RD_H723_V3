@@ -111,7 +111,7 @@ Irect_set_limit_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01; // rectifier çıkış ak
 Ibat_charge_set_limit_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0; // batarya şarj akımı ayar max
 Ibat_charge_set_limit_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1; // batarya şarj akımı ayar min
 
-blm_I_step_05perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.005;
+blm_I_step_025perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.0025;
 blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075;
 blm_I_step_10perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.010;
 blm_V_step_05perc  = EpD[DEV_NOM_VOUT][0].V1 * 0.005;

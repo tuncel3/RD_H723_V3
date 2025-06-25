@@ -791,7 +791,7 @@ void inline extern IRECT_LIM_RT_changed_fc(void) {
     Irect_set_limit_min = EpD[IRECT_LIM_RT_][0].V1 * 0.01;
     Ibat_charge_set_limit_max  = EpD[IRECT_LIM_RT_][0].V1 * 1.0;
     Ibat_charge_set_limit_min  = EpD[IRECT_LIM_RT_][0].V1 * 0.1;
-    blm_I_step_05perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.005;
+    blm_I_step_025perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.0025;
     blm_I_step_075perc = EpD[IRECT_LIM_RT_][0].V1 * 0.0075;
     blm_I_step_10perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.010;
 }
@@ -1219,12 +1219,12 @@ void stability_irect_fc(void) {
 }
 void stability_ibat_fc(void) {
     if (IBAT_pas.a64 > i_bat_max_stb) {
-        i_bat_max_stb = IBAT_pas.a64 + blm_I_step_05perc/2;
-        i_bat_min_stb = IBAT_pas.a64 - blm_I_step_05perc/2;
+        i_bat_max_stb = IBAT_pas.a64 + blm_I_step_025perc;
+        i_bat_min_stb = IBAT_pas.a64 - blm_I_step_025perc;
         ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
     } else if (IBAT_pas.a64 < i_bat_min_stb) {
-        i_bat_max_stb = IBAT_pas.a64 + blm_I_step_05perc/2;
-        i_bat_min_stb = IBAT_pas.a64 - blm_I_step_05perc/2;
+        i_bat_max_stb = IBAT_pas.a64 + blm_I_step_025perc;
+        i_bat_min_stb = IBAT_pas.a64 - blm_I_step_025perc;
         ibat_stable_cnt = (ibat_stable_cnt > 4) ? ibat_stable_cnt - 4 : 0;
     } else if (ibat_stable_cnt < 150) {
         ibat_stable_cnt++;
