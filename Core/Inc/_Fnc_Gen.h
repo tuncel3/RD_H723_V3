@@ -881,7 +881,26 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
 		PRF_GEN("BOOST charge mode %d", num);
-	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
+	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_FLOAT_CHARGE_FC) {
+		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
+		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
+		set_V_targ_con_sy(Current_charge_voltage);
+		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(BOOST_CHARGE_FC, 1);
+		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 1);
+		apply_state_changes_f(MANUAL_CHARGE, 0);
+		apply_state_changes_f(AUTO_CHARGE, 0);
+		LED_7_Data &= ~FLOAT_CHARGE_LED;
+		LED_7_Data |= BOOST_CHARGE_LED;
+		PRF_GEN("timed mode selected, boost charge values loaded");
+		switch_to_auto_mode_completed=0;
+		if (timed_mode_actions_do_once==0) {
+			timed_mode_actions_do_once=1; // timed a geçiş yapıldığında bir kez uygulanacak. tekrar uygulanabilmesi için başka moda geçilmesi lazım.
+			timed_mode_time_ended=0; // timed mod sayacı sıfırla. sayaç sonunda float a geçilecek
+			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
+		}
+	} else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_BOOST_CHARGE_FC) {
 		Current_charge_voltage=EpD[VBAT_BOOST][0].V1;
 		I_batt_targ_con_sy=EpD[SET_IBAT_BOOST][0].V1;
 		set_V_targ_con_sy(Current_charge_voltage);
@@ -901,7 +920,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
 		}
 	} else if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
-		apply_state_changes_f(TIMED_CHARGE, 0);
+		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
+		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
 		apply_state_changes_f(MANUAL_CHARGE, 0);
 		apply_state_changes_f(AUTO_CHARGE, 1);
 	}
