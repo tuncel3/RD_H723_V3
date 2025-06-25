@@ -919,8 +919,8 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     if (set) {
         if (state_list[state_code].code < 16) {
         	LED_16_Data |= fault_bit; }  // 16 lı sıra ledler.
-        if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
-        	LED_7_Data |= led7_bit; }  // 7 li diagram
+//        if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
+//        	LED_7_Data |= led7_bit; }  // 7 li diagram
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data |= REL8_bit; }  // mb röleler.
     		REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
@@ -947,8 +947,8 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     } else {
         if (state_list[state_code].code < 16) {
         	LED_16_Data &= ~fault_bit; }  // deactivate LED if resetting a fault with LED requirement
-        if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
-        	LED_7_Data &= ~led7_bit; }  // deactivate LED 7 if required
+//        if (state_list[state_code].code >= 16 && state_list[state_code].code < 23) {
+//        	LED_7_Data &= ~led7_bit; }  // deactivate LED 7 if required
         if (state_list[state_code].code >= 29 && state_list[state_code].code < 46) {
         	REL_MB_8Bit_Data &= ~REL8_bit; }  // deactivate REL 8 if required
 			REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
