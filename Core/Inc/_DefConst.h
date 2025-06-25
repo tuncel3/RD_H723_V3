@@ -1110,9 +1110,9 @@ State_Info state_list[] = {
 	// REL MB 8 BIT7 enum 36
 	{ LOAD_DC_HG_FC,              0b10111,	"Yük VDC Yüksk",       LOAD_DC_HG_FC_REL },
 	{ LOAD_DC_LW_FC,              0b10011,	"Yük VDC Düşük",       LOAD_DC_LW_FC_REL },
-	{ TIMED_CHARGE_FC,         	  0b10000,	"Norm Şarj(Zmn)",        none_REL },
-	{ MANUAL_CHARGE_FC,     	  0b00000,	"Norm Şarj(Man)",       		   none_REL },
-	{ AUTO_CHARGE_FC,        	  0b00000,	"Norm Şarj(Oto)",  			   none_REL },
+	{ TIMED_CHARGE_FC,         	  0b10000,	"(Zmn)",        none_REL },
+	{ MANUAL_CHARGE_FC,     	  0b00000,	"(Man)",       		   none_REL },
+	{ AUTO_CHARGE_FC,        	  0b00000,	"(Oto)",  			   none_REL },
 	{ SOFT_START_ST,      	   	  0b00000,	"SFT S",  		       none_REL },
 	{ EEPROM_FAULT_FC,            0b00000,	"Kayit Sist Arz",      NUM_REL_CODES },
 	{ RTC_FAULT_FC,               0b00000,	"RTC Arz",             NUM_REL_CODES },
