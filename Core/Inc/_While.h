@@ -1003,13 +1003,9 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-if (is_state_active(FLOAT_CHARGE_FC)) {
-	LED_7_Data |= ((is_state_active(FLOAT_CHARGE_FC))U << (FLOAT_CHARGE_FC-16));
-} else if (is_state_active(BOOST_CHARGE_FC)) {
-	LED_7_Data |= (1U << (BOOST_CHARGE_FC-16));
-} else if (is_state_active(LOAD_FUSE_OFF_FC)) {
-	LED_7_Data |= (1U << (LOAD_FUSE_OFF_FC-16));
-}
+	LED_7_Data |= ((is_state_active(FLOAT_CHARGE_FC)) << (FLOAT_CHARGE_FC-16));
+	LED_7_Data |= (is_state_active(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
+	LED_7_Data |= (is_state_active(LOAD_FUSE_OFF_FC) << (LOAD_FUSE_OFF_FC-16));
 
 
 
