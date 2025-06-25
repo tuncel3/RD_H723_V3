@@ -105,7 +105,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MANAGE CHARGE MODE TIMED /////////////////////////////////////////////////////////////////////////////////////
-if (EpD[SET_CHARGE_MODE][0].V1 == TIMED) {
+if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_FLOAT_CHARGE_FC || EpD[SET_CHARGE_MODE][0].V1 == TIMED_BOOST_CHARGE_FC) {
 	if (charge_mode_timed_time_cnt > 0) {
 		charge_mode_timed_float=0;
 		charge_mode_timed_boost=1;
