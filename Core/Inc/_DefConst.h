@@ -1529,4 +1529,7 @@ uint32_t lnhg=0;
 
 uint32_t led7_bit=0;
 
+float scaled_DEV_NOM_VOUT[]={0.0f};
+
+
 
