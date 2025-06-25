@@ -1344,6 +1344,12 @@ float calc_phase_rms_current(float i_dc, float alpha_deg)
     return i_ac_rms;
 }
 
-
+void print_active_states() {
+    for (int i = 0; i < NUM_STATE_NAMES; i++) {
+        if (state_list[i].action & (1 << ACTIVE_enum)) {
+            PRF_GEN("%s", state_list[i].name);
+        }
+    }
+}
 
 
