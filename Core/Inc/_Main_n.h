@@ -1,5 +1,4 @@
 
-Uart ekran temizle
 EEPROM INIT
 EEPROM READ TABLE DATA
 GLCD INIT

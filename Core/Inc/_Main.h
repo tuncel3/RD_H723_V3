@@ -5,12 +5,12 @@
 prfm("\033[H");
 prfm("\033[2J");
 
-// EEPROM INIT
+PRF_GEN("EEPROM INIT");
 set_(CS_M95P32);
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
 
-// EEPROM READ
+PRF_GEN("EEPROM READ TABLE DATA");
 track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8); // programlarken eep table da değişiklik yapılmış ise değişikliklere göre işlemleri yap
 if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { // tablo sonundaki değer sadece okunuyor. kayma varsa programdaki değerden farklı olacaktır.
 	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
@@ -24,7 +24,7 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { /
 //	print_Eep_data_f();
 }
 
-// GLCD INIT
+PRF_GEN("GLCD INIT");
 GLCD_Init();
 delay_1ms(10);
 GLCD_ClearScreen(0x00);
@@ -34,7 +34,7 @@ GLCD_RefreshGRAM();
 // FAZ SIRASI
 swap_scr_lines(&SCR_R, &SCR_T); // faz sıralamasına göre değşim gerekiyorsa bu fonksiyon kullanılacak.
 
-// RTC INIT
+PRF_GEN("RTC INIT");
 if (Read_RTC_Osc_Status() == 0) {
     Write_To_Register(0, 0b10000000); // osc en
     Write_To_Register(2, 0b00000000); // 12/24_n set
@@ -45,7 +45,7 @@ if (Read_RTC_Osc_Status() == 0) {
 	PRF_GEN("RTC already started");
 }
 
-// EEP READ FAULT RECORDS
+PRF_GEN("EEP READ FAULT RECORDS");
 SPI4_ReadDataFaultRegion(FAULT_RECORD_START_ADDRESS, NUM_FAULT_RECORD);
 // find address to write faults
 for (int i = 0; i < NUM_FAULT_RECORD; i++) {	// find first record which is ff
@@ -85,8 +85,8 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
 
-// USE EEPROM DATA
-// eeprom okunduktan sonra kayıtlı şarj moduna göre şarj ve kontrol sisemi voltajını belirle
+
+PRF_GEN("USE EEPROM TABLE DATA"); // eeprom okunduktan sonra kayıtlı dataya göre değişkenleri belirle
 PRF_GEN("Startup eeprom charge mode %f", EpD[SET_CHARGE_MODE][0]);
 Current_charge_voltage=EpD[VBAT_FLOAT][0].V1;
 I_batt_targ_con_sy=EpD[SET_IBAT_FLOAT][0].V1;
