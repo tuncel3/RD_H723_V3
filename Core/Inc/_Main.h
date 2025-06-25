@@ -21,7 +21,6 @@ if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { /
 } else {
 	PRF_GEN("EEP Table size OK");
 	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
-//	print_Eep_data_f();
 }
 
 PRF_GEN("GLCD INIT");
