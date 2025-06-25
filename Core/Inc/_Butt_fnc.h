@@ -27,13 +27,13 @@ void bleft_fnc(void) {
     		}
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_FLOAT) {						// LEFT
     		EpD[SET_IBAT_FLOAT][1].V1=EpD[SET_IBAT_FLOAT][1].V1-1.0;
-    		if (EpD[SET_IBAT_FLOAT][1].V1 <= Ibat_min) {
-    			EpD[SET_IBAT_FLOAT][1].V1=Ibat_min;
+    		if (EpD[SET_IBAT_FLOAT][1].V1 <= Ibat_charge_set_limit_min) {
+    			EpD[SET_IBAT_FLOAT][1].V1=Ibat_charge_set_limit_min;
     		}
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_BOOST) {						// LEFT
     		EpD[SET_IBAT_BOOST][1].V1=EpD[SET_IBAT_BOOST][1].V1-1.0;
-    		if (EpD[SET_IBAT_BOOST][1].V1 <= Ibat_min) {
-    			EpD[SET_IBAT_BOOST][1].V1=Ibat_min;
+    		if (EpD[SET_IBAT_BOOST][1].V1 <= Ibat_charge_set_limit_min) {
+    			EpD[SET_IBAT_BOOST][1].V1=Ibat_charge_set_limit_min;
     		}
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==IRECT_LIM_RT_) {						// LEFT
     		EpD[IRECT_LIM_RT_][1].V1=EpD[IRECT_LIM_RT_][1].V1-1.0;
@@ -237,12 +237,12 @@ void bright_fnc(void) {
     			EpD[VBAT_BOOST][1].V1=EpD[VBAT_BOOST][1].V1+1.0;
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_FLOAT) {								// RIGHT
     		EpD[SET_IBAT_FLOAT][1].V1=EpD[SET_IBAT_FLOAT][1].V1+1.0;
-    		if (EpD[SET_IBAT_FLOAT][1].V1 >= Ibat_charge_set_limit_min)
-    			EpD[SET_IBAT_FLOAT][1].V1=Ibat_charge_set_limit_min;
+    		if (EpD[SET_IBAT_FLOAT][1].V1 >= Ibat_charge_set_limit_max)
+    			EpD[SET_IBAT_FLOAT][1].V1=Ibat_charge_set_limit_max;
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_BOOST) {
     		EpD[SET_IBAT_BOOST][1].V1=EpD[SET_IBAT_BOOST][1].V1+1.0;
-    		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_charge_set_limit_min)
-    			EpD[SET_IBAT_BOOST][1].V1=Ibat_charge_set_limit_min;
+    		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_charge_set_limit_max)
+    			EpD[SET_IBAT_BOOST][1].V1=Ibat_charge_set_limit_max;
     	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_FLOAT) {								// RIGHT
     		if (EpD[I_LIM_TO_FLOAT][1].V1 <= EpD[IRECT_LIM_RT_][1].V1-1.2) { // 0.2 altında tut. boost bunun 0.1 üstü olacak.
     			EpD[I_LIM_TO_FLOAT][1].V1=EpD[I_LIM_TO_FLOAT][1].V1+1;
@@ -484,12 +484,12 @@ if (!chg_setting_edit_mode) {
 		}
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_FLOAT) {
 		EpD[SET_IBAT_FLOAT][1].V1=EpD[SET_IBAT_FLOAT][1].V1+0.1;
-		if (EpD[SET_IBAT_FLOAT][1].V1 >= Ibat_charge_set_limit_min)
-			EpD[SET_IBAT_FLOAT][1].V1=Ibat_charge_set_limit_min;
+		if (EpD[SET_IBAT_FLOAT][1].V1 >= Ibat_charge_set_limit_max)
+			EpD[SET_IBAT_FLOAT][1].V1=Ibat_charge_set_limit_max;
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_BOOST) {					// UP
 		EpD[SET_IBAT_BOOST][1].V1=EpD[SET_IBAT_BOOST][1].V1+0.1;
-		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_charge_set_limit_min)
-			EpD[SET_IBAT_BOOST][1].V1=Ibat_charge_set_limit_min;
+		if (EpD[SET_IBAT_BOOST][1].V1 >= Ibat_charge_set_limit_max)
+			EpD[SET_IBAT_BOOST][1].V1=Ibat_charge_set_limit_max;
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_FLOAT) {
 		if (EpD[I_LIM_TO_FLOAT][1].V1 <= EpD[IRECT_LIM_RT_][1].V1-0.3) { // 0.2 altında tut. boost bunun 0.1 üstü olacak.
 			EpD[I_LIM_TO_FLOAT][1].V1=EpD[I_LIM_TO_FLOAT][1].V1+0.1;
@@ -857,12 +857,12 @@ if (!chg_setting_edit_mode) {
 		}
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_FLOAT) {
 		EpD[SET_IBAT_FLOAT][1].V1=EpD[SET_IBAT_FLOAT][1].V1-0.1;
-		if (EpD[SET_IBAT_FLOAT][1].V1 <= Ibat_min)
-			EpD[SET_IBAT_FLOAT][1].V1=Ibat_min;
+		if (EpD[SET_IBAT_FLOAT][1].V1 <= Ibat_charge_set_limit_min)
+			EpD[SET_IBAT_FLOAT][1].V1=Ibat_charge_set_limit_min;
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_IBAT_BOOST) {			// DOWN
 		EpD[SET_IBAT_BOOST][1].V1=EpD[SET_IBAT_BOOST][1].V1-0.1;
-		if (EpD[SET_IBAT_BOOST][1].V1 <= Ibat_min)
-			EpD[SET_IBAT_BOOST][1].V1=Ibat_min;
+		if (EpD[SET_IBAT_BOOST][1].V1 <= Ibat_charge_set_limit_min)
+			EpD[SET_IBAT_BOOST][1].V1=Ibat_charge_set_limit_min;
 	} else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==I_LIM_TO_FLOAT) {
 		EpD[I_LIM_TO_FLOAT][1].V1=EpD[I_LIM_TO_FLOAT][1].V1-0.1;
 		if (EpD[I_LIM_TO_FLOAT][1].V1 <= 0)
