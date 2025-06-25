@@ -796,10 +796,6 @@ void inline extern IRECT_LIM_RT_changed_fc(void) {
     blm_I_step_10perc  = EpD[IRECT_LIM_RT_][0].V1 * 0.010;
 }
 
-void inline extern startup_get_vars_from_EEP(void) { // n012
-
-}
-
 void inline extern set_V_targ_con_sy(float set_val) {
 	targ_DC_voltage=set_val;
 //	targ_DC_voltage=temp_targ_DC_voltage;

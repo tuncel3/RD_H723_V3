@@ -1529,6 +1529,6 @@ float frq_cal_k=0;
 uint32_t trim_val=0;
 uint32_t lnhg=0;
 
-
+uint32_t led7_bit=0;
 
 
