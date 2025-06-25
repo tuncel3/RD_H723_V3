@@ -87,6 +87,8 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 
 PRF_GEN("USE EEPROM TABLE DATA"); // eeprom okunduktan sonra kayıtlı dataya göre değişkenleri belirle
 PRF_GEN("Startup eeprom charge mode %f", EpD[SET_CHARGE_MODE][0]);
+
+state_list[state_code].action |= (1 << ACTIVE_enum);
 temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 //LED_7_Data |= FLOAT_CHARGE_LED;
