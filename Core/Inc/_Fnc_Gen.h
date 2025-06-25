@@ -825,8 +825,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 		set_V_targ_con_sy(temp_targ_DC_voltage);
-		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
-		apply_state_changes_f(BOOST_CHARGE_FC, 0);
+		set_state_active(FLOAT_CHARGE_FC);
+		set_state_deactive(BOOST_CHARGE_FC);
 //		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 //		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
 //		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 1);
@@ -843,8 +843,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 		set_V_targ_con_sy(temp_targ_DC_voltage);
-		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
-		apply_state_changes_f(BOOST_CHARGE_FC, 1);
+		set_state_deactive(FLOAT_CHARGE_FC);
+		set_state_active(BOOST_CHARGE_FC);
 //		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 //		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
 //		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
@@ -1334,6 +1334,9 @@ void print_active_states() {
 }
 void set_state_active(State_Codes state) {
 	state_list[state].action |= (1 << ACTIVE_enum);
+}
+void set_state_deactive(State_Codes state) {
+    state_list[state].action &= ~(1 << ACTIVE_enum);
 }
 uint8_t is_state_active(State_Codes state) {
 	return (state_list[state].action & (1 << ACTIVE_enum)) != 0;
