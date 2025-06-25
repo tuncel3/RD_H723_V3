@@ -801,12 +801,12 @@ void inline extern startup_get_vars_from_EEP(void) { // n012
 }
 
 void inline extern set_V_targ_con_sy(float set_val) {
-	V_targ_con_sy=set_val;
-//	V_targ_con_sy=temp_targ_DC_voltage;
-	vrect_dc_high_lim=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
-	vrect_dc_high_lim_ret=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
-	vrect_dc_low_lim=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
-	vrect_dc_low_lim_ret=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
+	targ_DC_voltage=set_val;
+//	targ_DC_voltage=temp_targ_DC_voltage;
+	vrect_dc_high_lim=targ_DC_voltage*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
+	vrect_dc_high_lim_ret=targ_DC_voltage*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
+	vrect_dc_low_lim=targ_DC_voltage/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
+	vrect_dc_low_lim_ret=targ_DC_voltage/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
 }
 
 void inline extern actions_after_charge_voltage_change() {
@@ -1182,10 +1182,10 @@ float calculate_corr_from_sums(float sum_x, float sum_y, float sum_x2, float sum
 }
 
 void inline extern bring_vtarg_back_to_chrgV(uint8_t num) {
-	if (V_targ_con_sy < temp_targ_DC_voltage - blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy + blm_V_step_05perc);
-	} else if (V_targ_con_sy > temp_targ_DC_voltage + blm_V_step_05perc) {
-		set_V_targ_con_sy(V_targ_con_sy - blm_V_step_05perc);
+	if (targ_DC_voltage < temp_targ_DC_voltage - blm_V_step_05perc) {
+		set_V_targ_con_sy(targ_DC_voltage + blm_V_step_05perc);
+	} else if (targ_DC_voltage > temp_targ_DC_voltage + blm_V_step_05perc) {
+		set_V_targ_con_sy(targ_DC_voltage - blm_V_step_05perc);
 	} else {
 		set_V_targ_con_sy(temp_targ_DC_voltage); // hedefe ulaşınca sabitle
 		blm_op_phase = num;
@@ -1241,8 +1241,8 @@ void blm_set_up_down_vtarg_limits(void) {
 	baslangic_v_stbl=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
 	blm_vtarg_move_up_targ=baslangic_v_stbl+blm_V_move_up_set;
 	blm_vtarg_move_dn_targ=baslangic_v_stbl-blm_V_move_dn_set;
-	blm_vtarg_move_up_max=V_targ_con_sy*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01); // ayarlanan vdc rect max değerinden yüzde 1 aşağısı hesaplanıyor burada
-	blm_vtarg_move_dn_min=V_targ_con_sy/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)+0.01); // VRECT_DC_LOW_LIM_add demek ayarlanan dc rect voltajından ne kadar aşağıya inmesine izin veriliyor rect voltajın
+	blm_vtarg_move_up_max=targ_DC_voltage*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01); // ayarlanan vdc rect max değerinden yüzde 1 aşağısı hesaplanıyor burada
+	blm_vtarg_move_dn_min=targ_DC_voltage/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)+0.01); // VRECT_DC_LOW_LIM_add demek ayarlanan dc rect voltajından ne kadar aşağıya inmesine izin veriliyor rect voltajın
 
 	if (blm_vtarg_move_up_targ > blm_vtarg_move_up_max) {// targete kadar gidebilir ancak target minimumun altındaysa minimuma kadar gidebilir.
 		blm_vtarg_move_up_targ = blm_vtarg_move_up_max;

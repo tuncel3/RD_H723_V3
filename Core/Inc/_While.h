@@ -3,19 +3,19 @@ if (ms_tick_cnt-sfst_1_t_hold >= 5) { // soft start step. 5ms
 	sfst_1_t_hold=ms_tick_cnt;
 
 	if (sfsta_op_phase == S_SFSTA_REQ && line_sgn_stable && thy_stop_fault_hold_bits==0) {
-		if (V_targ_con_sy <= temp_targ_DC_voltage) {
-			set_V_targ_con_sy(V_targ_con_sy*1.003);
+		if (targ_DC_voltage <= temp_targ_DC_voltage) {
+			set_V_targ_con_sy(targ_DC_voltage*1.003);
 		}
-		else if (V_targ_con_sy > temp_targ_DC_voltage) {
+		else if (targ_DC_voltage > temp_targ_DC_voltage) {
 			set_V_targ_con_sy(temp_targ_DC_voltage);
 			sfsta_op_phase=S_SFSTA_REQ_OK;
 			apply_state_changes_f(SOFT_START_ST, 0);
 //			actions_after_charge_mode_change(6);
 			PRF_GEN("Soft start request ok");
 		}
-		if (V_targ_con_sy < VRECT_smp_sc-4) {		// vout zaten yüksekse direk hedefi oraya yaklaştırarak başla
+		if (targ_DC_voltage < VRECT_smp_sc-4) {		// vout zaten yüksekse direk hedefi oraya yaklaştırarak başla
 			set_V_targ_con_sy(VRECT_smp_sc-4);
-			PRF_GEN("Sfst OK V_targ_con_sy < VRECT_smp_sc-4;");
+			PRF_GEN("Sfst OK targ_DC_voltage < VRECT_smp_sc-4;");
 		}
 	}
 }
@@ -891,8 +891,8 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		PRF_BLM("start changing voltage");
 		blm_op_phase = 3;
 	} else if (blm_op_phase == 3) { // Vtarg’ı düşür
-		if (V_targ_con_sy > blm_vtarg_move_dn_targ) {
-			set_V_targ_con_sy(V_targ_con_sy / (1 + blm_vi_change_mult));
+		if (targ_DC_voltage > blm_vtarg_move_dn_targ) {
+			set_V_targ_con_sy(targ_DC_voltage / (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 4;
@@ -905,14 +905,14 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == 5) {
 		if (check_vrect_vtarg_e_asagi_gitti) {
 			check_vrect_vtarg_e_asagi_gitti=0;
-			hedef_suan_fark=fabs(V_targ_con_sy-VRECT_pas.a16); // çıkarılmak istenen değer ile şu anki gerçek değer arası fark.
-			hedef_baslng_fark=fabs(V_targ_con_sy-baslangic_v_stbl); // çıkarılmak istenen değer ile başlangıç arası fark.
+			hedef_suan_fark=fabs(targ_DC_voltage-VRECT_pas.a16); // çıkarılmak istenen değer ile şu anki gerçek değer arası fark.
+			hedef_baslng_fark=fabs(targ_DC_voltage-baslangic_v_stbl); // çıkarılmak istenen değer ile başlangıç arası fark.
 			hedefe_yaklasma_yuzde_dn=hedef_suan_fark/hedef_baslng_fark;
-			hedef_baslngc_fark=fabs(baslangic_v_stbl-V_targ_con_sy); // başlangıç volt ile hedef volt farkı
+			hedef_baslngc_fark=fabs(baslangic_v_stbl-targ_DC_voltage); // başlangıç volt ile hedef volt farkı
 			PRF_BLM("asag hdf-suan hdf-basl hdf_yakl_yuzde. %f %f %f", hedef_suan_fark, hedef_baslngc_fark, hedefe_yaklasma_yuzde_dn); // hedef voltaj ile stabil voltaj arası fark
 		}
-		if (V_targ_con_sy < blm_vtarg_move_up_targ) { // Vtarg’ı artır
-			set_V_targ_con_sy(V_targ_con_sy * (1 + blm_vi_change_mult));
+		if (targ_DC_voltage < blm_vtarg_move_up_targ) { // Vtarg’ı artır
+			set_V_targ_con_sy(targ_DC_voltage * (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 6;
@@ -925,13 +925,13 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	} else if (blm_op_phase == 7) {
 		if (check_vrect_vtarg_e_yukari_gitti) {
 			check_vrect_vtarg_e_yukari_gitti=0;
-			hedef_suan_fark=fabs(V_targ_con_sy-VRECT_pas.a16); // indirilmek istenen değer ile şu anki gerçek değer arası fark.
-			hedef_baslng_fark=fabs(V_targ_con_sy-baslangic_v_stbl); // indirilmek istenen değer ile başlangıç arası fark.
+			hedef_suan_fark=fabs(targ_DC_voltage-VRECT_pas.a16); // indirilmek istenen değer ile şu anki gerçek değer arası fark.
+			hedef_baslng_fark=fabs(targ_DC_voltage-baslangic_v_stbl); // indirilmek istenen değer ile başlangıç arası fark.
 			hedefe_yaklasma_yuzde_up=hedef_suan_fark/hedef_baslngc_fark;
 			PRF_BLM("yukr hdf-suan hdf-basl hdf_yakl_yuzde. %f %f %f", hedef_suan_fark, hedef_baslngc_fark, hedefe_yaklasma_yuzde_up); // hedef voltaj ile stabil voltaj arası fark
 		}
-		if (V_targ_con_sy > temp_targ_DC_voltage) {
-			set_V_targ_con_sy(V_targ_con_sy * (1 - blm_vi_change_mult));
+		if (targ_DC_voltage > temp_targ_DC_voltage) {
+			set_V_targ_con_sy(targ_DC_voltage * (1 - blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 71;
@@ -982,7 +982,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	if (blm_enable_collect_samples && blm_corr_buf_index < CORR_BUF_SIZE) {
 		vrect_buf[blm_corr_buf_index] = VRECT_pas.a16;
 		ibat_buf[blm_corr_buf_index] = IBAT_pas.a16;
-		vtarg_buf[blm_corr_buf_index] = V_targ_con_sy;
+		vtarg_buf[blm_corr_buf_index] = targ_DC_voltage;
 		blm_corr_buf_index++;
 	}
 	if (blm_req_corr_batt_connected == 1) { // corr sonucuna göre batt line broken state uygulaması buraya koyuldu, çünkü başka durumlar da izlenerek sonuç çıkarılmaya çalışılacak. örneğin vtarg düşürüldü ama vrect düşmedi.
@@ -997,7 +997,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 //											|
 //VRECT_pas.a16		  |		hedef_baslngc_fark |
 //	hedef_suan_fark  |						|
-//V_targ_con_sy		  |						|
+//targ_DC_voltage		  |						|
 ////// BATT LINE MONITORING /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

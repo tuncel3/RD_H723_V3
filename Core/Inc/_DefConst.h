@@ -773,7 +773,7 @@ uint32_t unexpected_program_state=0;
 
 float I_rect_lim_con_sy = 0;
 float targ_DC_current = 0;
-float V_targ_con_sy = 0; // v target cont sys
+float targ_DC_voltage = 0; // v target cont sys
 //float temp_targ_DC_voltage = 0; // v target soft start
 float temp_targ_DC_voltage = 0; // v target charge mode
 uint32_t sfst_1_unexpected_state = 0;
