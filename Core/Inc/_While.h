@@ -106,7 +106,7 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MANAGE CHARGE MODE TIMED /////////////////////////////////////////////////////////////////////////////////////
-if (EpD[SET_CH_CONT_MODE][0].V1 == TIMED && EpD[SET_CHARGE_MODE][0].V1 == FLOAT || EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
+if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_FLOAT || EpD[SET_CHARGE_MODE][0].V1 == TIMED_BOOST) {
 	if (charge_mode_timed_time_cnt > 0) {
 		charge_mode_timed_float=0;
 		charge_mode_timed_boost=1;
@@ -1003,12 +1003,15 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-if (is_state_active(FLOAT_CHARGE_FC)) {
-	LED_7_Data |= (1U << (FLOAT_CHARGE_FC-16));
-} else if (is_state_active(BOOST_CHARGE_FC)) {
-	LED_7_Data |= (1U << (BOOST_CHARGE_FC-16));
-}
+if (condition) {
 
+
+	LED_7_Data |= led7_bit
+
+
+} else if (condition) {
+
+}
 
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
