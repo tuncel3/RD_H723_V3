@@ -4,17 +4,17 @@ if (ms_tick_cnt-sfst_1_t_hold >= 5) { // soft start step. 5ms
 
 	if (sfsta_op_phase == S_SFSTA_REQ && line_sgn_stable && thy_stop_fault_hold_bits==0) {
 		if (targ_DC_voltage <= temp_targ_DC_voltage) {
-			set_V_targ_con_sy(targ_DC_voltage*1.003);
+			set_targ_DC_voltage(targ_DC_voltage*1.003);
 		}
 		else if (targ_DC_voltage > temp_targ_DC_voltage) {
-			set_V_targ_con_sy(temp_targ_DC_voltage);
+			set_targ_DC_voltage(temp_targ_DC_voltage);
 			sfsta_op_phase=S_SFSTA_REQ_OK;
 			apply_state_changes_f(SOFT_START_ST, 0);
 //			actions_after_charge_mode_change(6);
 			PRF_GEN("Soft start request ok");
 		}
 		if (targ_DC_voltage < VRECT_smp_sc-4) {		// vout zaten yüksekse direk hedefi oraya yaklaştırarak başla
-			set_V_targ_con_sy(VRECT_smp_sc-4);
+			set_targ_DC_voltage(VRECT_smp_sc-4);
 			PRF_GEN("Sfst OK targ_DC_voltage < VRECT_smp_sc-4;");
 		}
 	}
@@ -35,7 +35,7 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 	if (thy_drv_en==0 && VRECT_pas.a64 <= temp_targ_DC_voltage*1.1 && thy_drv_en_req ==1 && line_sgn_stable && thy_stop_fault_hold_bits==0) {
 		sf_sta_req_cnt++;
 		if (sf_sta_req_cnt >= 20) {		// delayed soft start trigger
-			set_V_targ_con_sy(5);
+			set_targ_DC_voltage(5);
 			apply_state_changes_f(STOP_FC, 0);
 			apply_state_changes_f(START_FC, 1);
 			apply_state_changes_f(SOFT_START_ST, 1);
@@ -70,7 +70,7 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 //		actions_after_charge_mode_change(33);
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
-		set_V_targ_con_sy(temp_targ_DC_voltage);
+		set_targ_DC_voltage(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
 		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
@@ -88,7 +88,7 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 //		actions_after_charge_mode_change(34);
 		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
-		set_V_targ_con_sy(temp_targ_DC_voltage);
+		set_targ_DC_voltage(temp_targ_DC_voltage);
 		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
@@ -121,7 +121,7 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 //		charge_mode_timed_boost=0;
 //		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
-//		set_V_targ_con_sy(temp_targ_DC_voltage);
+//		set_targ_DC_voltage(temp_targ_DC_voltage);
 //		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
 //		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 //		LED_7_Data &= ~BOOST_CHARGE_LED;
@@ -892,7 +892,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		blm_op_phase = 3;
 	} else if (blm_op_phase == 3) { // Vtarg’ı düşür
 		if (targ_DC_voltage > blm_vtarg_move_dn_targ) {
-			set_V_targ_con_sy(targ_DC_voltage / (1 + blm_vi_change_mult));
+			set_targ_DC_voltage(targ_DC_voltage / (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 4;
@@ -912,7 +912,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			PRF_BLM("asag hdf-suan hdf-basl hdf_yakl_yuzde. %f %f %f", hedef_suan_fark, hedef_baslngc_fark, hedefe_yaklasma_yuzde_dn); // hedef voltaj ile stabil voltaj arası fark
 		}
 		if (targ_DC_voltage < blm_vtarg_move_up_targ) { // Vtarg’ı artır
-			set_V_targ_con_sy(targ_DC_voltage * (1 + blm_vi_change_mult));
+			set_targ_DC_voltage(targ_DC_voltage * (1 + blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 6;
@@ -931,7 +931,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			PRF_BLM("yukr hdf-suan hdf-basl hdf_yakl_yuzde. %f %f %f", hedef_suan_fark, hedef_baslngc_fark, hedefe_yaklasma_yuzde_up); // hedef voltaj ile stabil voltaj arası fark
 		}
 		if (targ_DC_voltage > temp_targ_DC_voltage) {
-			set_V_targ_con_sy(targ_DC_voltage * (1 - blm_vi_change_mult));
+			set_targ_DC_voltage(targ_DC_voltage * (1 - blm_vi_change_mult));
 		} else {
 			blm_phase_switch_delay_cnt = 0;
 			blm_op_phase = 71;
