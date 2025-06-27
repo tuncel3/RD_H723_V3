@@ -1010,7 +1010,7 @@ delay_1ms(100);
     USART10_SendByte(0x8C);
     delayA_1us(10);
     USART10_SendByte(0x90);
-    delay_1ms(1000);
+    delay_1ms(100);
 
     uint8_t dev_count_raw = U10_rxBuf[2];
     uint8_t temp_sens_count = dev_count_raw & 0x0F;
