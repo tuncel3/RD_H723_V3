@@ -958,9 +958,9 @@ uint32_t DC_leak_below_neg_lim = 0;
 #define FLOAT_CHARGE_LED			(1U << 5)   // bit 5
 //#define INPUT_MCB_OFF_LED	    	(1U << 6)   // bit 6
 
-uint8_t SW_LINE_OFF=0;
-uint8_t SW_BATT_OFF=0;
-uint8_t SW_LOAD_OFF=0;
+//uint8_t SW_LINE_OFF=0;
+//uint8_t SW_BATT_OFF=0;
+//uint8_t SW_LOAD_OFF=0;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

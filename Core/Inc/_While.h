@@ -783,7 +783,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	stability_ibat_fc();	// ibat_stable ve batt_current_detected 1 0 yapıyor.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
-	if (SW_BATT_OFF && !state_get(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1 && blm_pause==0) {
+	if (state_get(SW_BATT_OFF) && !state_get(BATT_LINE_BROKEN_FC) && EpD[SET_BATT_DISC_DET][0].V1==1 && blm_pause==0) {
 		apply_state_changes_f(BATT_LINE_BROKEN_FC, 1);										// BATT SWITCH OFF
 			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			fast_restart_blm_after_bat_switch_on = 1;
