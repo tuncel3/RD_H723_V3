@@ -145,8 +145,6 @@ state_set(ST_LOAD_MCCB_OFF, !isInSet_(SW_LOAD_P));
 //en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection
 //disb_uart_msg_group(pr_btln);
 
-//print_REL_OUT_Table();
-
 ///////////////////////////////////////////////////////////
 // Temp sensor init
 USART10_SendByte(0x55);
