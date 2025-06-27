@@ -825,7 +825,6 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		set_state_deactive(ST_FLOAT_CHARGE);
 		state_change(ST_FLOAT_CHARGE, 0);
 		state_change(BOOST_CHARGE_FC, 1);
 		switch_to_auto_mode_completed=0;
@@ -1313,12 +1312,12 @@ void state_change(State_Codes state, uint8_t set) {
         state_list[state].action &= ~(1 << ACTIVE_enum); // Clear the ACTIVE_enum bit
     }
 }
-void set_state_active(State_Codes state) {
-	state_list[state].action |= (1 << ACTIVE_enum);
-}
-void set_state_deactive(State_Codes state) {
-    state_list[state].action &= ~(1 << ACTIVE_enum);
-}
+//void set_state_active(State_Codes state) {
+//	state_list[state].action |= (1 << ACTIVE_enum);
+//}
+//void set_state_deactive(State_Codes state) {
+//    state_list[state].action &= ~(1 << ACTIVE_enum);
+//}
 uint8_t is_state_active(State_Codes state) {
 	return (state_list[state].action & (1 << ACTIVE_enum)) != 0;
 }
