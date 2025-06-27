@@ -9,7 +9,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_targ_DC_voltage(float set_val);
 //void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
-static inline uint8_t is_state_active(State_Codes state_code);
+uint8_t state_get(State_Codes state);
 void inline extern actions_after_charge_voltage_change();
 void inline extern DEV_NOM_VOUT_changed_fc(void);
 
@@ -350,7 +350,7 @@ if (BLEFT == 0 && BRIGHT == 0 && BUP == 0 && BDOWN == 0 && BENTER == 0 && BESC =
 
 
 inline extern void short_circ_monitor_f(void) {
-	if (thy_drv_en==1 && IRECT_smp_sc > EpD[RECT_SHORT][0].V1 && !is_state_active(RECT_SHORT_FC)) {
+	if (thy_drv_en==1 && IRECT_smp_sc > EpD[RECT_SHORT][0].V1 && !state_get(RECT_SHORT_FC)) {
 		IRECT_Short_Acc_cnt++;
 		IRECT_Short_Ret_Acc_cnt=0;
 		if (IRECT_Short_Acc_cnt >= IRECT_Short_Acc_per) {
@@ -359,7 +359,7 @@ inline extern void short_circ_monitor_f(void) {
 			PRF_GEN("DC SH %f", IRECT_smp_sc);
 		}
 	} else { IRECT_Short_Acc_per=0; }
-	if (IRECT_smp_sc <= EpD[RECT_SHORT][0].V1 && is_state_active(RECT_SHORT_FC)) {
+	if (IRECT_smp_sc <= EpD[RECT_SHORT][0].V1 && state_get(RECT_SHORT_FC)) {
 		IRECT_Short_Ret_Acc_cnt++;
 		IRECT_Short_Acc_cnt=0;
 		if (IRECT_Short_Ret_Acc_cnt >= IRECT_Short_Ret_Acc_per) {
@@ -367,7 +367,7 @@ inline extern void short_circ_monitor_f(void) {
 			apply_state_changes_f(RECT_SHORT_FC, 0);
 		}
 	} else { IRECT_Short_Ret_Acc_cnt=0; }
-	if (thy_drv_en==1 && IBAT_smp_sc > EpD[BATT_SHORT][0].V1 && !is_state_active(BATT_SHORT_FC)) {
+	if (thy_drv_en==1 && IBAT_smp_sc > EpD[BATT_SHORT][0].V1 && !state_get(BATT_SHORT_FC)) {
 		IBAT_Short_Acc_cnt++;
 		IBAT_Short_Ret_Acc_cnt=0;
 		if (IBAT_Short_Acc_cnt >= IBAT_Short_Acc_per) {
@@ -376,7 +376,7 @@ inline extern void short_circ_monitor_f(void) {
 			PRF_GEN("BT SH %f", IBAT_smp_sc);
 		}
 	} else { IBAT_Short_Acc_cnt=0; }
-	if (IBAT_smp_sc <= IBAT_Short_Lim && is_state_active(BATT_SHORT_FC)) {
+	if (IBAT_smp_sc <= IBAT_Short_Lim && state_get(BATT_SHORT_FC)) {
 		IBAT_Short_Ret_Acc_cnt++;
 		IBAT_Short_Acc_cnt=0;
 		if (IBAT_Short_Ret_Acc_cnt >= IBAT_Short_Ret_Acc_per) {
@@ -815,8 +815,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		state_change(ST_FLOAT_CHARGE, 1);
-		state_change(BOOST_CHARGE_FC, 0);
+		state_set(ST_FLOAT_CHARGE, 1);
+		state_set(BOOST_CHARGE_FC, 0);
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
@@ -825,8 +825,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		state_change(ST_FLOAT_CHARGE, 0);
-		state_change(BOOST_CHARGE_FC, 1);
+		state_set(ST_FLOAT_CHARGE, 0);
+		state_set(BOOST_CHARGE_FC, 1);
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
@@ -1305,7 +1305,7 @@ void print_active_states() {
         }
     }
 }
-void state_change(State_Codes state, uint8_t set) {
+void state_set(State_Codes state, uint8_t set) {
     if (set) {
         state_list[state].action |= (1 << ACTIVE_enum); // Set the ACTIVE_enum bit
     } else {
@@ -1318,8 +1318,10 @@ void state_change(State_Codes state, uint8_t set) {
 //void set_state_deactive(State_Codes state) {
 //    state_list[state].action &= ~(1 << ACTIVE_enum);
 //}
-uint8_t is_state_active(State_Codes state) {
-	return (state_list[state].action & (1 << ACTIVE_enum)) != 0;
+//uint8_t state_get(State_Codes state) {
+//	return (state_list[state].action & (1 << ACTIVE_enum)) != 0;
+//}
+uint8_t state_get(State_Codes state) {
+    return ((state_list[state].action & (1 << ACTIVE_enum)) != 0) ? 1 : 0;
 }
-
 

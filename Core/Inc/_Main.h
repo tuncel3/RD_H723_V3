@@ -91,18 +91,18 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 
 PRF_GEN("USE EEPROM TABLE DATA"); // eeprom okunduktan sonra kayıtlı dataya göre değişkenleri belirle
 if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
-	state_change(ST_FLOAT_CHARGE, 1); PRF_GEN("Startup eeprom CHARGE MODE FLOAT");
+	state_set(ST_FLOAT_CHARGE, 1); PRF_GEN("Startup eeprom CHARGE MODE FLOAT");
 	temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 	targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 } else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
-	state_change(BOOST_CHARGE_FC, 1); PRF_GEN("Startup eeprom CHARGE MODE BOOST");
+	state_set(BOOST_CHARGE_FC, 1); PRF_GEN("Startup eeprom CHARGE MODE BOOST");
 }
 if (EpD[SET_CH_CONT_MODE][0].V1 == MANUAL) {
-	state_change(MANUAL_CHARGE_FC, 1); PRF_GEN("Startup eeprom CHARGE CONTROL MODE MANUAL");
+	state_set(MANUAL_CHARGE_FC, 1); PRF_GEN("Startup eeprom CHARGE CONTROL MODE MANUAL");
 } else if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
-	state_change(AUTO_CHARGE_ST, 1); PRF_GEN("Startup eeprom CHARGE CONTROL MODE AUTO");
+	state_set(AUTO_CHARGE_ST, 1); PRF_GEN("Startup eeprom CHARGE CONTROL MODE AUTO");
 } else if (EpD[SET_CH_CONT_MODE][0].V1 == TIMED) {
-	state_change(TIMED_CHARGE_FC, 1); PRF_GEN("Startup eeprom CHARGE CONTROL MODE TIMED");
+	state_set(TIMED_CHARGE_FC, 1); PRF_GEN("Startup eeprom CHARGE CONTROL MODE TIMED");
 }
 Vbat_flt = EpD[DEV_NOM_VOUT][0].V1 * 0.1; // Vbat too low control. Batt line monitor checks this to determine if battery is connected or not. If voltge is too low
 
@@ -133,8 +133,8 @@ ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate 
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);  // set dropper control pin according to EpD[SET_DROPPER_K1][0].V1 value
 DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-state_change(ST_DROPPER_K1, 1);
-state_change(ST_DROPPER_K2, 1);
+state_set(ST_DROPPER_K1, 1);
+state_set(ST_DROPPER_K2, 1);
 
 frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 
@@ -142,13 +142,13 @@ frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 SW_LINE_OFF=!isInSet_(SW_LINE_P);
 SW_BATT_OFF=!isInSet_(SW_BATT_P);
 SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
-if (is_state_active(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
+if (state_get(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
 	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
 }
-if (is_state_active(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
+if (state_get(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
 	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
 }
-if (is_state_active(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
+if (state_get(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
 	apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
 }
 
