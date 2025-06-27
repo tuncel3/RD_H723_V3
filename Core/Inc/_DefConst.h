@@ -985,8 +985,8 @@ typedef enum {
 	VAC_OFF_FC,
 	VAC_ON_FC, // led 16
 	LOAD_FUSE_OFF_FC,
-	DROPPER2_BYP_FC,
-	DROPPER1_BYP_FC,
+	ST_DROPPER_K1,
+	ST_DROPPER_K2,
 	BATT_FUSE_OFF_FC,
 	BOOST_CHARGE_FC,
 	FLOAT_CHARGE_FC,
@@ -1091,8 +1091,8 @@ State_Info state_list[] = {
 	// LED 16 BIT15	enum 15
 	// LED 7 BIT0 enum 16
 	{ LOAD_FUSE_OFF_FC,      	  0b10010,	"Çıkş Sigrt Atık",    LOAD_FUSE_OFF_FC_REL },
-	{ DROPPER2_BYP_FC,      	  0b00000,	"Dropper 2 Bypass",    NUM_REL_CODES },
-	{ DROPPER1_BYP_FC,      	  0b00000,	"Dropper 1 Bypass",    NUM_REL_CODES },
+	{ ST_DROPPER_K1,      	  0b00000,	"Dropper 2 Bypass",    NUM_REL_CODES },
+	{ ST_DROPPER_K2,      	  0b00000,	"Dropper 1 Bypass",    NUM_REL_CODES },
 	{ BATT_FUSE_OFF_FC,           0b10010,	"Akü Sigrta Atık",    BATT_FUSE_OFF_FC_REL },
 	{ BOOST_CHARGE_FC,      	  0b10000,	"Hızl Şarj",          BOOST_CHARGE_FC_REL },
 	{ FLOAT_CHARGE_FC,      	  0b10000,	"Norm Şarj",         FLOAT_CHARGE_FC_REL },

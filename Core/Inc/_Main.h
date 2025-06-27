@@ -133,8 +133,8 @@ ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate 
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);  // set dropper control pin according to EpD[SET_DROPPER_K1][0].V1 value
 DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
-apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+apply_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K1][0].V1);
+apply_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K2][0].V1);
 frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 
 //delay_1ms(100);

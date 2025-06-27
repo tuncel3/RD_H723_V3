@@ -243,53 +243,53 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 ////// MANAGE DROPPER ///////////////////////////////////////////////////////////////////////////////////////////////
 
 	if (EpD[SET_DROPPER_MANOTO][0].V1==1) { // 0 manuel 1 auto
-		if (VLOAD_pas.a1+dropper_test_var_1 > set_dropper_l_hg_V && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
+		if (VLOAD_pas.a1+dropper_test_var_1 > set_dropper_l_hg_V && !is_state_active(ST_DROPPER_K2) && !is_state_active(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K1][0].V1=1; EpD[SET_DROPPER_K1][1].V1=1; // kullanıcı harici değişim olduğu için bu değişiklik yapılmalı.
 				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1); // dropper ı kayıtlı değere göre değiştir.
-				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1); // burası ledleri değiştiriyor.
+				apply_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1); // burası ledleri değiştiriyor.
 			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 > set_dropper_l_hg_V && is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
+		} else if (VLOAD_pas.a1+dropper_test_var_1 > set_dropper_l_hg_V && is_state_active(ST_DROPPER_K2) && !is_state_active(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K2][0].V1=1; EpD[SET_DROPPER_K2][1].V1=1;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+				apply_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
 			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 > set_dropper_l_hg_V && !is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
+		} else if (VLOAD_pas.a1+dropper_test_var_1 > set_dropper_l_hg_V && !is_state_active(ST_DROPPER_K2) && is_state_active(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K1][0].V1=1; EpD[SET_DROPPER_K1][1].V1=1;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K1][0].V1);
-				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+				apply_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1);
 			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
+		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && is_state_active(ST_DROPPER_K2) && is_state_active(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) { // ikisi de devredeyse önce 2. dropperi kapat.
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+				apply_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
 			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)) {
+		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && is_state_active(ST_DROPPER_K2) && !is_state_active(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) { // 2. kapalıysa 1. dropperi kapat.
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K1][0].V1=0; EpD[SET_DROPPER_K1][1].V1=0;
 				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
-				apply_state_changes_f(DROPPER1_BYP_FC, EpD[SET_DROPPER_K1][0].V1);
+				apply_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1);
 			}
-		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && !is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)) {
+		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && !is_state_active(ST_DROPPER_K2) && is_state_active(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
 			if (actvate_drop_cnt >= actvate_drop_per) { // 1. kapalıysa 2. dropperi kapat.
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(DROPPER2_BYP_FC, EpD[SET_DROPPER_K2][0].V1);
+				apply_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
 			}
 		}
 	}
@@ -297,7 +297,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// V LOAD DC HIGH/LOW MON ///////////////////////////////////////////////////////////////////////////////////////
 //	dropper high limit vload_dc_high_lim olarak kabul ediliyor
-		if (VLOAD_pas.a1+load_dcv_test_var_1 > set_dropper_l_hg_V && is_state_active(DROPPER1_BYP_FC) && is_state_active(DROPPER2_BYP_FC)
+		if (VLOAD_pas.a1+load_dcv_test_var_1 > set_dropper_l_hg_V && is_state_active(ST_DROPPER_K2) && is_state_active(ST_DROPPER_K1)
 				&& !is_state_active(LOAD_DC_HG_FC)) {
 			vload_dc_high_lim_Acc_cnt++; // dropper kademeleri devreye alınmasına rağmen limitin üzerine çıkmış
 			vload_dc_high_lim_ret_Acc_cnt=0;
@@ -318,7 +318,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			}
 		} else { vload_dc_high_lim_ret_Acc_cnt=0; }
 
-		if (VLOAD_pas.a1+load_dcv_test_var_1 < set_dropper_l_lw_V && !is_state_active(DROPPER1_BYP_FC) && !is_state_active(DROPPER2_BYP_FC)
+		if (VLOAD_pas.a1+load_dcv_test_var_1 < set_dropper_l_lw_V && !is_state_active(ST_DROPPER_K2) && !is_state_active(ST_DROPPER_K1)
 				&& !is_state_active(LOAD_DC_LW_FC)) {
 			vload_dc_low_lim_Acc_cnt++; // dropper kademeleri devrede olmamasına rağmen limitin altına inilmiş
 			vload_dc_low_lim_ret_Acc_cnt=0;
@@ -1006,16 +1006,16 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 
 // LED_7_Data SET CLEAR
 LED_7_Data |= (is_state_active(LOAD_FUSE_OFF_FC) << (LOAD_FUSE_OFF_FC-16));
-LED_7_Data |= (is_state_active(DROPPER2_BYP_FC) << (DROPPER2_BYP_FC-16));
-LED_7_Data |= (is_state_active(DROPPER1_BYP_FC) << (DROPPER1_BYP_FC-16));
+LED_7_Data |= (is_state_active(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
+LED_7_Data |= (is_state_active(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
 LED_7_Data |= (is_state_active(BATT_FUSE_OFF_FC) << (BATT_FUSE_OFF_FC-16));
 LED_7_Data |= (is_state_active(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
 LED_7_Data |= (is_state_active(FLOAT_CHARGE_FC) << (FLOAT_CHARGE_FC-16));
 LED_7_Data |= (is_state_active(LINE_FUSE_OFF_FC) << (LINE_FUSE_OFF_FC-16));
 
 LED_7_Data &= ~(!is_state_active(LOAD_FUSE_OFF_FC) << (LOAD_FUSE_OFF_FC-16));
-LED_7_Data &= ~(!is_state_active(DROPPER2_BYP_FC) << (DROPPER2_BYP_FC-16));
-LED_7_Data &= ~(!is_state_active(DROPPER1_BYP_FC) << (DROPPER1_BYP_FC-16));
+LED_7_Data &= ~(!is_state_active(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
+LED_7_Data &= ~(!is_state_active(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
 LED_7_Data &= ~(!is_state_active(BATT_FUSE_OFF_FC) << (BATT_FUSE_OFF_FC-16));
 LED_7_Data &= ~(!is_state_active(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
 LED_7_Data &= ~(!is_state_active(FLOAT_CHARGE_FC) << (FLOAT_CHARGE_FC-16));
