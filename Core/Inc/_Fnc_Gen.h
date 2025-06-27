@@ -1016,14 +1016,30 @@ delay_1ms(100);
     uint8_t temp_sens_count = dev_count_raw & 0x0F;
 
     if (temp_sens_count < 1 || temp_sens_count > 16) {
-        return 0;
+    	temp_sens_count=0;
     }
-    return temp_sens_count;
-}
 
-int tmp144_init_and_assign(void) {
-
-
+    if (temp_sens_count == 0) {
+    	PRF_GEN("Temp sensor init failed");
+    	sogut_sensor_exists = 0;
+    	trafo_sensor_exists = 0;
+    	batt_sensor_exists = 0;
+    } else {
+    	PRF_GEN("Temp sensor init success %d Sensors", temp_sens_count);
+    	if (temp_sens_count == 1) {
+    		sogut_sensor_exists = 1;
+    		trafo_sensor_exists = 0;
+    		batt_sensor_exists = 0;
+    	} else if (temp_sens_count == 2) {
+    		sogut_sensor_exists = 1;
+    		trafo_sensor_exists = 1;
+    		batt_sensor_exists = 0;
+    	} else if (temp_sens_count == 3) {
+    		sogut_sensor_exists = 1;
+    		trafo_sensor_exists = 1;
+    		batt_sensor_exists = 1;
+    	}
+    }
 }
 
 
