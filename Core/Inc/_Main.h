@@ -139,20 +139,20 @@ frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 ///////////////////////////////////////////////////////////////////////////////////
 
 //delay_1ms(100);
-SW_LINE_OFF=!isInSet_(SW_LINE_P);
-SW_BATT_OFF=!isInSet_(SW_BATT_P);
-SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
-	state_set(LINE_FUSE_OFF_FC, !isInSet_(SW_LINE_P));
-	state_set(BATT_FUSE_OFF_FC, !isInSet_(SW_BATT_P));
-	state_set(LOAD_FUSE_OFF_FC, !isInSet_(SW_LOAD_P));
-//if (state_get(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
-//	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
+//SW_LINE_OFF=isInSet_(SW_LINE_P);
+//SW_BATT_OFF=isInSet_(SW_BATT_P);
+//SW_LOAD_OFF=isInSet_(SW_LOAD_P);
+	state_set(ST_LINE_MCCB, isInSet_(SW_LINE_P));
+	state_set(ST_BATT_MCCB, isInSet_(SW_BATT_P));
+	state_set(ST_LOAD_MCCB, isInSet_(SW_LOAD_P));
+//if (state_get(ST_LINE_MCCB) != SW_LINE_OFF) {
+//	apply_state_changes_f(ST_LINE_MCCB, SW_LINE_OFF);
 //}
-//if (state_get(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
-//	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
+//if (state_get(ST_BATT_MCCB) != SW_BATT_OFF) {
+//	apply_state_changes_f(ST_BATT_MCCB, SW_BATT_OFF);
 //}
-//if (state_get(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
-//	apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
+//if (state_get(ST_LOAD_MCCB) != SW_LOAD_OFF) {
+//	apply_state_changes_f(ST_LOAD_MCCB, SW_LOAD_OFF);
 //}
 
 //en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection

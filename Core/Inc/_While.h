@@ -142,37 +142,37 @@ if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 ////// MANAGE CHARGE MODE AUTO //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SW_LINE_OFF=!isInSet_(SW_LINE_P);
-SW_BATT_OFF=!isInSet_(SW_BATT_P);
-SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
+//SW_LINE_OFF=isInSet_(SW_LINE_P);
+//SW_BATT_OFF=isInSet_(SW_BATT_P);
+//SW_LOAD_OFF=isInSet_(SW_LOAD_P);
 
-state_set(LINE_FUSE_OFF_FC, !isInSet_(SW_LINE_P));
-state_set(BATT_FUSE_OFF_FC, !isInSet_(SW_BATT_P));
-state_set(LOAD_FUSE_OFF_FC, !isInSet_(SW_LOAD_P));
+state_set(ST_LINE_MCCB, isInSet_(SW_LINE_P));
+state_set(ST_BATT_MCCB, isInSet_(SW_BATT_P));
+state_set(ST_LOAD_MCCB, isInSet_(SW_LOAD_P));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// MCCB MONITORING //////////////////////////////////////////////////////////////////////////////////////////////
 ////// LINE FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
-//if (state_get(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
-//	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
+//if (state_get(ST_LINE_MCCB) != SW_LINE_OFF) {
+//	apply_state_changes_f(ST_LINE_MCCB, SW_LINE_OFF);
 //}
 //////// BATT FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
-//if (state_get(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
-//	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
+//if (state_get(ST_BATT_MCCB) != SW_BATT_OFF) {
+//	apply_state_changes_f(ST_BATT_MCCB, SW_BATT_OFF);
 //}
 //////// LOAD FUSE OFF MONITORING /////////////////////////////////////////////////////////////////////////////////////
-//if (state_get(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
-//	apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
+//if (state_get(ST_LOAD_MCCB) != SW_LOAD_OFF) {
+//	apply_state_changes_f(ST_LOAD_MCCB, SW_LOAD_OFF);
 //}
 ////// MCCB MONITORING //////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// BATTERY_FAULT_FC decide //////////////////////////////////////////////////////////////////////////////////////
 if (!state_get(BATTERY_FAULT_FC)) {
-	if (state_get(BATT_FUSE_OFF_FC) || state_get(BATT_LINE_BROKEN_FC) || state_get(BATT_REVERSE_FC) || state_get(BATT_SHORT_FC)) {
+	if (state_get(ST_BATT_MCCB) || state_get(BATT_LINE_BROKEN_FC) || state_get(BATT_REVERSE_FC) || state_get(BATT_SHORT_FC)) {
 		apply_state_changes_f(BATTERY_FAULT_FC, 1);
 	}
 } else if (state_get(BATTERY_FAULT_FC)) {
-	if (!state_get(BATT_FUSE_OFF_FC) && !state_get(BATT_LINE_BROKEN_FC) && !state_get(BATT_REVERSE_FC) && !state_get(BATT_SHORT_FC)) {
+	if (!state_get(ST_BATT_MCCB) && !state_get(BATT_LINE_BROKEN_FC) && !state_get(BATT_REVERSE_FC) && !state_get(BATT_SHORT_FC)) {
 		apply_state_changes_f(BATTERY_FAULT_FC, 0);
 	}
 }
@@ -1008,21 +1008,21 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 
 
 // LED_7_Data SET CLEAR
-LED_7_Data |= (state_get(LOAD_FUSE_OFF_FC) << (LOAD_FUSE_OFF_FC-16));
+LED_7_Data |= (state_get(ST_LOAD_MCCB) << (ST_LOAD_MCCB-16));
 LED_7_Data |= (state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
 LED_7_Data |= (state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
-LED_7_Data |= (state_get(BATT_FUSE_OFF_FC) << (BATT_FUSE_OFF_FC-16));
+LED_7_Data |= (state_get(ST_BATT_MCCB) << (ST_BATT_MCCB-16));
 LED_7_Data |= (state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
 LED_7_Data |= (state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
-LED_7_Data |= (state_get(LINE_FUSE_OFF_FC) << (LINE_FUSE_OFF_FC-16));
+LED_7_Data |= (state_get(ST_LINE_MCCB) << (ST_LINE_MCCB-16));
 
-LED_7_Data &= ~(!state_get(LOAD_FUSE_OFF_FC) << (LOAD_FUSE_OFF_FC-16));
+LED_7_Data &= ~(!state_get(ST_LOAD_MCCB) << (ST_LOAD_MCCB-16));
 LED_7_Data &= ~(!state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
 LED_7_Data &= ~(!state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
-LED_7_Data &= ~(!state_get(BATT_FUSE_OFF_FC) << (BATT_FUSE_OFF_FC-16));
+LED_7_Data &= ~(!state_get(ST_BATT_MCCB) << (ST_BATT_MCCB-16));
 LED_7_Data &= ~(!state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
 LED_7_Data &= ~(!state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
-LED_7_Data &= ~(!state_get(LINE_FUSE_OFF_FC) << (LINE_FUSE_OFF_FC-16));
+LED_7_Data &= ~(!state_get(ST_LINE_MCCB) << (ST_LINE_MCCB-16));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
