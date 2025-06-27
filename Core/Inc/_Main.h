@@ -91,7 +91,7 @@ if (flt_array_index_found == 0) { // couldn't find last fault record location. C
 
 PRF_GEN("USE EEPROM TABLE DATA"); // eeprom okunduktan sonra kayıtlı dataya göre değişkenleri belirle
 if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
-	set_state_active(FLOAT_CHARGE_FC); PRF_GEN("Startup eeprom CHARGE MODE FLOAT");
+	set_state_active(ST_FLOAT_CHARGE); PRF_GEN("Startup eeprom CHARGE MODE FLOAT");
 	temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 	targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 } else if (EpD[SET_CHARGE_MODE][0].V1 == BOOST) {
@@ -133,10 +133,9 @@ ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate 
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);  // set dropper control pin according to EpD[SET_DROPPER_K1][0].V1 value
 DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-set_state_active(ST_DROPPER_K1);
-set_state_active(ST_DROPPER_K2);e
-//apply_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K1][0].V1);
-//apply_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K2][0].V1);
+state_change(ST_DROPPER_K1, 1);
+state_change(ST_DROPPER_K2, 1);
+
 frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 
 //delay_1ms(100);

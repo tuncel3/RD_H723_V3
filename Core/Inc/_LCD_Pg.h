@@ -300,11 +300,11 @@ if (tabl_dolas_delay_cnt==0) {
 //		}
 	for (tabl_dolas = son_kal; tabl_dolas <= NUM_STATE_NAMES; tabl_dolas++) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-			if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
+			if ((state_list[tabl_dolas].code==ST_FLOAT_CHARGE || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
 			} else if ((state_list[tabl_dolas].code==1 || state_list[tabl_dolas].code==1)) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Zmn)");
-			} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
+			} else if ((state_list[tabl_dolas].code==ST_FLOAT_CHARGE || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Man)");
 			} else {
 				sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
@@ -319,11 +319,11 @@ if (tabl_dolas_delay_cnt==0) {
 
 		for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) { // üstteki for döngüsü ile aynı. yazma işlemi üstteki loopta yapılıyor. üstteki loop bir şey bulamayıp tablo sonuna geldi diyelim. bu durumda birşey bulunamadığı için bu döngüde boş satır yazılacak. bunu engellemek için aynı loop buraya da koyuluyor.
 			if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
-				if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
+				if ((state_list[tabl_dolas].code==ST_FLOAT_CHARGE || state_list[tabl_dolas].code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
 				} else if ((state_list[tabl_dolas].code==1 || state_list[tabl_dolas].code==1)) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Zmn)");
-				} else if ((state_list[tabl_dolas].code==FLOAT_CHARGE_FC || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
+				} else if ((state_list[tabl_dolas].code==ST_FLOAT_CHARGE || state_list[tabl_dolas].code==BOOST_CHARGE_FC)) {
 					sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Man)");
 				} else {
 					sprintf(RollBuf, "%s", state_list[tabl_dolas].name);

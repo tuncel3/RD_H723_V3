@@ -815,7 +815,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		set_state_active(FLOAT_CHARGE_FC);
+		state_change(ST_FLOAT_CHARGE, 1);
+
 		set_state_deactive(BOOST_CHARGE_FC);
 //		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 //		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
@@ -833,8 +834,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		set_state_deactive(FLOAT_CHARGE_FC);
-		set_state_active(BOOST_CHARGE_FC);
+		set_state_deactive(ST_FLOAT_CHARGE);
+		state_change(ST_FLOAT_CHARGE, 0);
+		state_change(BOOST_CHARGE_FC, 1);
 //		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 //		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
 //		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
@@ -852,7 +854,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
-//		apply_state_changes_f(FLOAT_CHARGE_FC, 1);
+//		apply_state_changes_f(ST_FLOAT_CHARGE, 1);
 //		apply_state_changes_f(BOOST_CHARGE_FC, 0);
 //		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 1);
 //		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
@@ -874,7 +876,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
-//		apply_state_changes_f(FLOAT_CHARGE_FC, 0);
+//		apply_state_changes_f(ST_FLOAT_CHARGE, 0);
 //		apply_state_changes_f(BOOST_CHARGE_FC, 1);
 //		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
 //		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 1);
@@ -1319,6 +1321,13 @@ void print_active_states() {
         if (state_list[i].action & (1 << ACTIVE_enum)) {
             PRF_GEN("%s", state_list[i].name);
         }
+    }
+}
+void state_change(State_Codes state, uint8_t set) {
+    if (set) {
+        state_list[state].action |= (1 << ACTIVE_enum); // Set the ACTIVE_enum bit
+    } else {
+        state_list[state].action &= ~(1 << ACTIVE_enum); // Clear the ACTIVE_enum bit
     }
 }
 void set_state_active(State_Codes state) {
