@@ -1121,31 +1121,15 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 //	print_active_states();
 
-//	if (var1==3) {
-//		var1=0;
-//		apply_state_changes_f(TRF_FAN2_REL,1);
-//		calc_REL_24Bit_Data_f();
-//	}
-//	if (var1==4) {
-//		var1=0;
-//		apply_state_changes_f(TRF_FAN2_REL,0);
-//		calc_REL_24Bit_Data_f();
-//	}
-//	if (var1==1) {
-//		var1=0;
-//		rel_ord_tb[var2].rel_sel_nm=rel_dat_tb[var3].rel_sel_nm;
-//		rel_ord_tb[var2].rel_sel_desc=rel_dat_tb[var3].rel_sel_desc;
-//		calc_REL_24Bit_Data_f();
-//		print_REL_OUT_Table();
-//	}
-//	if (var1==6) {
-//		var1=0;
-//		REL_OUT_order_chng_f(OVERTEMP_OPEN_FC_REL,4);
-//		calc_REL_24Bit_Data_f();
-//		print_REL_OUT_Table();
-//	}
+	if (dbg_disp==1) {
+		dbg_disp=0;
+		print_REL_OUT_Table();
+	}
+	if (dbg_disp==2) {
+		dbg_disp=0;
+		print_active_states();
+	}
 }
-//PRF_GEN("%lu", var1++);
 
 BUZZ_P(buzzer_override);
 

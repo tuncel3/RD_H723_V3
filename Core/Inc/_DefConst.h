@@ -298,6 +298,7 @@ uint32_t VDCK_return_per = 40;
 uint8_t adjustmentMode = 0;
 uint8_t out_en_h=0;
 uint32_t UART_Debg_t_h=0;
+uint32_t dbg_disp=0;
 uint32_t while_LCD_delay_h=0;
 uint32_t while_LCD_delay_per=500;
 uint32_t while_LCD_delay_normal_per=500;
