@@ -1021,6 +1021,10 @@ delay_1ms(100);
     return temp_sens_count;
 }
 
+int tmp144_init_and_assign(void) {
+
+
+}
 
 
 
