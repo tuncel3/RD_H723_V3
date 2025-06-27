@@ -128,8 +128,6 @@ VAC_Hg_Lim = VAC_Nom * (1 + 0.1); // Giriş voltajı monitör
 VAC_Lo_Lim = VAC_Nom * (1 - 0.12); // Giriş voltajı monitör
 
 ovtmp_open_per=(uint32_t) (EpD[SET_OVT_OPEN_DELAY][0].V1*1000/50); // calculate alarm to open duration in 50ms
-///////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////
 
 DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);  // set dropper control pin according to EpD[SET_DROPPER_K1][0].V1 value
 DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
@@ -137,20 +135,25 @@ state_set(ST_DROPPER_K1, 1);
 state_set(ST_DROPPER_K2, 1);
 
 frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
+///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 //delay_1ms(100);
 SW_LINE_OFF=!isInSet_(SW_LINE_P);
 SW_BATT_OFF=!isInSet_(SW_BATT_P);
 SW_LOAD_OFF=!isInSet_(SW_LOAD_P);
-if (state_get(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
-	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
-}
-if (state_get(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
-	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
-}
-if (state_get(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
-	apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
-}
+	state_set(LINE_FUSE_OFF_FC, !isInSet_(SW_LINE_P));
+	state_set(BATT_FUSE_OFF_FC, !isInSet_(SW_BATT_P));
+	state_set(LOAD_FUSE_OFF_FC, !isInSet_(SW_LOAD_P));
+//if (state_get(LINE_FUSE_OFF_FC) != SW_LINE_OFF) {
+//	apply_state_changes_f(LINE_FUSE_OFF_FC, SW_LINE_OFF);
+//}
+//if (state_get(BATT_FUSE_OFF_FC) != SW_BATT_OFF) {
+//	apply_state_changes_f(BATT_FUSE_OFF_FC, SW_BATT_OFF);
+//}
+//if (state_get(LOAD_FUSE_OFF_FC) != SW_LOAD_OFF) {
+//	apply_state_changes_f(LOAD_FUSE_OFF_FC, SW_LOAD_OFF);
+//}
 
 //en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection
 //disb_uart_msg_group(pr_btln);
