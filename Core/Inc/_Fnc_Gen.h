@@ -904,7 +904,6 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 
 void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 	uint32_t fault_bit = (1U << state_code);
-	uint32_t led7_bit = (1U << (state_code-16));
 	uint32_t REL8_bit = (1U << (state_code-29));
     if (set) {
         if (state_list[state_code].code < 16) {
