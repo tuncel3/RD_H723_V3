@@ -1010,16 +1010,16 @@ delay_1ms(100);
     USART10_SendByte(0x8C);
     delayA_1us(10);
     USART10_SendByte(0x90);
-    delay_1ms(100);
+    delay_1ms(1000);
 
     uint8_t dev_count_raw = U10_rxBuf[2];
-    uint8_t temp_sens_count = dev_count_raw & 0x0F;
-
-    if (temp_sens_count < 1 || temp_sens_count > 16) {
+    uint8_t temp_sens_count_g = dev_count_raw & 0x0F;
+    temp_sens_count=temp_sens_count_g;
+    if (temp_sens_count_g < 1 || temp_sens_count_g > 16) {
     	temp_sens_count=0;
     }
 
-    if (temp_sens_count == 0) {
+    if (temp_sens_count == 0) { // Alınan sensor bilgilerine göre sensör isimlendirmelerini yap.
     	PRF_GEN("Temp sensor init failed");
     	sogut_sensor_exists = 0;
     	trafo_sensor_exists = 0;

@@ -147,29 +147,7 @@ state_set(ST_LOAD_MCCB_OFF, !isInSet_(SW_LOAD_P));
 
 ///////////////////////////////////////////////////////////
 // Temp sensor init
-temp_sens_count = tmp144_init_and_assign();
-if (temp_sens_count == 0) {
-	PRF_GEN("Temp sensor init failed");
-	sogut_sensor_exists = 0;
-	trafo_sensor_exists = 0;
-	batt_sensor_exists = 0;
-} else {
-	PRF_GEN("Temp sensor init success %d Sensors", temp_sens_count);
-	if (temp_sens_count == 1) {
-		sogut_sensor_exists = 1;
-		trafo_sensor_exists = 0;
-		batt_sensor_exists = 0;
-	} else if (temp_sens_count == 2) {
-		sogut_sensor_exists = 1;
-		trafo_sensor_exists = 1;
-		batt_sensor_exists = 0;
-	} else if (temp_sens_count == 3) {
-		sogut_sensor_exists = 1;
-		trafo_sensor_exists = 1;
-		batt_sensor_exists = 1;
-	}
-}
-// Temp sensor init
+tmp144_init_and_assign();
 ///////////////////////////////////////////////////////////
 
 generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
