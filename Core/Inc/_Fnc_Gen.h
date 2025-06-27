@@ -996,6 +996,11 @@ static float tmp144_convert_temperature(uint16_t raw16) {
 
 int tmp144_init_and_assign(void)
 {
+USART10_SendByte(0x55); // Calibration Byte (55h)
+delayA_1us(10);
+USART10_SendByte(0xB4); // Global software reset
+delay_1ms(100);
+
 	U10_rxCount = 0;
     for (int i = 0; i < U10_RX_BUFFER_SIZE; i++) {
     	U10_rxBuf[i] = 0;

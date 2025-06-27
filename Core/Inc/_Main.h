@@ -147,11 +147,6 @@ state_set(ST_LOAD_MCCB_OFF, !isInSet_(SW_LOAD_P));
 
 ///////////////////////////////////////////////////////////
 // Temp sensor init
-USART10_SendByte(0x55);
-delayA_1us(10);
-USART10_SendByte(0xB4);
-delay_1ms(100);
-
 temp_sens_count = tmp144_init_and_assign();
 if (temp_sens_count == 0) {
 	PRF_GEN("Temp sensor init failed");
