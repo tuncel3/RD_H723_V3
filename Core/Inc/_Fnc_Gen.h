@@ -816,16 +816,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
 		state_change(ST_FLOAT_CHARGE, 1);
-
-		set_state_deactive(BOOST_CHARGE_FC);
-//		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
-//		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
-//		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 1);
-//		apply_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
-//		apply_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
-//		apply_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
-//		LED_7_Data |= FLOAT_CHARGE_LED;
-//		LED_7_Data &= ~BOOST_CHARGE_LED;
+		state_change(BOOST_CHARGE_FC, 0);
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
@@ -837,14 +828,6 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		set_state_deactive(ST_FLOAT_CHARGE);
 		state_change(ST_FLOAT_CHARGE, 0);
 		state_change(BOOST_CHARGE_FC, 1);
-//		apply_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
-//		apply_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
-//		apply_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
-//		apply_state_changes_f(MANUAL_BOOST_CHARGE_FC, 1);
-//		apply_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
-//		apply_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
-//		LED_7_Data &= ~FLOAT_CHARGE_LED;
-//		LED_7_Data |= BOOST_CHARGE_LED;
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
