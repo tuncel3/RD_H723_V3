@@ -984,13 +984,13 @@ typedef enum {
 	START_FC,
 	VAC_OFF_FC,
 	VAC_ON_FC, // led 16
-	ST_LOAD_MCCB,
+	ST_LOAD_MCCB_OFF,
 	ST_DROPPER_K1,
 	ST_DROPPER_K2,
-	ST_BATT_MCCB,
+	ST_BATT_MCCB_OFF,
 	BOOST_CHARGE_FC,
 	ST_FLOAT_CHARGE,
-	ST_LINE_MCCB, // led 7
+	ST_LINE_MCCB_OFF, // led 7
 	RECT_SHORT_FC,
 	BATT_SHORT_FC,
 	BATT_REVERSE_FC,
@@ -1090,13 +1090,13 @@ State_Info state_list[] = {
 	{ VAC_ON_FC,                  0b00000,	"VAC ON",              VAC_ON_FC_REL },
 	// LED 16 BIT15	enum 15
 	// LED 7 BIT0 enum 16
-	{ ST_LOAD_MCCB,      	  0b10010,	"Çıkş Sigrt Atık",    LOAD_FUSE_OFF_FC_REL },
+	{ ST_LOAD_MCCB_OFF,      	  0b10010,	"Çıkş Sigrt Atık",    LOAD_FUSE_OFF_FC_REL },
 	{ ST_DROPPER_K1,      	  0b00000,	"Dropper 2 Bypass",    NUM_REL_CODES },
 	{ ST_DROPPER_K2,      	  0b00000,	"Dropper 1 Bypass",    NUM_REL_CODES },
-	{ ST_BATT_MCCB,           0b10010,	"Akü Sigrta Atık",    BATT_FUSE_OFF_FC_REL },
+	{ ST_BATT_MCCB_OFF,           0b10010,	"Akü Sigrta Atık",    BATT_FUSE_OFF_FC_REL },
 	{ BOOST_CHARGE_FC,      	  0b10000,	"Hızl Şarj",          BOOST_CHARGE_FC_REL },
 	{ ST_FLOAT_CHARGE,      	  0b10000,	"Norm Şarj",         FLOAT_CHARGE_FC_REL },
-	{ ST_LINE_MCCB,      	  0b10110,	"Girş Sigrt Atık",    LINE_FUSE_OFF_FC_REL },
+	{ ST_LINE_MCCB_OFF,      	  0b10110,	"Girş Sigrt Atık",    LINE_FUSE_OFF_FC_REL },
 	// LED 7 BIT6 enum 22
 	{ RECT_SHORT_FC,              0b00110,	"DC Kısa Devre",       NUM_REL_CODES },
 	{ BATT_SHORT_FC,              0b00110,	"Akü Kısa Devre",      NUM_REL_CODES },
