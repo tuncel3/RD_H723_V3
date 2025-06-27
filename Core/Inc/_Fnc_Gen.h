@@ -994,8 +994,7 @@ static float tmp144_convert_temperature(uint16_t raw16) {
   return (float)val12 * 0.0625f;
 }
 
-int tmp144_init_and_assign(void)
-{
+int tmp144_init_and_assign(void) {
 USART10_SendByte(0x55); // Calibration Byte (55h)
 delayA_1us(10);
 USART10_SendByte(0xB4); // Global software reset
