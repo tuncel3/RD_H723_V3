@@ -564,8 +564,8 @@ inline extern void DEVICE_SETT_pg_disp(void) {
 			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_REV_DET][dev_setting_edit_mode].V1]);
 			GLCD_PrintString(86, (i + 1) * 9, M);
 		}
-		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_BATT_DISC_DET) {
-			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_DISC_DET][dev_setting_edit_mode].V1]);
+		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_BATT_DISC_CHK_EN) {
+			sprintf(M, "%s", AKTFPAS_SEL_Items[(uint32_t)EpD[SET_BATT_DISC_CHK_EN][dev_setting_edit_mode].V1]);
 			GLCD_PrintString(86, (i + 1) * 9, M);
 		}
 //		else if (DEVICE_SETT_Items[dev_set_disp_index_].V1 == SET_OVTM_OPEN_DUR) {

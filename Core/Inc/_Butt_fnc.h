@@ -68,10 +68,10 @@ void bleft_fnc(void) {
 				if (EpD[SET_BATT_REV_DET][1].V1==1) {
 					EpD[SET_BATT_REV_DET][1].V1=0;
 				} else { EpD[SET_BATT_REV_DET][1].V1=1;}
-			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {						// LEFT
-				if (EpD[SET_BATT_DISC_DET][1].V1==1) {
-					EpD[SET_BATT_DISC_DET][1].V1=0;
-				} else { EpD[SET_BATT_DISC_DET][1].V1=1;}
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_CHK_EN) {						// LEFT
+				if (EpD[SET_BATT_DISC_CHK_EN][1].V1==1) {
+					EpD[SET_BATT_DISC_CHK_EN][1].V1=0;
+				} else { EpD[SET_BATT_DISC_CHK_EN][1].V1=1;}
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1-1.0;
 				if (EpD[DEV_NOM_VOUT][1].V1 <= 0)
@@ -267,10 +267,10 @@ void bright_fnc(void) {
 				if (EpD[SET_BATT_REV_DET][1].V1==1) {
 					EpD[SET_BATT_REV_DET][1].V1=0;
 				} else { EpD[SET_BATT_REV_DET][1].V1=1;}
-			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {							// RIGHT
-				if (EpD[SET_BATT_DISC_DET][1].V1==1) {
-					EpD[SET_BATT_DISC_DET][1].V1=0;
-				} else { EpD[SET_BATT_DISC_DET][1].V1=1;}
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_CHK_EN) {							// RIGHT
+				if (EpD[SET_BATT_DISC_CHK_EN][1].V1==1) {
+					EpD[SET_BATT_DISC_CHK_EN][1].V1=0;
+				} else { EpD[SET_BATT_DISC_CHK_EN][1].V1=1;}
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {								// RIGHT
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1+1.0;
 				if (EpD[DEV_NOM_VOUT][1].V1 >= VDC_NOM_MAX)
@@ -420,10 +420,10 @@ void bup_fnc(void) {
 				if (EpD[SET_BATT_REV_DET][1].V1==1) {
 					EpD[SET_BATT_REV_DET][1].V1=0;
 				} else { EpD[SET_BATT_REV_DET][1].V1=1;}
-			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {							// UP
-				if (EpD[SET_BATT_DISC_DET][1].V1==1) {
-					EpD[SET_BATT_DISC_DET][1].V1=0;
-				} else { EpD[SET_BATT_DISC_DET][1].V1=1;}
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_CHK_EN) {							// UP
+				if (EpD[SET_BATT_DISC_CHK_EN][1].V1==1) {
+					EpD[SET_BATT_DISC_CHK_EN][1].V1=0;
+				} else { EpD[SET_BATT_DISC_CHK_EN][1].V1=1;}
 			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {							// UP
 				EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1+0.1;
 				if (EpD[DEV_NOM_VOUT][1].V1 >= VDC_NOM_MAX)
@@ -792,10 +792,10 @@ void bdown_fnc(void) {
     			if (EpD[SET_BATT_REV_DET][1].V1==1) {
     				EpD[SET_BATT_REV_DET][1].V1=0;
     			} else { EpD[SET_BATT_REV_DET][1].V1=1;}
-			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_DET) {		// DOWN
-				if (EpD[SET_BATT_DISC_DET][1].V1==1) {
-					EpD[SET_BATT_DISC_DET][1].V1=0;
-				} else { EpD[SET_BATT_DISC_DET][1].V1=1;}
+			} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_DISC_CHK_EN) {		// DOWN
+				if (EpD[SET_BATT_DISC_CHK_EN][1].V1==1) {
+					EpD[SET_BATT_DISC_CHK_EN][1].V1=0;
+				} else { EpD[SET_BATT_DISC_CHK_EN][1].V1=1;}
     		} else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==DEV_NOM_VOUT) {
     			EpD[DEV_NOM_VOUT][1].V1=EpD[DEV_NOM_VOUT][1].V1-0.1;
     			if (EpD[DEV_NOM_VOUT][1].V1 <= VDC_NOM_MIN) {
