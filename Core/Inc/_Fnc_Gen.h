@@ -14,7 +14,7 @@ void inline extern actions_after_charge_voltage_change();
 void inline extern DEV_NOM_VOUT_changed_fc(void);
 
 
-void compress_REL_OUT_order_to_parts(void);
+void save_REL_OUT_order_to_EEP(void);
 void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void);
 void generate_rel_ord_tb_from_REL_OUT_order_vector_fc(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
@@ -1058,7 +1058,7 @@ void print_REL_OUT_Table() {
 }
 
 
-void compress_REL_OUT_order_to_parts(void) {
+void save_REL_OUT_order_to_EEP(void) {
     REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_order[16]; sıralama bu global vektöre kaydediliyor.
     REL_OUT_order_part2 = 0; // ön panelden sıralama değiştirilirse, bu vektör güncelleniyor.
     REL_OUT_order_part3 = 0; // bu fonksiyon ile de 4 tane 30 bitlik sayıya dönüştürülerek eeproma kaydediliyor.
