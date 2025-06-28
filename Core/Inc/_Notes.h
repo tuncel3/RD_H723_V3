@@ -143,7 +143,8 @@ Relay, röle, çıkış kontakları sistemi.
 bir tane sıralama vektörü var. adı REL_OUT_order[i]
 hangi sırada hangi durumun rölesi var bunu kaydediyor
 REL_OUT_order[0] START_STOP_REL
-REL_OUT_order[0] VAC_LO_FC_REL
+REL_OUT_order[1] VAC_LO_FC_REL
+REL_OUT_order[2] LINE_FUSE_OFF_FC_REL
 
 
 
