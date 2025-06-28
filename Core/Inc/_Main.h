@@ -135,6 +135,10 @@ state_set(ST_DROPPER_K1, 1);
 state_set(ST_DROPPER_K2, 1);
 
 frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
+
+generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
+generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
+
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -142,17 +146,10 @@ state_set(ST_LINE_MCCB_OFF, !isInSet_(SW_LINE_P));
 state_set(ST_BATT_MCCB_OFF, !isInSet_(SW_BATT_P));
 state_set(ST_LOAD_MCCB_OFF, !isInSet_(SW_LOAD_P));
 
-//en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection
-//disb_uart_msg_group(pr_btln);
-
 ///////////////////////////////////////////////////////////
 // Temp sensor init
 tmp144_init_and_assign();
 ///////////////////////////////////////////////////////////
-
-generate_REL_OUT_order_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
-generate_rel_ord_tb_from_REL_OUT_order_vector_fc(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // cihaz ilk açılışta doğrultucuyu direk devreye alacak mı.
@@ -167,6 +164,9 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 	PRF_GEN("Yönetim ayarları -> Açılışta aktif özelliği.");
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection
+//disb_uart_msg_group(pr_btln);
 
 
 // 4 - eeprom okuma başarısız ise arıza durumu gösterilmeli.
