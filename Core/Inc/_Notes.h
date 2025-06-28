@@ -138,5 +138,35 @@ n014
  *   dolana kadar yeni basış görülmez.
  *====================================================================*/
 
+Relay, röle, çıkış kontakları sistemi.
+16 tane çıkış rölesi var.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
