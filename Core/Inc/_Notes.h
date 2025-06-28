@@ -150,8 +150,8 @@ Bu vektör sıkıştırılarak eeprom a kaydediliyor.
 Açılışta eepromdan sıkıştırılmış data alınarak bu vektör oluşturuluyor. generate_REL_OUT_order_vect_from_eeprom_parts_fc();
 Bir de bir tablo var. adı rel_ord_tb[].
 Açışışta bu tablo da güncelleniyor. generate_rel_ord_tb_from_REL_OUT_order_vector_fc();
-Bu tablo eepromdaki sıralamaya göre oluşturuluyor.
-
+Bu tablo, eepromdaki sıralamaya göre oluşturuluyor.
+Böylece elimizde kullanıcının isteğine göre sıralanmış röle durum tablosu oluşuyor.
 
 
 
