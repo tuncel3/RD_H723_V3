@@ -1089,7 +1089,6 @@ void compress_REL_OUT_order_to_parts(void) {
     Rec_Dat_to_EEp_f(REL_OUT_4);
 }
 
-
 void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void) {
 
     REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
