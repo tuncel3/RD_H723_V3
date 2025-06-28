@@ -1059,12 +1059,11 @@ void print_REL_OUT_Table() {
 
 
 void compress_REL_OUT_order_to_parts(void) {
-    REL_OUT_order_part1 = 0;
-    REL_OUT_order_part2 = 0;
-    REL_OUT_order_part3 = 0;
+    REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_order[16]; sıralama bu global vektöre kaydediliyor.
+    REL_OUT_order_part2 = 0; // ön panelden sıralama değiştirilirse, bu vektör güncelleniyor.
+    REL_OUT_order_part3 = 0; // bu fonksiyon ile de 4 tane 30 bitlik sayıya dönüştürülerek eeproma kaydediliyor.
     REL_OUT_order_part4 = 0;
-    // rel_names_t REL_OUT_order[16]; sıralama bu global vektöre kaydediliyor.
-    // örneğin VAC_LO_FC_REL
+
     for (int i = 0; i < 16; i++) {
         uint32_t val = REL_OUT_order[i] & 0x1F;  // 5-bit
 
