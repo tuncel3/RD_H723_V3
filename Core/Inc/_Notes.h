@@ -145,6 +145,8 @@ hangi sırada hangi durumun rölesi var bunu kaydediyor
 REL_OUT_order[0] START_STOP_REL
 REL_OUT_order[1] VAC_LO_FC_REL
 REL_OUT_order[2] LINE_FUSE_OFF_FC_REL
+Kullanıcı sıralama değiştirince bu vektörde sağdaki elmanlar değişiyor.
+Bu vektör sıkıştırılarak eeprom a kaydediliyor.
 
 
 
