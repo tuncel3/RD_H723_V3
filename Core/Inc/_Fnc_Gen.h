@@ -1067,8 +1067,8 @@ void compress_REL_OUT_order_to_parts(void) {
     for (int i = 0; i < 16; i++) {
         uint32_t val = REL_OUT_order[i] & 0x1F;  // 5-bit
 
-        if (i < 4) {
-            REL_OUT_order_part1 |= (val << (i * 5));
+        if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
+            REL_OUT_order_part1 |= (val << (i * 5)); // 4 tan 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
         } else if (i < 8) {
             REL_OUT_order_part2 |= (val << ((i - 4) * 5));
         } else if (i < 12) {
