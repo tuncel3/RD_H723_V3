@@ -1063,8 +1063,9 @@ void compress_REL_OUT_order_to_parts(void) {
     REL_OUT_order_part2 = 0;
     REL_OUT_order_part3 = 0;
     REL_OUT_order_part4 = 0;
-
-    for (int i = 0; i < 16; i++) { // rel_names_t REL_OUT_order[16]; sıralama bu global vektöre kaydediliyor
+    // rel_names_t REL_OUT_order[16]; sıralama bu global vektöre kaydediliyor.
+    // örneğin VAC_LO_FC_REL
+    for (int i = 0; i < 16; i++) {
         uint32_t val = REL_OUT_order[i] & 0x1F;  // 5-bit
 
         if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
