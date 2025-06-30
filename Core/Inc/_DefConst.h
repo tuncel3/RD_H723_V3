@@ -1030,7 +1030,8 @@ typedef enum {
 	SAVE_enum,
 	THYSTOP_enum,
 	ACTIVE_enum,
-	LCD_roll_enum		// bu state LCD ekranda üstte döndürülecek
+	LCD_roll_enum,		// bu state LCD ekranda üstte döndürülecek
+	REL_OUT_enum
 } State_Code_Action_Bits;
 
 typedef enum {
@@ -1194,22 +1195,22 @@ typedef struct {
 } rel_ord_st;
 
 rel_ord_st REL_OUT_TB[] = {
-    { START_STOP_REL,            1,  0, "Başlat-Durdur" },
-    { VAC_HG_FC_REL,             2,  0, "Şebeke Yüksek" },
-    { VAC_LO_FC_REL,             3,  0, "Şebeke Düşük" },
-    { LOAD_DC_HG_FC_REL,         4,  0, "Yük VDC Yüksk" },
-    { LOAD_DC_LW_FC_REL,         5,  0, "Yük VDC Düşük" },
-    { DC_LEAK_POSITIVE_FC_REL,   6,  0, "DC Kaçak Poztf" },
-    { DC_LEAK_NEGATIVE_FC_REL,   7,  0, "DC Kaçak Negtf" },
-    { LINE_FUSE_OFF_FC_REL,      8,  0, "Giriş Sigr Off" },
-    { BATT_FUSE_OFF_FC_REL,      9,  0, "Akü Sigrta Off" },
-    { LOAD_FUSE_OFF_FC_REL,      10, 0, "Yük Sigrt Atık" },
-    { OVERTEMP_ALARM_FC_REL,     11, 0, "Aşrı Sıck Uyar" },
-    { FAN_FAULT_FC_REL,          12, 0, "Fan Arızası" },
-    { BATT_LINE_BROKEN_FC_REL,   13, 0, "Akü Hattı Kopuk" },
-    { BATT_REVERSE_FC_REL,       14, 0, "Akü Ters" },
-    { BATTERY_FAULT_FC_REL,      15, 0, "Akü Arızası" },
-    { GENERAL_FAULT_FC_REL,      16, 0, "Genel Arıza" }
+    { START_STOP_REL,            1,  0, "Başlat-Durdur", STOP_FC },
+    { VAC_HG_FC_REL,             2,  0, "Şebeke Yüksek", VAC_HG_FC },
+    { VAC_LO_FC_REL,             3,  0, "Şebeke Düşük", VAC_LO_FC },
+    { LOAD_DC_HG_FC_REL,         4,  0, "Yük VDC Yüksk", LOAD_DC_HG_FC },
+    { LOAD_DC_LW_FC_REL,         5,  0, "Yük VDC Düşük", LOAD_DC_LW_FC },
+    { DC_LEAK_POSITIVE_FC_REL,   6,  0, "DC Kaçak Poztf", DC_LEAK_POSITIVE_FC },
+    { DC_LEAK_NEGATIVE_FC_REL,   7,  0, "DC Kaçak Negtf", DC_LEAK_POSITIVE_FC },
+    { LINE_FUSE_OFF_FC_REL,      8,  0, "Giriş Sigr Off", DC_LEAK_POSITIVE_FC },
+    { BATT_FUSE_OFF_FC_REL,      9,  0, "Akü Sigrta Off", DC_LEAK_POSITIVE_FC },
+    { LOAD_FUSE_OFF_FC_REL,      10, 0, "Yük Sigrt Atık", DC_LEAK_POSITIVE_FC },
+    { OVERTEMP_ALARM_FC_REL,     11, 0, "Aşrı Sıck Uyar", DC_LEAK_POSITIVE_FC },
+    { FAN_FAULT_FC_REL,          12, 0, "Fan Arızası", DC_LEAK_POSITIVE_FC   },
+    { BATT_LINE_BROKEN_FC_REL,   13, 0, "Akü Hattı Kopuk", DC_LEAK_POSITIVE_FC },
+    { BATT_REVERSE_FC_REL,       14, 0, "Akü Ters", DC_LEAK_POSITIVE_FC },
+    { BATTERY_FAULT_FC_REL,      15, 0, "Akü Arızası", DC_LEAK_POSITIVE_FC },
+    { GENERAL_FAULT_FC_REL,      16, 0, "Genel Arıza", DC_LEAK_POSITIVE_FC }
 };
 
 uint8_t rel_dat_tb_size = NUM_REL_CODES;
