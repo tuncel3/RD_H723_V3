@@ -1158,6 +1158,7 @@ typedef struct {
 	rel_names_t rel_dat_nm;
     uint8_t rel_dat_val;
     char* rel_dat_desc;
+    uint8_t rel_dat_tb_st_name;
 } rel_dat_stru;
 rel_dat_stru REL_DAT_TB[] = {
 	{ START_STOP_REL,            0, "Başlat-Durdur", 	STOP_FC },
@@ -1176,45 +1177,16 @@ rel_dat_stru REL_DAT_TB[] = {
 	{ BATT_REVERSE_FC_REL,       0, "Akü Ters", 		BATT_REVERSE_FC },
 	{ BATTERY_FAULT_FC_REL,      0, "Akü Arızası", 		BATTERY_FAULT_FC },
 	{ GENERAL_FAULT_FC_REL,      0, "Genel Arıza", 		GENERAL_FAULT_FC },
-	{ VAC_OFF_FC_REL,            0, "Şebeke Yok", 		0 },
-	{ VAC_ON_FC_REL,             0, "Şebeke Var", 		0 },
-	{ BOOST_CHARGE_FC_REL,       0, "Hızlı Şarj", 		0 },
-	{ FLOAT_CHARGE_FC_REL,       0, "Normal Şarj", 		0 },
-	{ RECT_DC_HG_FC_REL,         0, "Doğr VDC Yüksk", 	0 },
-	{ RECT_DC_LW_FC_REL,         0, "Doğr VDC Düşük", 	0 },
-	{ OVERTEMP_OPEN_FC_REL,      0, "Aşrı Sıck Açma", 	0 },
-	{ BAT_TEMP_ZERO_FC_REL,      0, "Akü Sıck Sıfr C", 	0 },
-	{ BAT_TEMP_50_FC_REL,        0, "Akü Sıck 50 C", 	0 },
-	{ EMPTY_REL,        		 0, "     Boş", 		0 }
-};
-
-rel_dat_stru REL_DAT_TB[] = {
-	{ START_STOP_REL,            0, "Başlat-Durdur" },
-	{ VAC_HG_FC_REL,             0, "Şebeke Yüksek" },
-	{ VAC_LO_FC_REL,             0, "Şebeke Düşük" },
-	{ LOAD_DC_HG_FC_REL,         0, "Yük VDC Yüksk" },
-	{ LOAD_DC_LW_FC_REL,         0, "Yük VDC Düşük" },
-	{ DC_LEAK_POSITIVE_FC_REL,   0, "DC Kaçak Poztf" },
-	{ DC_LEAK_NEGATIVE_FC_REL,   0, "DC Kaçak Negtf" },
-	{ LINE_FUSE_OFF_FC_REL,      0, "Giriş Sigr Off" },
-	{ BATT_FUSE_OFF_FC_REL,      0, "Akü Sigrta Off" },
-	{ LOAD_FUSE_OFF_FC_REL,      0, "Yük Sigrt Atık" },
-	{ OVERTEMP_ALARM_FC_REL,     0, "Aşrı Sıck Uyar" },
-	{ FAN_FAULT_FC_REL,          0, "Fan Arızası" },
-	{ BATT_LINE_BROKEN_FC_REL,   0, "Akü Hattı Kopuk" },
-	{ BATT_REVERSE_FC_REL,       0, "Akü Ters" },
-	{ BATTERY_FAULT_FC_REL,      0, "Akü Arızası" },
-	{ GENERAL_FAULT_FC_REL,      0, "Genel Arıza" },
-	{ VAC_OFF_FC_REL,            0, "Şebeke Yok" },
-	{ VAC_ON_FC_REL,             0, "Şebeke Var" },
-	{ BOOST_CHARGE_FC_REL,       0, "Hızlı Şarj" },
-	{ FLOAT_CHARGE_FC_REL,       0, "Normal Şarj" },
-	{ RECT_DC_HG_FC_REL,         0, "Doğr VDC Yüksk" },
-	{ RECT_DC_LW_FC_REL,         0, "Doğr VDC Düşük" },
-	{ OVERTEMP_OPEN_FC_REL,      0, "Aşrı Sıck Açma" },
-	{ BAT_TEMP_ZERO_FC_REL,      0, "Akü Sıck Sıfr C" },
-	{ BAT_TEMP_50_FC_REL,        0, "Akü Sıck 50 C" },
-	{ EMPTY_REL,        		 0, "     Boş" }
+	{ VAC_OFF_FC_REL,            0, "Şebeke Yok", 		VAC_OFF_FC },
+	{ VAC_ON_FC_REL,             0, "Şebeke Var", 		VAC_ON_FC },
+	{ BOOST_CHARGE_FC_REL,       0, "Hızlı Şarj", 		BOOST_CHARGE_FC },
+	{ FLOAT_CHARGE_FC_REL,       0, "Normal Şarj", 		ST_FLOAT_CHARGE },
+	{ RECT_DC_HG_FC_REL,         0, "Doğr VDC Yüksk", 	RECT_DC_HG_FC },
+	{ RECT_DC_LW_FC_REL,         0, "Doğr VDC Düşük", 	RECT_DC_LW_FC },
+	{ OVERTEMP_OPEN_FC_REL,      0, "Aşrı Sıck Açma", 	OVERTEMP_OPEN_FC },
+	{ BAT_TEMP_ZERO_FC_REL,      0, "Akü Sıck Sıfr C", 	BAT_TEMP_ZERO_FC },
+	{ BAT_TEMP_50_FC_REL,        0, "Akü Sıck 50 C", 	BAT_TEMP_50_FC },
+	{ EMPTY_REL,        		 0, "     Boş", 		999 }
 };
 
 typedef struct {
