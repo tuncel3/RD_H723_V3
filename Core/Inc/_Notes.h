@@ -140,11 +140,11 @@ n014
 n015
 Relay, röle, çıkış kontakları sistemi.
 16 tane çıkış rölesi var.
-bir tane sıralama vektörü var. adı REL_OUT_order[i]
+bir tane sıralama vektörü var. adı REL_OUT_order_vect[i]
 hangi sırada hangi durumun rölesi var bunu kaydediyor
-REL_OUT_order[0] START_STOP_REL
-REL_OUT_order[1] VAC_LO_FC_REL
-REL_OUT_order[2] LINE_FUSE_OFF_FC_REL
+REL_OUT_order_vect[0] START_STOP_REL
+REL_OUT_order_vect[1] VAC_LO_FC_REL
+REL_OUT_order_vect[2] LINE_FUSE_OFF_FC_REL
 Kullanıcı sıralama değiştirince bu vektörde sağdaki elmanlar değişiyor.
 Bu vektör sıkıştırılarak eeprom a kaydediliyor.
 Açılışta eepromdan sıkıştırılmış data alınarak bu vektör oluşturuluyor. generate_REL_OUT_order_vect_from_eeprom_parts_fc();

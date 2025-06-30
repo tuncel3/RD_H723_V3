@@ -1059,13 +1059,13 @@ void print_REL_OUT_Table() {
 
 
 void save_REL_OUT_order_to_EEP(void) {
-    REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_order[16]; sıralama bu global vektöre kaydediliyor.
+    REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_order_vect[16]; sıralama bu global vektöre kaydediliyor.
     REL_OUT_order_part2 = 0; // ön panelden sıralama değiştirilirse, bu vektör güncelleniyor.
     REL_OUT_order_part3 = 0; // bu fonksiyon ile de 4 tane 30 bitlik sayıya dönüştürülerek eeproma kaydediliyor.
     REL_OUT_order_part4 = 0;
 
     for (int i = 0; i < 16; i++) {
-        uint32_t val = REL_OUT_order[i] & 0x1F;  // 5-bit
+        uint32_t val = REL_OUT_order_vect[i] & 0x1F;  // 5-bit
 
         if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
             REL_OUT_order_part1 |= (val << (i * 5)); // 4 tan 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
@@ -1108,20 +1108,20 @@ void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void) {
         } else {
             val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
         }
-        REL_OUT_order[i] = (rel_names_t)val;
+        REL_OUT_order_vect[i] = (rel_names_t)val;
     }
 }
 
 void generate_rel_ord_tb_from_REL_OUT_order_vector_fc(void) {
     for (int i = 0; i < 16; i++) {
-    	rel_ord_tb[i].rel_ord_nm=REL_OUT_order[i];
+    	rel_ord_tb[i].rel_ord_nm=REL_OUT_order_vect[i];
     	rel_ord_tb[i].rel_ord_desc=rel_dat_tb[rel_ord_tb[i].rel_ord_nm].rel_dat_desc;
     }
 }
 
 void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
     for (int i = 0; i < 16; ++i) {
-        REL_OUT_order[i] = rel_ord_tb[i].rel_ord_nm;
+        REL_OUT_order_vect[i] = rel_ord_tb[i].rel_ord_nm;
     }
 }
 void generate_REL_24Bit_Data_fc(void) {
