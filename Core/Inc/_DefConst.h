@@ -1060,7 +1060,6 @@ typedef enum {
 	BAT_TEMP_ZERO_FC_REL,
 	BAT_TEMP_50_FC_REL,
 	EMPTY_REL,
-	none_REL,
     NUM_REL_CODES
 } rel_names_t;
 
@@ -1117,10 +1116,10 @@ State_Info state_list[] = {
 	// REL MB 8 BIT7 enum 36
 	{ LOAD_DC_HG_FC,              0b10111,	"Yük VDC Yüksk",       LOAD_DC_HG_FC_REL },
 	{ LOAD_DC_LW_FC,              0b10011,	"Yük VDC Düşük",       LOAD_DC_LW_FC_REL },
-	{ MANUAL_CHARGE_FC,     	  0b00000,	"(Man)",       		   none_REL },
-	{ AUTO_CHARGE_ST,        	  0b00000,	"(Oto)",  			   none_REL },
-	{ TIMED_CHARGE_FC,         	  0b10000,	"(Zmn)",        	   none_REL },
-	{ SOFT_START_ST,      	   	  0b00000,	"SFT S",  		       none_REL },
+	{ MANUAL_CHARGE_FC,     	  0b00000,	"(Man)",       		   EMPTY_REL },
+	{ AUTO_CHARGE_ST,        	  0b00000,	"(Oto)",  			   EMPTY_REL },
+	{ TIMED_CHARGE_FC,         	  0b10000,	"(Zmn)",        	   EMPTY_REL },
+	{ SOFT_START_ST,      	   	  0b00000,	"SFT S",  		       EMPTY_REL },
 	{ EEPROM_FAULT_FC,            0b00000,	"Kayit Sist Arz",      NUM_REL_CODES },
 	{ RTC_FAULT_FC,               0b00000,	"RTC Arz",             NUM_REL_CODES },
 	{ VAC_R_RMS_HG_FAULT_FC,      0b00000,	"VINR RMS Yüksek",     NUM_REL_CODES },
