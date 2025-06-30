@@ -19,7 +19,7 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void);
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
 void generate_REL_24Bit_Data_fc(void);
-void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val);
+void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val);
 
 #include "_EEP_M95P32.h"
 #include "_Fnc_RTC.h"
@@ -886,11 +886,11 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //	}
 }
 
-void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val)
+void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val)
 {
     // Update REL_DAT_TB
     for (int i = 0; i < rel_dat_tb_size; i++) {
-        if (REL_DAT_TB[i].rel_dat_nm == rname) {
+        if (REL_DAT_TB[i].rel_dat_nm == rname) { // ekrandan seçim yapılırken rel dat tb den liste gösteriliyor. bu arada value lar da gösterilebilsin diye bu tabloda da value lar saklanıyor.
             REL_DAT_TB[i].rel_dat_val = new_val;
             break;  // Found the matching enum, so we can stop searching
         }
@@ -934,8 +934,8 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	REL_MB_8Bit_Data |= REL8_bit; }  // mb röleler.
     		REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
-        	LED_16_Data |= (1U << GENERAL_FAULT_FC);
-        	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 1); } // activate general fault LED if associated
+        	LED_16_Data |= (1U << GENERAL_FAULT_FC); // activate general fault LED if associated
+        	set_REL_OUT_vals_in_tables(GENERAL_FAULT_FC_REL, 1); }
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) {  // stop thy drv if fault requires
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
@@ -944,10 +944,10 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
         if (state_code == START_FC) {
-        	change_rel_vals_in_tables_f(START_STOP_REL, 1);
+        	set_REL_OUT_vals_in_tables(START_STOP_REL, 1);
         }
         if (state_code == STOP_FC) {
-        	change_rel_vals_in_tables_f(START_STOP_REL, 0);
+        	set_REL_OUT_vals_in_tables(START_STOP_REL, 0);
         }
 		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
 
@@ -963,7 +963,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 			REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
-        	change_rel_vals_in_tables_f(GENERAL_FAULT_FC_REL, 0); }
+        	set_REL_OUT_vals_in_tables(GENERAL_FAULT_FC_REL, 0); }
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
@@ -976,7 +976,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     rel_names_t relCode = state_list[state_code].rel_dat_nm;  // 4. sütunda tanımlı enum
     // ACTIVE_enum set mi değil mi
     uint8_t activeBitSet = (state_list[state_code].action & (1 << ACTIVE_enum)) ? 1 : 0;
-    change_rel_vals_in_tables_f(relCode, activeBitSet);
+    set_REL_OUT_vals_in_tables(relCode, activeBitSet);
 ////// OUT RELAY ACTIVATE DEACTIVATE ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
