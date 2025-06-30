@@ -621,7 +621,6 @@ if (!chg_setting_edit_mode) {
 				rel_dat_disp_index = (rel_dat_disp_index - 1 + rel_dat_tb_size) % rel_dat_tb_size;		// UP
 			}
 			rel_dat_tb_sel = (rel_dat_arrow_loc + rel_dat_disp_index) % rel_dat_tb_size;
-//			if (rel_dat_tb_sel == rel_dat_tb_size-1) rel_dat_tb_sel=rel_dat_tb_size-2;
         }
     }
 

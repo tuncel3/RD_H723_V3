@@ -156,6 +156,9 @@ Bu tablo oluşturulurken gereken bazı bilgiler REL_DAT_TB[] den alınıyor.
 Yani REL_OUT_ORDER_vect sıralaması ve REL_DAT_TB[] deki bilgiler kullanılarak REL_OUT_TB[] hazırlanıyor.
 Böylece elimizde kullanıcının isteğine göre sıralanmış röle durum tablosu oluşuyor (REL_OUT_TB[]).
 Rölelerin durumlarındaki değişiklikler bu tabloya işleniyor.
+Kullanıcı bir sıralama değişikliği yaptığında sıralamanın REL_OUT_ORDER_vect[] e uygulanması
+generate_REL_OUT_order_vect_from_ord_table_fc() ile yapılıyor.
+Bu işlem ön panelde sıralama değiştirilip enter yapıldığında yapılıyor.
 
 
 
