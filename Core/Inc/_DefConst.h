@@ -1090,20 +1090,20 @@ State_Info state_list[] = {
 	{ VAC_ON_FC,                  0b00000,	"VAC ON",              VAC_ON_FC_REL },
 	// LED 16 BIT15	enum 15
 	// LED 7 BIT0 enum 16
-	{ ST_LOAD_MCCB_OFF,      	  0b10010,	"Çıkş Sigrt Atık",    LOAD_FUSE_OFF_FC_REL },
+	{ ST_LOAD_MCCB_OFF,      	  0b10010,	"Çıkş Sigrt Atık",     LOAD_FUSE_OFF_FC_REL },
 	{ ST_DROPPER_K1,      	  	  0b00000,	"Dropper 2 Bypass",    NUM_REL_CODES },
 	{ ST_DROPPER_K2,      	 	  0b00000,	"Dropper 1 Bypass",    NUM_REL_CODES },
-	{ ST_BATT_MCCB_OFF,           0b10010,	"Akü Sigrta Atık",    BATT_FUSE_OFF_FC_REL },
-	{ BOOST_CHARGE_FC,      	  0b10000,	"Hızl Şarj",          BOOST_CHARGE_FC_REL },
-	{ ST_FLOAT_CHARGE,      	  0b10000,	"Norm Şarj",         FLOAT_CHARGE_FC_REL },
-	{ ST_LINE_MCCB_OFF,      	  0b10110,	"Girş Sigrt Atık",    LINE_FUSE_OFF_FC_REL },
+	{ ST_BATT_MCCB_OFF,           0b10010,	"Akü Sigrta Atık",     BATT_FUSE_OFF_FC_REL },
+	{ BOOST_CHARGE_FC,      	  0b10000,	"Hızl Şarj",           BOOST_CHARGE_FC_REL },
+	{ ST_FLOAT_CHARGE,      	  0b10000,	"Norm Şarj",           FLOAT_CHARGE_FC_REL },
+	{ ST_LINE_MCCB_OFF,      	  0b10110,	"Girş Sigrt Atık",     LINE_FUSE_OFF_FC_REL },
 	// LED 7 BIT6 enum 22
 	{ RECT_SHORT_FC,              0b00110,	"DC Kısa Devre",       NUM_REL_CODES },
 	{ BATT_SHORT_FC,              0b00110,	"Akü Kısa Devre",      NUM_REL_CODES },
 	{ BATT_REVERSE_FC,            0b10010,	"Akü Ters",            BATT_REVERSE_FC_REL },
 	{ ST_BATT_LINE_BROKEN,        0b10011,	"Akü Hattı Kopuk",     BATT_LINE_BROKEN_FC_REL },
-	{ BAT_TEMP_ZERO_FC,           0b10011,	"Akü Sıcklk Sıfr",    BAT_TEMP_ZERO_FC_REL },
-	{ BAT_TEMP_50_FC,          	  0b10111,	"Akü Sıcklk 50 C",    BAT_TEMP_50_FC_REL },
+	{ BAT_TEMP_ZERO_FC,           0b10011,	"Akü Sıcklk Sıfr",     BAT_TEMP_ZERO_FC_REL },
+	{ BAT_TEMP_50_FC,          	  0b10111,	"Akü Sıcklk 50 C",     BAT_TEMP_50_FC_REL },
 	// REL MB 8 BIT0 enum 31
 	{ AUX_REL1_REL,      		  0b00000,	"Aux Rel 1",           NUM_REL_CODES },
 	{ THY_FAN1_REL,     		  0b00000,	"Tristör Fan 1",       NUM_REL_CODES },
