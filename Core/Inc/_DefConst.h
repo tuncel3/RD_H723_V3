@@ -1069,7 +1069,7 @@ typedef struct {
     const char *name;
 	rel_names_t rel_dat_nm;
 } State_Info;
-//  LCD_ROLL - ACTIVE - THYSTOP - SAVE - SET_GEN_F_LED
+//  REL_OUT - LCD_ROLL - ACTIVE - THYSTOP - SAVE - SET_GEN_F_LED
 State_Info state_list[] = {
 	// LED 16 BIT0 enum 0
     { GENERAL_FAULT_FC,           0b00010,	"Genel Arıza",         GENERAL_FAULT_FC_REL }, // 4. sütun out relay enum u
@@ -1116,10 +1116,10 @@ State_Info state_list[] = {
 	// REL MB 8 BIT7 enum 36
 	{ LOAD_DC_HG_FC,              0b10111,	"Yük VDC Yüksk",       LOAD_DC_HG_FC_REL },
 	{ LOAD_DC_LW_FC,              0b10011,	"Yük VDC Düşük",       LOAD_DC_LW_FC_REL },
-	{ MANUAL_CHARGE_FC,     	  0b00000,	"(Man)",       		   EMPTY_REL },
-	{ AUTO_CHARGE_ST,        	  0b00000,	"(Oto)",  			   EMPTY_REL },
-	{ TIMED_CHARGE_FC,         	  0b10000,	"(Zmn)",        	   EMPTY_REL },
-	{ SOFT_START_ST,      	   	  0b00000,	"SFT S",  		       EMPTY_REL },
+	{ MANUAL_CHARGE_FC,     	  0b00000,	"(Man)",       		   NUM_REL_CODES },
+	{ AUTO_CHARGE_ST,        	  0b00000,	"(Oto)",  			   NUM_REL_CODES },
+	{ TIMED_CHARGE_FC,         	  0b10000,	"(Zmn)",        	   NUM_REL_CODES },
+	{ SOFT_START_ST,      	   	  0b00000,	"SFT S",  		       NUM_REL_CODES },
 	{ EEPROM_FAULT_FC,            0b00000,	"Kayit Sist Arz",      NUM_REL_CODES },
 	{ RTC_FAULT_FC,               0b00000,	"RTC Arz",             NUM_REL_CODES },
 	{ VAC_R_RMS_HG_FAULT_FC,      0b00000,	"VINR RMS Yüksek",     NUM_REL_CODES },
