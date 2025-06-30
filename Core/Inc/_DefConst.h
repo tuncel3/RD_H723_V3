@@ -1069,7 +1069,7 @@ typedef struct {
     const char *name;
 	rel_names_t rel_dat_nm;
 } State_Info;
-//  LCD_ROLL ACTIVE   THYSTOP  SAVE    SET_GEN_F_LED
+//  LCD_ROLL - ACTIVE - THYSTOP - SAVE - SET_GEN_F_LED
 State_Info state_list[] = {
 	// LED 16 BIT0 enum 0
     { GENERAL_FAULT_FC,           0b00010,	"Genel Arıza",         GENERAL_FAULT_FC_REL }, // 4. sütun out relay enum u
