@@ -151,9 +151,10 @@ Açılışta eepromdan sıkıştırılmış data alınarak bu vektör oluşturul
 generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc();
 Bir de bir tablo var. adı REL_OUT_TB[].
 Açılışta bu tablo da güncelleniyor. REL_OUT_ORDER_vect_to_REL_OUT_TB();
-Bu tablo, eepromdaki sıralamaya göre oluşturuluyor.
-Bu tablo oluşturulurken gereken bazı bilgiler
-Böylece elimizde kullanıcının isteğine göre sıralanmış röle durum tablosu oluşuyor.
+Bu tablo, REL_OUT_ORDER_vect kullanılarak oluşturuluyor.
+Bu tablo oluşturulurken gereken bazı bilgiler REL_DAT_TB[] den alınıyor.
+Yani REL_OUT_ORDER_vect sıralaması ve REL_DAT_TB[] deki bilgiler kullanılarak REL_OUT_TB[] hazırlanıyor.
+Böylece elimizde kullanıcının isteğine göre sıralanmış röle durum tablosu oluşuyor (REL_OUT_TB[]).
 Rölelerin durumlarındaki değişiklikler bu tabloya işleniyor.
 
 
