@@ -1012,8 +1012,40 @@ LED_7_Data &= ~(!state_get(ST_LINE_MCCB_OFF) << (ST_LINE_MCCB_OFF-16));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-LED_16_Data |= (state_get(BATTERY_FAULT_FC) << (BATTERY_FAULT_FC-0));
-LED_16_Data |= (state_get(BATTERY_FAULT_FC) << (BATTERY_FAULT_FC-0));
+LED_16_Data |= (state_get(GENERAL_FAULT_FC) << (GENERAL_FAULT_FC - 0));
+LED_16_Data |= (state_get(BATTERY_FAULT_FC) << (BATTERY_FAULT_FC - 0));
+LED_16_Data |= (state_get(OVERTEMP_ALARM_FC) << (OVERTEMP_ALARM_FC - 0));
+LED_16_Data |= (state_get(OVERTEMP_OPEN_FC) << (OVERTEMP_OPEN_FC - 0));
+LED_16_Data |= (state_get(BATTERY_CURRENT_LIMIT_FC) << (BATTERY_CURRENT_LIMIT_FC - 0));
+LED_16_Data |= (state_get(RECTIFIER_CURRENT_LIMIT_FC) << (RECTIFIER_CURRENT_LIMIT_FC - 0));
+LED_16_Data |= (state_get(DC_LEAK_NEGATIVE_FC) << (DC_LEAK_NEGATIVE_FC - 0));
+LED_16_Data |= (state_get(DC_LEAK_POSITIVE_FC) << (DC_LEAK_POSITIVE_FC - 0));
+LED_16_Data |= (state_get(RECT_DC_LW_FC) << (RECT_DC_LW_FC - 0));
+LED_16_Data |= (state_get(RECT_DC_HG_FC) << (RECT_DC_HG_FC - 0));
+LED_16_Data |= (state_get(VAC_LO_FC) << (VAC_LO_FC - 0));
+LED_16_Data |= (state_get(VAC_HG_FC) << (VAC_HG_FC - 0));
+LED_16_Data |= (state_get(STOP_FC) << (STOP_FC - 0));
+LED_16_Data |= (state_get(START_FC) << (START_FC - 0));
+LED_16_Data |= (state_get(VAC_OFF_FC) << (VAC_OFF_FC - 0));
+LED_16_Data |= (state_get(VAC_ON_FC) << (VAC_ON_FC - 0));
+
+LED_16_Data &= ~(!state_get(GENERAL_FAULT_FC) << (GENERAL_FAULT_FC-0));
+LED_16_Data &= ~(!state_get(BATTERY_FAULT_FC) << (BATTERY_FAULT_FC-0));
+LED_16_Data &= ~(!state_get(OVERTEMP_ALARM_FC) << (OVERTEMP_ALARM_FC-0));
+LED_16_Data &= ~(!state_get(OVERTEMP_OPEN_FC) << (OVERTEMP_OPEN_FC-0));
+LED_16_Data &= ~(!state_get(BATTERY_CURRENT_LIMIT_FC) << (BATTERY_CURRENT_LIMIT_FC-0));
+LED_16_Data &= ~(!state_get(RECTIFIER_CURRENT_LIMIT_FC) << (RECTIFIER_CURRENT_LIMIT_FC-0));
+LED_16_Data &= ~(!state_get(DC_LEAK_NEGATIVE_FC) << (DC_LEAK_NEGATIVE_FC-0));
+LED_16_Data &= ~(!state_get(DC_LEAK_POSITIVE_FC) << (DC_LEAK_POSITIVE_FC-0));
+LED_16_Data &= ~(!state_get(RECT_DC_LW_FC) << (RECT_DC_LW_FC-0));
+LED_16_Data &= ~(!state_get(RECT_DC_HG_FC) << (RECT_DC_HG_FC-0));
+LED_16_Data &= ~(!state_get(VAC_LO_FC) << (VAC_LO_FC-0));
+LED_16_Data &= ~(!state_get(VAC_HG_FC) << (VAC_HG_FC-0));
+LED_16_Data &= ~(!state_get(STOP_FC) << (STOP_FC-0));
+LED_16_Data &= ~(!state_get(START_FC) << (START_FC-0));
+LED_16_Data &= ~(!state_get(VAC_OFF_FC) << (VAC_OFF_FC-0));
+LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
+
 
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
