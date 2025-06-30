@@ -155,11 +155,11 @@ state_set(ST_LOAD_MCCB_OFF, !isInSet_(SW_LOAD_P)); // LOAD FUSE OFF MONITORING
 ////// BATTERY_FAULT_FC decide //////////////////////////////////////////////////////////////////////////////////////
 if (!state_get(BATTERY_FAULT_FC)) {
 	if (state_get(ST_BATT_MCCB_OFF) || state_get(ST_BATT_LINE_BROKEN) || state_get(BATT_REVERSE_FC) || state_get(BATT_SHORT_FC)) {
-		apply_state_changes_f(BATTERY_FAULT_FC, 1);
+		state_set(BATTERY_FAULT_FC, 1);
 	}
 } else if (state_get(BATTERY_FAULT_FC)) {
 	if (!state_get(ST_BATT_MCCB_OFF) && !state_get(ST_BATT_LINE_BROKEN) && !state_get(BATT_REVERSE_FC) && !state_get(BATT_SHORT_FC)) {
-		apply_state_changes_f(BATTERY_FAULT_FC, 0);
+		state_set(BATTERY_FAULT_FC, 0);
 	}
 }
 ////// BATTERY_FAULT_FC decide //////////////////////////////////////////////////////////////////////////////////////
