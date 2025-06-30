@@ -897,8 +897,8 @@ void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val)
     }
     // Update REL_OUT_TB
     for (int j = 0; j < rel_ord_tb_size; j++) {
-        if (REL_OUT_TB[j].rel_ord_nm == rname) {
-            REL_OUT_TB[j].rel_ord_val = new_val;
+        if (REL_OUT_TB[j].rel_out_tb_nm == rname) {
+            REL_OUT_TB[j].rel_out_tb_val = new_val;
             generate_REL_24Bit_Data_fc(); // röle değerleri update edildiği için 24 bit değer de güncelleniyor.
             break;  // Found and updated, so we can stop searching
         }
@@ -908,8 +908,8 @@ void generate_REL_24Bit_Data_fc(void) {
     rel_out_16Bit_Data = 0; // Clear current value
 
     for (int i = 0; i < 16; ++i) {
-        uint8_t order = REL_OUT_TB[i].rel_ord_tb_ind;
-        uint8_t val = REL_OUT_TB[i].rel_ord_val;
+        uint8_t order = REL_OUT_TB[i].rel_out_tb_ind;
+        uint8_t val = REL_OUT_TB[i].rel_out_tb_val;
 
         // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
         int reverse_order = 16 - order; // Yani, 16->1, 15->2, 14->3, ...
@@ -1088,7 +1088,7 @@ delay_1ms(100);
 
 void print_REL_OUT_Table() {
     for (int i = 0; i < 16; i++) {
-		PRF_GEN("Order %d %s", REL_OUT_TB[i].rel_ord_nm, REL_OUT_TB[i].rel_ord_desc);
+		PRF_GEN("Order %d %s", REL_OUT_TB[i].rel_out_tb_nm, REL_OUT_TB[i].rel_out_tb_desc);
 		delay_1ms(10);
     }
 }
@@ -1150,14 +1150,14 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
 
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
     for (int i = 0; i < 16; i++) {
-    	REL_OUT_TB[i].rel_ord_nm=REL_OUT_ORDER_vect[i];
-    	REL_OUT_TB[i].rel_ord_desc=REL_DAT_TB[REL_OUT_ORDER_vect[i]].rel_dat_desc;
+    	REL_OUT_TB[i].rel_out_tb_nm=REL_OUT_ORDER_vect[i];
+    	REL_OUT_TB[i].rel_out_tb_desc=REL_DAT_TB[REL_OUT_ORDER_vect[i]].rel_dat_desc;
     }
 }
 
 void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
     for (int i = 0; i < 16; ++i) {
-        REL_OUT_ORDER_vect[i] = REL_OUT_TB[i].rel_ord_nm;
+        REL_OUT_ORDER_vect[i] = REL_OUT_TB[i].rel_out_tb_nm;
     }
 }
 

@@ -1188,10 +1188,10 @@ rel_dat_stru REL_DAT_TB[] = {
 };
 
 typedef struct {
-	rel_names_t rel_ord_nm;
-    uint8_t rel_ord_tb_ind;
-    uint8_t rel_ord_val;
-    char* rel_ord_desc;
+	rel_names_t rel_out_tb_nm;
+    uint8_t rel_out_tb_ind;
+    uint8_t rel_out_tb_val;
+    char* rel_out_tb_desc;
 } rel_ord_st;
 
 rel_ord_st REL_OUT_TB[] = {
