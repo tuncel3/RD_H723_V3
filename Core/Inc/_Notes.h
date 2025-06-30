@@ -140,16 +140,16 @@ n014
 n015
 Relay, röle, çıkış kontakları sistemi.
 16 tane çıkış rölesi var.
-bir tane sıralama vektörü var. adı REL_OUT_order_vect[i]
+bir tane sıralama vektörü var. adı REL_OUT_ORDER_vect[i]
 hangi sırada hangi durumun rölesi var bunu kaydediyor
-REL_OUT_order_vect[0] START_STOP_REL
-REL_OUT_order_vect[1] VAC_LO_FC_REL
-REL_OUT_order_vect[2] LINE_FUSE_OFF_FC_REL
+REL_OUT_ORDER_vect[0] START_STOP_REL
+REL_OUT_ORDER_vect[1] VAC_LO_FC_REL
+REL_OUT_ORDER_vect[2] LINE_FUSE_OFF_FC_REL
 Kullanıcı sıralama değiştirince bu vektörde sağdaki elmanlar değişiyor.
 Bu vektör sıkıştırılarak eeprom a kaydediliyor.
 Açılışta eepromdan sıkıştırılmış data alınarak bu vektör oluşturuluyor. generate_REL_OUT_order_vect_from_eeprom_parts_fc();
-Bir de bir tablo var. adı rel_ord_tb[].
-Açışışta bu tablo da güncelleniyor. generate_rel_ord_tb_from_REL_OUT_order_vector_fc();
+Bir de bir tablo var. adı REL_OUT_TB[].
+Açışışta bu tablo da güncelleniyor. REL_OUT_ORDER_vect_to_REL_OUT_TB();
 Bu tablo, eepromdaki sıralamaya göre oluşturuluyor.
 Böylece elimizde kullanıcının isteğine göre sıralanmış röle durum tablosu oluşuyor.
 Rölelerin durumlarındaki değişiklikler bu tabloya işleniyor.

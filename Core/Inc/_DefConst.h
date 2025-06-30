@@ -1139,7 +1139,7 @@ State_Info state_list[] = {
 
 
 
-rel_names_t REL_OUT_order_vect[16]; // sıralama buna kaydediliyor
+rel_names_t REL_OUT_ORDER_vect[16]; // sıralama buna kaydediliyor
 uint32_t REL_OUT_order_part1 = 0;  // 20 bit. float olarak kaydedildiği için 24 bit max
 uint32_t REL_OUT_order_part2 = 0;  // 20 bit
 uint32_t REL_OUT_order_part3 = 0;  // 20 bit
@@ -1196,7 +1196,7 @@ typedef struct {
     char* rel_ord_desc;
 } rel_ord_st;
 
-rel_ord_st rel_ord_tb[] = {
+rel_ord_st REL_OUT_TB[] = {
     { START_STOP_REL,            1,  0, REL_NO, "Başlat-Durdur" },
     { VAC_HG_FC_REL,             2,  0, REL_NO, "Şebeke Yüksek" },
     { VAC_LO_FC_REL,             3,  0, REL_NO, "Şebeke Düşük" },

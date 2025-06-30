@@ -16,7 +16,7 @@ void inline extern DEV_NOM_VOUT_changed_fc(void);
 
 void save_REL_OUT_order_to_EEP(void);
 void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void);
-void generate_rel_ord_tb_from_REL_OUT_order_vector_fc(void);
+void REL_OUT_ORDER_vect_to_REL_OUT_TB(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
 void generate_REL_24Bit_Data_fc(void);
 void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val);
@@ -1052,20 +1052,20 @@ delay_1ms(100);
 
 void print_REL_OUT_Table() {
     for (int i = 0; i < 16; i++) {
-		PRF_GEN("Order %d %s", rel_ord_tb[i].rel_ord_nm, rel_ord_tb[i].rel_ord_desc);
+		PRF_GEN("Order %d %s", REL_OUT_TB[i].rel_ord_nm, REL_OUT_TB[i].rel_ord_desc);
 		delay_1ms(10);
     }
 }
 
 
 void save_REL_OUT_order_to_EEP(void) {
-    REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_order_vect[16]; sıralama bu global vektöre kaydediliyor.
+    REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_ORDER_vect[16]; sıralama bu global vektöre kaydediliyor.
     REL_OUT_order_part2 = 0; // ön panelden sıralama değiştirilirse, bu vektör güncelleniyor.
     REL_OUT_order_part3 = 0; // bu fonksiyon ile de 4 tane 30 bitlik sayıya dönüştürülerek eeproma kaydediliyor.
     REL_OUT_order_part4 = 0;
 
     for (int i = 0; i < 16; i++) {
-        uint32_t val = REL_OUT_order_vect[i] & 0x1F;  // 5-bit
+        uint32_t val = REL_OUT_ORDER_vect[i] & 0x1F;  // 5-bit
 
         if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
             REL_OUT_order_part1 |= (val << (i * 5)); // 4 tan 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
@@ -1108,28 +1108,28 @@ void generate_REL_OUT_order_vect_from_eeprom_parts_fc(void) {
         } else {
             val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
         }
-        REL_OUT_order_vect[i] = (rel_names_t)val;
+        REL_OUT_ORDER_vect[i] = (rel_names_t)val;
     }
 }
 
-void generate_rel_ord_tb_from_REL_OUT_order_vector_fc(void) {
+void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
     for (int i = 0; i < 16; i++) {
-    	rel_ord_tb[i].rel_ord_nm=REL_OUT_order_vect[i];
-    	rel_ord_tb[i].rel_ord_desc=rel_dat_tb[rel_ord_tb[i].rel_ord_nm].rel_dat_desc;
+    	REL_OUT_TB[i].rel_ord_nm=REL_OUT_ORDER_vect[i];
+    	REL_OUT_TB[i].rel_ord_desc=rel_dat_tb[REL_OUT_ORDER_vect[i]].rel_dat_desc;
     }
 }
 
 void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
     for (int i = 0; i < 16; ++i) {
-        REL_OUT_order_vect[i] = rel_ord_tb[i].rel_ord_nm;
+        REL_OUT_ORDER_vect[i] = REL_OUT_TB[i].rel_ord_nm;
     }
 }
 void generate_REL_24Bit_Data_fc(void) {
     rel_out_16Bit_Data = 0; // Clear current value
 
     for (int i = 0; i < 16; ++i) {
-        uint8_t order = rel_ord_tb[i].rel_ord_order;
-        uint8_t val = rel_ord_tb[i].rel_ord_val;
+        uint8_t order = REL_OUT_TB[i].rel_ord_order;
+        uint8_t val = REL_OUT_TB[i].rel_ord_val;
 
         // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
         int reverse_order = 16 - order; // Yani, 16->1, 15->2, 14->3, ...
@@ -1152,10 +1152,10 @@ void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val)
             break;  // Found the matching enum, so we can stop searching
         }
     }
-    // Update rel_ord_tb
+    // Update REL_OUT_TB
     for (int j = 0; j < rel_ord_tb_size; j++) {
-        if (rel_ord_tb[j].rel_ord_nm == rname) {
-            rel_ord_tb[j].rel_ord_val = new_val;
+        if (REL_OUT_TB[j].rel_ord_nm == rname) {
+            REL_OUT_TB[j].rel_ord_val = new_val;
             generate_REL_24Bit_Data_fc(); // röle değerleri update edildiği için 24 bit değer de güncelleniyor.
             break;  // Found and updated, so we can stop searching
         }
