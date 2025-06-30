@@ -908,7 +908,7 @@ void generate_REL_24Bit_Data_fc(void) {
     rel_out_16Bit_Data = 0; // Clear current value
 
     for (int i = 0; i < 16; ++i) {
-        uint8_t order = REL_OUT_TB[i].rel_ord_order;
+        uint8_t order = REL_OUT_TB[i].rel_ord_tb_ind;
         uint8_t val = REL_OUT_TB[i].rel_ord_val;
 
         // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
