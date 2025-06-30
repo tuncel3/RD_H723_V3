@@ -1159,6 +1159,34 @@ typedef struct {
     uint8_t rel_dat_val;
     char* rel_dat_desc;
 } rel_dat_stru;
+rel_dat_stru REL_DAT_TB[] = {
+	{ START_STOP_REL,            0, "Başlat-Durdur", 	STOP_FC },
+	{ VAC_HG_FC_REL,             0, "Şebeke Yüksek", 	VAC_HG_FC },
+	{ VAC_LO_FC_REL,             0, "Şebeke Düşük", 	VAC_LO_FC },
+	{ LOAD_DC_HG_FC_REL,         0, "Yük VDC Yüksk", 	LOAD_DC_HG_FC },
+	{ LOAD_DC_LW_FC_REL,         0, "Yük VDC Düşük", 	LOAD_DC_LW_FC },
+	{ DC_LEAK_POSITIVE_FC_REL,   0, "DC Kaçak Poztf", 	DC_LEAK_POSITIVE_FC },
+	{ DC_LEAK_NEGATIVE_FC_REL,   0, "DC Kaçak Negtf", 	DC_LEAK_NEGATIVE_FC },
+	{ LINE_FUSE_OFF_FC_REL,      0, "Giriş Sigr Off", 	ST_LINE_MCCB_OFF },
+	{ BATT_FUSE_OFF_FC_REL,      0, "Akü Sigrta Off", 	ST_BATT_MCCB_OFF },
+	{ LOAD_FUSE_OFF_FC_REL,      0, "Yük Sigrt Atık", 	ST_LOAD_MCCB_OFF },
+	{ OVERTEMP_ALARM_FC_REL,     0, "Aşrı Sıck Uyar", 	OVERTEMP_ALARM_FC },
+	{ FAN_FAULT_FC_REL,          0, "Fan Arızası", 		FAN_FAULT_FC },
+	{ BATT_LINE_BROKEN_FC_REL,   0, "Akü Hattı Kopuk", 	ST_BATT_LINE_BROKEN },
+	{ BATT_REVERSE_FC_REL,       0, "Akü Ters", 		BATT_REVERSE_FC },
+	{ BATTERY_FAULT_FC_REL,      0, "Akü Arızası", 		BATTERY_FAULT_FC },
+	{ GENERAL_FAULT_FC_REL,      0, "Genel Arıza", 		GENERAL_FAULT_FC },
+	{ VAC_OFF_FC_REL,            0, "Şebeke Yok", 		0 },
+	{ VAC_ON_FC_REL,             0, "Şebeke Var", 		0 },
+	{ BOOST_CHARGE_FC_REL,       0, "Hızlı Şarj", 		0 },
+	{ FLOAT_CHARGE_FC_REL,       0, "Normal Şarj", 		0 },
+	{ RECT_DC_HG_FC_REL,         0, "Doğr VDC Yüksk", 	0 },
+	{ RECT_DC_LW_FC_REL,         0, "Doğr VDC Düşük", 	0 },
+	{ OVERTEMP_OPEN_FC_REL,      0, "Aşrı Sıck Açma", 	0 },
+	{ BAT_TEMP_ZERO_FC_REL,      0, "Akü Sıck Sıfr C", 	0 },
+	{ BAT_TEMP_50_FC_REL,        0, "Akü Sıck 50 C", 	0 },
+	{ EMPTY_REL,        		 0, "     Boş", 		0 }
+};
 
 rel_dat_stru REL_DAT_TB[] = {
 	{ START_STOP_REL,            0, "Başlat-Durdur" },
