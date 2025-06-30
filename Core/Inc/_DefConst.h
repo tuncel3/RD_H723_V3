@@ -1159,7 +1159,7 @@ typedef struct {
     char* rel_dat_desc;
 } rel_dat_stru;
 
-rel_dat_stru rel_dat_tb[] = {
+rel_dat_stru REL_DAT_TB[] = {
 	{ START_STOP_REL,            0, REL_NO, "Başlat-Durdur" },
 	{ VAC_HG_FC_REL,             0, REL_NO, "Şebeke Yüksek" },
 	{ VAC_LO_FC_REL,             0, REL_NO, "Şebeke Düşük" },

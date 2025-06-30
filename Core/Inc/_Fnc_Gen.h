@@ -1115,7 +1115,7 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
     for (int i = 0; i < 16; i++) {
     	REL_OUT_TB[i].rel_ord_nm=REL_OUT_ORDER_vect[i];
-    	REL_OUT_TB[i].rel_ord_desc=rel_dat_tb[REL_OUT_ORDER_vect[i]].rel_dat_desc;
+    	REL_OUT_TB[i].rel_ord_desc=REL_DAT_TB[REL_OUT_ORDER_vect[i]].rel_dat_desc;
     }
 }
 
@@ -1145,10 +1145,10 @@ void generate_REL_24Bit_Data_fc(void) {
 
 void change_rel_vals_in_tables_f(rel_names_t rname, uint8_t new_val)
 {
-    // Update rel_dat_tb
+    // Update REL_DAT_TB
     for (int i = 0; i < rel_dat_tb_size; i++) {
-        if (rel_dat_tb[i].rel_dat_nm == rname) {
-            rel_dat_tb[i].rel_dat_val = new_val;
+        if (REL_DAT_TB[i].rel_dat_nm == rname) {
+            REL_DAT_TB[i].rel_dat_val = new_val;
             break;  // Found the matching enum, so we can stop searching
         }
     }

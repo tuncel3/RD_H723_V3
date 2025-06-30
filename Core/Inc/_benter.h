@@ -297,9 +297,9 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
     	rel_edit_mode ^=1;
 
         if (rel_disp_mode == 1) { // ekranda order değiştirildi. tabloda değiş
-        	REL_OUT_TB[rel_ord_tb_sel].rel_ord_nm= rel_dat_tb[rel_dat_tb_sel].rel_dat_nm;
-        	REL_OUT_TB[rel_ord_tb_sel].rel_ord_desc= rel_dat_tb[rel_dat_tb_sel].rel_dat_desc; // rel_dat_tb den seçili olanı al ve REL_OUT_TB ye kopyala
-        	REL_OUT_TB[rel_ord_tb_sel].rel_ord_val= rel_dat_tb[rel_dat_tb_sel].rel_dat_val;
+        	REL_OUT_TB[rel_ord_tb_sel].rel_ord_nm= REL_DAT_TB[rel_dat_tb_sel].rel_dat_nm;
+        	REL_OUT_TB[rel_ord_tb_sel].rel_ord_desc= REL_DAT_TB[rel_dat_tb_sel].rel_dat_desc; // REL_DAT_TB den seçili olanı al ve REL_OUT_TB ye kopyala
+        	REL_OUT_TB[rel_ord_tb_sel].rel_ord_val= REL_DAT_TB[rel_dat_tb_sel].rel_dat_val;
         	generate_REL_OUT_order_vect_from_ord_table_fc(); // relout order vector üret
         	generate_REL_24Bit_Data_fc(); // 24 bit data üret, shift register için
         	save_REL_OUT_order_to_EEP(); //sıkıştırılmış orderı 20 bitlik parçalara ayır ve eeproma kaydet
