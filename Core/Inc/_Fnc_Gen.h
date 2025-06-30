@@ -945,10 +945,10 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
         if (state_code == START_FC) {
-        	set_REL_OUT_vals_in_tables(START_STOP_REL, 1);
+//        	set_REL_OUT_vals_in_tables(START_STOP_REL, 1);
         }
         if (state_code == STOP_FC) {
-        	set_REL_OUT_vals_in_tables(START_STOP_REL, 0);
+//        	set_REL_OUT_vals_in_tables(START_STOP_REL, 0);
         }
 		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
 
