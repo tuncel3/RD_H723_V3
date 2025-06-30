@@ -206,18 +206,18 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			apply_state_changes_f(DC_LEAK_POSITIVE_FC, 0);
 			PRF_GEN("DC leak above pos lim removed");
 		}
-	} else if (VDCKN_perc >= EpD[DC_KAC_NEG][0].V1 && !state_get(DC_LEAK_NEGATIVE_FC)) {
+	} else if (VDCKN_perc >= EpD[DC_KAC_NEG][0].V1 && !state_get(DC_LEAK_NEG_FC)) {
 		VDCK_accept_cnt++;
 		if (VDCK_accept_cnt >= VDCK_accept_per) {
 			VDCK_accept_cnt=0;
-			apply_state_changes_f(DC_LEAK_NEGATIVE_FC, 1);
+			apply_state_changes_f(DC_LEAK_NEG_FC, 1);
 			PRF_GEN("DC leak below neg lim");
 		}
-	} else if (VDCKN_perc < EpD[DC_KAC_NEG][0].V1 && state_get(DC_LEAK_NEGATIVE_FC)) {
+	} else if (VDCKN_perc < EpD[DC_KAC_NEG][0].V1 && state_get(DC_LEAK_NEG_FC)) {
 		VDCK_return_cnt++;
 		if (VDCK_return_cnt >= VDCK_return_per) {
 			VDCK_return_cnt=0;
-			apply_state_changes_f(DC_LEAK_NEGATIVE_FC, 0);
+			apply_state_changes_f(DC_LEAK_NEG_FC, 0);
 			PRF_GEN("DC leak below neg lim removed");
 		}
 	} else {
@@ -1018,7 +1018,7 @@ LED_16_Data |= (state_get(OVERTEMP_ALARM_FC) << (OVERTEMP_ALARM_FC - 0));
 LED_16_Data |= (state_get(OVERTEMP_OPEN_FC) << (OVERTEMP_OPEN_FC - 0));
 LED_16_Data |= (state_get(BATTERY_CURRENT_LIMIT_FC) << (BATTERY_CURRENT_LIMIT_FC - 0));
 LED_16_Data |= (state_get(RECTIFIER_CURRENT_LIMIT_FC) << (RECTIFIER_CURRENT_LIMIT_FC - 0));
-LED_16_Data |= (state_get(DC_LEAK_NEGATIVE_FC) << (DC_LEAK_NEGATIVE_FC - 0));
+LED_16_Data |= (state_get(DC_LEAK_NEG_FC) << (DC_LEAK_NEG_FC - 0));
 LED_16_Data |= (state_get(DC_LEAK_POSITIVE_FC) << (DC_LEAK_POSITIVE_FC - 0));
 LED_16_Data |= (state_get(RECT_DC_LW_FC) << (RECT_DC_LW_FC - 0));
 LED_16_Data |= (state_get(RECT_DC_HG_FC) << (RECT_DC_HG_FC - 0));
@@ -1035,7 +1035,7 @@ LED_16_Data &= ~(!state_get(OVERTEMP_ALARM_FC) << (OVERTEMP_ALARM_FC-0));
 LED_16_Data &= ~(!state_get(OVERTEMP_OPEN_FC) << (OVERTEMP_OPEN_FC-0));
 LED_16_Data &= ~(!state_get(BATTERY_CURRENT_LIMIT_FC) << (BATTERY_CURRENT_LIMIT_FC-0));
 LED_16_Data &= ~(!state_get(RECTIFIER_CURRENT_LIMIT_FC) << (RECTIFIER_CURRENT_LIMIT_FC-0));
-LED_16_Data &= ~(!state_get(DC_LEAK_NEGATIVE_FC) << (DC_LEAK_NEGATIVE_FC-0));
+LED_16_Data &= ~(!state_get(DC_LEAK_NEG_FC) << (DC_LEAK_NEG_FC-0));
 LED_16_Data &= ~(!state_get(DC_LEAK_POSITIVE_FC) << (DC_LEAK_POSITIVE_FC-0));
 LED_16_Data &= ~(!state_get(RECT_DC_LW_FC) << (RECT_DC_LW_FC-0));
 LED_16_Data &= ~(!state_get(RECT_DC_HG_FC) << (RECT_DC_HG_FC-0));
