@@ -423,12 +423,6 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		uint8_t rel_ord_disp_index_=rel_ord_disp_index;
 		for (uint8_t i = 0; i < 6; i++) {
 
-		    if (rel_ord_disp_index_ < 16) {
-		    	sprintf(L, " %02d", REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_ind);
-				GLCD_PrintString(0, (i + 1) * 9, L);
-		    }
-			sprintf(L, "%s ", REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_desc);
-			GLCD_PrintString(22, (i + 1) * 9, L);
 			sprintf(L, "%d ", REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_val);
 			GLCD_PrintString(122, (i + 1) * 9, L);
 
@@ -444,7 +438,6 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
 		for (uint8_t i = 0; i < 6; i++) {
 
-			sprintf(L, " %s ", REL_DAT_TB[rel_dat_disp_index_].rel_dat_desc);
 			GLCD_PrintString(3, (i + 1) * 9, L);
 			sprintf(L, "%d ", REL_DAT_TB[rel_dat_disp_index_].rel_dat_val);
 			GLCD_PrintString(122, (i + 1) * 9, L);
