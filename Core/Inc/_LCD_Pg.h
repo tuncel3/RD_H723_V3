@@ -441,7 +441,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		GLCD_PrintString(0, 0, L);
 		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
 		for (uint8_t i = 0; i < 6; i++) {
-
+			if(is_rel_out
 //			sprintf(L, " %s ", REL_DAT_TB[rel_dat_disp_index_].rel_dat_desc);
 			GLCD_PrintString(3, (i + 1) * 9, L);
 //			sprintf(L, "%d ", REL_DAT_TB[rel_dat_disp_index_].rel_dat_val);
