@@ -423,7 +423,13 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		uint8_t rel_ord_disp_index_=rel_ord_disp_index;
 		for (uint8_t i = 0; i < 6; i++) {
 
-//			sprintf(L, "%d ", REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_val);
+		    if (rel_ord_disp_index_ < 16) {
+		    	sprintf(L, " %02d", REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_ind);
+				GLCD_PrintString(0, (i + 1) * 9, L);
+		    }
+			sprintf(L, "%s ", REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_desc);
+			GLCD_PrintString(22, (i + 1) * 9, L);
+			sprintf(L, "%d ", REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_val);
 			GLCD_PrintString(122, (i + 1) * 9, L);
 
 			rel_ord_disp_index_=(rel_ord_disp_index_+1+rel_ord_tb_size) % rel_ord_tb_size;
@@ -433,13 +439,14 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		GLCD_PrintString(0, (rel_ord_arrow_loc+1) * 9, ">");
 
 	} else if (rel_edit_mode == 1) {
-//		sprintf(L, "Kontak %02d İçin Seçim", REL_OUT_TB[rel_ord_tb_sel].rel_out_tb_ind);
+		sprintf(L, "Kontak %02d İçin Seçim", REL_OUT_TB[rel_ord_tb_sel].rel_out_tb_ind);
 		GLCD_PrintString(0, 0, L);
 		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
 		for (uint8_t i = 0; i < 6; i++) {
 
+			sprintf(L, " %s ", REL_DAT_TB[rel_dat_disp_index_].rel_dat_desc);
 			GLCD_PrintString(3, (i + 1) * 9, L);
-//			sprintf(L, "%d ", REL_DAT_TB[rel_dat_disp_index_].rel_dat_val);
+			sprintf(L, "%d ", REL_DAT_TB[rel_dat_disp_index_].rel_dat_val);
 			GLCD_PrintString(122, (i + 1) * 9, L);
 			rel_dat_disp_index_=(rel_dat_disp_index_+1+rel_dat_tb_size) % rel_dat_tb_size;
 
@@ -455,15 +462,8 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			}
 		}
     }
-
-
-
-
-
-
-
-
 }
+
 inline extern void CHARGE_SETT_pg_disp(void) {
     GLCD_PrintString(0, 0, "Şarj Ayarları");
 	char L[32]; char M[32];
