@@ -1097,7 +1097,7 @@ State_Info state_list[] = {
     { ST_LOAD_MCCB_OFF,           0b10010, "Çıkş Sigrt Atık",  LOAD_FUSE_OFF_FC_REL,      9, 0 },
     { ST_DROPPER_K1,              0b00000, "Dropper 2 Bypass", NUM_REL_CODES,            99, 0 },
     { ST_DROPPER_K2,              0b00000, "Dropper 1 Bypass", NUM_REL_CODES,            99, 0 },
-    { ST_BATT_MCCB_OFF,           0b10010, "Akü Sigrta Atık",  BATT_FUSE_OFF_FC_REL,      8, 0 },
+    { ST_BATT_MCCB_OFF,           0b10010, "Akü Sigrta Atık",  BATT_FUSE_OFF_FC_REL,      3, 0 },
     { BOOST_CHARGE_FC,            0b10000, "Hızl Şarj",        BOOST_CHARGE_FC_REL,      99, 0 },
     { ST_FLOAT_CHARGE,            0b10000, "Norm Şarj",        FLOAT_CHARGE_FC_REL,      99, 0 },
     { ST_LINE_MCCB_OFF,           0b10110, "Girş Sigrt Atık",  LINE_FUSE_OFF_FC_REL,      7, 0 },
@@ -1118,7 +1118,7 @@ State_Info state_list[] = {
     { DROP_CON1_REL,              0b00000, "Dropper 1 Bypass", NUM_REL_CODES,            99, 0 },
     { DROP_CON2_REL,              0b00000, "Dropper 2 Bypass", NUM_REL_CODES,            99, 0 },
     // REL MB 8 BIT7 enum 36
-    { LOAD_DC_HG_FC,              0b10111, "Yük VDC Yüksk",    LOAD_DC_HG_FC_REL,         3, 0 },
+    { LOAD_DC_HG_FC,              0b10111, "Yük VDC Yüksk",    LOAD_DC_HG_FC_REL,         8, 0 },
     { LOAD_DC_LW_FC,              0b10011, "Yük VDC Düşük",    LOAD_DC_LW_FC_REL,         4, 0 },
     { MANUAL_CHARGE_FC,           0b00000, "(Man)",            NUM_REL_CODES,            99, 0 },
     { AUTO_CHARGE_ST,             0b00000, "(Oto)",            NUM_REL_CODES,            99, 0 },
