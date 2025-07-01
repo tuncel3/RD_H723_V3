@@ -437,9 +437,9 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		GLCD_PrintString(0, (rel_ord_arrow_loc+1) * 9, ">");
 
 	} else if (rel_edit_mode == 1) {
+		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
 		sprintf(L, "Kontak %02d İçin Seçim", REL_OUT_ALL[rel_ord_tb_sel].rel_out_tb_ind);
 		GLCD_PrintString(0, 0, L);
-		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
 		for (uint8_t i = 0; i < 6; i++) {
 
 			sprintf(L, " %s ", REL_OUT_ALL[rel_dat_disp_index_].name);
