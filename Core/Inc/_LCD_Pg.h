@@ -423,11 +423,11 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		uint8_t rel_ord_disp_index_=rel_ord_disp_index;
 		for (uint8_t i = 0; i < 6; i++) {
 
-		    sprintf(L, " %02d", rel_ord_disp_index_);
+		    sprintf(L, " %02d", rel_ord_disp_index_+1);
 			GLCD_PrintString(0, (i + 1) * 9, L);
 			sprintf(L, "%s ", state_list[(REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_nm)].name);
 			GLCD_PrintString(22, (i + 1) * 9, L);
-			sprintf(L, "%d ", state_list[(REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_nm)].rel_val);
+			sprintf(L, "%d ", (state_list[(REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_nm)].action >> ACTIVE_enum) & 1);
 			GLCD_PrintString(122, (i + 1) * 9, L);
 
 			rel_ord_disp_index_=(rel_ord_disp_index_+1+rel_ord_tb_size) % rel_ord_tb_size;
