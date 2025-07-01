@@ -1059,7 +1059,7 @@ for (int i = 0; i < sizeof(state_list) / sizeof(state_list[0]); i++) {
         }
     }
 }
-
+REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
