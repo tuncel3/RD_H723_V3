@@ -1190,7 +1190,7 @@ rel_dat_stru REL_DAT_TB[] = {
 	{ OVERTEMP_OPEN_FC_REL,      0, "Aşrı Sıck Açma", 	OVERTEMP_OPEN_FC },
 	{ BAT_TEMP_ZERO_FC_REL,      0, "Akü Sıck Sıfr C", 	BAT_TEMP_ZERO_FC },
 	{ BAT_TEMP_50_FC_REL,        0, "Akü Sıck 50 C", 	BAT_TEMP_50_FC },
-	{ EMPTY_REL,        		 0, "     Boş", 		999 }
+	{ EMPTY_REL,        		 0, "     Boş", 		127 }
 };
 
 typedef struct {
