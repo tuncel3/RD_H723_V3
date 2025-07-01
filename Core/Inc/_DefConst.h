@@ -333,7 +333,7 @@ typedef enum {
     NUM_PAGES
 } MenuPage;
 
-MenuPage currentPage = HOME_PAGE_pg;
+MenuPage currentPage = RELAY_ORDER_pg;
 
 uint8_t management_menu_en = 1;
 uint8_t management_menu_en_cnt = 0;
