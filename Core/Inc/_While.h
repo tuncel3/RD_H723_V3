@@ -1062,9 +1062,9 @@ for (int i = 0; i < NM_STATE_CODES; i++) {
     int bit_pos = state_list[i].rel_ord; // Get the rel_ord value
     if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
         if (state_get(i)) { // Check if the state is active
-            rel_out_16Bit_Data |= (1 << bit_pos); // Set the corresponding bit
-        } else {
-            rel_out_16Bit_Data &= ~(1 << bit_pos); // Clear the corresponding bit
+            rel_out_16Bit_Data |= (1 << (15-bit_pos)); // Set the corresponding bit
+        } else {										// 15-x yaparak variable ı ters oluşturuyor shif register için.
+            rel_out_16Bit_Data &= ~(1 << (15-bit_pos)); // Clear the corresponding bit
         }
     }
 }
