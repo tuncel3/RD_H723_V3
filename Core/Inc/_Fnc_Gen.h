@@ -13,7 +13,7 @@ uint8_t state_get(State_Codes state);
 void state_set(State_Codes state, uint8_t set);
 void inline extern actions_after_charge_voltage_change();
 void inline extern DEV_NOM_VOUT_changed_fc(void);
-
+void print_active_states();
 
 void save_REL_OUT_order_to_EEP(void);
 void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void);
