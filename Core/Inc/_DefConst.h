@@ -1208,7 +1208,32 @@ uint32_t REL_OUT_order_part2 = 0;  // 20 bit
 uint32_t REL_OUT_order_part3 = 0;  // 20 bit
 uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 
+typedef struct {
+	rel_names_t rel_ord_nm;
+    uint8_t rel_ord_order;
+    uint8_t rel_ord_val;
+    uint8_t rel_dat_NO_NC;
+    char* rel_ord_desc;
+} rel_ord_st;
 
+rel_ord_st REL_OUT_TB[] = {
+    { START_STOP_REL,            1,  0, REL_NO, "Başlat-Durdur" },
+    { VAC_HG_FC_REL,             2,  0, REL_NO, "Şebeke Yüksek" },
+    { VAC_LO_FC_REL,             3,  0, REL_NO, "Şebeke Düşük" },
+    { LOAD_DC_HG_FC_REL,         4,  0, REL_NO, "Yük VDC Yüksk" },
+    { LOAD_DC_LW_FC_REL,         5,  0, REL_NO, "Yük VDC Düşük" },
+    { DC_LEAK_POSITIVE_FC_REL,   6,  0, REL_NO, "DC Kaçak Poztf" },
+    { DC_LEAK_NEGATIVE_FC_REL,   7,  0, REL_NO, "DC Kaçak Negtf" },
+    { LINE_FUSE_OFF_FC_REL,      8,  0, REL_NO, "Giriş Sigr Off" },
+    { BATT_FUSE_OFF_FC_REL,      9,  0, REL_NO, "Akü Sigrta Off" },
+    { LOAD_FUSE_OFF_FC_REL,      10, 0, REL_NO, "Yük Sigrt Atık" },
+    { OVERTEMP_ALARM_FC_REL,     11, 0, REL_NO, "Aşrı Sıck Uyar" },
+    { FAN_FAULT_FC_REL,          12, 0, REL_NO, "Fan Arızası" },
+    { BATT_LINE_BROKEN_FC_REL,   13, 0, REL_NO, "Akü Hattı Kopuk" },
+    { BATT_REVERSE_FC_REL,       14, 0, REL_NO, "Akü Ters" },
+    { BATTERY_FAULT_FC_REL,      15, 0, REL_NO, "Akü Arızası" },
+    { GENERAL_FAULT_FC_REL,      16, 0, REL_NO, "Genel Arıza" }
+};
 
 //typedef enum {
 //	REL_NO,
