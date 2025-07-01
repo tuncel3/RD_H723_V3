@@ -1140,7 +1140,7 @@ State_Info state_list[] = {
 };
 
 typedef struct {
-	rel_names_t rel_out_tb_nm;
+	State_Codes rel_out_tb_nm;
     uint8_t rel_out_tb_val;
     uint8_t rel_out_tb_ind;
 } rel_ord_st;
