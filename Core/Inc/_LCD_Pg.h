@@ -427,7 +427,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			GLCD_PrintString(0, (i + 1) * 9, L);
 			sprintf(L, "%s ", state_list[(REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_nm)].name);
 			GLCD_PrintString(22, (i + 1) * 9, L);
-			sprintf(L, "%d ", (state_list[(REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_nm)].action >> ACTIVE_enum) & 1);
+			sprintf(L, "%d ", (state_get(REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_nm)));
 			GLCD_PrintString(122, (i + 1) * 9, L);
 
 			rel_ord_disp_index_=(rel_ord_disp_index_+1+rel_ord_tb_size) % rel_ord_tb_size;
