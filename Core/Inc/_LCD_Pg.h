@@ -425,9 +425,9 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 
 		    sprintf(L, " %02d", rel_ord_disp_index_+1);
 			GLCD_PrintString(0, (i + 1) * 9, L);
-			sprintf(L, "%s ", REL_OUT_TB[rel_ord_disp_index_].name);
+			sprintf(L, "%s ", state_list[(REL_OUT_TB[rel_ord_disp_index_].rel_out_code)].name);
 			GLCD_PrintString(22, (i + 1) * 9, L);
-			sprintf(L, "%d ", REL_OUT_TB[rel_ord_disp_index_].rel_out_tb_val);
+			sprintf(L, "%d ", (state_get(REL_OUT_TB[rel_ord_disp_index_].rel_out_code)));
 			GLCD_PrintString(122, (i + 1) * 9, L);
 
 			rel_ord_disp_index_=(rel_ord_disp_index_+1+rel_ord_tb_size) % rel_ord_tb_size;
