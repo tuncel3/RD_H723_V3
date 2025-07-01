@@ -1202,24 +1202,24 @@ uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 //    uint8_t rel_out_tb_st_name;
 //} rel_ord_st;
 //
-//rel_ord_st REL_OUT_TB[] = {
-//    { START_STOP_REL,            1,  0, "Başlat-Durdur", 	STOP_FC },
-//    { VAC_HG_FC_REL,             2,  0, "Şebeke Yüksek", 	VAC_HG_FC },
-//    { VAC_LO_FC_REL,             3,  0, "Şebeke Düşük", 	VAC_LO_FC },
-//    { LOAD_DC_HG_FC_REL,         4,  0, "Yük VDC Yüksk", 	LOAD_DC_HG_FC },
-//    { LOAD_DC_LW_FC_REL,         5,  0, "Yük VDC Düşük", 	LOAD_DC_LW_FC },
-//    { DC_LEAK_POS_FC_REL,   6,  0, "DC Kaçak Poztf", 	DC_LEAK_POS_FC },
-//    { DC_LEAK_NEG_FC_REL,   7,  0, "DC Kaçak Negtf", 	DC_LEAK_NEG_FC },
-//    { LINE_MCCB_OFF_REL,      8,  0, "Giriş Sigr Off", 	ST_LINE_MCCB_OFF },
-//    { BATT_MCCB_OFF_REL,      9,  0, "Akü Sigrta Off", 	ST_BATT_MCCB_OFF },
-//    { LOAD_MCCB_OFF_REL,      10, 0, "Yük Sigrt Atık", 	ST_LOAD_MCCB_OFF },
-//    { OVERTEMP_ALARM_FC_REL,     11, 0, "Aşrı Sıck Uyar", 	OVERTEMP_ALARM_FC },
-//    { FAN_FAULT_FC_REL,          12, 0, "Fan Arızası", 		FAN_FAULT_FC   },
-//    { BATT_LINE_BROKEN_FC_REL,   13, 0, "Akü Hattı Kopuk", 	ST_BATT_LINE_BROKEN },
-//    { BATT_REVERSE_FC_REL,       14, 0, "Akü Ters", 		BATT_REVERSE_FC },
-//    { BATTERY_FAULT_FC_REL,      15, 0, "Akü Arızası", 		BATTERY_FAULT_FC },
-//    { GENERAL_FAULT_FC_REL,      16, 0, "Genel Arıza", 		GENERAL_FAULT_FC }
-//};
+rel_ord_st REL_OUT_TB[] = {
+    { START_STOP_REL,            1,  0, "Başlat-Durdur", 	STOP_FC },
+    { VAC_HG_FC_REL,             2,  0, "Şebeke Yüksek", 	VAC_HG_FC },
+    { VAC_LO_FC_REL,             3,  0, "Şebeke Düşük", 	VAC_LO_FC },
+    { LOAD_DC_HG_FC_REL,         4,  0, "Yük VDC Yüksk", 	LOAD_DC_HG_FC },
+    { LOAD_DC_LW_FC_REL,         5,  0, "Yük VDC Düşük", 	LOAD_DC_LW_FC },
+    { DC_LEAK_POS_FC_REL,   6,  0, "DC Kaçak Poztf", 	DC_LEAK_POS_FC },
+    { DC_LEAK_NEG_FC_REL,   7,  0, "DC Kaçak Negtf", 	DC_LEAK_NEG_FC },
+    { LINE_MCCB_OFF_REL,      8,  0, "Giriş Sigr Off", 	ST_LINE_MCCB_OFF },
+    { BATT_MCCB_OFF_REL,      9,  0, "Akü Sigrta Off", 	ST_BATT_MCCB_OFF },
+    { LOAD_MCCB_OFF_REL,      10, 0, "Yük Sigrt Atık", 	ST_LOAD_MCCB_OFF },
+    { OVERTEMP_ALARM_FC_REL,     11, 0, "Aşrı Sıck Uyar", 	OVERTEMP_ALARM_FC },
+    { FAN_FAULT_FC_REL,          12, 0, "Fan Arızası", 		FAN_FAULT_FC   },
+    { BATT_LINE_BROKEN_FC_REL,   13, 0, "Akü Hattı Kopuk", 	ST_BATT_LINE_BROKEN },
+    { BATT_REVERSE_FC_REL,       14, 0, "Akü Ters", 		BATT_REVERSE_FC },
+    { BATTERY_FAULT_FC_REL,      15, 0, "Akü Arızası", 		BATTERY_FAULT_FC },
+    { GENERAL_FAULT_FC_REL,      16, 0, "Genel Arıza", 		GENERAL_FAULT_FC }
+};
 
 uint8_t rel_dat_tb_size = NUM_REL_CODES;
 uint8_t rel_dat_tb_sel = 1;

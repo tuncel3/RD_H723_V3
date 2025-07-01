@@ -1089,7 +1089,7 @@ delay_1ms(100);
 
 void print_REL_OUT_Table() {
     for (int i = 0; i < 16; i++) {
-		PRF_GEN("Order %d %s", REL_OUT_TB[i].rel_out_tb_nm, REL_OUT_TB[i].rel_out_tb_desc);
+//		PRF_GEN("Order %d %s", REL_OUT_TB[i].rel_out_tb_nm, REL_OUT_TB[i].rel_out_tb_desc);
 		delay_1ms(10);
     }
 }
