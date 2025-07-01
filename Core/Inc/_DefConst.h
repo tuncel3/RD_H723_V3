@@ -1145,8 +1145,8 @@ rel_dat_stru REL_DAT_TB[] = {
 	{ VAC_LO_FC,             0, REL_NO, "Şebeke Düşük" },
 	{ LOAD_DC_HG_FC,         0, REL_NO, "Yük VDC Yüksk" },
 	{ LOAD_DC_LW_FC,         0, REL_NO, "Yük VDC Düşük" },
-	{ DC_LEAK_POS_FC,   0, REL_NO, "DC Kaçak Poztf" },
-	{ DC_LEAK_NEG_FC,   0, REL_NO, "DC Kaçak Negtf" },
+	{ DC_LEAK_POS_FC,   	0, REL_NO, "DC Kaçak Poztf" },
+	{ DC_LEAK_NEG_FC,   	0, REL_NO, "DC Kaçak Negtf" },
 	{ ST_LINE_MCCB_OFF,      0, REL_NO, "Giriş Sigr Off" },
 	{ ST_BATT_MCCB_OFF,      0, REL_NO, "Akü Sigrta Off" },
 	{ ST_LOAD_MCCB_OFF,      0, REL_NO, "Yük Sigrt Atık" },
@@ -1156,16 +1156,16 @@ rel_dat_stru REL_DAT_TB[] = {
 	{ BATT_REVERSE_FC,       0, REL_NO, "Akü Ters" },
 	{ BATTERY_FAULT_FC,      0, REL_NO, "Akü Arızası" },
 	{ GENERAL_FAULT_FC,      0, REL_NO, "Genel Arıza" },
-	{ VAC_OFF_FC_REL,            0, REL_NO, "Şebeke Yok" },
-	{ VAC_ON_FC_REL,             0, REL_NO, "Şebeke Var" },
-	{ BOOST_CHARGE_FC_REL,       0, REL_NO, "Hızlı Şarj" },
-	{ FLOAT_CHARGE_FC_REL,       0, REL_NO, "Normal Şarj" },
-	{ RECT_DC_HG_FC_REL,         0, REL_NO, "Doğr VDC Yüksk" },
-	{ RECT_DC_LW_FC_REL,         0, REL_NO, "Doğr VDC Düşük" },
-	{ OVERTEMP_OPEN_FC_REL,      0, REL_NO, "Aşrı Sıck Açma" },
-	{ BAT_TEMP_ZERO_FC_REL,      0, REL_NO, "Akü Sıck Sıfr C" },
-	{ BAT_TEMP_50_FC_REL,        0, REL_NO, "Akü Sıck 50 C" },
-	{ EMPTY_REL,        		 0, REL_NO, "     Boş" }
+    { VAC_OFF_FC,                0, REL_NO, "Şebeke Yok" },
+    { VAC_ON_FC,                 0, REL_NO, "Şebeke Var" },
+    { BOOST_CHARGE_FC,           0, REL_NO, "Hızlı Şarj" },
+    { FLOAT_CHARGE_FC,           0, REL_NO, "Normal Şarj" },
+    { RECT_DC_HG_FC,             0, REL_NO, "Doğr VDC Yüksk" },
+    { RECT_DC_LW_FC,             0, REL_NO, "Doğr VDC Düşük" },
+    { OVERTEMP_OPEN_FC,          0, REL_NO, "Aşrı Sıck Açma" },
+    { BAT_TEMP_ZERO_FC,          0, REL_NO, "Akü Sıck Sıfr C" },
+    { BAT_TEMP_50_FC,            0, REL_NO, "Akü Sıck 50 C" },
+    { EMPTY_REL,                 0, REL_NO, "     Boş" }
 };
 
 typedef struct {
