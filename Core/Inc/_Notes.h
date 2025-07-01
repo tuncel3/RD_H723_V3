@@ -144,7 +144,7 @@ bir tane sıralama vektörü var. adı REL_OUT_ORDER_vect[i]
 hangi sırada hangi durumun rölesi var bunu kaydediyor
 REL_OUT_ORDER_vect[0] START_STOP_REL
 REL_OUT_ORDER_vect[1] VAC_LO_FC_REL
-REL_OUT_ORDER_vect[2] LINE_FUSE_OFF_FC_REL
+REL_OUT_ORDER_vect[2] LINE_MCCB_OFF_REL
 Kullanıcı sıralama değiştirince bu vektörde sağdaki elmanlar değişiyor.
 Bu vektör sıkıştırılarak eeprom a kaydediliyor.
 Açılışta eepromdan sıkıştırılmış data alınarak bu vektör oluşturuluyor.
