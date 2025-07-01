@@ -1054,7 +1054,7 @@ for (int i = 0; i < sizeof(state_list) / sizeof(state_list[0]); i++) {
         if (state_list[i].action & (1 << 3)) { // Check if the 3rd bit of the 2nd column is 1
             rel_out_16Bit_Data |= (1 << 2); // Set the 3rd bit from the end of rel_out_16Bit_Data
         }
-        else if (state_list[i].action & (1 << 3)) { // Check if the 3rd bit of the 2nd column is 1
+        else if (!(state_list[i].action & (1 << 3))) { // Check if the 3rd bit of the 2nd column is 1
             rel_out_16Bit_Data &= ~(1 << 2); // Set the 3rd bit from the end of rel_out_16Bit_Data
         }
     }
