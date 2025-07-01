@@ -1048,27 +1048,27 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 //rel_out_16Bit_Data REL_OUT_TB[0].rel_out_tb_nm
 
-// state tablosundan REL_OUT_TB
-for (int i = 0; i < NUM_REL_CODES; i++) {
-	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
-		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_nm = state_list[i].rel_nm;
-		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_val = state_get(i);
-		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_ind = state_list[i].code;
-	}
-}
-
-// state tablosundan rel_out_16Bit_Data
-for (int i = 0; i < NM_STATE_CODES; i++) {
-    int bit_pos = state_list[i].rel_ord; // Get the rel_ord value
-    if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
-        if (state_list[i].action & (1 << 3)) { // Check if the 3rd bit of action is 1
-            rel_out_16Bit_Data |= (1 << bit_pos); // Set the corresponding bit
-        } else {
-            rel_out_16Bit_Data &= ~(1 << bit_pos); // Clear the corresponding bit
-        }
-    }
-}
-REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
+//// state tablosundan REL_OUT_TB
+//for (int i = 0; i < NUM_REL_CODES; i++) {
+//	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
+//		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_nm = state_list[i].rel_nm;
+//		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_val = state_get(i);
+//		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_ind = state_list[i].code;
+//	}
+//}
+//
+//// state tablosundan rel_out_16Bit_Data
+//for (int i = 0; i < NM_STATE_CODES; i++) {
+//    int bit_pos = state_list[i].rel_ord; // Get the rel_ord value
+//    if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
+//        if (state_list[i].action & (1 << 3)) { // Check if the 3rd bit of action is 1
+//            rel_out_16Bit_Data |= (1 << bit_pos); // Set the corresponding bit
+//        } else {
+//            rel_out_16Bit_Data &= ~(1 << bit_pos); // Clear the corresponding bit
+//        }
+//    }
+//}
+//REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 
 
 //for (int i = 0; i < num_rows; i++) {
