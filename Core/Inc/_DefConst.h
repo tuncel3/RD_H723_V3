@@ -1141,6 +1141,7 @@ State_Info state_list[] = {
 
 typedef struct {
 	State_Codes rel_out_tb_nm;
+    const char *name;
     uint8_t rel_out_tb_val;
     uint8_t rel_out_tb_ind;
 } rel_ord_st;
