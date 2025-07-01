@@ -1178,26 +1178,27 @@ rel_out_all REL_OUT_ALL[] = {
 typedef struct {
 	State_Codes rel_out_code;
     uint8_t rel_out_tb_val;
+    uint8_t rel_out_tb_ind;
     const char *name;
 } rel_ord_st;
 
 rel_ord_st REL_OUT_TB[] = {
-    { START_FC,            0, "Başlat-Durdur" },
-    { VAC_HG_FC,           0, "Şebeke Yüksek" },
-    { VAC_LO_FC,           0, "Şebeke Düşük" },
-    { LOAD_DC_HG_FC,       0, "Yük VDC Yüksk" },
-    { LOAD_DC_LW_FC,       0, "Yük VDC Düşük" },
-    { DC_LEAK_POS_FC,      0, "DC Kaçak Poztf" },
-    { DC_LEAK_NEG_FC,      0, "DC Kaçak Negtf" },
-    { ST_LINE_MCCB_OFF,    0, "Giriş Sigr Off" },
-    { ST_BATT_MCCB_OFF,    0, "Akü Sigrta Off" },
-    { ST_LOAD_MCCB_OFF,    0, "Yük Sigrt Atık" },
-    { OVERTEMP_ALARM_FC,   0, "Aşrı Sıck Uyar" },
-    { FAN_FAULT_FC,        0, "Fan Arızası" },
-    { ST_BATT_LINE_BROKEN, 0, "Akü Hattı Kopuk" },
-    { BATT_REVERSE_FC,     0, "Akü Ters" },
-    { BATTERY_FAULT_FC,    0, "Akü Arızası" },
-    { GENERAL_FAULT_FC,    0, "Genel Arıza" },
+    { START_FC,            0, 1, "Başlat-Durdur" },
+    { VAC_HG_FC,           0, 2, "Şebeke Yüksek" },
+    { VAC_LO_FC,           0, 3, "Şebeke Düşük" },
+    { LOAD_DC_HG_FC,       0, 4, "Yük VDC Yüksk" },
+    { LOAD_DC_LW_FC,       0, 5, "Yük VDC Düşük" },
+    { DC_LEAK_POS_FC,      0, 6, "DC Kaçak Poztf" },
+    { DC_LEAK_NEG_FC,      0, 7, "DC Kaçak Negtf" },
+    { ST_LINE_MCCB_OFF,    0, 8, "Giriş Sigr Off" },
+    { ST_BATT_MCCB_OFF,    0, 9, "Akü Sigrta Off" },
+    { ST_LOAD_MCCB_OFF,    0, 10, "Yük Sigrt Atık" },
+    { OVERTEMP_ALARM_FC,   0, 11, "Aşrı Sıck Uyar" },
+    { FAN_FAULT_FC,        0, 12, "Fan Arızası" },
+    { ST_BATT_LINE_BROKEN, 0, 13, "Akü Hattı Kopuk" },
+    { BATT_REVERSE_FC,     0, 14, "Akü Ters" },
+    { BATTERY_FAULT_FC,    0, 15, "Akü Arızası" },
+    { GENERAL_FAULT_FC,    0, 16, "Genel Arıza" },
 };
 
 #define NUM_STATE_NAMES sizeof(state_list) / sizeof(state_list[0])
