@@ -1197,7 +1197,6 @@ uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 typedef struct {
 	rel_names_t rel_out_tb_nm;
     uint8_t rel_out_tb_val;
-    uint8_t rel_out_tb_st_name;
 } rel_ord_st;
 
 rel_ord_st REL_OUT_TB[] = {
