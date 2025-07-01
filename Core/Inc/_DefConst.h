@@ -1023,7 +1023,8 @@ typedef enum {
 	VAC_T_RMS_LW_FAULT_FC,
 	VAC_R_RMS_0_FAULT_FC,
 	VAC_S_RMS_0_FAULT_FC,
-	VAC_T_RMS_0_FAULT_FC
+	VAC_T_RMS_0_FAULT_FC,
+	NM_STATE_CODES
 } State_Codes;
 
 typedef enum {

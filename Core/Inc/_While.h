@@ -1048,14 +1048,13 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 //rel_out_16Bit_Data REL_OUT_TB[0].rel_out_tb_nm
 
-
-for (int i = 0; i < sizeof(state_list) / sizeof(state_list[0]); i++) {
+for (int i = 0; i < NM_STATE_CODES; i++) {
     if (state_list[i].rel_ord == 3) { // Check if the 4th column is 3
         if (state_list[i].action & (1 << 3)) { // Check if the 3rd bit of the 2nd column is 1
-            rel_out_16Bit_Data |= (1 << (15-2)); // Set the 3rd bit from the end of rel_out_16Bit_Data
+            rel_out_16Bit_Data |= (1 << (16-3)); // Set the 3rd bit from the start of rel_out_16Bit_Data
         }
         else if (!(state_list[i].action & (1 << 3))) { // Check if the 3rd bit of the 2nd column is 1
-            rel_out_16Bit_Data &= ~(1 << (15-2)); // Set the 3rd bit from the end of rel_out_16Bit_Data
+            rel_out_16Bit_Data &= ~(1 << (16-3)); // Set the 3rd bit from the start of rel_out_16Bit_Data
         }
     }
 }
