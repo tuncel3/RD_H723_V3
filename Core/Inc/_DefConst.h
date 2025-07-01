@@ -1197,27 +1197,26 @@ uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 typedef struct {
 	rel_names_t rel_out_tb_nm;
     uint8_t rel_out_tb_val;
-    char* rel_out_tb_desc;
     uint8_t rel_out_tb_st_name;
 } rel_ord_st;
 
 rel_ord_st REL_OUT_TB[] = {
-    { START_STOP_REL,             0, 	STOP_FC },
-    { VAC_HG_FC_REL,              0, 	VAC_HG_FC },
-    { VAC_LO_FC_REL,              0, 	VAC_LO_FC },
-    { LOAD_DC_HG_FC_REL,          0, 	LOAD_DC_HG_FC },
-    { LOAD_DC_LW_FC_REL,          0, 	LOAD_DC_LW_FC },
-    { DC_LEAK_POS_FC_REL,    	  0, 	DC_LEAK_POS_FC },
-    { DC_LEAK_NEG_FC_REL,     	  0, 	DC_LEAK_NEG_FC },
-    { LINE_MCCB_OFF_REL,          0, 	ST_LINE_MCCB_OFF },
-    { BATT_MCCB_OFF_REL,          0, 	ST_BATT_MCCB_OFF },
-    { LOAD_MCCB_OFF_REL,          0, 	ST_LOAD_MCCB_OFF },
-    { OVERTEMP_ALARM_FC_REL,      0, 	OVERTEMP_ALARM_FC },
-    { FAN_FAULT_FC_REL,           0, 	FAN_FAULT_FC   },
-    { BATT_LINE_BROKEN_FC_REL,    0, 	ST_BATT_LINE_BROKEN },
-    { BATT_REVERSE_FC_REL,        0, 	BATT_REVERSE_FC },
-    { BATTERY_FAULT_FC_REL,       0, 	BATTERY_FAULT_FC },
-    { GENERAL_FAULT_FC_REL,       0, 	GENERAL_FAULT_FC }
+    { START_STOP_REL,             0},
+    { VAC_HG_FC_REL,              0},
+    { VAC_LO_FC_REL,              0},
+    { LOAD_DC_HG_FC_REL,          0},
+    { LOAD_DC_LW_FC_REL,          0},
+    { DC_LEAK_POS_FC_REL,    	  0},
+    { DC_LEAK_NEG_FC_REL,     	  0},
+    { LINE_MCCB_OFF_REL,          0},
+    { BATT_MCCB_OFF_REL,          0},
+    { LOAD_MCCB_OFF_REL,          0},
+    { OVERTEMP_ALARM_FC_REL,      0},
+    { FAN_FAULT_FC_REL,           0},
+    { BATT_LINE_BROKEN_FC_REL,    0},
+    { BATT_REVERSE_FC_REL,        0},
+    { BATTERY_FAULT_FC_REL,       0},
+    { GENERAL_FAULT_FC_REL,       0}
 };
 
 uint8_t rel_dat_tb_size = NUM_REL_CODES;
