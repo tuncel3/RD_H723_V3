@@ -1049,7 +1049,7 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 //rel_out_16Bit_Data REL_OUT_TB[0].rel_out_tb_nm
 
 
-for (int i = NUM_REL_CODES - 1; i >= 0; i--) {
+for (int i = 0; i < NUM_REL_CODES; i++) {
 	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
 		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_nm = state_list[i].rel_nm;
 		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_val = state_get(i);
