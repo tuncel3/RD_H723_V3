@@ -1139,33 +1139,39 @@ State_Info state_list[] = {
     { VAC_T_RMS_0_FAULT_FC,       0b00000, "VINT RMS Yok",     NUM_REL_CODES,            99, 0 },
 };
 
-rel_dat_stru REL_DAT_TB[] = {
-	{ START_FC,              0, REL_NO, "Başlat-Durdur"      },
-	{ VAC_HG_FC,             0, REL_NO, "Şebeke Yüksek"      },
-	{ VAC_LO_FC,             0, REL_NO, "Şebeke Düşük"       },
-	{ LOAD_DC_HG_FC,         0, REL_NO, "Yük VDC Yüksk"      },
-	{ LOAD_DC_LW_FC,         0, REL_NO, "Yük VDC Düşük"      },
-	{ DC_LEAK_POS_FC,        0, REL_NO, "DC Kaçak Poztf"     },
-	{ DC_LEAK_NEG_FC,        0, REL_NO, "DC Kaçak Negtf"     },
-	{ ST_LINE_MCCB_OFF,      0, REL_NO, "Giriş Sigr Off"     },
-	{ ST_BATT_MCCB_OFF,      0, REL_NO, "Akü Sigrta Off"     },
-	{ ST_LOAD_MCCB_OFF,      0, REL_NO, "Yük Sigrt Atık"     },
-	{ OVERTEMP_ALARM_FC,     0, REL_NO, "Aşrı Sıck Uyar"     },
-	{ FAN_FAULT_FC,          0, REL_NO, "Fan Arızası"        },
-	{ ST_BATT_LINE_BROKEN,   0, REL_NO, "Akü Hattı Kopuk"    },
-	{ BATT_REVERSE_FC,       0, REL_NO, "Akü Ters"           },
-	{ BATTERY_FAULT_FC,      0, REL_NO, "Akü Arızası"        },
-	{ GENERAL_FAULT_FC,      0, REL_NO, "Genel Arıza"        },
-	{ VAC_OFF_FC,            0, REL_NO, "Şebeke Yok"         },
-	{ VAC_ON_FC,             0, REL_NO, "Şebeke Var"         },
-	{ BOOST_CHARGE_FC,       0, REL_NO, "Hızlı Şarj"         },
-	{ ST_FLOAT_CHARGE,       0, REL_NO, "Normal Şarj"        },
-	{ RECT_DC_HG_FC,         0, REL_NO, "Doğr VDC Yüksk"     },
-	{ RECT_DC_LW_FC,         0, REL_NO, "Doğr VDC Düşük"     },
-	{ OVERTEMP_OPEN_FC,      0, REL_NO, "Aşrı Sıck Açma"     },
-	{ BAT_TEMP_ZERO_FC,      0, REL_NO, "Akü Sıck Sıfr C"    },
-	{ BAT_TEMP_50_FC,        0, REL_NO, "Akü Sıck 50 C"      },
-	{ EMPTY_REL,             0, REL_NO, "     Boş"           }
+typedef struct {
+	State_Codes rel_out_code;
+    uint8_t rel_out_tb_val;
+    const char *name;
+} rel_out_all;
+
+rel_out_all REL_OUT_ALL[] = {
+	{ START_FC,              0, "Başlat-Durdur"      },
+	{ VAC_HG_FC,             0, "Şebeke Yüksek"      },
+	{ VAC_LO_FC,             0, "Şebeke Düşük"       },
+	{ LOAD_DC_HG_FC,         0, "Yük VDC Yüksk"      },
+	{ LOAD_DC_LW_FC,         0, "Yük VDC Düşük"      },
+	{ DC_LEAK_POS_FC,        0, "DC Kaçak Poztf"     },
+	{ DC_LEAK_NEG_FC,        0, "DC Kaçak Negtf"     },
+	{ ST_LINE_MCCB_OFF,      0, "Giriş Sigr Off"     },
+	{ ST_BATT_MCCB_OFF,      0, "Akü Sigrta Off"     },
+	{ ST_LOAD_MCCB_OFF,      0, "Yük Sigrt Atık"     },
+	{ OVERTEMP_ALARM_FC,     0, "Aşrı Sıck Uyar"     },
+	{ FAN_FAULT_FC,          0, "Fan Arızası"        },
+	{ ST_BATT_LINE_BROKEN,   0, "Akü Hattı Kopuk"    },
+	{ BATT_REVERSE_FC,       0, "Akü Ters"           },
+	{ BATTERY_FAULT_FC,      0, "Akü Arızası"        },
+	{ GENERAL_FAULT_FC,      0, "Genel Arıza"        },
+	{ VAC_OFF_FC,            0, "Şebeke Yok"         },
+	{ VAC_ON_FC,             0, "Şebeke Var"         },
+	{ BOOST_CHARGE_FC,       0, "Hızlı Şarj"         },
+	{ ST_FLOAT_CHARGE,       0, "Normal Şarj"        },
+	{ RECT_DC_HG_FC,         0, "Doğr VDC Yüksk"     },
+	{ RECT_DC_LW_FC,         0, "Doğr VDC Düşük"     },
+	{ OVERTEMP_OPEN_FC,      0, "Aşrı Sıck Açma"     },
+	{ BAT_TEMP_ZERO_FC,      0, "Akü Sıck Sıfr C"    },
+	{ BAT_TEMP_50_FC,        0, "Akü Sıck 50 C"      },
+	{ EMPTY_REL,             0, "     Boş"           }
 };
 
 
