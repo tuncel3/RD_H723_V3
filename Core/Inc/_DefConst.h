@@ -1139,6 +1139,29 @@ State_Info state_list[] = {
     { VAC_T_RMS_0_FAULT_FC,       0b00000, "VINT RMS Yok",     NUM_REL_CODES,            99, 0 },
 };
 
+typedef struct {
+	rel_names_t rel_out_tb_nm;
+    uint8_t rel_out_tb_val;
+} rel_ord_st;
+
+rel_ord_st REL_OUT_TB[] = {
+    { START_STOP_REL,             0},
+    { VAC_HG_FC_REL,              0},
+    { VAC_LO_FC_REL,              0},
+    { LOAD_DC_HG_FC_REL,          0},
+    { LOAD_DC_LW_FC_REL,          0},
+    { DC_LEAK_POS_FC_REL,    	  0},
+    { DC_LEAK_NEG_FC_REL,     	  0},
+    { LINE_MCCB_OFF_REL,          0},
+    { BATT_MCCB_OFF_REL,          0},
+    { LOAD_MCCB_OFF_REL,          0},
+    { OVERTEMP_ALARM_FC_REL,      0},
+    { FAN_FAULT_FC_REL,           0},
+    { BATT_LINE_BROKEN_FC_REL,    0},
+    { BATT_REVERSE_FC_REL,        0},
+    { BATTERY_FAULT_FC_REL,       0},
+    { GENERAL_FAULT_FC_REL,       0}
+};
 
 
 
@@ -1194,29 +1217,6 @@ uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 //	{ EMPTY_REL,        		 0, "     Boş", 		127 }
 //};
 
-typedef struct {
-	rel_names_t rel_out_tb_nm;
-    uint8_t rel_out_tb_val;
-} rel_ord_st;
-
-rel_ord_st REL_OUT_TB[] = {
-    { START_STOP_REL,             0},
-    { VAC_HG_FC_REL,              0},
-    { VAC_LO_FC_REL,              0},
-    { LOAD_DC_HG_FC_REL,          0},
-    { LOAD_DC_LW_FC_REL,          0},
-    { DC_LEAK_POS_FC_REL,    	  0},
-    { DC_LEAK_NEG_FC_REL,     	  0},
-    { LINE_MCCB_OFF_REL,          0},
-    { BATT_MCCB_OFF_REL,          0},
-    { LOAD_MCCB_OFF_REL,          0},
-    { OVERTEMP_ALARM_FC_REL,      0},
-    { FAN_FAULT_FC_REL,           0},
-    { BATT_LINE_BROKEN_FC_REL,    0},
-    { BATT_REVERSE_FC_REL,        0},
-    { BATTERY_FAULT_FC_REL,       0},
-    { GENERAL_FAULT_FC_REL,       0}
-};
 
 uint8_t rel_dat_tb_size = NUM_REL_CODES;
 uint8_t rel_dat_tb_sel = 1;
