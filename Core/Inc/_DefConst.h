@@ -1140,36 +1140,31 @@ State_Info state_list[] = {
 };
 
 typedef struct {
-	State_Codes rel_out_tb_nm;
-    const char *name;
+	State_Codes rel_out_code;
     uint8_t rel_out_tb_val;
-    uint8_t rel_out_tb_ind;
+    const char *name;
 } rel_ord_st;
 
 rel_ord_st REL_OUT_TB[] = {
-    { START_FC,            0, 0},
-    { VAC_HG_FC,           0, 0},
-    { VAC_LO_FC,           0, 0},
-    { LOAD_DC_HG_FC,       0, 0},
-    { LOAD_DC_LW_FC,       0, 0},
-    { DC_LEAK_POS_FC,      0, 0},
-    { DC_LEAK_NEG_FC,      0, 0},
-    { ST_LINE_MCCB_OFF,    0, 0},
-    { ST_BATT_MCCB_OFF,    0, 0},
-    { ST_LOAD_MCCB_OFF,    0, 0},
-    { OVERTEMP_ALARM_FC,   0, 0},
-    { FAN_FAULT_FC,        0, 0},
-    { ST_BATT_LINE_BROKEN, 0, 0},
-    { BATT_REVERSE_FC,     0, 0},
-    { BATTERY_FAULT_FC,    0, 0},
-    { GENERAL_FAULT_FC,    0, 0}
+    { START_FC,            0, "Başlat-Durdur" },
+    { VAC_HG_FC,           0, "Şebeke Yüksek" },
+    { VAC_LO_FC,           0, "Şebeke Düşük" },
+    { LOAD_DC_HG_FC,       0, "Yük VDC Yüksk" },
+    { LOAD_DC_LW_FC,       0, "Yük VDC Düşük" },
+    { DC_LEAK_POS_FC,      0, "DC Kaçak Poztf" },
+    { DC_LEAK_NEG_FC,      0, "DC Kaçak Negtf" },
+    { ST_LINE_MCCB_OFF,    0, "Giriş Sigr Off" },
+    { ST_BATT_MCCB_OFF,    0, "Akü Sigrta Off" },
+    { ST_LOAD_MCCB_OFF,    0, "Yük Sigrt Atık" },
+    { OVERTEMP_ALARM_FC,   0, "Aşrı Sıck Uyar" },
+    { FAN_FAULT_FC,        0, "Fan Arızası" },
+    { ST_BATT_LINE_BROKEN, 0, "Akü Hattı Kopuk" },
+    { BATT_REVERSE_FC,     0, "Akü Ters" },
+    { BATTERY_FAULT_FC,    0, "Akü Arızası" },
+    { GENERAL_FAULT_FC,    0, "Genel Arıza" },
 };
 
-
-
 #define NUM_STATE_NAMES sizeof(state_list) / sizeof(state_list[0])
-
-
 
 rel_names_t REL_OUT_ORDER_vect[16]; // sıralama buna kaydediliyor
 uint32_t REL_OUT_order_part1 = 0;  // 20 bit. float olarak kaydedildiği için 24 bit max

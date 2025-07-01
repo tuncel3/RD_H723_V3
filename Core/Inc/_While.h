@@ -1046,15 +1046,14 @@ LED_16_Data &= ~(!state_get(START_FC) << (START_FC-0));
 LED_16_Data &= ~(!state_get(VAC_OFF_FC) << (VAC_OFF_FC-0));
 LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
-//rel_out_16Bit_Data REL_OUT_TB[0].rel_out_tb_nm
+//rel_out_16Bit_Data REL_OUT_TB[0].rel_out_code
 
- state tablosundan REL_OUT_TB
+// state tablosundan REL_OUT_TB
 for (int i = 0; i < NUM_REL_CODES; i++) {
 	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
-		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_nm = state_list[i].code;
-		REL_OUT_TB[state_list[i].rel_ord].name = state_list[i].name;
+		REL_OUT_TB[state_list[i].rel_ord].rel_out_code = state_list[i].code;
 		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_val = state_get(i);
-		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_ind = state_list[i].code;
+		REL_OUT_TB[state_list[i].rel_ord].name = state_list[i].name;
 	}
 }
 
