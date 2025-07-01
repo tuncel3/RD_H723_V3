@@ -1048,6 +1048,14 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 //rel_out_16Bit_Data REL_OUT_TB[0].rel_out_tb_nm
 
+
+for (int i = 0; i < NUM_REL_CODES; i++) {
+	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
+		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_nm = state_list[i].rel_nm;
+		REL_OUT_TB[state_list[i].rel_ord].rel_out_tb_val = state_get(i);
+	}
+}
+
 for (int i = 0; i < NM_STATE_CODES; i++) {
     int bit_pos = state_list[i].rel_ord; // Get the rel_ord value
     if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
