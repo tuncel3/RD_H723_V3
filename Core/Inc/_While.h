@@ -1048,30 +1048,44 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 //rel_out_16Bit_Data REL_OUT_TB[0].rel_out_tb_nm
 
-
-for (int i = 0; i < num_rows; i++) {
-    if (state_list[i].rel_ord == 3) { // Check if the 5th column (rel_ord) is 3
-        row = i; // Store the row number
-        break;   // Exit the loop as we found the match
-    }
-}
-
-
-for (int i = 0; i < NM_STATE_CODES; i++) {
-//	A=state_list[i].rel_ord == 3	// 4th column is 3
-//	B=state_list[i].action & (1 << 3) // 3rd bit of the 2nd column is 1
-//	C=rel_out_16Bit_Data |= (1 << (16-3)) // Set the 3rd bit from the start of rel_out_16Bit_Data
-
-    if (state_list[i].rel_ord == 3) { // Check if the 4th column is 3
-        if (state_get(i)) { // Check if this column state is active
-            rel_out_16Bit_Data |= (1 << (16-3)); // Set the 3rd bit from the start of rel_out_16Bit_Data
-        }
-        else if (!state_get(i)) { // Check if the 3rd bit of the 2nd column is 1
-            rel_out_16Bit_Data &= ~(1 << (16-3)); // Set the 3rd bit from the start of rel_out_16Bit_Data
+for (int bit_pos = 0; bit_pos <= 15; bit_pos++) { // 0'dan 15'e kadar döngü
+    for (int i = 0; i < NM_STATE_CODES; i++) {
+        if (state_list[i].rel_ord == bit_pos) { // rel_ord sütununda bit_pos değerini bul
+            if (state_list[i].action & (1 << 3)) { // action sütununun 3. biti 1 mi?
+                rel_out_16Bit_Data |= (1 << bit_pos); // bit_pos bitini 1 yap
+            } else {
+                rel_out_16Bit_Data &= ~(1 << bit_pos); // bit_pos bitini 0 yap
+            }
+            break; // İlk eşleşmeden sonra döngüyü sonlandır
         }
     }
 }
 REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
+
+
+//for (int i = 0; i < num_rows; i++) {
+//    if (state_list[i].rel_ord == 3) { // Check if the 5th column (rel_ord) is 3
+//        row = i; // Store the row number
+//        break;   // Exit the loop as we found the match
+//    }
+//}
+//
+//
+//for (int i = 0; i < NM_STATE_CODES; i++) {
+////	A=state_list[i].rel_ord == 3	// 4th column is 3
+////	B=state_list[i].action & (1 << 3) // 3rd bit of the 2nd column is 1
+////	C=rel_out_16Bit_Data |= (1 << (16-3)) // Set the 3rd bit from the start of rel_out_16Bit_Data
+//
+//    if (state_list[i].rel_ord == 3) { // Check if the 4th column is 3
+//        if (state_get(i)) { // Check if this column state is active
+//            rel_out_16Bit_Data |= (1 << (16-3)); // Set the 3rd bit from the start of rel_out_16Bit_Data
+//        }
+//        else if (!state_get(i)) { // Check if the 3rd bit of the 2nd column is 1
+//            rel_out_16Bit_Data &= ~(1 << (16-3)); // Set the 3rd bit from the start of rel_out_16Bit_Data
+//        }
+//    }
+//}
+//REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
