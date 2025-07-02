@@ -1001,27 +1001,27 @@ void USART10_SendByte(uint8_t data)
     }
 }
 
-int read_data(uint8_t temp_sens_count, uint16_t *raw_vals)
-{
-
-	U10_rxCount = 0;
-    for (int i = 0; i < U10_RX_BUFFER_SIZE; i++) {
-    	U10_rxBuf[i] = 0;
-    }
-
-    USART10_SendByte(0x55);
-    delayA_1us(10);
-    USART10_SendByte(0xF1);
-
-    for (int i = 0; i < temp_sens_count; i++) {
-        // ham değer = LSB + (MSB << 8)
-        uint8_t lsb = U10_rxBuf[2 + i*2];
-        uint8_t msb = U10_rxBuf[3 + i*2];
-        raw_vals[i] = (msb << 8) | lsb;
-    }
-
-    return 0;
-}
+//int read_data(uint8_t temp_sens_count, uint16_t *raw_vals)
+//{
+//
+//	U10_rxCount = 0;
+//    for (int i = 0; i < U10_RX_BUFFER_SIZE; i++) {
+//    	U10_rxBuf[i] = 0;
+//    }
+//
+//    USART10_SendByte(0x55);
+//    delayA_1us(10);
+//    USART10_SendByte(0xF1);
+//
+//    for (int i = 0; i < temp_sens_count; i++) {
+//        // ham değer = LSB + (MSB << 8)
+//        uint8_t lsb = U10_rxBuf[2 + i*2];
+//        uint8_t msb = U10_rxBuf[3 + i*2];
+//        raw_vals[i] = (msb << 8) | lsb;
+//    }
+//
+//    return 0;
+//}
 
 static float tmp144_convert_temperature(uint16_t raw16) {
   int16_t val12 = (raw16 >> 4) & 0x0FFF;
