@@ -420,23 +420,23 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 	char L[32];
     if (rel_disp_mode == 1) {
 		GLCD_PrintString(0, 0, "Kontak Sıralama");
-		uint8_t sirali_tablo_disp_index=sirali_tablo_sel_index; // aşağıdaki for döngüsü bu indexten başlayarak ilerleyecek ve 6 elemanı gösterecek.
+		uint8_t sirali_tablo_disp_start_ind_h=sirali_tablo_disp_start_ind; // aşağıdaki for döngüsü bu indexten başlayarak ilerleyecek ve 6 elemanı gösterecek.
 		for (uint8_t i = 0; i < 6; i++) {
 
-		    sprintf(L, " %02d", sirali_tablo_disp_index+1);
+		    sprintf(L, " %02d", sirali_tablo_disp_start_ind_h+1);
 			GLCD_PrintString(0, (i + 1) * 9, L);
-			sprintf(L, "%s ", state_list[(SIRALI_TABLO_RELOUT[sirali_tablo_disp_index].rel_out_code)].name);
+			sprintf(L, "%s ", state_list[(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].rel_out_code)].name);
 			GLCD_PrintString(22, (i + 1) * 9, L);
-			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[sirali_tablo_disp_index].rel_out_code)));
+			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].rel_out_code)));
 			GLCD_PrintString(122, (i + 1) * 9, L);
-			sirali_tablo_disp_index=(sirali_tablo_disp_index+1+rel_ord_tb_size) % rel_ord_tb_size;
+			sirali_tablo_disp_start_ind_h=(sirali_tablo_disp_start_ind_h+1+rel_ord_tb_size) % rel_ord_tb_size;
 
 		}
 
 		GLCD_PrintString(0, (rel_ord_arrow_loc+1) * 9, ">");
 
 	} else if (rel_edit_mode == 1) {
-		sprintf(L, "Kontak %02d İçin Seçim", SIRALI_TABLO_RELOUT[sirali_tablo_sel_index].rel_out_tb_ind);
+		sprintf(L, "Kontak %02d İçin Seçim", SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind].rel_out_tb_ind);
 		GLCD_PrintString(0, 0, L);
 //		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
 //		for (uint8_t i = 0; i < 6; i++) {
