@@ -433,7 +433,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 
 		}
 
-		GLCD_PrintString(0, (rel_ord_arrow_loc+1) * 9, ">");
+		GLCD_PrintString(0, (sirali_tablo_arrow_ind+1) * 9, ">");
 
 	} else if (rel_edit_mode == 1) {
 		sprintf(L, "Kontak %02d İçin Seçim", SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind].rel_out_tb_ind);

@@ -1219,7 +1219,7 @@ uint8_t rel_edit_mode = 0;
 uint8_t rel_ord_tb_size = 16;
 uint8_t rel_ord_tb_sel = 1;
 uint8_t sirali_tablo_disp_start_ind =0;
-uint8_t rel_ord_arrow_loc = 1;
+uint8_t sirali_tablo_arrow_ind = 1;
 //typedef struct {
 //	rel_names_t rel_ord_nm;
 //    uint8_t rel_ord_order;
