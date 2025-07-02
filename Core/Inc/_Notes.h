@@ -169,6 +169,9 @@ aktif pasif state tablosunda
 açıklama yazısı state tablosunda
 sıralama state tablosunda
 
+sıralı tabloda geziniyorken
+	enter dendi
+
 
 
 
