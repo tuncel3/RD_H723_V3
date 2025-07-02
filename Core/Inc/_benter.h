@@ -464,7 +464,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
     else if (currentPage == DEVICE_RESET_pg) {
     	device_reset_req=1;
     	if (device_reset_req_right == 1) {
-				NVIC_SystemReset();
+			NVIC_SystemReset();
 		}
     }
     else if (currentPage == FAULT_CODES_REPORT_pg && FAULT_CODES_REPORT_disp_mode == 0) {
