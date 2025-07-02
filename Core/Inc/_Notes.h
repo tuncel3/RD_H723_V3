@@ -183,7 +183,8 @@ sıralı tabloda geziniyorken
 
 sıralı tabloda geziniyorken
 	sıralı tablo gösteriliyor
-tam tabloda geziniyoren tam tablo gösteriliyor
+tam tabloda geziniyorken
+	tam tablo gösteriliyor
 
 
 

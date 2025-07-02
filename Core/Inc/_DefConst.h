@@ -1209,6 +1209,17 @@ uint32_t REL_OUT_order_part2 = 0;  // 20 bit
 uint32_t REL_OUT_order_part3 = 0;  // 20 bit
 uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 
+
+uint8_t rel_dat_tb_size = NUM_REL_CODES;
+uint8_t rel_dat_tb_sel = 1;
+uint8_t rel_dat_disp_index =0;
+uint8_t rel_dat_arrow_loc = 1;
+uint8_t rel_disp_mode = 1;
+uint8_t rel_edit_mode = 0;
+uint8_t rel_ord_tb_size = 16;
+uint8_t rel_ord_tb_sel = 1;
+uint8_t rel_ord_disp_index =0;
+uint8_t rel_ord_arrow_loc = 1;
 //typedef struct {
 //	rel_names_t rel_ord_nm;
 //    uint8_t rel_ord_order;
@@ -1276,17 +1287,6 @@ uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 //	{ EMPTY_REL,        		 0, "     Boş", 		127 }
 //};
 
-
-uint8_t rel_dat_tb_size = NUM_REL_CODES;
-uint8_t rel_dat_tb_sel = 1;
-uint8_t rel_dat_disp_index =0;
-uint8_t rel_dat_arrow_loc = 1;
-uint8_t rel_disp_mode = 0;
-uint8_t rel_edit_mode = 1;
-uint8_t rel_ord_tb_size = 16;
-uint8_t rel_ord_tb_sel = 1;
-uint8_t rel_ord_disp_index =0;
-uint8_t rel_ord_arrow_loc = 1;
 
 ////// STATE CHANGES ////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
