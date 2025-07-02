@@ -163,8 +163,8 @@ Bu işlem ön panelde sıralama değiştirilip enter yapıldığında yapılıyo
 
 
 
-hepsinino olduğu tablo
-kullanılan sıralı tablo
+röle seçeneği olan durumların hepsinin olduğu tablo REL_OUT_ALL[]
+seçili olan ve sıralı tablo REL_OUT_TB[]
 aktif pasif state tablosunda
 açıklama yazısı state tablosunda
 sıralama state tablosunda
