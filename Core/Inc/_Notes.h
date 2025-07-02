@@ -188,7 +188,7 @@ tam tabloda geziniyorken
 
 
 
-
+	Başlat-Durdur
 
 
 
