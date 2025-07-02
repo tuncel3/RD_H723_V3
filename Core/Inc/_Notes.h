@@ -163,6 +163,11 @@ Bu işlem ön panelde sıralama değiştirilip enter yapıldığında yapılıyo
 
 
 
+hepsinino olduğu tablo
+kullanılan sıralı tablo
+aktif pasif state tablosunda
+açıklama yazısı state tablosunda
+sıralama state tablosunda
 
 
 
