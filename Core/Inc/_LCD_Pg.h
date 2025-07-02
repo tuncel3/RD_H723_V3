@@ -420,17 +420,17 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 	char L[32];
     if (rel_disp_mode == 1) {
 		GLCD_PrintString(0, 0, "Kontak Sıralama");
-		uint8_t rel_ord_disp_index_=rel_ord_disp_index;
+		uint8_t sirali_tablo_index_ilerle=sirali_tablo_index;
 		for (uint8_t i = 0; i < 6; i++) {
 
-		    sprintf(L, " %02d", rel_ord_disp_index_+1);
+		    sprintf(L, " %02d", sirali_tablo_index_ilerle+1);
 			GLCD_PrintString(0, (i + 1) * 9, L);
-			sprintf(L, "%s ", state_list[(SIRALI_TABLO_RELOUT[rel_ord_disp_index_].rel_out_code)].name);
+			sprintf(L, "%s ", state_list[(SIRALI_TABLO_RELOUT[sirali_tablo_index_ilerle].rel_out_code)].name);
 			GLCD_PrintString(22, (i + 1) * 9, L);
-			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[rel_ord_disp_index_].rel_out_code)));
+			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[sirali_tablo_index_ilerle].rel_out_code)));
 			GLCD_PrintString(122, (i + 1) * 9, L);
 
-			rel_ord_disp_index_=(rel_ord_disp_index_+1+rel_ord_tb_size) % rel_ord_tb_size;
+			sirali_tablo_index_ilerle=(sirali_tablo_index_ilerle+1+rel_ord_tb_size) % rel_ord_tb_size;
 
 		}
 
