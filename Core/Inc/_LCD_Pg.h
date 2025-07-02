@@ -429,7 +429,6 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			GLCD_PrintString(22, (i + 1) * 9, L);
 			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[sirali_tablo_disp_index].rel_out_code)));
 			GLCD_PrintString(122, (i + 1) * 9, L);
-
 			sirali_tablo_disp_index=(sirali_tablo_disp_index+1+rel_ord_tb_size) % rel_ord_tb_size;
 
 		}
@@ -437,28 +436,28 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		GLCD_PrintString(0, (rel_ord_arrow_loc+1) * 9, ">");
 
 	} else if (rel_edit_mode == 1) {
-		sprintf(L, "Kontak %02d İçin Seçim", SIRALI_TABLO_RELOUT[rel_ord_tb_sel].rel_out_tb_ind);
+		sprintf(L, "Kontak %02d İçin Seçim", SIRALI_TABLO_RELOUT[sirali_tablo_sel_index].rel_out_tb_ind);
 		GLCD_PrintString(0, 0, L);
-		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
-		for (uint8_t i = 0; i < 6; i++) {
+//		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
+//		for (uint8_t i = 0; i < 6; i++) {
+//
+//			sprintf(L, " %s ", TAM_TABLO_RELOUT[rel_dat_disp_index_].name);
+//			GLCD_PrintString(3, (i + 1) * 9, L);
+//			sprintf(L, "%d ", TAM_TABLO_RELOUT[rel_dat_disp_index_].rel_out_tb_val);
+//			GLCD_PrintString(122, (i + 1) * 9, L);
+//			rel_dat_disp_index_=(rel_dat_disp_index_+1+rel_dat_tb_size) % rel_dat_tb_size;
+//
+//		}
 
-			sprintf(L, " %s ", TAM_TABLO_RELOUT[rel_dat_disp_index_].name);
-			GLCD_PrintString(3, (i + 1) * 9, L);
-			sprintf(L, "%d ", TAM_TABLO_RELOUT[rel_dat_disp_index_].rel_out_tb_val);
-			GLCD_PrintString(122, (i + 1) * 9, L);
-			rel_dat_disp_index_=(rel_dat_disp_index_+1+rel_dat_tb_size) % rel_dat_tb_size;
-
-		}
-
-		GLCD_PrintString(0, (rel_dat_arrow_loc+1) * 9, ">");
-
-		uint8_t x0=0; uint8_t y0=0; uint8_t w=100; uint8_t h=10;
-		if (cal_pg1_sel_edit_mode==cal_none) {
-			if (cal_pg1_sel_col==0) {
-				x0=6; y0=(rel_dat_arrow_loc+1) * 9-2;
-				GLCD_Rect_E(x0,y0,x0+w,y0+h);
-			}
-		}
+//		GLCD_PrintString(0, (rel_dat_arrow_loc+1) * 9, ">");
+//
+//		uint8_t x0=0; uint8_t y0=0; uint8_t w=100; uint8_t h=10;
+//		if (cal_pg1_sel_edit_mode==cal_none) {
+//			if (cal_pg1_sel_col==0) {
+//				x0=6; y0=(rel_dat_arrow_loc+1) * 9-2;
+//				GLCD_Rect_E(x0,y0,x0+w,y0+h);
+//			}
+//		}
     }
 }
 
