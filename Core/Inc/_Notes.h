@@ -149,12 +149,12 @@ Kullanıcı sıralama değiştirince bu vektörde sağdaki elmanlar değişiyor.
 Bu vektör sıkıştırılarak eeprom a kaydediliyor.
 Açılışta eepromdan sıkıştırılmış data alınarak bu vektör oluşturuluyor.
 generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc();
-Bir de bir tablo var. adı REL_OUT_TB[].
+Bir de bir tablo var. adı SIRALI_TABLO_RELOUT[].
 Açılışta bu tablo da güncelleniyor. REL_OUT_ORDER_vect_to_REL_OUT_TB();
 Bu tablo, REL_OUT_ORDER_vect kullanılarak oluşturuluyor.
 Bu tablo oluşturulurken gereken bazı bilgiler REL_DAT_TB[] den alınıyor.
-Yani REL_OUT_ORDER_vect sıralaması ve REL_DAT_TB[] deki bilgiler kullanılarak REL_OUT_TB[] hazırlanıyor.
-Böylece elimizde kullanıcının isteğine göre sıralanmış röle durum tablosu oluşuyor (REL_OUT_TB[]).
+Yani REL_OUT_ORDER_vect sıralaması ve REL_DAT_TB[] deki bilgiler kullanılarak SIRALI_TABLO_RELOUT[] hazırlanıyor.
+Böylece elimizde kullanıcının isteğine göre sıralanmış röle durum tablosu oluşuyor (SIRALI_TABLO_RELOUT[]).
 Rölelerin durumlarındaki değişiklikler bu tabloya işleniyor.
 Kullanıcı bir sıralama değişikliği yaptığında sıralamanın REL_OUT_ORDER_vect[] e uygulanması
 generate_REL_OUT_order_vect_from_ord_table_fc() ile yapılıyor.
@@ -163,17 +163,27 @@ Bu işlem ön panelde sıralama değiştirilip enter yapıldığında yapılıyo
 
 
 
-röle seçeneği olan durumların hepsinin olduğu tablo REL_OUT_ALL[]
-seçili olan ve sıralı tablo REL_OUT_TB[]
+röle seçeneği olan durumların hepsinin olduğu tablo TAM_TABLO_RELOUT[]
+seçili olan ve sıralı tablo SIRALI_TABLO_RELOUT[]
 aktif pasif state tablosunda
 açıklama yazısı state tablosunda
 sıralama state tablosunda
 
 sıralı tabloda geziniyorken
 	enter dendi
+		sıralı tablo indisini tuttuk
+		şimdi tam tablo görülüyor
+			tam tabloda geziniyorken
+				enter dendi
+					tam toblo indisini tuttuk
+	enter dendi
+		sıralı tablo indisinde bulunan code tam tablo indisinde bulunan
+		code ile değiştirildi.
 
 
-
+sıralı tabloda geziniyorken
+	sıralı tablo gösteriliyor
+tam tabloda geziniyoren tam tablo gösteriliyor
 
 
 

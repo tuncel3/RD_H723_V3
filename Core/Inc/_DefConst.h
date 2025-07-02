@@ -1145,7 +1145,7 @@ typedef struct {
     const char *name;
 } rel_out_all;
 
-rel_out_all REL_OUT_ALL[] = {
+rel_out_all TAM_TABLO_RELOUT[] = {
 	{ START_FC,              0, "Başlat-Durdur"      },
 	{ VAC_HG_FC,             0, "Şebeke Yüksek"      },
 	{ VAC_LO_FC,             0, "Şebeke Düşük"       },
@@ -1182,7 +1182,7 @@ typedef struct {
     const char *name;
 } rel_ord_st;
 
-rel_ord_st REL_OUT_TB[] = {
+rel_ord_st SIRALI_TABLO_RELOUT[] = {
     { START_FC,            0, 1, "Başlat-Durdur" },
     { VAC_HG_FC,           0, 2, "Şebeke Yüksek" },
     { VAC_LO_FC,           0, 3, "Şebeke Düşük" },
@@ -1217,7 +1217,7 @@ uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 //    char* rel_ord_desc;
 //} rel_ord_st;
 //
-//rel_ord_st REL_OUT_TB[] = {
+//rel_ord_st SIRALI_TABLO_RELOUT[] = {
 //    { START_STOP_REL,            1,  0, REL_NO, "Başlat-Durdur" },
 //    { VAC_HG_FC_REL,             2,  0, REL_NO, "Şebeke Yüksek" },
 //    { VAC_LO_FC_REL,             3,  0, REL_NO, "Şebeke Düşük" },
