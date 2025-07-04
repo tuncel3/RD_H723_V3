@@ -438,23 +438,23 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 	} else if (rel_edit_mode == 1) {
 		sprintf(L, "Kontak %02d İçin Seçim", SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind].rel_out_tb_ind);
 		GLCD_PrintString(0, 0, L);
-//		uint8_t rel_dat_disp_index_=rel_dat_disp_index;
+//		uint8_t tam_tablo_disp_start_ind_=tam_tablo_disp_start_ind;
 //		for (uint8_t i = 0; i < 6; i++) {
 //
-//			sprintf(L, " %s ", TAM_TABLO_RELOUT[rel_dat_disp_index_].name);
+//			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].name);
 //			GLCD_PrintString(3, (i + 1) * 9, L);
-//			sprintf(L, "%d ", TAM_TABLO_RELOUT[rel_dat_disp_index_].rel_out_tb_val);
+//			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].rel_out_tb_val);
 //			GLCD_PrintString(122, (i + 1) * 9, L);
-//			rel_dat_disp_index_=(rel_dat_disp_index_+1+rel_dat_tb_size) % rel_dat_tb_size;
+//			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+tam_tablo_size) % tam_tablo_size;
 //
 //		}
 
-//		GLCD_PrintString(0, (rel_dat_arrow_loc+1) * 9, ">");
+//		GLCD_PrintString(0, (tam_tablo_arrow_ind+1) * 9, ">");
 //
 //		uint8_t x0=0; uint8_t y0=0; uint8_t w=100; uint8_t h=10;
 //		if (cal_pg1_sel_edit_mode==cal_none) {
 //			if (cal_pg1_sel_col==0) {
-//				x0=6; y0=(rel_dat_arrow_loc+1) * 9-2;
+//				x0=6; y0=(tam_tablo_arrow_ind+1) * 9-2;
 //				GLCD_Rect_E(x0,y0,x0+w,y0+h);
 //			}
 //		}

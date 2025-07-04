@@ -890,7 +890,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val)
 {
     // Update REL_DAT_TB
-//    for (int i = 0; i < rel_dat_tb_size; i++) {
+//    for (int i = 0; i < tam_tablo_size; i++) {
 //        if (REL_DAT_TB[i].rel_dat_nm == rname) { // ekrandan seçim yapılırken rel dat tb den liste gösteriliyor. bu arada value lar da gösterilebilsin diye bu tabloda da value lar saklanıyor.
 //            REL_DAT_TB[i].rel_dat_val = new_val;
 //            break;  // Found the matching enum, so we can stop searching
