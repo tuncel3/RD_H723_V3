@@ -1090,7 +1090,7 @@ State_Info state_list[] = {
     { RECT_DC_HG_FC,              0b10111, "Doğr VDC Yüksk",   RECT_DC_HG_FC_REL,        99, 0 },
     { VAC_LO_FC,                  0b10110, "Şebeke Düşük",     VAC_LO_FC_REL,             2, 0 },
     { VAC_HG_FC,                  0b10110, "Şebeke Yüksek",    VAC_HG_FC_REL,             1, 0 },
-    { STOP_FC,                    0b00010, "Stop",             START_STOP_REL,            0, 0 },
+    { STOP_FC,                    0b00010, "Stop",             START_STOP_REL,           99, 0 },
     { START_FC,                   0b00000, "Start",            START_STOP_REL,            0, 0 },
     { VAC_OFF_FC,                 0b10110, "VAC OFF",          VAC_OFF_FC_REL,           99, 0 },
     { VAC_ON_FC,                  0b00000, "VAC ON",           VAC_ON_FC_REL,            99, 0 },
