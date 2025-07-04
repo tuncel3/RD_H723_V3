@@ -449,7 +449,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 //
 		}
 
-//		GLCD_PrintString(0, (tam_tablo_arrow_ind+1) * 9, ">");
+		GLCD_PrintString(0, (tam_tablo_arrow_ind+1) * 9, ">");
 //
 //		uint8_t x0=0; uint8_t y0=0; uint8_t w=100; uint8_t h=10;
 //		if (cal_pg1_sel_edit_mode==cal_none) {
