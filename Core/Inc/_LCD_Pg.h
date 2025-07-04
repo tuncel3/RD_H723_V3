@@ -445,7 +445,10 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+tam_tablo_size) % tam_tablo_size;
 		}
 
+		GLCD_Rect_E(95,(tam_tablo_arrow_ind+1)*9-2,127,(tam_tablo_arrow_ind+2)*9-1); // batt rect
 		GLCD_PrintString(0, (tam_tablo_arrow_ind+1) * 9, ">");
+		uint8_t x0=0; uint8_t y0=0; uint8_t w=100; uint8_t h=10;
+		GLCD_Rect_E(x0,y0,x0+w,y0+h);
     }
 }
 
