@@ -429,7 +429,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			GLCD_PrintString(22, (i + 1) * 9, L);
 			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].rel_out_code)));
 			GLCD_PrintString(122, (i + 1) * 9, L);
-			sirali_tablo_disp_start_ind_h=(sirali_tablo_disp_start_ind_h+1+rel_ord_tb_size) % rel_ord_tb_size;
+			sirali_tablo_disp_start_ind_h=(sirali_tablo_disp_start_ind_h+1+sirali_tablo_size) % sirali_tablo_size;
 
 		}
 

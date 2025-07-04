@@ -897,7 +897,7 @@ void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val)
 //        }
 //    }
 //    // Update SIRALI_TABLO_RELOUT
-//    for (int j = 0; j < rel_ord_tb_size; j++) {
+//    for (int j = 0; j < sirali_tablo_size; j++) {
 //        if (SIRALI_TABLO_RELOUT[j].rel_out_code == rname) {
 //            SIRALI_TABLO_RELOUT[j].rel_out_tb_val = new_val;
 //            generate_REL_24Bit_Data_fc(); // röle değerleri update edildiği için 24 bit değer de güncelleniyor.

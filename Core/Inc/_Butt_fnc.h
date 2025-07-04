@@ -609,9 +609,9 @@ if (!chg_setting_edit_mode) {
 			if (sirali_tablo_arrow_ind > 1) {
 				sirali_tablo_arrow_ind--;
 			} else if (sirali_tablo_arrow_ind == 1) {
-				sirali_tablo_disp_start_ind = (sirali_tablo_disp_start_ind - 1 + rel_ord_tb_size) % rel_ord_tb_size;
+				sirali_tablo_disp_start_ind = (sirali_tablo_disp_start_ind - 1 + sirali_tablo_size) % sirali_tablo_size;
 			}
-			rel_ord_tb_sel = (sirali_tablo_arrow_ind + sirali_tablo_disp_start_ind) % rel_ord_tb_size;				// UP
+			sirali_tablo_sel = (sirali_tablo_arrow_ind + sirali_tablo_disp_start_ind) % sirali_tablo_size;				// UP
 
         } else if (rel_edit_mode == 1) {
 
@@ -620,7 +620,7 @@ if (!chg_setting_edit_mode) {
 			} else if (tam_tablo_arrow_ind == 1) {
 				tam_tablo_disp_start_ind = (tam_tablo_disp_start_ind - 1 + tam_tablo_size) % tam_tablo_size;		// UP
 			}
-			rel_dat_tb_sel = (tam_tablo_arrow_ind + tam_tablo_disp_start_ind) % tam_tablo_size;
+			tam_tablo_sel = (tam_tablo_arrow_ind + tam_tablo_disp_start_ind) % tam_tablo_size;
         }
     }
 
@@ -952,9 +952,9 @@ if (!chg_setting_edit_mode) {
 			if (sirali_tablo_arrow_ind < 4) {
 				sirali_tablo_arrow_ind++;
 			} else if (sirali_tablo_arrow_ind == 4) {
-				sirali_tablo_disp_start_ind = (sirali_tablo_disp_start_ind + 1 + rel_ord_tb_size) % rel_ord_tb_size;	// DOWN
+				sirali_tablo_disp_start_ind = (sirali_tablo_disp_start_ind + 1 + sirali_tablo_size) % sirali_tablo_size;	// DOWN
 			}
-			rel_ord_tb_sel = (sirali_tablo_arrow_ind + sirali_tablo_disp_start_ind) % rel_ord_tb_size;
+			sirali_tablo_sel = (sirali_tablo_arrow_ind + sirali_tablo_disp_start_ind) % sirali_tablo_size;
 
         } else if (rel_edit_mode == 1) {
 
@@ -963,8 +963,8 @@ if (!chg_setting_edit_mode) {
 			} else if (tam_tablo_arrow_ind == 4) {
 				tam_tablo_disp_start_ind = (tam_tablo_disp_start_ind + 1 + tam_tablo_size) % tam_tablo_size;	// DOWN
 			}
-			rel_dat_tb_sel = (tam_tablo_arrow_ind + tam_tablo_disp_start_ind) % tam_tablo_size;
-//			if (rel_dat_tb_sel == tam_tablo_size-1) rel_dat_tb_sel=0;
+			tam_tablo_sel = (tam_tablo_arrow_ind + tam_tablo_disp_start_ind) % tam_tablo_size;
+//			if (tam_tablo_sel == tam_tablo_size-1) tam_tablo_sel=0;
 
         }
     }
