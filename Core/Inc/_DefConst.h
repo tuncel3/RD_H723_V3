@@ -1142,8 +1142,6 @@ rel_out_all TAM_TABLO_RELOUT[] = {
 	{ BAT_TEMP_ZERO_FC,      0, "Akü Sıck Sıfr C"    },
 	{ BAT_TEMP_50_FC,        0, "Akü Sıck 50 C"      }
 };
-#define TAM_TABLO_RELOUT_SIZE   (sizeof(TAM_TABLO_RELOUT) / sizeof(TAM_TABLO_RELOUT[0]))
-
 typedef struct {
 	State_Codes rel_out_code;
     uint8_t rel_out_tb_val;
@@ -1169,6 +1167,9 @@ rel_ord_st SIRALI_TABLO_RELOUT[] = {
     { BATTERY_FAULT_FC,    0, 15, "Akü Arızası" },
     { GENERAL_FAULT_FC,    0, 16, "Genel Arıza" },
 };
+#define SIRALI_TABLO_SIZE   (sizeof(SIRALI_TABLO_RELOUT) / sizeof(SIRALI_TABLO_RELOUT[0]))
+#define TAM_TABLO_RELOUT_SIZE   (sizeof(TAM_TABLO_RELOUT) / sizeof(TAM_TABLO_RELOUT[0]))
+
 
 #define NUM_STATE_NAMES sizeof(state_list) / sizeof(state_list[0])
 
@@ -1182,7 +1183,6 @@ uint8_t tam_tablo_disp_start_ind =0;
 uint8_t tam_tablo_arrow_ind = 1;
 uint8_t rel_disp_mode = 1;
 uint8_t rel_edit_mode = 0;
-uint8_t sirali_tablo_size = 16;
 uint8_t sirali_tablo_sel = 1;
 uint8_t sirali_tablo_disp_start_ind =0;
 uint8_t sirali_tablo_arrow_ind = 1;

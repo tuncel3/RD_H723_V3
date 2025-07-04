@@ -428,7 +428,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			GLCD_PrintString(22, (i + 1) * 9, L);
 			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].rel_out_code)));
 			GLCD_PrintString(110, (i + 1) * 9, L);
-			sirali_tablo_disp_start_ind_h=(sirali_tablo_disp_start_ind_h+1+sirali_tablo_size) % sirali_tablo_size;
+			sirali_tablo_disp_start_ind_h=(sirali_tablo_disp_start_ind_h+1+SIRALI_TABLO_SIZE) % SIRALI_TABLO_SIZE;
 		}
 
 		GLCD_PrintString(0, (sirali_tablo_arrow_ind+1) * 9, ">");
@@ -442,7 +442,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			GLCD_PrintString(3, (i + 1) * 9, L);
 			sprintf(L, "%d ", (state_get(TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].rel_out_code)));
 			GLCD_PrintString(110, (i + 1) * 9, L);
-			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+tam_tablo_size) % tam_tablo_size;
+			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+TAM_TABLO_RELOUT_SIZE) % TAM_TABLO_RELOUT_SIZE;
 		}
 
 		GLCD_PrintString(0, (tam_tablo_arrow_ind+1) * 9, ">");

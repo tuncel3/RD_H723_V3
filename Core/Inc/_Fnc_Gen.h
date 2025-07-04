@@ -20,7 +20,6 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void);
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
 void generate_REL_24Bit_Data_fc(void);
-void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val);
 
 #include "_EEP_M95P32.h"
 #include "_Fnc_RTC.h"
@@ -887,8 +886,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //	}
 }
 
-void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val)
-{
+//void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val)
+//{
     // Update REL_DAT_TB
 //    for (int i = 0; i < tam_tablo_size; i++) {
 //        if (REL_DAT_TB[i].rel_dat_nm == rname) { // ekrandan seçim yapılırken rel dat tb den liste gösteriliyor. bu arada value lar da gösterilebilsin diye bu tabloda da value lar saklanıyor.
@@ -904,7 +903,7 @@ void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val)
 //            break;  // Found and updated, so we can stop searching
 //        }
 //    }
-}
+//}
 void generate_REL_24Bit_Data_fc(void) {
     rel_out_16Bit_Data = 0; // Clear current value
 
@@ -1095,59 +1094,59 @@ void print_REL_OUT_Table() {
 }
 
 
-void save_REL_OUT_order_to_EEP(void) {
-    REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_ORDER_vect[16]; sıralama bu global vektöre kaydediliyor.
-    REL_OUT_order_part2 = 0; // ön panelden sıralama değiştirilirse, bu vektör güncelleniyor.
-    REL_OUT_order_part3 = 0; // bu fonksiyon ile de 4 tane 30 bitlik sayıya dönüştürülerek eeproma kaydediliyor.
-    REL_OUT_order_part4 = 0;
+//void save_REL_OUT_order_to_EEP(void) {
+//    REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_ORDER_vect[16]; sıralama bu global vektöre kaydediliyor.
+//    REL_OUT_order_part2 = 0; // ön panelden sıralama değiştirilirse, bu vektör güncelleniyor.
+//    REL_OUT_order_part3 = 0; // bu fonksiyon ile de 4 tane 30 bitlik sayıya dönüştürülerek eeproma kaydediliyor.
+//    REL_OUT_order_part4 = 0;
+//
+//    for (int i = 0; i < 16; i++) {
+//        uint32_t val = REL_OUT_ORDER_vect[i] & 0x1F;  // 5-bit
+//
+//        if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
+//            REL_OUT_order_part1 |= (val << (i * 5)); // 4 tan 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
+//        } else if (i < 8) {
+//            REL_OUT_order_part2 |= (val << ((i - 4) * 5));
+//        } else if (i < 12) {
+//            REL_OUT_order_part3 |= (val << ((i - 8) * 5));
+//        } else {
+//            REL_OUT_order_part4 |= (val << ((i - 12) * 5));
+//        }
+//    }
+//
+//    EpD[REL_OUT_1][0].V1 = REL_OUT_order_part1; EpD[REL_OUT_1][1].V1 = REL_OUT_order_part1;
+//    EpD[REL_OUT_2][0].V1 = REL_OUT_order_part2; EpD[REL_OUT_2][1].V1 = REL_OUT_order_part2;
+//    EpD[REL_OUT_3][0].V1 = REL_OUT_order_part3; EpD[REL_OUT_3][1].V1 = REL_OUT_order_part3;
+//    EpD[REL_OUT_4][0].V1 = REL_OUT_order_part4; EpD[REL_OUT_4][1].V1 = REL_OUT_order_part4;
+//
+//    Rec_Dat_to_EEp_f(REL_OUT_1);
+//    Rec_Dat_to_EEp_f(REL_OUT_2);
+//    Rec_Dat_to_EEp_f(REL_OUT_3);
+//    Rec_Dat_to_EEp_f(REL_OUT_4);
+//}
 
-    for (int i = 0; i < 16; i++) {
-        uint32_t val = REL_OUT_ORDER_vect[i] & 0x1F;  // 5-bit
-
-        if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
-            REL_OUT_order_part1 |= (val << (i * 5)); // 4 tan 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
-        } else if (i < 8) {
-            REL_OUT_order_part2 |= (val << ((i - 4) * 5));
-        } else if (i < 12) {
-            REL_OUT_order_part3 |= (val << ((i - 8) * 5));
-        } else {
-            REL_OUT_order_part4 |= (val << ((i - 12) * 5));
-        }
-    }
-
-    EpD[REL_OUT_1][0].V1 = REL_OUT_order_part1; EpD[REL_OUT_1][1].V1 = REL_OUT_order_part1;
-    EpD[REL_OUT_2][0].V1 = REL_OUT_order_part2; EpD[REL_OUT_2][1].V1 = REL_OUT_order_part2;
-    EpD[REL_OUT_3][0].V1 = REL_OUT_order_part3; EpD[REL_OUT_3][1].V1 = REL_OUT_order_part3;
-    EpD[REL_OUT_4][0].V1 = REL_OUT_order_part4; EpD[REL_OUT_4][1].V1 = REL_OUT_order_part4;
-
-    Rec_Dat_to_EEp_f(REL_OUT_1);
-    Rec_Dat_to_EEp_f(REL_OUT_2);
-    Rec_Dat_to_EEp_f(REL_OUT_3);
-    Rec_Dat_to_EEp_f(REL_OUT_4);
-}
-
-void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
-
-    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
-    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
-    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
-    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
-
-    for (int i = 0; i < 16; i++) {
-        uint32_t val;
-
-        if (i < 4) {
-            val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
-        } else if (i < 8) {
-            val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
-        } else if (i < 12) {
-            val = (REL_OUT_order_part3 >> ((i - 8) * 5)) & 0x1F;
-        } else {
-            val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
-        }
-        REL_OUT_ORDER_vect[i] = (rel_names_t)val;
-    }
-}
+//void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
+//
+//    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
+//    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
+//    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
+//    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
+//
+//    for (int i = 0; i < 16; i++) {
+//        uint32_t val;
+//
+//        if (i < 4) {
+//            val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
+//        } else if (i < 8) {
+//            val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
+//        } else if (i < 12) {
+//            val = (REL_OUT_order_part3 >> ((i - 8) * 5)) & 0x1F;
+//        } else {
+//            val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
+//        }
+//        REL_OUT_ORDER_vect[i] = (rel_names_t)val;
+//    }
+//}
 
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
     for (int i = 0; i < 16; i++) {
