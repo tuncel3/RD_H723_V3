@@ -1048,6 +1048,9 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 //rel_out_16Bit_Data SIRALI_TABLO_RELOUT[0].rel_out_code
 
+
+
+
 // state tablosundan SIRALI_TABLO_RELOUT
 for (int i = 0; i < TAM_TABLO_RELOUT_SIZE; i++) {
 	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
@@ -1107,6 +1110,11 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
+	for (int i = 0; i < NM_STATE_CODES; i++) {
+		PRF_GEN("%s /t/t %ld", state_list[i].name, state_list[i].rel_ord);
+		PRF_GEN(" ");
+		PRF_GEN(" ");
+	}
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
