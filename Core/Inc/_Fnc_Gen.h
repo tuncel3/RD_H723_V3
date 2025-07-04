@@ -16,7 +16,7 @@ void inline extern DEV_NOM_VOUT_changed_fc(void);
 void print_active_states();
 
 void save_REL_OUT_order_to_EEP(void);
-void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void);
+//void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void);
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
 void generate_REL_24Bit_Data_fc(void);
@@ -1148,12 +1148,12 @@ void print_REL_OUT_Table() {
 //    }
 //}
 
-void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
-    for (int i = 0; i < 16; i++) {
+//void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
+//    for (int i = 0; i < 16; i++) {
 //    	SIRALI_TABLO_RELOUT[i].rel_out_code=REL_OUT_ORDER_vect[i];
 //    	SIRALI_TABLO_RELOUT[i].rel_out_tb_desc=REL_DAT_TB[REL_OUT_ORDER_vect[i]].rel_dat_desc;
-    }
-}
+//    }
+//}
 
 void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
     for (int i = 0; i < 16; ++i) {

@@ -136,8 +136,8 @@ state_set(ST_DROPPER_K2, 1);
 
 frq_cal_k=275e6*EpD[SET_FRQ_CAL][0].V1;
 // n015
-generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
-REL_OUT_ORDER_vect_to_REL_OUT_TB(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
+//generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(); // eepromdan sıkışmış datayı al ve decompress et
+//REL_OUT_ORDER_vect_to_REL_OUT_TB(); // tabloya aktar. buraya kadar henüz röleler aktif edilmiyor. Hepsi 0. Program işleyişi rölelerin durumunu belirleyecek.
 
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
