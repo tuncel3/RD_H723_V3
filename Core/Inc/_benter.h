@@ -298,14 +298,14 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 
         if (rel_disp_mode == 1) { // ekranda order değiştirildi. tabloda değiş
 //        	SIRALI_TABLO_RELOUT[sirali_tablo_sel].rel_out_code= TAM_TABLO_RELOUT[tam_tablo_sel].rel_out_code;
-        	state_list[ TAM_TABLO_RELOUT[sirali_tablo_sel].rel_out_code ].rel_ord=sirali_tablo_sel;
+        	state_list[ TAM_TABLO_RELOUT[tam_tablo_sel].rel_out_code ].rel_ord=sirali_tablo_sel;
 //        	state_list[(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].rel_out_code)].name);
 //        	SIRALI_TABLO_RELOUT[sirali_tablo_sel].rel_out_tb_val= TAM_TABLO_RELOUT[tam_tablo_sel].rel_dat_val;
 //        	generate_REL_OUT_order_vect_from_ord_table_fc(); // relout order vector üret
 //        	generate_REL_24Bit_Data_fc(); // 24 bit data üret, shift register için
 //        	save_REL_OUT_order_to_EEP(); //sıkıştırılmış orderı 20 bitlik parçalara ayır ve eeproma kaydet
         } else if (rel_edit_mode == 1) {
-        	state_list[ TAM_TABLO_RELOUT[sirali_tablo_sel].rel_out_code ].rel_ord=99;
+        	state_list[ SIRALI_TABLO_RELOUT[sirali_tablo_sel].rel_out_code ].rel_ord=99; // seçili state code'un sıralamasını resetle
         }
     }
 
