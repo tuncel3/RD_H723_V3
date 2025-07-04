@@ -441,11 +441,21 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		uint8_t tam_tablo_disp_start_ind_=tam_tablo_disp_start_ind;
 		for (uint8_t i = 0; i < 6; i++) {
 //
-			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].name);
-			GLCD_PrintString(3, (i + 1) * 9, L);
-			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].rel_out_tb_val);
-			GLCD_PrintString(122, (i + 1) * 9, L);
-			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+tam_tablo_size) % tam_tablo_size;
+			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+0].name);	GLCD_PrintString(3, (0 + 1) * 9, L);
+			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+1].name);	GLCD_PrintString(3, (1 + 1) * 9, L);
+			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+2].name);	GLCD_PrintString(3, (2 + 1) * 9, L);
+			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+3].name);	GLCD_PrintString(3, (3 + 1) * 9, L);
+			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+4].name);	GLCD_PrintString(3, (4 + 1) * 9, L);
+			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+5].name);	GLCD_PrintString(3, (5 + 1) * 9, L);
+
+			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+0].rel_out_tb_val);		GLCD_PrintString(122, (0 + 1) * 9, L);
+			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+1].rel_out_tb_val);	GLCD_PrintString(122, (1 + 1) * 9, L);
+			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+2].rel_out_tb_val);	GLCD_PrintString(122, (2 + 1) * 9, L);
+			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+3].rel_out_tb_val);	GLCD_PrintString(122, (3 + 1) * 9, L);
+			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+4].rel_out_tb_val);	GLCD_PrintString(122, (4 + 1) * 9, L);
+			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+5].rel_out_tb_val);	GLCD_PrintString(122, (5 + 1) * 9, L);
+//			GLCD_PrintString(122, (i + 1) * 9, L);
+//			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+tam_tablo_size) % tam_tablo_size;
 //
 		}
 
