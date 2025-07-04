@@ -1052,7 +1052,7 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 
 // state tablosundan SIRALI_TABLO_RELOUT
-for (int i = 0; i < TAM_TABLO_RELOUT_SIZE; i++) {
+for (int i = 0; i < NM_STATE_CODES; i++) {
 	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
 		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].rel_out_code = state_list[i].code;
 		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].rel_out_tb_val = state_get(i);
