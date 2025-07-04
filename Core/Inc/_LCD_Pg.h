@@ -448,7 +448,8 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+4].name);	GLCD_PrintString(3, (4 + 1) * 9, L);
 			sprintf(L, " %s ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+5].name);	GLCD_PrintString(3, (5 + 1) * 9, L);
 
-			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+0].rel_out_tb_val);		GLCD_PrintString(122, (0 + 1) * 9, L);
+			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+0].rel_out_tb_val);	GLCD_PrintString(122, (0 + 1) * 9, L);
+			sprintf(L, "%d ", (state_get(TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].rel_out_code)));
 			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+1].rel_out_tb_val);	GLCD_PrintString(122, (1 + 1) * 9, L);
 			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+2].rel_out_tb_val);	GLCD_PrintString(122, (2 + 1) * 9, L);
 			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_+3].rel_out_tb_val);	GLCD_PrintString(122, (3 + 1) * 9, L);
