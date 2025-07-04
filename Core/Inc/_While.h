@@ -1111,10 +1111,11 @@ if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
 	for (int i = 0; i < NM_STATE_CODES; i++) {
-		PRF_GEN("%s \t\t%d", state_list[i].name, state_list[i].rel_ord);
-		PRF_GEN(" ");
-		PRF_GEN(" ");
+		PRF_GEN("%-20s  %d", state_list[i].name, state_list[i].rel_ord);
+		delay_1ms(1);
 	}
+		PRF_GEN(" ");
+		PRF_GEN(" ");
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
