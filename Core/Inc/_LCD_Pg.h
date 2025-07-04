@@ -422,15 +422,13 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		GLCD_PrintString(0, 0, "Kontak Sıralama");
 		uint8_t sirali_tablo_disp_start_ind_h=sirali_tablo_disp_start_ind; // aşağıdaki for döngüsü bu indexten başlayarak ilerleyecek ve 6 elemanı gösterecek.
 		for (uint8_t i = 0; i < 6; i++) {
-
 		    sprintf(L, " %02d", sirali_tablo_disp_start_ind_h+1);
 			GLCD_PrintString(0, (i + 1) * 9, L);
-			sprintf(L, "%s ", state_list[(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].rel_out_code)].name);
+			sprintf(L, "%s ", state_list[(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].rel_out_code)].name); // rel_out_code aslında state'lerin enumeration değerleri. bu değerlerin state_list tablosunda karşılığı olan sütundaki text alınıyor.
 			GLCD_PrintString(22, (i + 1) * 9, L);
 			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].rel_out_code)));
 			GLCD_PrintString(122, (i + 1) * 9, L);
 			sirali_tablo_disp_start_ind_h=(sirali_tablo_disp_start_ind_h+1+sirali_tablo_size) % sirali_tablo_size;
-
 		}
 
 		GLCD_PrintString(0, (sirali_tablo_arrow_ind+1) * 9, ">");
@@ -440,24 +438,14 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		GLCD_PrintString(0, 0, L);
 		uint8_t tam_tablo_disp_start_ind_=tam_tablo_disp_start_ind;
 		for (uint8_t i = 0; i < 6; i++) {
-//
 			sprintf(L, " %s ", state_list[(TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].rel_out_code)].name);
 			GLCD_PrintString(3, (i + 1) * 9, L);
 			sprintf(L, "%d ", (state_get(TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].rel_out_code)));
 			GLCD_PrintString(122, (i + 1) * 9, L);
 			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+tam_tablo_size) % tam_tablo_size;
-//
 		}
 
 		GLCD_PrintString(0, (tam_tablo_arrow_ind+1) * 9, ">");
-//
-//		uint8_t x0=0; uint8_t y0=0; uint8_t w=100; uint8_t h=10;
-//		if (cal_pg1_sel_edit_mode==cal_none) {
-//			if (cal_pg1_sel_col==0) {
-//				x0=6; y0=(tam_tablo_arrow_ind+1) * 9-2;
-//				GLCD_Rect_E(x0,y0,x0+w,y0+h);
-//			}
-//		}
     }
 }
 
