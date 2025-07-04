@@ -1037,107 +1037,76 @@ typedef enum {
 	REL_OUT_enum
 } State_Code_Action_Bits;
 
-typedef enum {
-    START_STOP_REL,
-    VAC_HG_FC_REL,
-    VAC_LO_FC_REL,
-    LOAD_DC_HG_FC_REL,
-	LOAD_DC_LW_FC_REL,
-    DC_LEAK_POS_FC_REL,
-    DC_LEAK_NEG_FC_REL,
-    LINE_MCCB_OFF_REL,
-    BATT_MCCB_OFF_REL,
-    LOAD_MCCB_OFF_REL,
-    OVERTEMP_ALARM_FC_REL,
-    FAN_FAULT_FC_REL,
-    BATT_LINE_BROKEN_FC_REL,
-    BATT_REVERSE_FC_REL,
-    BATTERY_FAULT_FC_REL,
-    GENERAL_FAULT_FC_REL,
-    VAC_OFF_FC_REL,
-    VAC_ON_FC_REL,
-    BOOST_CHARGE_REL,
-    FLOAT_CHARGE_REL,
-    RECT_DC_HG_FC_REL,
-    RECT_DC_LW_FC_REL,
-	OVERTEMP_OPEN_FC_REL,
-	BAT_TEMP_ZERO_FC_REL,
-	BAT_TEMP_50_FC_REL,
-	EMPTY_REL,
-    NUM_REL_CODES
-} rel_names_t;
-
 typedef struct {
 	State_Codes code;
     uint8_t action;
     const char *name;
-	rel_names_t rel_nm;
     uint8_t rel_ord;
     uint8_t rel_val;
 } State_Info;
 //  REL_OUT - LCD_ROLL - ACTIVE - THYSTOP - SAVE - SET_GEN_F_LED
 State_Info state_list[] = {
     // LED 16 BIT0 enum 0
-    { GENERAL_FAULT_FC,           0b00010, "Genel Arıza",      GENERAL_FAULT_FC_REL,     15, 0 },
-    { BATTERY_FAULT_FC,           0b00000, "Akü Arızası",      BATTERY_FAULT_FC_REL,     14, 0 },
-    { OVERTEMP_ALARM_FC,          0b10010, "Aşrı Sıckl Uyar",  OVERTEMP_ALARM_FC_REL,    10, 0 },
-    { OVERTEMP_OPEN_FC,           0b10111, "Aşrı Sıckl Açık",  OVERTEMP_OPEN_FC_REL,     99, 0 },
-    { BATTERY_CURRENT_LIMIT_FC,   0b00000, "Akü Akım Sınırı",  NUM_REL_CODES,            99, 0 },
-    { RECTIFIER_CURRENT_LIMIT_FC, 0b00000, "Doğrltc Akm Sınr", NUM_REL_CODES,            99, 0 },
-    { DC_LEAK_NEG_FC,             0b10010, "DC Kaçak Negtf",   DC_LEAK_NEG_FC_REL,        6, 0 },
-    { DC_LEAK_POS_FC,             0b10010, "DC Kaçak Poztf",   DC_LEAK_POS_FC_REL,        5, 0 },
-    { RECT_DC_LW_FC,              0b10011, "Doğr VDC Düşük",   RECT_DC_LW_FC_REL,        99, 0 },
-    { RECT_DC_HG_FC,              0b10111, "Doğr VDC Yüksk",   RECT_DC_HG_FC_REL,        99, 0 },
-    { VAC_LO_FC,                  0b10110, "Şebeke Düşük",     VAC_LO_FC_REL,             2, 0 },
-    { VAC_HG_FC,                  0b10110, "Şebeke Yüksek",    VAC_HG_FC_REL,             1, 0 },
-    { STOP_FC,                    0b00010, "Stop",             START_STOP_REL,           99, 0 },
-    { START_FC,                   0b00000, "Start",            START_STOP_REL,            0, 0 },
-    { VAC_OFF_FC,                 0b10110, "VAC OFF",          VAC_OFF_FC_REL,           99, 0 },
-    { VAC_ON_FC,                  0b00000, "VAC ON",           VAC_ON_FC_REL,            99, 0 },
+    { GENERAL_FAULT_FC,           0b00010, "Genel Arıza",       15, 0 },
+    { BATTERY_FAULT_FC,           0b00000, "Akü Arızası",       14, 0 },
+    { OVERTEMP_ALARM_FC,          0b10010, "Aşrı Sıckl Uyar",   10, 0 },
+    { OVERTEMP_OPEN_FC,           0b10111, "Aşrı Sıckl Açık",   99, 0 },
+    { BATTERY_CURRENT_LIMIT_FC,   0b00000, "Akü Akım Sınırı",   99, 0 },
+    { RECTIFIER_CURRENT_LIMIT_FC, 0b00000, "Doğrltc Akm Sınr",  99, 0 },
+    { DC_LEAK_NEG_FC,             0b10010, "DC Kaçak Negtf",     6, 0 },
+    { DC_LEAK_POS_FC,             0b10010, "DC Kaçak Poztf",     5, 0 },
+    { RECT_DC_LW_FC,              0b10011, "Doğr VDC Düşük",    99, 0 },
+    { RECT_DC_HG_FC,              0b10111, "Doğr VDC Yüksk",    99, 0 },
+    { VAC_LO_FC,                  0b10110, "Şebeke Düşük",       2, 0 },
+    { VAC_HG_FC,                  0b10110, "Şebeke Yüksek",      1, 0 },
+    { STOP_FC,                    0b00010, "Stop",              99, 0 },
+    { START_FC,                   0b00000, "Start",              0, 0 },
+    { VAC_OFF_FC,                 0b10110, "VAC OFF",           99, 0 },
+    { VAC_ON_FC,                  0b00000, "VAC ON",            99, 0 },
     // LED 16 BIT15 enum 15
     // LED 7 BIT0 enum 16
-    { ST_LOAD_MCCB_OFF,           0b10010, "Çıkş Sigrt Atık",  LOAD_MCCB_OFF_REL,      9, 0 },
-    { ST_DROPPER_K1,              0b00000, "Dropper 2 Bypass", NUM_REL_CODES,            99, 0 },
-    { ST_DROPPER_K2,              0b00000, "Dropper 1 Bypass", NUM_REL_CODES,            99, 0 },
-    { ST_BATT_MCCB_OFF,           0b10010, "Akü Sigrta Atık",  BATT_MCCB_OFF_REL,      8, 0 },
-    { BOOST_CHARGE_FC,            0b10000, "Hızl Şarj",        BOOST_CHARGE_REL,      99, 0 },
-    { ST_FLOAT_CHARGE,            0b10000, "Norm Şarj",        FLOAT_CHARGE_REL,      99, 0 },
-    { ST_LINE_MCCB_OFF,           0b10110, "Girş Sigrt Atık",  LINE_MCCB_OFF_REL,      7, 0 },
+    { ST_LOAD_MCCB_OFF,           0b10010, "Çıkş Sigrt Atık",    9, 0 },
+    { ST_DROPPER_K1,              0b00000, "Dropper 2 Bypass",  99, 0 },
+    { ST_DROPPER_K2,              0b00000, "Dropper 1 Bypass",  99, 0 },
+    { ST_BATT_MCCB_OFF,           0b10010, "Akü Sigrta Atık",    8, 0 },
+    { BOOST_CHARGE_FC,            0b10000, "Hızl Şarj",         99, 0 },
+    { ST_FLOAT_CHARGE,            0b10000, "Norm Şarj",         99, 0 },
+    { ST_LINE_MCCB_OFF,           0b10110, "Girş Sigrt Atık",    7, 0 },
     // LED 7 BIT6 enum 22
-    { RECT_SHORT_FC,              0b00110, "DC Kısa Devre",    NUM_REL_CODES,            99, 0 },
-    { BATT_SHORT_FC,              0b00110, "Akü Kısa Devre",   NUM_REL_CODES,            99, 0 },
-    { BATT_REVERSE_FC,            0b10010, "Akü Ters",         BATT_REVERSE_FC_REL,      13, 0 },
-    { ST_BATT_LINE_BROKEN,        0b10011, "Akü Hattı Kopuk",  BATT_LINE_BROKEN_FC_REL,  12, 0 },
-    { BAT_TEMP_ZERO_FC,           0b10011, "Akü Sıcklk Sıfr",  BAT_TEMP_ZERO_FC_REL,     99, 0 },
-    { BAT_TEMP_50_FC,             0b10111, "Akü Sıcklk 50 C",  BAT_TEMP_50_FC_REL,       99, 0 },
+    { RECT_SHORT_FC,              0b00110, "DC Kısa Devre",     99, 0 },
+    { BATT_SHORT_FC,              0b00110, "Akü Kısa Devre",    99, 0 },
+    { BATT_REVERSE_FC,            0b10010, "Akü Ters",          13, 0 },
+    { ST_BATT_LINE_BROKEN,        0b10011, "Akü Hattı Kopuk",   12, 0 },
+    { BAT_TEMP_ZERO_FC,           0b10011, "Akü Sıcklk Sıfr",   99, 0 },
+    { BAT_TEMP_50_FC,             0b10111, "Akü Sıcklk 50 C",   99, 0 },
     // REL MB 8 BIT0 enum 31
-    { AUX_REL1_REL,               0b00000, "Aux Rel 1",        NUM_REL_CODES,            99, 0 },
-    { THY_FAN1_REL,               0b00000, "Tristör Fan 1",    NUM_REL_CODES,            99, 0 },
-    { TRF_FAN2_REL,               0b00000, "Trafo Fan 2",      NUM_REL_CODES,            99, 0 },
-    { DROP_FAN3_REL,              0b00000, "Dropper Fan 3",    NUM_REL_CODES,            99, 0 },
-    { AC_CON1_REL,                0b00000, "AC KONT1 RÖL",     NUM_REL_CODES,            99, 0 },
-    { AC_CON2_REL,                0b00000, "AC KONT2 RÖL",     NUM_REL_CODES,            99, 0 },
-    { DROP_CON1_REL,              0b00000, "Dropper 1 Bypass", NUM_REL_CODES,            99, 0 },
-    { DROP_CON2_REL,              0b00000, "Dropper 2 Bypass", NUM_REL_CODES,            99, 0 },
+    { AUX_REL1_REL,               0b00000, "Aux Rel 1",         99, 0 },
+    { THY_FAN1_REL,               0b00000, "Tristör Fan 1",     99, 0 },
+    { TRF_FAN2_REL,               0b00000, "Trafo Fan 2",       99, 0 },
+    { DROP_FAN3_REL,              0b00000, "Dropper Fan 3",     99, 0 },
+    { AC_CON1_REL,                0b00000, "AC KONT1 RÖL",      99, 0 },
+    { AC_CON2_REL,                0b00000, "AC KONT2 RÖL",      99, 0 },
+    { DROP_CON1_REL,              0b00000, "Dropper 1 Bypass",  99, 0 },
+    { DROP_CON2_REL,              0b00000, "Dropper 2 Bypass",  99, 0 },
     // REL MB 8 BIT7 enum 36
-    { LOAD_DC_HG_FC,              0b10111, "Yük VDC Yüksk",    LOAD_DC_HG_FC_REL,         3, 0 },
-    { LOAD_DC_LW_FC,              0b10011, "Yük VDC Düşük",    LOAD_DC_LW_FC_REL,         4, 0 },
-    { MANUAL_CHARGE_FC,           0b00000, "(Man)",            NUM_REL_CODES,            99, 0 },
-    { AUTO_CHARGE_ST,             0b00000, "(Oto)",            NUM_REL_CODES,            99, 0 },
-    { TIMED_CHARGE_FC,            0b10000, "(Zmn)",            NUM_REL_CODES,            99, 0 },
-    { SOFT_START_ST,              0b00000, "SFT S",            NUM_REL_CODES,            99, 0 },
-    { EEPROM_FAULT_FC,            0b00000, "Kayit Sist Arz",   NUM_REL_CODES,            99, 0 },
-    { FAN_FAULT_FC,               0b00000, "Fan Arz",          FAN_FAULT_FC_REL,         11, 0 },
-    { RTC_FAULT_FC,               0b00000, "RTC Arz",          NUM_REL_CODES,            99, 0 },
-    { VAC_R_RMS_HG_FAULT_FC,      0b00000, "VINR RMS Yüksek",  NUM_REL_CODES,            99, 0 },
-    { VAC_S_RMS_HG_FAULT_FC,      0b00000, "VINS RMS Yüksek",  NUM_REL_CODES,            99, 0 },
-    { VAC_T_RMS_HG_FAULT_FC,      0b00000, "VINT RMS Yüksek",  NUM_REL_CODES,            99, 0 },
-    { VAC_R_RMS_LW_FAULT_FC,      0b00000, "VINR RMS Düşük",   NUM_REL_CODES,            99, 0 },
-    { VAC_S_RMS_LW_FAULT_FC,      0b00000, "VINS RMS Düşük",   NUM_REL_CODES,            99, 0 },
-    { VAC_T_RMS_LW_FAULT_FC,      0b00000, "VINT RMS Düşük",   NUM_REL_CODES,            99, 0 },
-    { VAC_R_RMS_0_FAULT_FC,       0b00000, "VINR RMS Yok",     NUM_REL_CODES,            99, 0 },
-    { VAC_S_RMS_0_FAULT_FC,       0b00000, "VINS RMS Yok",     NUM_REL_CODES,            99, 0 },
-    { VAC_T_RMS_0_FAULT_FC,       0b00000, "VINT RMS Yok",     NUM_REL_CODES,            99, 0 },
+    { LOAD_DC_HG_FC,              0b10111, "Yük VDC Yüksk",      3, 0 },
+    { LOAD_DC_LW_FC,              0b10011, "Yük VDC Düşük",      4, 0 },
+    { MANUAL_CHARGE_FC,           0b00000, "(Man)",             99, 0 },
+    { AUTO_CHARGE_ST,             0b00000, "(Oto)",             99, 0 },
+    { TIMED_CHARGE_FC,            0b10000, "(Zmn)",             99, 0 },
+    { SOFT_START_ST,              0b00000, "SFT S",             99, 0 },
+    { EEPROM_FAULT_FC,            0b00000, "Kayit Sist Arz",    99, 0 },
+    { FAN_FAULT_FC,               0b00000, "Fan Arz",           11, 0 },
+    { RTC_FAULT_FC,               0b00000, "RTC Arz",           99, 0 },
+    { VAC_R_RMS_HG_FAULT_FC,      0b00000, "VINR RMS Yüksek",   99, 0 },
+    { VAC_S_RMS_HG_FAULT_FC,      0b00000, "VINS RMS Yüksek",   99, 0 },
+    { VAC_T_RMS_HG_FAULT_FC,      0b00000, "VINT RMS Yüksek",   99, 0 },
+    { VAC_R_RMS_LW_FAULT_FC,      0b00000, "VINR RMS Düşük",    99, 0 },
+    { VAC_S_RMS_LW_FAULT_FC,      0b00000, "VINS RMS Düşük",    99, 0 },
+    { VAC_T_RMS_LW_FAULT_FC,      0b00000, "VINT RMS Düşük",    99, 0 },
+    { VAC_R_RMS_0_FAULT_FC,       0b00000, "VINR RMS Yok",      99, 0 },
+    { VAC_S_RMS_0_FAULT_FC,       0b00000, "VINS RMS Yok",      99, 0 },
+    { VAC_T_RMS_0_FAULT_FC,       0b00000, "VINT RMS Yok",      99, 0 },
 };
 
 typedef struct {
@@ -1171,10 +1140,9 @@ rel_out_all TAM_TABLO_RELOUT[] = {
 	{ RECT_DC_LW_FC,         0, "Doğr VDC Düşük"     },
 	{ OVERTEMP_OPEN_FC,      0, "Aşrı Sıck Açma"     },
 	{ BAT_TEMP_ZERO_FC,      0, "Akü Sıck Sıfr C"    },
-	{ BAT_TEMP_50_FC,        0, "Akü Sıck 50 C"      },
-	{ EMPTY_REL,             0, "     Boş"           }
+	{ BAT_TEMP_50_FC,        0, "Akü Sıck 50 C"      }
 };
-
+#define TAM_TABLO_RELOUT_SIZE   (sizeof(TAM_TABLO_RELOUT) / sizeof(TAM_TABLO_RELOUT[0]))
 
 typedef struct {
 	State_Codes rel_out_code;
