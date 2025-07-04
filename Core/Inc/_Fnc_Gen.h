@@ -936,7 +936,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     		REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC); // activate general fault LED if associated
-        	set_REL_OUT_vals_in_tables(GENERAL_FAULT_FC_REL, 1); }
+        }
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) {  // stop thy drv if fault requires
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
@@ -964,7 +964,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 			REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
-        	set_REL_OUT_vals_in_tables(GENERAL_FAULT_FC_REL, 0); }
+        }
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }

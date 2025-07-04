@@ -1172,14 +1172,11 @@ rel_ord_st SIRALI_TABLO_RELOUT[] = {
 
 #define NUM_STATE_NAMES sizeof(state_list) / sizeof(state_list[0])
 
-rel_names_t REL_OUT_ORDER_vect[16]; // sıralama buna kaydediliyor
 uint32_t REL_OUT_order_part1 = 0;  // 20 bit. float olarak kaydedildiği için 24 bit max
 uint32_t REL_OUT_order_part2 = 0;  // 20 bit
 uint32_t REL_OUT_order_part3 = 0;  // 20 bit
 uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 
-
-uint8_t tam_tablo_size = NUM_REL_CODES;
 uint8_t tam_tablo_sel = 1;
 uint8_t tam_tablo_disp_start_ind =0;
 uint8_t tam_tablo_arrow_ind = 1;

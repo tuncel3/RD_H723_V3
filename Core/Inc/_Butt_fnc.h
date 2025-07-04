@@ -618,9 +618,9 @@ if (!chg_setting_edit_mode) {
 			if (tam_tablo_arrow_ind > 1) {
 				tam_tablo_arrow_ind--;
 			} else if (tam_tablo_arrow_ind == 1) {
-				tam_tablo_disp_start_ind = (tam_tablo_disp_start_ind - 1 + tam_tablo_size) % tam_tablo_size;		// UP
+				tam_tablo_disp_start_ind = (tam_tablo_disp_start_ind - 1 + TAM_TABLO_RELOUT_SIZE) % TAM_TABLO_RELOUT_SIZE;		// UP
 			}
-			tam_tablo_sel = (tam_tablo_arrow_ind + tam_tablo_disp_start_ind) % tam_tablo_size;
+			tam_tablo_sel = (tam_tablo_arrow_ind + tam_tablo_disp_start_ind) % TAM_TABLO_RELOUT_SIZE;
         }
     }
 
