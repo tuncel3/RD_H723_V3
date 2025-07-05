@@ -1094,45 +1094,45 @@ void print_REL_OUT_Table() {
 }
 
 void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
-
-    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
-    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
-    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
-    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
-
-            uint32_t val;
-
-	for (int i = 0; i < NM_STATE_CODES; i++) {
-		if (i < 4) {
-			val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
-			state_list[val].rel_ord=i;
-		} else if (i < 8) {
-			val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
-		} else if (i < 12) {
-			val = (REL_OUT_order_part3 >> ((i - 8) * 5)) & 0x1F;
-		} else {
-			val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
-		}
-	}
-
-
-	for (int i = 0; i < NM_STATE_CODES; i++) {
-		int bit_pos = state_list[i].rel_ord; // Get the rel_ord value
-		int state_code = state_list[i].code; // Get the state_code value
-		if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
-			uint32_t val = state_code & 0x1F;  // 5-bit
-
-			if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
-				REL_OUT_order_part1 |= (val << (i * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
-			} else if (i < 8) {
-				REL_OUT_order_part2 |= (val << ((i - 4) * 5)); // i burda 4 5 6 7 oluyor. parantez içi 0 1 2 3 oluyor.
-			} else if (i < 12) {
-				REL_OUT_order_part3 |= (val << ((i - 8) * 5));
-			} else {
-				REL_OUT_order_part4 |= (val << ((i - 12) * 5));
-			}
-		}
-	}
+//
+//    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
+//    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
+//    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
+//    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
+//
+//            uint32_t val;
+//
+//	for (int i = 0; i < NM_STATE_CODES; i++) {
+//		if (i < 4) {
+//			val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
+//			state_list[val].rel_ord=i;
+//		} else if (i < 8) {
+//			val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
+//		} else if (i < 12) {
+//			val = (REL_OUT_order_part3 >> ((i - 8) * 5)) & 0x1F;
+//		} else {
+//			val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
+//		}
+//	}
+//
+//
+//	for (int i = 0; i < NM_STATE_CODES; i++) {
+//		int bit_pos = state_list[i].rel_ord; // Get the rel_ord value
+//		int state_code = state_list[i].code; // Get the state_code value
+//		if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
+//			uint32_t val = state_code & 0x1F;  // 5-bit
+//
+//			if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
+//				REL_OUT_order_part1 |= (val << (i * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
+//			} else if (i < 8) {
+//				REL_OUT_order_part2 |= (val << ((i - 4) * 5)); // i burda 4 5 6 7 oluyor. parantez içi 0 1 2 3 oluyor.
+//			} else if (i < 12) {
+//				REL_OUT_order_part3 |= (val << ((i - 8) * 5));
+//			} else {
+//				REL_OUT_order_part4 |= (val << ((i - 12) * 5));
+//			}
+//		}
+//	}
 
 //    for (int i = 0; i < 16; i++) {
 //        uint32_t val;
