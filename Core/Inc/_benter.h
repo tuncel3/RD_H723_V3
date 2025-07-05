@@ -297,7 +297,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
     	rel_edit_mode ^=1;
 
         if (rel_disp_mode == 1) { // ekranda order değiştirildi. tabloda değiş
-        	SIRALI_TABLO_RELOUT[sirali_tablo_sel].tbl_code=TAM_TABLO_RELOUT[tam_tablo_sel].tbl_code;
+        	SIRALI_TABLO_RELOUT[sirali_tablo_sel].tbl_code=TAM_TABLO_RELOUT[1].tbl_code;
 //        	state_list[(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].tbl_code)].name);
 //        	SIRALI_TABLO_RELOUT[sirali_tablo_sel].tbl_val= TAM_TABLO_RELOUT[tam_tablo_sel].rel_dat_val;
 //        	generate_REL_OUT_order_vect_from_ord_table_fc(); // relout order vector üret
