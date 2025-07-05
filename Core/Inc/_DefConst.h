@@ -1035,7 +1035,7 @@ typedef enum {
 } State_Code_Action_Bits;
 
 typedef struct {
-	State_Codes ind;
+	uint8_t ind;
 	State_Codes code;
     uint8_t action;
     const char *name;

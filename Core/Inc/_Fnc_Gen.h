@@ -1095,26 +1095,26 @@ void print_REL_OUT_Table() {
 
 void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
 
-//    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
-//    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
-//    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
-//    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
-//
-//            uint32_t val;
-//
-//	for (int i = 0; i < NM_STATE_CODES; i++) {
-//		if (i < 4) {
-//			val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
-//			state_list[val].rel_ord=i;
-//		} else if (i < 8) {
-//			val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
-//		} else if (i < 12) {
-//			val = (REL_OUT_order_part3 >> ((i - 8) * 5)) & 0x1F;
-//		} else {
-//			val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
-//		}
-//		SIRALI_TABLO_RELOUT[i].sirali_tablo_sira = (rel_names_t)val;
-//	}
+    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
+    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
+    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
+    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
+
+            uint32_t val;
+
+	for (int i = 0; i < NM_STATE_CODES; i++) {
+		if (i < 4) {
+			val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
+			state_list[val].rel_ord=i;
+		} else if (i < 8) {
+			val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
+		} else if (i < 12) {
+			val = (REL_OUT_order_part3 >> ((i - 8) * 5)) & 0x1F;
+		} else {
+			val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
+		}
+		SIRALI_TABLO_RELOUT[i].sirali_tablo_code = (State_Codes)val;
+	}
 }
 
 void save_REL_OUT_order_to_EEP(void) {
