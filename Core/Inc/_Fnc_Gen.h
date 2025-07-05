@@ -1160,7 +1160,7 @@ void save_REL_OUT_order_to_EEP(void) {
 
 		if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
 			uint32_t val = state_code & 0x1F;  // 5-bit
-			PRF_GEN("A %lu", state_code);
+			PRF_GEN("A %lu", val);
 			if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
 				REL_OUT_order_part1 |= (val << (i * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
 			} else if (i < 8) {
