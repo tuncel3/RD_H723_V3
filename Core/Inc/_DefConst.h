@@ -1170,7 +1170,7 @@ uint32_t REL_OUT_order_part2 = 0;  // 20 bit
 uint32_t REL_OUT_order_part3 = 0;  // 20 bit
 uint32_t REL_OUT_order_part4 = 0;  // 20 bit
 
-uint8_t tam_tablo_sel = 1;
+uint8_t tam_tablo_sel = 2;
 uint8_t tam_tablo_disp_start_ind =0;
 uint8_t tam_tablo_arrow_ind = 1;
 uint8_t rel_disp_mode = 1;
