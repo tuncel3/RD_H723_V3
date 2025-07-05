@@ -4,7 +4,7 @@ inline void delayA_1ms(uint32_t ms);
 inline void delayA_1us(uint32_t us);
 inline void delayA_100ns(uint32_t us);
 void printFaultCodes(void);
-void inline extern startup_get_vars_from_EEP(void);
+//void inline extern startup_get_vars_from_EEP(void);
 void apply_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_targ_DC_voltage(float set_val);
 //void inline extern update_VDC_high_low_lim_fc(void);
@@ -16,7 +16,7 @@ void inline extern DEV_NOM_VOUT_changed_fc(void);
 void print_active_states();
 
 void save_REL_OUT_order_to_EEP(void);
-//void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void);
+void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void);
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
 void generate_REL_24Bit_Data_fc(void);
@@ -1030,7 +1030,7 @@ static float tmp144_convert_temperature(uint16_t raw16) {
   return (float)val12 * 0.0625f;
 }
 
-int tmp144_init_and_assign(void) {
+void tmp144_init_and_assign(void) {
 USART10_SendByte(0x55); // Calibration Byte (55h)
 delayA_1us(10);
 USART10_SendByte(0xB4); // Global software reset
@@ -1087,14 +1087,13 @@ delay_1ms(100);
 
 
 void print_REL_OUT_Table() {
-    for (int i = 0; i < 16; i++) {
+//    for (int i = 0; i < 16; i++) {
 //		PRF_GEN("Order %d %s", SIRALI_TABLO_RELOUT[i].sirali_tablo_code, SIRALI_TABLO_RELOUT[i].rel_out_tb_desc);
-		delay_1ms(10);
-    }
+//		delay_1ms(10);
+//    }
 }
 
 void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
-
     REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
     REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
     REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
