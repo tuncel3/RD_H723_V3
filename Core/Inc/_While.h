@@ -1085,7 +1085,6 @@ REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 
 
 
-
 //for (int i = 0; i < num_rows; i++) {
 //    if (state_list[i].rel_ord == 3) { // Check if the 5th column (rel_ord) is 3
 //        row = i; // Store the row number
