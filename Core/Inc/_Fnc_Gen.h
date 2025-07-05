@@ -1160,6 +1160,7 @@ void save_REL_OUT_order_to_EEP(void) {
 		uint8_t state_code_ = SIRALI_TABLO_RELOUT[i].sirali_tablo_code & 0x1F;
 		if (rel_ord_ < 4) {
 			REL_OUT_order_part1 |= (state_code_ << ((rel_ord_ - 0) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
+			PRF_GEN("%u %u %d %lu", rel_ord_, state_code_, (state_code_ << ((rel_ord_ - 0) * 5)), REL_OUT_order_part1); delayA_1us(10);
 		} else if (rel_ord_ < 8) {
 			REL_OUT_order_part2 |= (state_code_ << ((rel_ord_ - 4) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
 		} else if (rel_ord_ < 12) {
