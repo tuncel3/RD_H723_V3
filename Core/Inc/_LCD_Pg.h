@@ -434,7 +434,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		GLCD_PrintString(0, (sirali_tablo_arrow_ind+1) * 9, ">");
 
 	} else if (rel_edit_mode == 1) {
-		sprintf(L, "Kontak %02d İçin Seçim", SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind].rel_out_tb_ind);
+		sprintf(L, "Kontak %02d İçin Seçim", SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind].sirali_tablo_sira);
 		GLCD_PrintString(0, 0, L);
 		uint8_t tam_tablo_disp_start_ind_=tam_tablo_disp_start_ind;
 		for (uint8_t i = 0; i < 6; i++) {

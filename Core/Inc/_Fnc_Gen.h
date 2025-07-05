@@ -908,7 +908,7 @@ void generate_REL_24Bit_Data_fc(void) {
     rel_out_16Bit_Data = 0; // Clear current value
 
 //    for (int i = 0; i < 16; ++i) {
-//        uint8_t order = SIRALI_TABLO_RELOUT[i].rel_out_tb_ind;
+//        uint8_t order = SIRALI_TABLO_RELOUT[i].sirali_tablo_sira;
 //        uint8_t val = SIRALI_TABLO_RELOUT[i].rel_out_tb_val;
 //
 //        // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
@@ -1157,8 +1157,8 @@ void save_REL_OUT_order_to_EEP(void) {
     REL_OUT_order_part2 = 0;
     REL_OUT_order_part3 = 0;
     REL_OUT_order_part4 = 0;
-	for (int i = 0; i < NM_STATE_CODES; i++) { // tüm state_list taranıyor
-		uint8_t rel_ord_ = state_list[i].rel_ord; // rel order al
+	for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
+		uint8_t rel_ord_ = SIRALI_TABLO_RELOUT[i].rel_out_tb_val; // rel order al
 		uint8_t state_code_ = state_list[i].code & 0x1F; // state_code_ un 5-bit'lik kısmını al
 		if (rel_ord_ >= 0 && rel_ord_ <= 15) { // state_list rel_ord kısmında 0 15 arası değerler olan satırlara bakılıyor
 			if (rel_ord_ < 4) { // her döngüde state_code_ değerlerini yan yana koyuyor
