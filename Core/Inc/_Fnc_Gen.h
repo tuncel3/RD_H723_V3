@@ -1158,13 +1158,13 @@ void save_REL_OUT_order_to_EEP(void) {
 //    Rec_Dat_to_EEp_f(REL_OUT_4);
 //}
 
-//void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
-//
-//    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
-//    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
-//    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
-//    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
-//
+void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
+
+    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
+    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
+    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
+    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
+
 //    for (int i = 0; i < 16; i++) {
 //        uint32_t val;
 //
@@ -1179,7 +1179,7 @@ void save_REL_OUT_order_to_EEP(void) {
 //        }
 //        REL_OUT_ORDER_vect[i] = (rel_names_t)val;
 //    }
-//}
+}
 
 //void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
 //    for (int i = 0; i < 16; i++) {

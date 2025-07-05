@@ -122,18 +122,7 @@ void bleft_fnc(void) {
     	}
     }
     else if (currentPage == RELAY_ORDER_pg) { // LEFT
-    	if (management_menu_en_cnt < 5 && management_menu_en==0) {
-    		management_menu_en_cnt++;
-			if (management_menu_en_cnt == 5) {
-				management_menu_en=1;
-			}
-    	}
-    	else if (management_menu_dis_cnt < 5 && management_menu_en==1) {
-    		management_menu_dis_cnt++;
-			if (management_menu_dis_cnt == 5) {
-				management_menu_en=0;
-			}
-    	}
+    	save_REL_OUT_order_to_EEP();
     }
     else if (currentPage == TEST_pg) { 		// LEFT
     	if (!test_edit_mode) {
