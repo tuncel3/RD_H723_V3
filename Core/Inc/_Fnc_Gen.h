@@ -1094,11 +1094,11 @@ void print_REL_OUT_Table() {
 }
 
 void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
-
-    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
-    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
-    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
-    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
+//
+//    REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
+//    REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
+//    REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
+//    REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
 //
 //            uint32_t val;
 //
@@ -1165,6 +1165,7 @@ void save_REL_OUT_order_to_EEP(void) {
 			if (rel_ord_ < 4) { // her döngüde state_code_ değerlerini yan yana koyuyor
 				REL_OUT_order_part1 |= (state_code_ << (rel_ord_ - 0 * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
 //				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 0) * 5); delayA_1us(10);
+				PRF_GEN("rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u %u", rel_ord_, state_code_, ((rel_ord_ - 0) * 5), (state_code_ << (rel_ord_ - 0 * 5))); delayA_1us(10);
 			} else if (rel_ord_ < 8) {
 				REL_OUT_order_part2 |= (state_code_ << ((rel_ord_ - 4) * 5)); // i burda 4 5 6 7 oluyor. parantez içi 0 1 2 3 oluyor.
 //				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 4) * 5); delayA_1us(10);
@@ -1184,10 +1185,10 @@ void save_REL_OUT_order_to_EEP(void) {
 	EpD[REL_OUT_3][0].V1 = REL_OUT_order_part3;
 	EpD[REL_OUT_4][0].V1 = REL_OUT_order_part4;
 
-	Rec_Dat_to_EEp_f(REL_OUT_1);
-	Rec_Dat_to_EEp_f(REL_OUT_2);
-	Rec_Dat_to_EEp_f(REL_OUT_3);
-	Rec_Dat_to_EEp_f(REL_OUT_4);
+//	Rec_Dat_to_EEp_f(REL_OUT_1);
+//	Rec_Dat_to_EEp_f(REL_OUT_2);
+//	Rec_Dat_to_EEp_f(REL_OUT_3);
+//	Rec_Dat_to_EEp_f(REL_OUT_4);
 }
 
 //void save_REL_OUT_order_to_EEP(void) {
