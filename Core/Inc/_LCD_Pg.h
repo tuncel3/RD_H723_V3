@@ -440,14 +440,14 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		for (uint8_t i = 0; i < 6; i++) {
 			sprintf(L, " %s ", state_list[(TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].tbl_code)].name);
 			GLCD_PrintString(3, (i + 1) * 9, L);
-			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].tbl_code);
+			sprintf(L, "%d ", SIRALI_TABLO_RELOUT[TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].tbl_code].tbl_val);
 			GLCD_PrintString(122, (i + 1) * 9, L);
 			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+TAM_TABLO_RELOUT_SIZE) % TAM_TABLO_RELOUT_SIZE;
 		}
 
 		GLCD_PrintString(0, (tam_tablo_arrow_ind+1) * 9, ">");
 		if (rel_sel_blink^=1) {
-			GLCD_Rect_E(6,(tam_tablo_arrow_ind+1)*9-2,var3,(tam_tablo_arrow_ind+2)*9-1); // blinking rect
+			GLCD_Rect_E(6,(tam_tablo_arrow_ind+1)*9-2,116,(tam_tablo_arrow_ind+2)*9-1); // blinking rect
 		}
     }
 }
