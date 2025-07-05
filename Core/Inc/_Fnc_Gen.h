@@ -1165,7 +1165,7 @@ void save_REL_OUT_order_to_EEP(void) {
 			if (rel_ord_ < 4) { // her döngüde state_code_ değerlerini yan yana koyuyor
 				REL_OUT_order_part1 |= (state_code_ << (rel_ord_ - 0 * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
 //				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 0) * 5); delayA_1us(10);
-				PRF_GEN("rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u %u", rel_ord_, state_code_, ((rel_ord_ - 0) * 5), (state_code_ << (rel_ord_ - 0 * 5))); delayA_1us(10);
+				PRF_GEN("rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u %u %lu", rel_ord_, state_code_, ((rel_ord_ - 0) * 5), (state_code_ << (rel_ord_ - 0 * 5)), REL_OUT_order_part1); delayA_1us(10);
 			} else if (rel_ord_ < 8) {
 				REL_OUT_order_part2 |= (state_code_ << ((rel_ord_ - 4) * 5)); // i burda 4 5 6 7 oluyor. parantez içi 0 1 2 3 oluyor.
 //				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 4) * 5); delayA_1us(10);
