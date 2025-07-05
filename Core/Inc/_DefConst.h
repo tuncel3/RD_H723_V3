@@ -1035,7 +1035,7 @@ typedef enum {
 } State_Code_Action_Bits;
 
 typedef struct {
-	uint8_t ind;
+	uint8_t tbl_ind;
 	State_Codes code;
     uint8_t action;
     const char *name;
@@ -1103,60 +1103,58 @@ State_Info state_list[] = {
 typedef struct {
 	State_Codes tbl_code;
     uint8_t tbl_val;
-    const char *name;
 } rel_out_all;
 
 rel_out_all TAM_TABLO_RELOUT[] = {
-	{ START_FC,              0, "Başlat-Durdur"      },
-	{ VAC_HG_FC,             0, "Şebeke Yüksek"      },
-	{ VAC_LO_FC,             0, "Şebeke Düşük"       },
-	{ LOAD_DC_HG_FC,         0, "Yük VDC Yüksk"      },
-	{ LOAD_DC_LW_FC,         0, "Yük VDC Düşük"      },
-	{ DC_LEAK_POS_FC,        0, "DC Kaçak Poztf"     },
-	{ DC_LEAK_NEG_FC,        0, "DC Kaçak Negtf"     },
-	{ ST_LINE_MCCB_OFF,      0, "Giriş Sigr Off"     },
-	{ ST_BATT_MCCB_OFF,      0, "Akü Sigrta Off"     },
-	{ ST_LOAD_MCCB_OFF,      0, "Yük Sigrt Atık"     },
-	{ OVERTEMP_ALARM_FC,     0, "Aşrı Sıck Uyar"     },
-	{ FAN_FAULT_FC,          0, "Fan Arızası"        },
-	{ ST_BATT_LINE_BROKEN,   0, "Akü Hattı Kopuk"    },
-	{ BATT_REVERSE_FC,       0, "Akü Ters"           },
-	{ BATTERY_FAULT_FC,      0, "Akü Arızası"        },
-	{ GENERAL_FAULT_FC,      0, "Genel Arıza"        },
-	{ VAC_OFF_FC,            0, "Şebeke Yok"         },
-	{ VAC_ON_FC,             0, "Şebeke Var"         },
-	{ BOOST_CHARGE_FC,       0, "Hızlı Şarj"         },
-	{ ST_FLOAT_CHARGE,       0, "Normal Şarj"        },
-	{ RECT_DC_HG_FC,         0, "Doğr VDC Yüksk"     },
-	{ RECT_DC_LW_FC,         0, "Doğr VDC Düşük"     },
-	{ OVERTEMP_OPEN_FC,      0, "Aşrı Sıck Açma"     },
-	{ BAT_TEMP_ZERO_FC,      0, "Akü Sıck Sıfr C"    },
-	{ BAT_TEMP_50_FC,        0, "Akü Sıck 50 C"      }
+	{ START_FC,              0 },
+	{ VAC_HG_FC,             0 },
+	{ VAC_LO_FC,             0 },
+	{ LOAD_DC_HG_FC,         0 },
+	{ LOAD_DC_LW_FC,         0 },
+	{ DC_LEAK_POS_FC,        0 },
+	{ DC_LEAK_NEG_FC,        0 },
+	{ ST_LINE_MCCB_OFF,      0 },
+	{ ST_BATT_MCCB_OFF,      0 },
+	{ ST_LOAD_MCCB_OFF,      0 },
+	{ OVERTEMP_ALARM_FC,     0 },
+	{ FAN_FAULT_FC,          0 },
+	{ ST_BATT_LINE_BROKEN,   0 },
+	{ BATT_REVERSE_FC,       0 },
+	{ BATTERY_FAULT_FC,      0 },
+	{ GENERAL_FAULT_FC,      0 },
+	{ VAC_OFF_FC,            0 },
+	{ VAC_ON_FC,             0 },
+	{ BOOST_CHARGE_FC,       0 },
+	{ ST_FLOAT_CHARGE,       0 },
+	{ RECT_DC_HG_FC,         0 },
+	{ RECT_DC_LW_FC,         0 },
+	{ OVERTEMP_OPEN_FC,      0 },
+	{ BAT_TEMP_ZERO_FC,      0 },
+	{ BAT_TEMP_50_FC,        0 }
 };
 typedef struct {
+	uint8_t tbl_ind;
 	State_Codes tbl_code;
     uint8_t tbl_val;
-    uint8_t sirali_tablo_sira;
-    const char *name;
 } rel_ord_st;
 
 rel_ord_st SIRALI_TABLO_RELOUT[] = {
-    { START_FC,            1,  0, "Başlat-Durdur" },
-    { VAC_HG_FC,           0,  1, "Şebeke Yüksek" },
-    { VAC_LO_FC,           1,  2, "Şebeke Düşük" },
-    { LOAD_DC_HG_FC,       0,  3, "Yük VDC Yüksk" },
-    { LOAD_DC_LW_FC,       0,  4, "Yük VDC Düşük" },
-    { DC_LEAK_POS_FC,      1,  5, "DC Kaçak Poztf" },
-    { DC_LEAK_NEG_FC,      0,  6, "DC Kaçak Negtf" },
-    { ST_LINE_MCCB_OFF,    0,  7, "Giriş Sigr Off" },
-    { ST_BATT_MCCB_OFF,    0,  8, "Akü Sigrta Off" },
-    { ST_LOAD_MCCB_OFF,    0,  9, "Yük Sigrt Atık" },
-    { OVERTEMP_ALARM_FC,   0, 10, "Aşrı Sıck Uyar" },
-    { FAN_FAULT_FC,        0, 11, "Fan Arızası" },
-    { ST_BATT_LINE_BROKEN, 0, 12, "Akü Hattı Kopuk" },
-    { BATT_REVERSE_FC,     0, 13, "Akü Ters" },
-    { BATTERY_FAULT_FC,    0, 14, "Akü Arızası" },
-    { GENERAL_FAULT_FC,    0, 15, "Genel Arıza" },
+    { START_FC,            1,  0 },
+    { VAC_HG_FC,           0,  1 },
+    { VAC_LO_FC,           1,  2 },
+    { LOAD_DC_HG_FC,       0,  3 },
+    { LOAD_DC_LW_FC,       0,  4 },
+    { DC_LEAK_POS_FC,      1,  5 },
+    { DC_LEAK_NEG_FC,      0,  6 },
+    { ST_LINE_MCCB_OFF,    0,  7 },
+    { ST_BATT_MCCB_OFF,    0,  8 },
+    { ST_LOAD_MCCB_OFF,    0,  9 },
+    { OVERTEMP_ALARM_FC,   0, 10 },
+    { FAN_FAULT_FC,        0, 11 },
+    { ST_BATT_LINE_BROKEN, 0, 12 },
+    { BATT_REVERSE_FC,     0, 13 },
+    { BATTERY_FAULT_FC,    0, 14 },
+    { GENERAL_FAULT_FC,    0, 15 },
 };
 
 #define SIRALI_TABLO_SIZE   (sizeof(SIRALI_TABLO_RELOUT) / sizeof(SIRALI_TABLO_RELOUT[0]))
