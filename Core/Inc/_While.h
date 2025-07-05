@@ -1052,24 +1052,21 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 
 // state tablosundan SIRALI_TABLO_RELOUT
-for (int i = 0; i < NM_STATE_CODES; i++) {
-	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
-		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].rel_out_code = state_list[i].code;
-		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].rel_out_tb_val = state_get(i);
-		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].name = state_list[i].name;
-	}
-}
+//for (int i = 0; i < NM_STATE_CODES; i++) {
+//	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
+//		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].rel_out_code = state_list[i].code;
+//		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].rel_out_tb_val = state_get(i);
+//		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].name = state_list[i].name;
+//	}
+//}
 
-// state tablosundan rel_out_16Bit_Data
-for (int i = 0; i < NM_STATE_CODES; i++) {
-    int bit_pos = state_list[i].rel_ord; // Get the rel_ord value
-    if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
-        if (state_get(i)) { // Check if the state is active
-            rel_out_16Bit_Data |= (1 << (15-bit_pos)); // Set the corresponding bit
-        } else {										// 15-x yaparak variable ı ters oluşturuyor shif register için.
-            rel_out_16Bit_Data &= ~(1 << (15-bit_pos)); // Clear the corresponding bit
-        }
-    }
+// sıralı tablodan rel_out_16Bit_Data
+for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
+	if (SIRALI_TABLO_RELOUT[i].rel_out_tb_val) {
+		rel_out_16Bit_Data |= (1 << (15-i));
+	} else {					// 15-x yaparak variable ı ters oluşturuyor shif register için.
+		rel_out_16Bit_Data &= ~(1 << (15-i)); // Clear the corresponding bit
+	}
 }
 REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 

@@ -1141,12 +1141,12 @@ typedef struct {
 } rel_ord_st;
 
 rel_ord_st SIRALI_TABLO_RELOUT[] = {
-    { START_FC,            0, 1, "Başlat-Durdur" },
+    { START_FC,            1, 1, "Başlat-Durdur" },
     { VAC_HG_FC,           0, 2, "Şebeke Yüksek" },
-    { VAC_LO_FC,           0, 3, "Şebeke Düşük" },
+    { VAC_LO_FC,           1, 3, "Şebeke Düşük" },
     { LOAD_DC_HG_FC,       0, 4, "Yük VDC Yüksk" },
     { LOAD_DC_LW_FC,       0, 5, "Yük VDC Düşük" },
-    { DC_LEAK_POS_FC,      0, 6, "DC Kaçak Poztf" },
+    { DC_LEAK_POS_FC,      1, 6, "DC Kaçak Poztf" },
     { DC_LEAK_NEG_FC,      0, 7, "DC Kaçak Negtf" },
     { ST_LINE_MCCB_OFF,    0, 8, "Giriş Sigr Off" },
     { ST_BATT_MCCB_OFF,    0, 9, "Akü Sigrta Off" },
