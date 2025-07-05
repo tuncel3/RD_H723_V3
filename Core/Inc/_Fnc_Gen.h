@@ -1163,7 +1163,7 @@ void save_REL_OUT_order_to_EEP(void) {
 			uint32_t state_code_ = state_code & 0x1F;  // 5-bit
 //			PRF_GEN("  rel_ord_ 0-15 state_code_ %u %u", rel_ord_, state_code_); delayA_1us(10);
 			if (rel_ord_ < 4) { // her döngüde state_code_ değerlerini yan yana koyuyor
-				REL_OUT_order_part1 |= (state_code_ << (rel_ord_ - 0 * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
+				REL_OUT_order_part1 |= (state_code_ << ((rel_ord_ - 0) * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
 //				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 0) * 5); delayA_1us(10);
 				PRF_GEN("rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u %u %lu", rel_ord_, state_code_, ((rel_ord_ - 0) * 5), (state_code_ << (rel_ord_ - 0 * 5)), REL_OUT_order_part1); delayA_1us(10);
 			} else if (rel_ord_ < 8) {
