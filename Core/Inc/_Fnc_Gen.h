@@ -1163,10 +1163,13 @@ void save_REL_OUT_order_to_EEP(void) {
 			PRF_GEN("%u %u %d %lu", rel_ord_, state_code_, (state_code_ << ((rel_ord_ - 0) * 5)), REL_OUT_order_part1); delayA_1us(10);
 		} else if (rel_ord_ < 8) {
 			REL_OUT_order_part2 |= (state_code_ << ((rel_ord_ - 4) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
+			PRF_GEN("%u %u %d %lu", rel_ord_, state_code_, (state_code_ << ((rel_ord_ - 4) * 5)), REL_OUT_order_part1); delayA_1us(10);
 		} else if (rel_ord_ < 12) {
 			REL_OUT_order_part3 |= (state_code_ << ((rel_ord_ - 8) * 5)); // rel_ord_ 8 9 10 11, parantez içi 0 1 2 3 oluyor.
+			PRF_GEN("%u %u %d %lu", rel_ord_, state_code_, (state_code_ << ((rel_ord_ - 8) * 5)), REL_OUT_order_part1); delayA_1us(10);
 		} else {
 			REL_OUT_order_part4 |= (state_code_ << ((rel_ord_ - 12) * 5));
+			PRF_GEN("%u %u %d %lu", rel_ord_, state_code_, (state_code_ << ((rel_ord_ - 12) * 5)), REL_OUT_order_part1); delayA_1us(10);
 		}
 	}
 
