@@ -1105,7 +1105,7 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
 	for (int i = 0; i < NM_STATE_CODES; i++) {
 		if (i < 4) {
 			val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
-			state_list[val].rel_ord]=i;
+			state_list[val].rel_ord=i;
 		} else if (i < 8) {
 			val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
 		} else if (i < 12) {

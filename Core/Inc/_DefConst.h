@@ -600,9 +600,6 @@ const char* Eep_data_Names[] = { // for printing in uart
 	"SET_OVERTEMP_ALARM",
 	"SET_OVERTEMP_OPEN",
 	"SET_OVT_OPEN_DELAY",
-    "SET_OVTM_ALRM_LIM",
-    "SET_OVTM_OPEN_DUR",
-    "SET_OVTM_OPEN_LIM",
     "DEV_NOM_VOUT", // Cihaz Nom VDC
     "BATT_NOM_IOUT",
     "DC_KAC_POS",	 	// DC kaçak pozitif
