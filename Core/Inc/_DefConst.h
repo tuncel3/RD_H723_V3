@@ -1101,6 +1101,7 @@ State_Info state_list[] = {
 };
 
 typedef struct {
+	uint8_t tbl_ind;
 	State_Codes tbl_code;
     uint8_t tbl_val;
 } rel_out_all;
@@ -1139,24 +1140,23 @@ typedef struct {
 } rel_ord_st;
 
 rel_ord_st SIRALI_TABLO_RELOUT[] = {
-    { START_FC,            1,  0 },
-    { VAC_HG_FC,           0,  1 },
-    { VAC_LO_FC,           1,  2 },
-    { LOAD_DC_HG_FC,       0,  3 },
-    { LOAD_DC_LW_FC,       0,  4 },
-    { DC_LEAK_POS_FC,      1,  5 },
-    { DC_LEAK_NEG_FC,      0,  6 },
-    { ST_LINE_MCCB_OFF,    0,  7 },
-    { ST_BATT_MCCB_OFF,    0,  8 },
-    { ST_LOAD_MCCB_OFF,    0,  9 },
-    { OVERTEMP_ALARM_FC,   0, 10 },
-    { FAN_FAULT_FC,        0, 11 },
-    { ST_BATT_LINE_BROKEN, 0, 12 },
-    { BATT_REVERSE_FC,     0, 13 },
-    { BATTERY_FAULT_FC,    0, 14 },
-    { GENERAL_FAULT_FC,    0, 15 },
+    {  0, START_FC,            1 },
+    {  1, VAC_HG_FC,           0 },
+    {  2, VAC_LO_FC,           1 },
+    {  3, LOAD_DC_HG_FC,       0 },
+    {  4, LOAD_DC_LW_FC,       0 },
+    {  5, DC_LEAK_POS_FC,      1 },
+    {  6, DC_LEAK_NEG_FC,      0 },
+    {  7, ST_LINE_MCCB_OFF,    0 },
+    {  8, ST_BATT_MCCB_OFF,    0 },
+    {  9, ST_LOAD_MCCB_OFF,    0 },
+    { 10, OVERTEMP_ALARM_FC,   0 },
+    { 11, FAN_FAULT_FC,        0 },
+    { 12, ST_BATT_LINE_BROKEN, 0 },
+    { 13, BATT_REVERSE_FC,     0 },
+    { 14, BATTERY_FAULT_FC,    0 },
+    { 15, GENERAL_FAULT_FC,    0 },
 };
-
 #define SIRALI_TABLO_SIZE   (sizeof(SIRALI_TABLO_RELOUT) / sizeof(SIRALI_TABLO_RELOUT[0]))
 #define TAM_TABLO_RELOUT_SIZE   (sizeof(TAM_TABLO_RELOUT) / sizeof(TAM_TABLO_RELOUT[0]))
 
