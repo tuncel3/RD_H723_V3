@@ -897,8 +897,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //    }
 //    // Update SIRALI_TABLO_RELOUT
 //    for (int j = 0; j < sirali_tablo_size; j++) {
-//        if (SIRALI_TABLO_RELOUT[j].rel_out_code == rname) {
-//            SIRALI_TABLO_RELOUT[j].rel_out_tb_val = new_val;
+//        if (SIRALI_TABLO_RELOUT[j].sirali_tablo_code == rname) {
+//            SIRALI_TABLO_RELOUT[j].sirali_tablo_val = new_val;
 //            generate_REL_24Bit_Data_fc(); // röle değerleri update edildiği için 24 bit değer de güncelleniyor.
 //            break;  // Found and updated, so we can stop searching
 //        }
@@ -909,7 +909,7 @@ void generate_REL_24Bit_Data_fc(void) {
 
 //    for (int i = 0; i < 16; ++i) {
 //        uint8_t order = SIRALI_TABLO_RELOUT[i].sirali_tablo_sira;
-//        uint8_t val = SIRALI_TABLO_RELOUT[i].rel_out_tb_val;
+//        uint8_t val = SIRALI_TABLO_RELOUT[i].sirali_tablo_val;
 //
 //        // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
 //        int reverse_order = 16 - order; // Yani, 16->1, 15->2, 14->3, ...
@@ -1088,7 +1088,7 @@ delay_1ms(100);
 
 void print_REL_OUT_Table() {
     for (int i = 0; i < 16; i++) {
-//		PRF_GEN("Order %d %s", SIRALI_TABLO_RELOUT[i].rel_out_code, SIRALI_TABLO_RELOUT[i].rel_out_tb_desc);
+//		PRF_GEN("Order %d %s", SIRALI_TABLO_RELOUT[i].sirali_tablo_code, SIRALI_TABLO_RELOUT[i].rel_out_tb_desc);
 		delay_1ms(10);
     }
 }
@@ -1150,30 +1150,22 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
 //    }
 }
 // 		4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
-//		mesela rel ord 2 ve code 10 (2-0)*5 kadar sola kaydır ve REL_OUT_order_part1 e ekle
-//		mesela rel ord 7 ve code 22 (7-4)*5 kadar sola kaydır ve REL_OUT_order_part2 ye ekle
 void save_REL_OUT_order_to_EEP(void) {
     REL_OUT_order_part1 = 0; // sıralama bu 4 parça değişkene kaydediliyor.
     REL_OUT_order_part2 = 0;
     REL_OUT_order_part3 = 0;
     REL_OUT_order_part4 = 0;
 	for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
-		uint8_t rel_ord_ = SIRALI_TABLO_RELOUT[i].rel_out_tb_val; // rel order al
-		uint8_t state_code_ = state_list[i].code & 0x1F; // state_code_ un 5-bit'lik kısmını al
-		if (rel_ord_ >= 0 && rel_ord_ <= 15) { // state_list rel_ord kısmında 0 15 arası değerler olan satırlara bakılıyor
-			if (rel_ord_ < 4) { // her döngüde state_code_ değerlerini yan yana koyuyor
-				REL_OUT_order_part1 |= (state_code_ << ((rel_ord_ - 0) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
-				PRF_GEN("%u %u %d %lu", rel_ord_, state_code_, (state_code_ << ((rel_ord_ - 0) * 5)), REL_OUT_order_part1); delayA_1us(10);
-			} else if (rel_ord_ < 8) {
-				REL_OUT_order_part2 |= (state_code_ << ((rel_ord_ - 4) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
-	//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 4) * 5); delayA_1us(10);
-			} else if (rel_ord_ < 12) {
-				REL_OUT_order_part3 |= (state_code_ << ((rel_ord_ - 8) * 5)); // rel_ord_ 8 9 10 11, parantez içi 0 1 2 3 oluyor.
-	//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 8) * 5); delayA_1us(10);
-			} else {
-				REL_OUT_order_part4 |= (state_code_ << ((rel_ord_ - 12) * 5));
-	//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 12) * 5); delayA_1us(10);
-			}
+		uint8_t rel_ord_ = SIRALI_TABLO_RELOUT[i].sirali_tablo_sira;
+		uint8_t state_code_ = SIRALI_TABLO_RELOUT[i].sirali_tablo_code & 0x1F;
+		if (rel_ord_ < 4) {
+			REL_OUT_order_part1 |= (state_code_ << ((rel_ord_ - 0) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
+		} else if (rel_ord_ < 8) {
+			REL_OUT_order_part2 |= (state_code_ << ((rel_ord_ - 4) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
+		} else if (rel_ord_ < 12) {
+			REL_OUT_order_part3 |= (state_code_ << ((rel_ord_ - 8) * 5)); // rel_ord_ 8 9 10 11, parantez içi 0 1 2 3 oluyor.
+		} else {
+			REL_OUT_order_part4 |= (state_code_ << ((rel_ord_ - 12) * 5));
 		}
 	}
 
@@ -1222,14 +1214,14 @@ void save_REL_OUT_order_to_EEP(void) {
 
 //void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
 //    for (int i = 0; i < 16; i++) {
-//    	SIRALI_TABLO_RELOUT[i].rel_out_code=REL_OUT_ORDER_vect[i];
+//    	SIRALI_TABLO_RELOUT[i].sirali_tablo_code=REL_OUT_ORDER_vect[i];
 //    	SIRALI_TABLO_RELOUT[i].rel_out_tb_desc=REL_DAT_TB[REL_OUT_ORDER_vect[i]].rel_dat_desc;
 //    }
 //}
 
 void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
     for (int i = 0; i < 16; ++i) {
-//        REL_OUT_ORDER_vect[i] = SIRALI_TABLO_RELOUT[i].rel_out_code;
+//        REL_OUT_ORDER_vect[i] = SIRALI_TABLO_RELOUT[i].sirali_tablo_code;
     }
 }
 

@@ -1101,8 +1101,8 @@ State_Info state_list[] = {
 };
 
 typedef struct {
-	State_Codes rel_out_code;
-    uint8_t rel_out_tb_val;
+	State_Codes sirali_tablo_code;
+    uint8_t sirali_tablo_val;
     const char *name;
 } rel_out_all;
 
@@ -1134,8 +1134,8 @@ rel_out_all TAM_TABLO_RELOUT[] = {
 	{ BAT_TEMP_50_FC,        0, "Akü Sıck 50 C"      }
 };
 typedef struct {
-	State_Codes rel_out_code;
-    uint8_t rel_out_tb_val;
+	State_Codes sirali_tablo_code;
+    uint8_t sirali_tablo_val;
     uint8_t sirali_tablo_sira;
     const char *name;
 } rel_ord_st;
