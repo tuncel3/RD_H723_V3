@@ -1046,7 +1046,7 @@ LED_16_Data &= ~(!state_get(START_FC) << (START_FC-0));
 LED_16_Data &= ~(!state_get(VAC_OFF_FC) << (VAC_OFF_FC-0));
 LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
-//rel_out_16Bit_Data SIRALI_TABLO_RELOUT[0].sirali_tablo_code
+//rel_out_16Bit_Data SIRALI_TABLO_RELOUT[0].tbl_code
 
 
 
@@ -1054,7 +1054,7 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 // state tablosundan SIRALI_TABLO_RELOUT
 //for (int i = 0; i < NM_STATE_CODES; i++) {
 //	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
-//		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].sirali_tablo_code = state_list[i].code;
+//		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].tbl_code = state_list[i].code;
 //		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].sirali_tablo_val = state_get(i);
 //		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].name = state_list[i].name;
 //	}

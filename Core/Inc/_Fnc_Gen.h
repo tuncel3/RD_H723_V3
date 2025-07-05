@@ -897,7 +897,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //    }
 //    // Update SIRALI_TABLO_RELOUT
 //    for (int j = 0; j < sirali_tablo_size; j++) {
-//        if (SIRALI_TABLO_RELOUT[j].sirali_tablo_code == rname) {
+//        if (SIRALI_TABLO_RELOUT[j].tbl_code == rname) {
 //            SIRALI_TABLO_RELOUT[j].sirali_tablo_val = new_val;
 //            generate_REL_24Bit_Data_fc(); // röle değerleri update edildiği için 24 bit değer de güncelleniyor.
 //            break;  // Found and updated, so we can stop searching
@@ -1088,7 +1088,7 @@ delay_1ms(100);
 
 void print_REL_OUT_Table() {
 //    for (int i = 0; i < 16; i++) {
-//		PRF_GEN("Order %d %s", SIRALI_TABLO_RELOUT[i].sirali_tablo_code, SIRALI_TABLO_RELOUT[i].rel_out_tb_desc);
+//		PRF_GEN("Order %d %s", SIRALI_TABLO_RELOUT[i].tbl_code, SIRALI_TABLO_RELOUT[i].rel_out_tb_desc);
 //		delay_1ms(10);
 //    }
 }
@@ -1111,7 +1111,7 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
 		} else {
 			val = (REL_OUT_order_part4 >> ((i - 12) * 5)) & 0x1F;
 		}
-		SIRALI_TABLO_RELOUT[i].sirali_tablo_code = (State_Codes)val;
+		SIRALI_TABLO_RELOUT[i].tbl_code = (State_Codes)val;
 	}
 }
 
@@ -1121,7 +1121,7 @@ void save_REL_OUT_order_to_EEP(void) {
     REL_OUT_order_part3 = 0;
     REL_OUT_order_part4 = 0;
 	for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
-		uint8_t state_code_ = SIRALI_TABLO_RELOUT[i].sirali_tablo_code & 0x1F;
+		uint8_t state_code_ = SIRALI_TABLO_RELOUT[i].tbl_code & 0x1F;
 		if (i < 4) {
 			REL_OUT_order_part1 |= (state_code_ << ((i - 0) * 5)); // i 4 5 6 7, parantez içi 0 1 2 3 oluyor.
 		} else if (i < 8) {
@@ -1178,14 +1178,14 @@ void save_REL_OUT_order_to_EEP(void) {
 
 //void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
 //    for (int i = 0; i < 16; i++) {
-//    	SIRALI_TABLO_RELOUT[i].sirali_tablo_code=REL_OUT_ORDER_vect[i];
+//    	SIRALI_TABLO_RELOUT[i].tbl_code=REL_OUT_ORDER_vect[i];
 //    	SIRALI_TABLO_RELOUT[i].rel_out_tb_desc=REL_DAT_TB[REL_OUT_ORDER_vect[i]].rel_dat_desc;
 //    }
 //}
 
 void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
     for (int i = 0; i < 16; ++i) {
-//        REL_OUT_ORDER_vect[i] = SIRALI_TABLO_RELOUT[i].sirali_tablo_code;
+//        REL_OUT_ORDER_vect[i] = SIRALI_TABLO_RELOUT[i].tbl_code;
     }
 }
 
