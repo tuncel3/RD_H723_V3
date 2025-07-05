@@ -426,8 +426,8 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 			GLCD_PrintString(0, (i + 1) * 9, L);
 			sprintf(L, "%s ", state_list[(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].tbl_code)].name); // tbl_code aslında state'lerin enumeration değerleri. bu değerlerin state_list tablosunda karşılığı olan sütundaki text alınıyor.
 			GLCD_PrintString(22, (i + 1) * 9, L);
-			sprintf(L, "%d ", (state_get(SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].tbl_code)));
-			GLCD_PrintString(110, (i + 1) * 9, L);
+			sprintf(L, "%d ", SIRALI_TABLO_RELOUT[sirali_tablo_disp_start_ind_h].tbl_val);
+			GLCD_PrintString(var2, (i + 1) * 9, L);
 			sirali_tablo_disp_start_ind_h=(sirali_tablo_disp_start_ind_h+1+SIRALI_TABLO_SIZE) % SIRALI_TABLO_SIZE;
 		}
 
@@ -440,7 +440,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 		for (uint8_t i = 0; i < 6; i++) {
 			sprintf(L, " %s ", state_list[(TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].tbl_code)].name);
 			GLCD_PrintString(3, (i + 1) * 9, L);
-			sprintf(L, "%d ", (state_get(TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].tbl_code)));
+			sprintf(L, "%d ", TAM_TABLO_RELOUT[tam_tablo_disp_start_ind_].tbl_code);
 			GLCD_PrintString(var1, (i + 1) * 9, L);
 			tam_tablo_disp_start_ind_=(tam_tablo_disp_start_ind_+1+TAM_TABLO_RELOUT_SIZE) % TAM_TABLO_RELOUT_SIZE;
 		}

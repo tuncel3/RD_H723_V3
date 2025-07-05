@@ -898,7 +898,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //    // Update SIRALI_TABLO_RELOUT
 //    for (int j = 0; j < sirali_tablo_size; j++) {
 //        if (SIRALI_TABLO_RELOUT[j].tbl_code == rname) {
-//            SIRALI_TABLO_RELOUT[j].sirali_tablo_val = new_val;
+//            SIRALI_TABLO_RELOUT[j].tbl_val = new_val;
 //            generate_REL_24Bit_Data_fc(); // röle değerleri update edildiği için 24 bit değer de güncelleniyor.
 //            break;  // Found and updated, so we can stop searching
 //        }
@@ -909,7 +909,7 @@ void generate_REL_24Bit_Data_fc(void) {
 
 //    for (int i = 0; i < 16; ++i) {
 //        uint8_t order = SIRALI_TABLO_RELOUT[i].sirali_tablo_sira;
-//        uint8_t val = SIRALI_TABLO_RELOUT[i].sirali_tablo_val;
+//        uint8_t val = SIRALI_TABLO_RELOUT[i].tbl_val;
 //
 //        // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
 //        int reverse_order = 16 - order; // Yani, 16->1, 15->2, 14->3, ...

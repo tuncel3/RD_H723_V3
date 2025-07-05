@@ -1102,7 +1102,7 @@ State_Info state_list[] = {
 
 typedef struct {
 	State_Codes tbl_code;
-    uint8_t sirali_tablo_val;
+    uint8_t tbl_val;
     const char *name;
 } rel_out_all;
 
@@ -1135,7 +1135,7 @@ rel_out_all TAM_TABLO_RELOUT[] = {
 };
 typedef struct {
 	State_Codes tbl_code;
-    uint8_t sirali_tablo_val;
+    uint8_t tbl_val;
     uint8_t sirali_tablo_sira;
     const char *name;
 } rel_ord_st;
@@ -1285,7 +1285,7 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_BKER  		0xD8  // Block Erase
 #define CMD_CHER  		0xC7  // Chip Erase
 uint32_t var1=0;
-//int var2=0;
+uint32_t var2=0;
 //int var3=0;
 //char var4[]="ü";
 //char var5[]="ş";
