@@ -447,7 +447,7 @@ inline extern void RELAY_ORDER_pg_disp(void) {
 
 		GLCD_PrintString(0, (tam_tablo_arrow_ind+1) * 9, ">");
 		if (rel_sel_blink^=1) {
-			GLCD_Rect_E(6,(tam_tablo_arrow_ind+1)*9-2,127,(tam_tablo_arrow_ind+2)*9-1); // blinking rect
+			GLCD_Rect_E(6,(tam_tablo_arrow_ind+1)*9-2,var3,(tam_tablo_arrow_ind+2)*9-1); // blinking rect
 		}
     }
 }

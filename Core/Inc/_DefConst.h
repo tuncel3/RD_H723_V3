@@ -1178,72 +1178,6 @@ uint8_t rel_edit_mode = 0;
 uint8_t sirali_tablo_sel = 1;
 uint8_t sirali_tablo_disp_start_ind =0;
 uint8_t sirali_tablo_arrow_ind = 1;
-//typedef struct {
-//	rel_names_t rel_ord_nm;
-//    uint8_t rel_ord_order;
-//    uint8_t rel_ord_val;
-//    uint8_t rel_dat_NO_NC;
-//    char* rel_ord_desc;
-//} rel_ord_st;
-//
-//rel_ord_st SIRALI_TABLO_RELOUT[] = {
-//    { START_STOP_REL,            1,  0, REL_NO, "Başlat-Durdur" },
-//    { VAC_HG_FC_REL,             2,  0, REL_NO, "Şebeke Yüksek" },
-//    { VAC_LO_FC_REL,             3,  0, REL_NO, "Şebeke Düşük" },
-//    { LOAD_DC_HG_FC_REL,         4,  0, REL_NO, "Yük VDC Yüksk" },
-//    { LOAD_DC_LW_FC_REL,         5,  0, REL_NO, "Yük VDC Düşük" },
-//    { DC_LEAK_POS_FC_REL,   6,  0, REL_NO, "DC Kaçak Poztf" },
-//    { DC_LEAK_NEG_FC_REL,   7,  0, REL_NO, "DC Kaçak Negtf" },
-//    { LINE_MCCB_OFF_REL,      8,  0, REL_NO, "Giriş Sigr Off" },
-//    { BATT_MCCB_OFF_REL,      9,  0, REL_NO, "Akü Sigrta Off" },
-//    { LOAD_MCCB_OFF_REL,      10, 0, REL_NO, "Yük Sigrt Atık" },
-//    { OVERTEMP_ALARM_FC_REL,     11, 0, REL_NO, "Aşrı Sıck Uyar" },
-//    { FAN_FAULT_FC_REL,          12, 0, REL_NO, "Fan Arızası" },
-//    { BATT_LINE_BROKEN_FC_REL,   13, 0, REL_NO, "Akü Hattı Kopuk" },
-//    { BATT_REVERSE_FC_REL,       14, 0, REL_NO, "Akü Ters" },
-//    { BATTERY_FAULT_FC_REL,      15, 0, REL_NO, "Akü Arızası" },
-//    { GENERAL_FAULT_FC_REL,      16, 0, REL_NO, "Genel Arıza" }
-//};
-//
-//typedef enum {
-//	REL_NO,
-//	REL_NC
-//} NO_NC;
-//
-//typedef struct {
-//	rel_names_t rel_dat_nm;
-//    uint8_t rel_dat_val;
-//    char* rel_dat_desc;
-//    uint8_t rel_dat_tb_st_name;
-//} rel_dat_stru;
-//rel_dat_stru REL_DAT_TB[] = {
-//	{ START_STOP_REL,            0, "Başlat-Durdur", 	STOP_FC },
-//	{ VAC_HG_FC_REL,             0, "Şebeke Yüksek", 	VAC_HG_FC },
-//	{ VAC_LO_FC_REL,             0, "Şebeke Düşük", 	VAC_LO_FC },
-//	{ LOAD_DC_HG_FC_REL,         0, "Yük VDC Yüksk", 	LOAD_DC_HG_FC },
-//	{ LOAD_DC_LW_FC_REL,         0, "Yük VDC Düşük", 	LOAD_DC_LW_FC },
-//	{ DC_LEAK_POS_FC_REL,   	 0, "DC Kaçak Poztf", 	DC_LEAK_POS_FC },
-//	{ DC_LEAK_NEG_FC_REL,   	 0, "DC Kaçak Negtf", 	DC_LEAK_NEG_FC },
-//	{ LINE_MCCB_OFF_REL,      0, "Giriş Sigr Off", 	ST_LINE_MCCB_OFF },
-//	{ BATT_MCCB_OFF_REL,      0, "Akü Sigrta Off", 	ST_BATT_MCCB_OFF },
-//	{ LOAD_MCCB_OFF_REL,      0, "Yük Sigrt Atık", 	ST_LOAD_MCCB_OFF },
-//	{ OVERTEMP_ALARM_FC_REL,     0, "Aşrı Sıck Uyar", 	OVERTEMP_ALARM_FC },
-//	{ FAN_FAULT_FC_REL,          0, "Fan Arızası", 		FAN_FAULT_FC },
-//	{ BATT_LINE_BROKEN_FC_REL,   0, "Akü Hattı Kopuk", 	ST_BATT_LINE_BROKEN },
-//	{ BATT_REVERSE_FC_REL,       0, "Akü Ters", 		BATT_REVERSE_FC },
-//	{ BATTERY_FAULT_FC_REL,      0, "Akü Arızası", 		BATTERY_FAULT_FC },
-//	{ GENERAL_FAULT_FC_REL,      0, "Genel Arıza", 		GENERAL_FAULT_FC },
-//	{ VAC_OFF_FC_REL,            0, "Şebeke Yok", 		VAC_OFF_FC },
-//	{ VAC_ON_FC_REL,             0, "Şebeke Var", 		VAC_ON_FC },
-//	{ BOOST_CHARGE_REL,       0, "Hızlı Şarj", 		BOOST_CHARGE_FC },
-//	{ FLOAT_CHARGE_REL,       0, "Normal Şarj", 		ST_FLOAT_CHARGE },
-//	{ RECT_DC_HG_FC_REL,         0, "Doğr VDC Yüksk", 	RECT_DC_HG_FC },
-//	{ RECT_DC_LW_FC_REL,         0, "Doğr VDC Düşük", 	RECT_DC_LW_FC },
-//	{ OVERTEMP_OPEN_FC_REL,      0, "Aşrı Sıck Açma", 	OVERTEMP_OPEN_FC },
-//	{ BAT_TEMP_ZERO_FC_REL,      0, "Akü Sıck Sıfr C", 	BAT_TEMP_ZERO_FC },
-//	{ BAT_TEMP_50_FC_REL,        0, "Akü Sıck 50 C", 	BAT_TEMP_50_FC },
-//	{ EMPTY_REL,        		 0, "     Boş", 		127 }
-//};
 
 
 ////// STATE CHANGES ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1286,7 +1220,7 @@ volatile uint8_t EEP_reg_volatile=0b10;
 #define CMD_CHER  		0xC7  // Chip Erase
 uint32_t var1=0;
 uint32_t var2=0;
-//int var3=0;
+uint32_t var3=0;
 //char var4[]="ü";
 //char var5[]="ş";
 //uint32_t var5=0;
