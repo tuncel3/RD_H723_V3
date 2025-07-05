@@ -1180,10 +1180,10 @@ void save_REL_OUT_order_to_EEP(void) {
 	EpD[REL_OUT_3][0].V1 = REL_OUT_order_part3; EpD[REL_OUT_3][1].V1 = REL_OUT_order_part3;
 	EpD[REL_OUT_4][0].V1 = REL_OUT_order_part4; EpD[REL_OUT_4][1].V1 = REL_OUT_order_part4;
 
-	Rec_Dat_to_EEp_f(REL_OUT_1);
-	Rec_Dat_to_EEp_f(REL_OUT_2);
-	Rec_Dat_to_EEp_f(REL_OUT_3);
-	Rec_Dat_to_EEp_f(REL_OUT_4);
+//	Rec_Dat_to_EEp_f(REL_OUT_1);
+//	Rec_Dat_to_EEp_f(REL_OUT_2);
+//	Rec_Dat_to_EEp_f(REL_OUT_3);
+//	Rec_Dat_to_EEp_f(REL_OUT_4);
 }
 
 //void save_REL_OUT_order_to_EEP(void) {
