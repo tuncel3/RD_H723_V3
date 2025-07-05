@@ -1159,6 +1159,8 @@ void save_REL_OUT_order_to_EEP(void) {
 		int state_code = state_list[i].code; // Get the state_code value
 //		PRF_GEN("rel_ord code %u %u", rel_ord_, state_code); delayA_1us(10);
 
+		mesela rel ord 2 ve code 10
+
 		if (rel_ord_ >= 0 && rel_ord_ <= 15) { // Ensure rel_ord_ is within the valid range
 			uint8_t state_code_ = state_code & 0x1F;  // 5-bit
 //			PRF_GEN("  rel_ord_ 0-15 state_code_ %u %u", rel_ord_, state_code_); delayA_1us(10);
