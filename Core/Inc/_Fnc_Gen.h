@@ -1152,7 +1152,6 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
 // 		4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
 //		mesela rel ord 2 ve code 10 (2-0)*5 kadar sola kaydır ve REL_OUT_order_part1 e ekle
 //		mesela rel ord 7 ve code 22 (7-4)*5 kadar sola kaydır ve REL_OUT_order_part2 ye ekle
-		if (rel_ord_ >= 0 && rel_ord_ <= 15) { // Ensure rel_ord_ is within the valid range
 void save_REL_OUT_order_to_EEP(void) {
     REL_OUT_order_part1 = 0; // sıralama bu 4 parça değişkene kaydediliyor.
     REL_OUT_order_part2 = 0;
@@ -1161,20 +1160,20 @@ void save_REL_OUT_order_to_EEP(void) {
 	for (int i = 0; i < NM_STATE_CODES; i++) { // tüm state list taranıyor
 		int rel_ord_ = state_list[i].rel_ord; // rel order al
 		uint8_t state_code_ = state_list[i].code & 0x1F; // state_code_ un 5-bit'lik kısmını al
-		if (rel_ord_ < 4) { // her döngüde state_code_ değerlerini yan yana koyuyor
-			REL_OUT_order_part1 |= (state_code_ << ((rel_ord_ - 0) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
-			PRF_GEN("%u %u %u %d %lu", rel_ord_, state_code_, ((rel_ord_ - 0) * 5), (state_code_ << ((rel_ord_ - 0) * 5)), REL_OUT_order_part1); delayA_1us(10);
-		} else if (rel_ord_ < 8) {
-			REL_OUT_order_part2 |= (state_code_ << ((rel_ord_ - 4) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
-//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 4) * 5); delayA_1us(10);
-		} else if (rel_ord_ < 12) {
-			REL_OUT_order_part3 |= (state_code_ << ((rel_ord_ - 8) * 5)); // rel_ord_ 8 9 10 11, parantez içi 0 1 2 3 oluyor.
-//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 8) * 5); delayA_1us(10);
-		} else {
-			REL_OUT_order_part4 |= (state_code_ << ((rel_ord_ - 12) * 5));
-//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 12) * 5); delayA_1us(10);
-		}
-
+		if (rel_ord_ >= 0 && rel_ord_ <= 15) { // Ensure rel_ord_ is within the valid range
+			if (rel_ord_ < 4) { // her döngüde state_code_ değerlerini yan yana koyuyor
+				REL_OUT_order_part1 |= (state_code_ << ((rel_ord_ - 0) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
+				PRF_GEN("%u %u %u %d %lu", rel_ord_, state_code_, ((rel_ord_ - 0) * 5), (state_code_ << ((rel_ord_ - 0) * 5)), REL_OUT_order_part1); delayA_1us(10);
+			} else if (rel_ord_ < 8) {
+				REL_OUT_order_part2 |= (state_code_ << ((rel_ord_ - 4) * 5)); // rel_ord_ 4 5 6 7, parantez içi 0 1 2 3 oluyor.
+	//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 4) * 5); delayA_1us(10);
+			} else if (rel_ord_ < 12) {
+				REL_OUT_order_part3 |= (state_code_ << ((rel_ord_ - 8) * 5)); // rel_ord_ 8 9 10 11, parantez içi 0 1 2 3 oluyor.
+	//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 8) * 5); delayA_1us(10);
+			} else {
+				REL_OUT_order_part4 |= (state_code_ << ((rel_ord_ - 12) * 5));
+	//				PRF_GEN("     rel_ord_ state_code_ (state_code_ << (rel_ord_ * 5)) %u %u %u", rel_ord_, state_code_, (rel_ord_ - 12) * 5); delayA_1us(10);
+			}
 		}
 	}
 
