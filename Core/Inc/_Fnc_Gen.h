@@ -1100,8 +1100,7 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
     REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
     REL_OUT_order_part4 = EpD[REL_OUT_4][0].V1;
 
-            uint32_t val;
-
+    uint32_t val;
 	for (int i = 0; i < NM_STATE_CODES; i++) {
 		if (i < 4) {
 			val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;

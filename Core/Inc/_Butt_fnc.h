@@ -309,6 +309,9 @@ void bright_fnc(void) {
     		fan_temp_dig=(fan_temp_dig+1+2) % 2;
     	}
     }
+    else if (currentPage == RELAY_ORDER_pg) { // RIGHT
+    	generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc();
+    }
     else if (currentPage == TEST_pg) { 		// RIGHT
     	if (!test_edit_mode) {
     		selected_TEST_PG_line=(selected_TEST_PG_line+1+NUM_TEST_ITEMS) % NUM_TEST_ITEMS;					// RIGHT
