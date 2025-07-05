@@ -142,7 +142,7 @@ uint16_t rel_out_16Bit_Data=0b0;
 ///////////////////////////////////////////////////////////////////////////
 
 // DMA UART
-#define BUFFER_SIZE 20          // Number of strings in the buffer
+#define BUFFER_SIZE 60          // Number of strings in the buffer
 #define MAX_STRING_LENGTH 128  // Maximum length of each string
 
 char dma_uart_buffer[BUFFER_SIZE][MAX_STRING_LENGTH];  // Ring buffer for strings
