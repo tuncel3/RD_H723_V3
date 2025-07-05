@@ -10,18 +10,18 @@ set_(CS_M95P32);
 SPI4_SetStatusConfig(); // unlock eeprom
 SPI4_WriteVolatRegDisableBuff();
 
-PRF_GEN("EEPROM READ TABLE DATA");
-track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8); // programlarken eep table da değişiklik yapılmış ise değişikliklere göre işlemleri yap
-if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { // tablo sonundaki değer sadece okunuyor. kayma varsa programdaki değerden farklı olacaktır.
-	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
-	write_Dat_to_EEp_fn(); // write default variables to eep.
-	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
-	track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8);
-	PRF_GEN("track_table_change %f", track_table_change);
-} else {
-	PRF_GEN("EEP Table size OK");
-	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
-}
+//PRF_GEN("EEPROM READ TABLE DATA");
+//track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8); // programlarken eep table da değişiklik yapılmış ise değişikliklere göre işlemleri yap
+//if ((uint32_t)EpD[TRACK_TABLE_CHANGE][0].V1 != (uint32_t)track_table_change) { // tablo sonundaki değer sadece okunuyor. kayma varsa programdaki değerden farklı olacaktır.
+//	PRF_GEN(" - - - - Default değerler eeprom a yazılıyor.");
+//	write_Dat_to_EEp_fn(); // write default variables to eep.
+//	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
+//	track_table_change=SPI4_ReadDataSetting(3145728+TRACK_TABLE_CHANGE*8);
+//	PRF_GEN("track_table_change %f", track_table_change);
+//} else {
+//	PRF_GEN("EEP Table size OK");
+//	SPI4_EEP_ReadDataSettingsRegion(3145728, NUM_SET_ENUM);
+//}
 //delay_1ms(100);
 
 PRF_GEN("GLCD INIT");
