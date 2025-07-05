@@ -1157,11 +1157,11 @@ void save_REL_OUT_order_to_EEP(void) {
 	for (int i = 0; i < NM_STATE_CODES; i++) {
 		int bit_pos = state_list[i].rel_ord; // Get the rel_ord value
 		int state_code = state_list[i].code; // Get the state_code value
-		PRF_GEN("rel_ord code %u %u", bit_pos, state_code); delay_1ms(1);
+		PRF_GEN("rel_ord code %u %u", bit_pos, state_code); delayA_1us(10);
 
 		if (bit_pos >= 0 && bit_pos <= 15) { // Ensure bit_pos is within the valid range
 			uint32_t val = state_code & 0x1F;  // 5-bit
-			PRF_GEN("  bit_pos 0-15 val %u %u", bit_pos, val); delay_1ms(1);
+			PRF_GEN("  bit_pos 0-15 val %u %u", bit_pos, val); delayA_1us(10);
 			if (bit_pos < 4) { // her döngüde val değerlerini yan yana koyuyor
 				REL_OUT_order_part1 |= (val << (bit_pos * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
 			} else if (bit_pos < 8) {
@@ -1172,7 +1172,7 @@ void save_REL_OUT_order_to_EEP(void) {
 				REL_OUT_order_part4 |= (val << ((bit_pos - 12) * 5));
 			}
 			PRF_GEN("     bit_pos val (val << (bit_pos * 5)) %u %u %u", bit_pos, val, (val << (bit_pos * 5)));
-			delay_1ms(1);
+			delayA_1us(10);
 		}
 	}
 
