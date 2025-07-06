@@ -992,7 +992,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// LED_7_Data SET CLEAR
 LED_7_Data |= (state_get(ST_LOAD_MCCB_OFF) << (ST_LOAD_MCCB_OFF-16));
 LED_7_Data |= (state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
@@ -1044,7 +1044,7 @@ LED_16_Data &= ~(!state_get(STOP_FC) << (STOP_FC-0));
 LED_16_Data &= ~(!state_get(START_FC) << (START_FC-0));
 LED_16_Data &= ~(!state_get(VAC_OFF_FC) << (VAC_OFF_FC-0));
 LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LED_MB8_Data SET CLEAR
 REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (AUX_REL1_REL-29));
 REL_MB_8Bit_Data |= (state_get(THY_FAN1_REL) << (THY_FAN1_REL-29));
@@ -1063,6 +1063,12 @@ REL_MB_8Bit_Data &= ~(!state_get(AC_CON1_REL) << (AC_CON1_REL-29));
 REL_MB_8Bit_Data &= ~(!state_get(AC_CON2_REL) << (AC_CON2_REL-29));
 REL_MB_8Bit_Data &= ~(!state_get(DROP_CON1_REL) << (DROP_CON1_REL-29));
 REL_MB_8Bit_Data &= ~(!state_get(DROP_CON2_REL) << (DROP_CON2_REL-29));
+
+
+
+
+
+
 
 
 // state tablosundaki state durumundan SIRALI_TABLO_RELOUT
