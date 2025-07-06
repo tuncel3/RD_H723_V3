@@ -1183,7 +1183,6 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 	if (dbg_disp_action==1) {
 		dbg_disp_action=0;
-		print_REL_OUT_Table();
 	}
 	if (dbg_disp_action==2) {
 		dbg_disp_action=0;

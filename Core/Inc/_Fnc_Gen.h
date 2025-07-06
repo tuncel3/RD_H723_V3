@@ -1086,12 +1086,6 @@ delay_1ms(100);
 ////// OUT RELAY OPERATION //////////////////////////////////////////////////////////////////////////////////////////
 
 
-void print_REL_OUT_Table() {
-//    for (int i = 0; i < 16; i++) {
-//		PRF_GEN("Order %d %s", SIRALI_TABLO_RELOUT[i].tbl_code, SIRALI_TABLO_RELOUT[i].rel_out_tb_desc);
-//		delay_1ms(10);
-//    }
-}
 
 void gen_SIRALI_TABLO_RELOUT_from_eep(void) {
     REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
