@@ -36,8 +36,8 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 		sf_sta_req_cnt++;
 		if (sf_sta_req_cnt >= 20) {		// delayed soft start trigger
 			set_targ_DC_voltage(5);
-			apply_state_changes_f(STOP_FC, 0);
-			apply_state_changes_f(START_FC, 1);
+//			apply_state_changes_f(STOP_FC, 0);
+//			apply_state_changes_f(START_FC, 1);
 			apply_state_changes_f(SOFT_START_ST, 1);
 			thy_drv_en=1;
 			sfsta_op_phase=S_SFSTA_REQ;
