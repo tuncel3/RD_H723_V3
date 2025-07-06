@@ -47,7 +47,7 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 
 // Arıza durumundan çıkınca veya sistem uygunsa doğrultucuyu başlat
 // burda düzenleme gerekebilir. hangi arızadan ne kadar süre sonra tekrar başlatılacak belirlemek lazım.
-if (thystop_faults_bit_all==0 && thy_drv_en==0 && state_get(USER_START_FC) && !thy_drv_en_req) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
+if (thystop_faults_bit_all==0 && thy_drv_en==0 && !state_get(USER_STOP_FC) && !thy_drv_en_req) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
 	thy_drv_en_req = 1; // bu durumda thy drv en req gönder.
 	PRF_GEN("thystop_faults_bit_all 0. bütün arızalar sıfırlandı. starting rectf");
 }
@@ -833,7 +833,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			blm_enable_collect_samples = 0;
 			PRF_BLM("blm !ibat_stable");
 	}
-	if (!state_get(USER_START_FC)) {
+	if (state_get(USER_STOP_FC)) {
 			blm_op_phase = B_RESTRT_AFTR_DELAY;
 			blm_enable_collect_samples = 0;
 			PRF_BLM("blm delay restart load dc low");
