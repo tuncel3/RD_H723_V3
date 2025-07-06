@@ -7,7 +7,6 @@ void bleft_fnc(void) {
     		user_wants_allows_thy_drv=1;
     		thy_drv_en_req=1;
     		apply_state_changes_f(USER_STOP_FC, 0);
-    		apply_state_changes_f(USER_STOP_FC, 0);
     		PRF_GEN("User req START rectf");
     	}
     }
