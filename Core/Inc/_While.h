@@ -1047,24 +1047,22 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 // LED_MB8_Data SET CLEAR
 REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (AUX_REL1_REL-29));
-REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (THY_FAN1_REL-29));
-REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (TRF_FAN2_REL-29));
-REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (DROP_FAN3_REL-29));
-REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (AC_CON1_REL-29));
-LED_7_Data |= (state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
-LED_7_Data |= (state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
-LED_7_Data |= (state_get(ST_BATT_MCCB_OFF) << (ST_BATT_MCCB_OFF-16));
-LED_7_Data |= (state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
-LED_7_Data |= (state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
-LED_7_Data |= (state_get(ST_LINE_MCCB_OFF) << (ST_LINE_MCCB_OFF-16));
+REL_MB_8Bit_Data |= (state_get(THY_FAN1_REL) << (THY_FAN1_REL-29));
+REL_MB_8Bit_Data |= (state_get(TRF_FAN2_REL) << (TRF_FAN2_REL-29));
+REL_MB_8Bit_Data |= (state_get(DROP_FAN3_REL) << (DROP_FAN3_REL-29));
+REL_MB_8Bit_Data |= (state_get(AC_CON1_REL) << (AC_CON1_REL-29));
+REL_MB_8Bit_Data |= (state_get(AC_CON2_REL) << (AC_CON2_REL-29));
+REL_MB_8Bit_Data |= (state_get(DROP_CON1_REL) << (DROP_CON1_REL-29));
+REL_MB_8Bit_Data |= (state_get(DROP_CON2_REL) << (DROP_CON2_REL-29));
 
-LED_7_Data &= ~(!state_get(ST_LOAD_MCCB_OFF) << (ST_LOAD_MCCB_OFF-16));
-LED_7_Data &= ~(!state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
-LED_7_Data &= ~(!state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
-LED_7_Data &= ~(!state_get(ST_BATT_MCCB_OFF) << (ST_BATT_MCCB_OFF-16));
-LED_7_Data &= ~(!state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
-LED_7_Data &= ~(!state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
-LED_7_Data &= ~(!state_get(ST_LINE_MCCB_OFF) << (ST_LINE_MCCB_OFF-16));
+REL_MB_8Bit_Data &= ~(!state_get(AUX_REL1_REL) << (AUX_REL1_REL-29));
+REL_MB_8Bit_Data &= ~(!state_get(THY_FAN1_REL) << (THY_FAN1_REL-29));
+REL_MB_8Bit_Data &= ~(!state_get(TRF_FAN2_REL) << (TRF_FAN2_REL-29));
+REL_MB_8Bit_Data &= ~(!state_get(DROP_FAN3_REL) << (DROP_FAN3_REL-29));
+REL_MB_8Bit_Data &= ~(!state_get(AC_CON1_REL) << (AC_CON1_REL-29));
+REL_MB_8Bit_Data &= ~(!state_get(AC_CON2_REL) << (AC_CON2_REL-29));
+REL_MB_8Bit_Data &= ~(!state_get(DROP_CON1_REL) << (DROP_CON1_REL-29));
+REL_MB_8Bit_Data &= ~(!state_get(DROP_CON2_REL) << (DROP_CON2_REL-29));
 
 
 // state tablosundaki state durumundan SIRALI_TABLO_RELOUT
