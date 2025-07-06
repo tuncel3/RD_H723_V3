@@ -2,7 +2,7 @@
 if (ms_tick_cnt-sfst_1_t_hold >= 5) { // soft start step. 5ms
 	sfst_1_t_hold=ms_tick_cnt;
 
-	if (sfsta_op_phase == S_SFSTA_REQ && line_sgn_stable && faults_bit_all==0) {
+	if (sfsta_op_phase == S_SFSTA_REQ && line_sgn_stable && thystop_faults_bit_all==0) {
 		if (targ_DC_voltage <= temp_targ_DC_voltage) {
 			set_targ_DC_voltage(targ_DC_voltage*1.003);
 		}
@@ -32,7 +32,7 @@ if (sta_op_phase == S_STARTUP_DELAY_CNT) {	// delay bekleme state'i.
 }
 // thy_drv_en_req set etmek başlatma işlemi yapmak için yeterli.
 if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
-	if (thy_drv_en==0 && VRECT_pas.a64 <= temp_targ_DC_voltage*1.1 && thy_drv_en_req ==1 && line_sgn_stable && faults_bit_all==0) {
+	if (thy_drv_en==0 && VRECT_pas.a64 <= temp_targ_DC_voltage*1.1 && thy_drv_en_req ==1 && line_sgn_stable && thystop_faults_bit_all==0) {
 		sf_sta_req_cnt++;
 		if (sf_sta_req_cnt >= 20) {		// delayed soft start trigger
 			set_targ_DC_voltage(5);
@@ -50,9 +50,9 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 
 // Arıza durumundan çıkınca veya sistem uygunsa doğrultucuyu başlat
 // burda düzenleme gerekebilir. hangi arızadan ne kadar süre sonra tekrar başlatılacak belirlemek lazım.
-if (faults_bit_all==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1 && !thy_drv_en_req) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
+if (thystop_faults_bit_all==0 && thy_drv_en==0 && user_wants_allows_thy_drv==1 && !thy_drv_en_req) { // bütün thy stop gerektiren arızalar deaktif durumunda ise.
 	thy_drv_en_req = 1; // bu durumda thy drv en req gönder.
-	PRF_GEN("faults_bit_all 0. bütün arızalar sıfırlandı. starting rectf");
+	PRF_GEN("thystop_faults_bit_all 0. bütün arızalar sıfırlandı. starting rectf");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -888,6 +888,9 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     if (set) {
 		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
+        if (is_state_a_general_fault(state_code)) {
+        	state_set(GENERAL_FAULT_FC, 1);
+        }
 
     }
 	else if (!set) {
@@ -896,17 +899,21 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 	}
 
     // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
-    faults_bit_all=0;
+    uint8_t faults_bit_all_=0;
     for (uint8_t i = 0; i < NUM_STATE_NAMES / NUM_STATE_NAMES; i++) {
         if (state_list[i].action & (1 << THYSTOP_enum)) {
-        	faults_bit_all++;
+        	faults_bit_all_++;
         }
-    }
+    } 	faults_bit_all=faults_bit_all_;
+    // genel arıza gerektirecek hiçbir arıza yok.
+    uint8_t general_faults_bit_all_=0;
+    for (uint8_t i = 0; i < NUM_STATE_NAMES / NUM_STATE_NAMES; i++) {
+        if (state_list[i].action & (1 << GENERAL_FAULT_FC)) {
+        	general_faults_bit_all_++;
+        }
+    } 	general_faults_bit_all=general_faults_bit_all_;
 
     if (set) {
-        if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
-        	LED_16_Data |= (1U << GENERAL_FAULT_FC); // activate general fault LED if associated
-        }
         if (is_state_require_stop(state_code)) {  // bu state durma gerektiriyor diye istenmiş mi
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
@@ -921,7 +928,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 		if (!!(state_list[state_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(state_code); }
     } else {
-        if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
+        if (!!(state_list[state_code].action & (1 << GEN_F_LED_enum))) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
         }
     }
@@ -1272,5 +1279,8 @@ uint8_t state_get(State_Codes state) {
 }
 uint8_t is_state_require_stop(State_Codes state) {
     return ((state_list[state].action & (1 << THYSTOP_enum)) != 0) ? 1 : 0;
+}
+uint8_t is_state_a_general_fault(State_Codes state) {
+    return ((state_list[state].action & (1 << GEN_F_LED_enum)) != 0) ? 1 : 0;
 }
 
