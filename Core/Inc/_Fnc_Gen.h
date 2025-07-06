@@ -895,6 +895,12 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 
 	}
 
+    // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
+    for (uint8_t i = 0; i < NUM_STATE_NAMES / NUM_STATE_NAMES; i++) {
+        if (state_list[i].action & (1 << 2)) {
+        	faults_bit_all++;
+        }
+    }
 
 
 	uint32_t fault_bit = (1U << state_code);
@@ -907,7 +913,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
         	blm_op_phase = B_RESTRT_AFTR_DELAY;
-            thy_stop_fault_hold_bits |= fault_bit;
         	LED_16_Data |= (1U << STOP_FC);
         	LED_16_Data &= ~(1U << START_FC); }
         if (state_code == START_FC) {
@@ -922,9 +927,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     } else {
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) { // deactivate general fault LED if associated
         	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
-        }
-        if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) { // thy stop gerektiren bir arıza reset ediliyor
-            thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
     }
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
