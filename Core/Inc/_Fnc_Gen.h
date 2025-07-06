@@ -916,16 +916,16 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 
 
 //// toplu state inceleme
-    uint8_t thystop_faults_bit_all_=0;    // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
+    uint8_t thystop_faults_bit_all_=0;    // tristörlerin kapatılmasını gerektirecek durumlardan aktif olanlar varsa üst üste toplanıyor
     for (uint8_t i = 0; i < NUM_STATE_NAMES; i++) {
-        if (is_state_require_stop(i)) {
+        if (is_state_require_stop(i) && state_get(i)) {
         	thystop_faults_bit_all_++;
         }
     } 	thystop_faults_bit_all=thystop_faults_bit_all_;
 
-    uint8_t general_thystop_faults_bit_all_=0;    // genel arıza gerektirecek hiçbir arıza yok.
+    uint8_t general_thystop_faults_bit_all_=0;    // genel arıza gerektirecek durumlardan aktif olanlar varsa üst üste toplanıyor.
     for (uint8_t i = 0; i < NUM_STATE_NAMES; i++) {
-        if (is_state_a_general_fault(i)) {
+        if (is_state_a_general_fault(i) && state_get(i)) {
         	general_thystop_faults_bit_all_++;
         }
     } 	general_thystop_faults_bit_all=general_thystop_faults_bit_all_;
