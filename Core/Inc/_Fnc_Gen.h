@@ -888,30 +888,28 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     if (set) {
 		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
-        if (is_state_a_general_fault(state_code)) {
-        	state_set(GENERAL_FAULT_FC, 1);
-        }
-
     }
 	else if (!set) {
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
 
 	}
 
-    // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
-    uint8_t faults_bit_all_=0;
-    for (uint8_t i = 0; i < NUM_STATE_NAMES / NUM_STATE_NAMES; i++) {
-        if (state_list[i].action & (1 << THYSTOP_enum)) {
-        	faults_bit_all_++;
+    uint8_t thystop_thystop_faults_bit_all_=0;    // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
+    for (uint8_t i = 0; i < NUM_STATE_NAMES; i++) {
+        if (is_state_require_stop(i)) {
+        	thystop_thystop_faults_bit_all_++;
         }
-    } 	faults_bit_all=faults_bit_all_;
-    // genel arıza gerektirecek hiçbir arıza yok.
-    uint8_t general_faults_bit_all_=0;
-    for (uint8_t i = 0; i < NUM_STATE_NAMES / NUM_STATE_NAMES; i++) {
-        if (state_list[i].action & (1 << GENERAL_FAULT_FC)) {
-        	general_faults_bit_all_++;
+    } 	thystop_faults_bit_all=thystop_faults_bit_all_;
+
+    uint8_t general_thystop_faults_bit_all_=0;    // genel arıza gerektirecek hiçbir arıza yok.
+    for (uint8_t i = 0; i < NUM_STATE_NAMES; i++) {
+        if (is_state_a_general_fault(i)) {
+        	general_thystop_faults_bit_all_++;
         }
-    } 	general_faults_bit_all=general_faults_bit_all_;
+    } 	general_thystop_faults_bit_all=general_thystop_faults_bit_all_;
+
+
+
 
     if (set) {
         if (is_state_require_stop(state_code)) {  // bu state durma gerektiriyor diye istenmiş mi
