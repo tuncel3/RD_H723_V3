@@ -1047,6 +1047,23 @@ LED_16_Data &= ~(!state_get(VAC_OFF_FC) << (VAC_OFF_FC-0));
 LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 
+// LED_7_Data SET CLEAR
+REL_MB_8Bit_Data |= (state_get(ST_LOAD_MCCB_OFF) << (ST_LOAD_MCCB_OFF-16));
+LED_7_Data |= (state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
+LED_7_Data |= (state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
+LED_7_Data |= (state_get(ST_BATT_MCCB_OFF) << (ST_BATT_MCCB_OFF-16));
+LED_7_Data |= (state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
+LED_7_Data |= (state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
+LED_7_Data |= (state_get(ST_LINE_MCCB_OFF) << (ST_LINE_MCCB_OFF-16));
+
+LED_7_Data &= ~(!state_get(ST_LOAD_MCCB_OFF) << (ST_LOAD_MCCB_OFF-16));
+LED_7_Data &= ~(!state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
+LED_7_Data &= ~(!state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
+LED_7_Data &= ~(!state_get(ST_BATT_MCCB_OFF) << (ST_BATT_MCCB_OFF-16));
+LED_7_Data &= ~(!state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
+LED_7_Data &= ~(!state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
+LED_7_Data &= ~(!state_get(ST_LINE_MCCB_OFF) << (ST_LINE_MCCB_OFF-16));
+
 
 // state tablosundaki state durumundan SIRALI_TABLO_RELOUT
 for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {

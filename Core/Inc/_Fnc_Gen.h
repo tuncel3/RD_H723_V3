@@ -926,8 +926,8 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 	uint32_t fault_bit = (1U << state_code);
 	uint32_t REL8_bit = (1U << (state_code-29));
     if (set) {
-        if (state_list[state_code].tbl_code < 16) {
-        	LED_16_Data |= fault_bit; }  // 16 lı sıra ledler.
+//        if (state_list[state_code].tbl_code < 16) {
+//        	LED_16_Data |= fault_bit; }  // 16 lı sıra ledler.
 //        if (state_list[state_code].tbl_code >= 16 && state_list[state_code].tbl_code < 23) {
 //        	LED_7_Data |= led7_bit; }  // 7 li diagram
         if (state_list[state_code].tbl_code >= 29 && state_list[state_code].tbl_code < 46) {
