@@ -904,6 +904,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (state_code == SOFT_START_ST) { // start isteyen state
         	state_set(START_FC, 1);
         	state_set(STOP_FC, 0);
+        	state_set(USER_START_FC, 1);
         }
         if (state_code == USER_START_FC) {
 //        	user_wants_allows_thy_drv=1;
