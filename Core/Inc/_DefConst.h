@@ -164,7 +164,7 @@ uint8_t Mode_CC = 1;
 uint8_t thy_drv_en=0;
 uint16_t thy_drv_en_cnt=0;
 uint8_t thy_drv_en_req = 0;
-uint8_t user_wants_allows_thy_drv = 1;
+//uint8_t user_wants_allows_thy_drv = 0;
 uint8_t batt_switch_on = 1; // debug
 uint8_t batt_switch_status = 1;
 uint8_t load_switch_status = 0;
@@ -1094,7 +1094,7 @@ State_Info state_list[] = {
     { 43, EEPROM_FAULT_FC,            0b00000, "Kayit Sist Arz",  },
     { 44, FAN_FAULT_FC,               0b00000, "Fan Arz",         },
     { 45, RTC_FAULT_FC,               0b00000, "RTC Arz",         },
-    { 46, USER_START_FC,              0b10000, "Kullanıcı Başlat",         },
+    { 46, USER_START_FC,              0b00000, "Kullanıcı Başlat",         },
     { 47, USER_STOP_FC,               0b00100, "Kullanıcı Durdur",         },
     { 48, VAC_R_RMS_HG_FAULT_FC,      0b00000, "VINR RMS Yüksek", },
     { 49, VAC_S_RMS_HG_FAULT_FC,      0b00000, "VINS RMS Yüksek", },
