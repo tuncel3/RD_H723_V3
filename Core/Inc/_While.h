@@ -1063,6 +1063,7 @@ REL_MB_8Bit_Data &= ~(!state_get(AC_CON1_REL) << (AC_CON1_REL-29));
 REL_MB_8Bit_Data &= ~(!state_get(AC_CON2_REL) << (AC_CON2_REL-29));
 REL_MB_8Bit_Data &= ~(!state_get(DROP_CON1_REL) << (DROP_CON1_REL-29));
 REL_MB_8Bit_Data &= ~(!state_get(DROP_CON2_REL) << (DROP_CON2_REL-29));
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

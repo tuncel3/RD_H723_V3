@@ -956,14 +956,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
     }
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////// OUT RELAY ACTIVATE DEACTIVATE ////////////////////////////////////////////////////////////////////////////////
-//    rel_names_t relCode = state_list[state_code].rel_dat_nm;  // 4. sütunda tanımlı enum
-    // ACTIVE_enum set mi değil mi
-//    uint8_t activeBitSet = (state_list[state_code].action & (1 << ACTIVE_enum)) ? 1 : 0;
-//    set_REL_OUT_vals_in_tables(relCode, activeBitSet);
-////// OUT RELAY ACTIVATE DEACTIVATE ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
