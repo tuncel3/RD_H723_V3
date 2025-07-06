@@ -1046,7 +1046,11 @@ LED_16_Data &= ~(!state_get(VAC_OFF_FC) << (VAC_OFF_FC-0));
 LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 // LED_MB8_Data SET CLEAR
-REL_MB_8Bit_Data |= (state_get(ST_LOAD_MCCB_OFF) << (ST_LOAD_MCCB_OFF-16));
+REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (AUX_REL1_REL-29));
+REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (THY_FAN1_REL-29));
+REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (TRF_FAN2_REL-29));
+REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (DROP_FAN3_REL-29));
+REL_MB_8Bit_Data |= (state_get(AUX_REL1_REL) << (AC_CON1_REL-29));
 LED_7_Data |= (state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
 LED_7_Data |= (state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
 LED_7_Data |= (state_get(ST_BATT_MCCB_OFF) << (ST_BATT_MCCB_OFF-16));
