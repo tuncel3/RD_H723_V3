@@ -907,7 +907,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC); // activate general fault LED if associated
         }
-        if (is_state_require_stop(state_code)) {  // durma gerektiriyorsa
+        if (is_state_require_stop(state_code)) {  // bu state durma gerektiriyor diye istenmiş mi
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
         	blm_op_phase = B_RESTRT_AFTR_DELAY;
