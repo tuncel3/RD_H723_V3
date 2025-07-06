@@ -916,12 +916,8 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
         	blm_op_phase = B_RESTRT_AFTR_DELAY;}
-        if (state_code == START_FC) {
-//        	set_REL_OUT_vals_in_tables(START_STOP_REL, 1);
-        }
-        if (state_code == STOP_FC) {
-//        	set_REL_OUT_vals_in_tables(START_STOP_REL, 0);
-        }
+        	state_set(START_FC, 1);
+        	state_set(STOP_FC, 1);
 
 		if (!!(state_list[state_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(state_code); }
@@ -1281,4 +1277,11 @@ uint8_t is_state_require_stop(State_Codes state) {
 uint8_t is_state_a_general_fault(State_Codes state) {
     return ((state_list[state].action & (1 << GEN_F_LED_enum)) != 0) ? 1 : 0;
 }
+uint8_t is_state_require_savep(State_Codes state) {
+    return ((state_list[state].action & (1 << SAVE_enum)) != 0) ? 1 : 0;
+}
+
+
+
+
 
