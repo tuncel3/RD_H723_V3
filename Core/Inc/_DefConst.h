@@ -1042,6 +1042,7 @@ typedef struct {
 } State_Info;
 //  REL_OUT - LCD_ROLL - ACTIVE - THYSTOP - SAVE - SET_GEN_F_LED
 State_Info state_list[] = {
+	    // LED 16 BIT0 enum 0
     {  0, GENERAL_FAULT_FC,           0b00010, "Genel Arıza",     },
     {  1, BATTERY_FAULT_FC,           0b00000, "Akü Arızası",     },
     {  2, OVERTEMP_ALARM_FC,          0b10010, "Aşrı Sıckl Uyar", },
@@ -1058,6 +1059,8 @@ State_Info state_list[] = {
     { 13, START_FC,                   0b00000, "Start",           },
     { 14, VAC_OFF_FC,                 0b10110, "VAC OFF",         },
     { 15, VAC_ON_FC,                  0b00000, "VAC ON",          },
+		// LED 16 BIT15 enum 15
+		// LED 7 BIT0 enum 16
     { 16, ST_LOAD_MCCB_OFF,           0b10010, "Çıkş Sigrt Atık", },
     { 17, ST_DROPPER_K1,              0b00000, "Dropper 2 Bypass",},
     { 18, ST_DROPPER_K2,              0b00000, "Dropper 1 Bypass",},
@@ -1065,12 +1068,14 @@ State_Info state_list[] = {
     { 20, BOOST_CHARGE_FC,            0b10000, "Hızl Şarj",       },
     { 21, ST_FLOAT_CHARGE,            0b10000, "Norm Şarj",       },
     { 22, ST_LINE_MCCB_OFF,           0b10110, "Girş Sigrt Atık", },
+    	// LED 7 BIT6 enum 22
     { 23, RECT_SHORT_FC,              0b00110, "DC Kısa Devre",   },
     { 24, BATT_SHORT_FC,              0b00110, "Akü Kısa Devre",  },
     { 25, BATT_REVERSE_FC,            0b10010, "Akü Ters",        },
     { 26, ST_BATT_LINE_BROKEN,        0b10011, "Akü Hattı Kopuk", },
     { 27, BAT_TEMP_ZERO_FC,           0b10011, "Akü Sıcklk Sıfr", },
     { 28, BAT_TEMP_50_FC,             0b10111, "Akü Sıcklk 50 C", },
+    	// REL MB 8 BIT0 enum 31
     { 29, AUX_REL1_REL,               0b00000, "Aux Rel 1",       },
     { 30, THY_FAN1_REL,               0b00000, "Tristör Fan 1",   },
     { 31, TRF_FAN2_REL,               0b00000, "Trafo Fan 2",     },
