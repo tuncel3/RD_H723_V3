@@ -901,6 +901,10 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 		if (is_state_require_save(state_code)) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(state_code);
 		}
+        if (state_code == SOFT_START_ST) { // start isteyen tek state bu.
+        	state_set(START_FC, 1);
+        	state_set(STOP_FC, 0);
+        }
     }
 	else if (!set) {
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
