@@ -903,14 +903,11 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         }
     }
 
-
-	uint32_t fault_bit = (1U << state_code);
-//	uint32_t REL8_bit = (1U << (state_code-29));
     if (set) {
         if (!!(state_list[state_code].action & (1 << SET_GEN_F_LED_enum))) {
         	LED_16_Data |= (1U << GENERAL_FAULT_FC); // activate general fault LED if associated
         }
-        if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) {  // stop thy drv if fault requires
+        if (is_state_require_stop(state_code)) {  // durma gerektiriyorsa
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
         	blm_op_phase = B_RESTRT_AFTR_DELAY;
@@ -1275,7 +1272,7 @@ void state_set(State_Codes state, uint8_t set) {
 uint8_t state_get(State_Codes state) {
     return ((state_list[state].action & (1 << ACTIVE_enum)) != 0) ? 1 : 0;
 }
-uint8_t is_rel_out(State_Codes state) {
-    return ((state_list[state].action & (1 << REL_OUT_enum)) != 0) ? 1 : 0;
+uint8_t is_state_require_stop(State_Codes state) {
+    return ((state_list[state].action & (1 << THYSTOP_enum)) != 0) ? 1 : 0;
 }
 
