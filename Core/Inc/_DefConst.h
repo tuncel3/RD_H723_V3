@@ -1025,7 +1025,7 @@ typedef enum {
 } State_Codes;
 
 typedef enum {
-	SET_GEN_F_LED_enum,
+	GEN_F_LED_enum,
 	SAVE_enum,
 	THYSTOP_enum,
 	ACTIVE_enum,
