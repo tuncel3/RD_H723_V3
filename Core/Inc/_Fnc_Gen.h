@@ -895,7 +895,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	thy_drv_en=0;
         	sfsta_op_phase = S_SFSTA_NONE;
         	blm_op_phase = B_RESTRT_AFTR_DELAY;
-        	state_set(START_FC, 1);
+        	state_set(START_FC, 0);
         	state_set(STOP_FC, 1);
         }
 		if (is_state_require_save(state_code)) { // eğer save biti 1 ise hafızaya kaydet

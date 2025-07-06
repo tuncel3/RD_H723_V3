@@ -781,7 +781,6 @@ float targ_DC_current = 0;
 float targ_DC_voltage = 0; // v target cont sys
 //float temp_targ_DC_voltage = 0; // v target soft start
 float temp_targ_DC_voltage = 0; // v target charge mode
-uint32_t sfst_1_unexpected_state = 0;
 uint32_t no_result_from_last_reduction = 0;
 uint32_t take_vout_sample_for_batt_insp = 1;
 uint32_t repeating_string_sent = 0;
