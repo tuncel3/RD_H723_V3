@@ -907,6 +907,11 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 
 	}
 
+
+
+
+
+//// toplu state inceleme
     uint8_t thystop_faults_bit_all_=0;    // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
     for (uint8_t i = 0; i < NUM_STATE_NAMES; i++) {
         if (is_state_require_stop(i)) {
