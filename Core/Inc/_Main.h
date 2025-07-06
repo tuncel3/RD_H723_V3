@@ -153,7 +153,7 @@ tmp144_init_and_assign();
 // cihaz ilk açılışta doğrultucuyu direk devreye alacak mı.
 // eğer çıkış voltaj değeri ayarlanmamışsa açılışta recrifieri direk devreye almak tehlikeli olabilir.
 if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
-	thy_drv_en_req=1;
+	thy_drv_en_req=1; // cihaz açılışında trsitör sürme başlatma isteği
 } else {
 	thy_drv_en_req=0;
 	apply_state_changes_f(USER_STOP_FC, 1);

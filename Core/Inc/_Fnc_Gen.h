@@ -904,9 +904,10 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (state_code == SOFT_START_ST) { // start isteyen state
         	state_set(START_FC, 1);
         	state_set(STOP_FC, 0);
-        	state_set(USER_START_FC, 1);
+        	state_set(USER_START_FC, 1); // bazı yerlerde user start istiyor mu bakılıyor
         }
         if (state_code == USER_STOP_FC) {
+        	state_set(USER_START_FC, 0);
         	state_set(START_FC, 0);
         	state_set(STOP_FC, 1);
         }
