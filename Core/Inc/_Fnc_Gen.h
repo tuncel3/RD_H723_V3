@@ -19,7 +19,6 @@ void save_REL_OUT_order_to_EEP(void);
 void gen_SIRALI_TABLO_RELOUT_from_eep(void);
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
-void generate_REL_24Bit_Data_fc(void);
 
 #include "_EEP_M95P32.h"
 #include "_Fnc_RTC.h"
@@ -886,42 +885,6 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //	}
 }
 
-//void set_REL_OUT_vals_in_tables(rel_names_t rname, uint8_t new_val)
-//{
-    // Update REL_DAT_TB
-//    for (int i = 0; i < tam_tablo_size; i++) {
-//        if (REL_DAT_TB[i].rel_dat_nm == rname) { // ekrandan seçim yapılırken rel dat tb den liste gösteriliyor. bu arada value lar da gösterilebilsin diye bu tabloda da value lar saklanıyor.
-//            REL_DAT_TB[i].rel_dat_val = new_val;
-//            break;  // Found the matching enum, so we can stop searching
-//        }
-//    }
-//    // Update SIRALI_TABLO_RELOUT
-//    for (int j = 0; j < sirali_tablo_size; j++) {
-//        if (SIRALI_TABLO_RELOUT[j].tbl_code == rname) {
-//            SIRALI_TABLO_RELOUT[j].tbl_val = new_val;
-//            generate_REL_24Bit_Data_fc(); // röle değerleri update edildiği için 24 bit değer de güncelleniyor.
-//            break;  // Found and updated, so we can stop searching
-//        }
-//    }
-//}
-void generate_REL_24Bit_Data_fc(void) {
-    rel_out_16Bit_Data = 0; // Clear current value
-
-//    for (int i = 0; i < 16; ++i) {
-//        uint8_t order = SIRALI_TABLO_RELOUT[i].tbl_sira;
-//        uint8_t val = SIRALI_TABLO_RELOUT[i].tbl_val;
-//
-//        // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
-//        int reverse_order = 16 - order; // Yani, 16->1, 15->2, 14->3, ...
-//
-//            if (val) {
-//                rel_out_16Bit_Data |= (1 << reverse_order);  // Eğer 'val' 1 ise, ters sıradaki 'reverse_order' bitini 1 yap.
-//            } else {
-//                rel_out_16Bit_Data &= ~(1 << reverse_order);  // Eğer 'val' 0 ise, ters sıradaki 'reverse_order' bitini 0 yap.
-//            }
-//    }
-        	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
-}
 void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 	uint32_t fault_bit = (1U << state_code);
 //	uint32_t REL8_bit = (1U << (state_code-29));
