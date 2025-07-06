@@ -901,7 +901,12 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 		if (is_state_require_save(state_code)) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(state_code);
 		}
-        if (state_code == SOFT_START_ST || state_code == SOFT_START_ST) { // start isteyen tek state bu.
+        if (state_code == SOFT_START_ST || state_code == USER_START_FC) { // start isteyen tek state bu.
+        	state_set(START_FC, 1);
+        	state_set(STOP_FC, 0);
+        }
+        if (state_code == USER_START_FC) { // start isteyen tek state bu.
+        	user_wants_allows_thy_drv=1;
         	state_set(START_FC, 1);
         	state_set(STOP_FC, 0);
         }
