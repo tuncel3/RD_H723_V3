@@ -908,7 +908,7 @@ void generate_REL_24Bit_Data_fc(void) {
     rel_out_16Bit_Data = 0; // Clear current value
 
 //    for (int i = 0; i < 16; ++i) {
-//        uint8_t order = SIRALI_TABLO_RELOUT[i].sirali_tablo_sira;
+//        uint8_t order = SIRALI_TABLO_RELOUT[i].tbl_sira;
 //        uint8_t val = SIRALI_TABLO_RELOUT[i].tbl_val;
 //
 //        // Burada index'i ters çevirecek matematiksel işlem ekliyoruz
@@ -1103,7 +1103,6 @@ void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
 	for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
 		if (i < 4) {
 			val = (REL_OUT_order_part1 >> (i * 5)) & 0x1F;
-			state_list[val].rel_ord=i;
 		} else if (i < 8) {
 			val = (REL_OUT_order_part2 >> ((i - 4) * 5)) & 0x1F;
 		} else if (i < 12) {
