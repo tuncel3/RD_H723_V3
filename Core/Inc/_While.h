@@ -993,7 +993,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////
 
 
-// LED_7_Data SET CLEAR
+	// LED_7_Data SET CLEAR
 LED_7_Data |= (state_get(ST_LOAD_MCCB_OFF) << (ST_LOAD_MCCB_OFF-16));
 LED_7_Data |= (state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
 LED_7_Data |= (state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
@@ -1010,8 +1010,7 @@ LED_7_Data &= ~(!state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
 LED_7_Data &= ~(!state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
 LED_7_Data &= ~(!state_get(ST_LINE_MCCB_OFF) << (ST_LINE_MCCB_OFF-16));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	// LED_16_Data SET CLEAR
 LED_16_Data |= (state_get(GENERAL_FAULT_FC) << (GENERAL_FAULT_FC - 0));
 LED_16_Data |= (state_get(BATTERY_FAULT_FC) << (BATTERY_FAULT_FC - 0));
 LED_16_Data |= (state_get(OVERTEMP_ALARM_FC) << (OVERTEMP_ALARM_FC - 0));
@@ -1046,8 +1045,7 @@ LED_16_Data &= ~(!state_get(START_FC) << (START_FC-0));
 LED_16_Data &= ~(!state_get(VAC_OFF_FC) << (VAC_OFF_FC-0));
 LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
-
-// LED_7_Data SET CLEAR
+// LED_MB8_Data SET CLEAR
 REL_MB_8Bit_Data |= (state_get(ST_LOAD_MCCB_OFF) << (ST_LOAD_MCCB_OFF-16));
 LED_7_Data |= (state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
 LED_7_Data |= (state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));

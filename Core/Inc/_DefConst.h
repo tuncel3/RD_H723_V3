@@ -1084,6 +1084,7 @@ State_Info state_list[] = {
     { 34, AC_CON2_REL,                0b00000, "AC KONT2 RÖL",    },
     { 35, DROP_CON1_REL,              0b00000, "Dropper 1 Bypass",},
     { 36, DROP_CON2_REL,              0b00000, "Dropper 2 Bypass",},
+    	// REL MB 8 BIT7 enum 36
     { 37, LOAD_DC_HG_FC,              0b10111, "Yük VDC Yüksk",   },
     { 38, LOAD_DC_LW_FC,              0b10011, "Yük VDC Düşük",   },
     { 39, MANUAL_CHARGE_FC,           0b00000, "(Man)",           },
