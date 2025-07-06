@@ -1048,8 +1048,8 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 
 
-// state tablosundan SIRALI_TABLO_RELOUT
-for (int i = 0; i < NM_STATE_CODES; i++) {
+// state tablosundaki state durumundan SIRALI_TABLO_RELOUT
+for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
 	SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
 }
 
