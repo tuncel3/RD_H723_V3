@@ -1049,13 +1049,13 @@ LED_16_Data &= ~(!state_get(VAC_ON_FC) << (VAC_ON_FC-0));
 
 
 // state tablosundan SIRALI_TABLO_RELOUT
-//for (int i = 0; i < NM_STATE_CODES; i++) {
-//	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
-//		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].tbl_code = state_list[i].code;
-//		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].tbl_val = state_get(i);
-//		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].name = state_list[i].name;
-//	}
-//}
+for (int i = 0; i < NM_STATE_CODES; i++) {
+	if (state_list[i].rel_ord >= 0 && state_list[i].rel_ord < 16) {
+		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].tbl_code = state_list[i].code;
+		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].tbl_val = state_get(i);
+		SIRALI_TABLO_RELOUT[state_list[i].rel_ord].name = state_list[i].name;
+	}
+}
 
 // sıralı tablodan rel_out_16Bit_Data
 for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
