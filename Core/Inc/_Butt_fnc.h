@@ -203,7 +203,7 @@ void bright_fnc(void) {
     if (currentPage == HOME_PAGE_pg) {
     	if (thy_drv_en == 1 && user_wants_allows_thy_drv==1) {								// RIGHT
     		user_wants_allows_thy_drv=0;
-    		state_set(USER_STOP_FC, 0);
+    		state_set(USER_STOP_FC, 1);
     		PRF_GEN("User req STOP rectf");
     	}
     }
