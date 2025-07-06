@@ -245,7 +245,6 @@ if (state_list[START_FC].action & (1 << ACTIVE_enum)) {
 } else if (state_list[STOP_FC].action & (1 << ACTIVE_enum)) {
 	sprintf(start_stop_str, "%s", state_list[STOP_FC].name); GLCD_PrintString(98, 0, start_stop_str);
 }
-
 		static uint8_t rolling_disp_VAC_cnt=0;
 		static uint8_t disp_VAC_phase_wait =12;
 		static uint8_t disp_VAC_phase_wait_slice =4;
@@ -302,12 +301,16 @@ if (tabl_dolas_delay_cnt==0) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 			if ((state_list[tabl_dolas].tbl_code==ST_FLOAT_CHARGE || state_list[tabl_dolas].tbl_code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");
+				PRF_GEN("db1");
 			} else if ((state_list[tabl_dolas].tbl_code==1 || state_list[tabl_dolas].tbl_code==1)) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Zmn)");
+				PRF_GEN("db2");
 			} else if ((state_list[tabl_dolas].tbl_code==ST_FLOAT_CHARGE || state_list[tabl_dolas].tbl_code==BOOST_CHARGE_FC)) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Man)");
+				PRF_GEN("db3");
 			} else {
 				sprintf(RollBuf, "%s", state_list[tabl_dolas].name);
+				PRF_GEN("db4");
 			}
 			son_kal=tabl_dolas+1;
 			break; // ilk gösterilecek eleman bulundu gösterildi.
