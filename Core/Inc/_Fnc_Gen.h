@@ -16,7 +16,7 @@ void inline extern DEV_NOM_VOUT_changed_fc(void);
 void print_active_states();
 
 void save_REL_OUT_order_to_EEP(void);
-void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void);
+void gen_SIRALI_TABLO_RELOUT_from_eep(void);
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
 void generate_REL_24Bit_Data_fc(void);
@@ -1085,15 +1085,7 @@ delay_1ms(100);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// OUT RELAY OPERATION //////////////////////////////////////////////////////////////////////////////////////////
 
-
-void print_REL_OUT_Table() {
-//    for (int i = 0; i < 16; i++) {
-//		PRF_GEN("Order %d %s", SIRALI_TABLO_RELOUT[i].tbl_code, SIRALI_TABLO_RELOUT[i].rel_out_tb_desc);
-//		delay_1ms(10);
-//    }
-}
-
-void generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc(void) {
+void gen_SIRALI_TABLO_RELOUT_from_eep(void) {
     REL_OUT_order_part1 = EpD[REL_OUT_1][0].V1;
     REL_OUT_order_part2 = EpD[REL_OUT_2][0].V1;
     REL_OUT_order_part3 = EpD[REL_OUT_3][0].V1;
@@ -1142,53 +1134,6 @@ void save_REL_OUT_order_to_EEP(void) {
 	Rec_Dat_to_EEp_f(REL_OUT_3);
 	Rec_Dat_to_EEp_f(REL_OUT_4);
 }
-
-//void save_REL_OUT_order_to_EEP(void) {
-//    REL_OUT_order_part1 = 0; // rel_names_t REL_OUT_ORDER_vect[16]; sıralama bu global vektöre kaydediliyor.
-//    REL_OUT_order_part2 = 0; // ön panelden sıralama değiştirilirse, bu vektör güncelleniyor.
-//    REL_OUT_order_part3 = 0; // bu fonksiyon ile de 4 tane 30 bitlik sayıya dönüştürülerek eeproma kaydediliyor.
-//    REL_OUT_order_part4 = 0;
-//
-//    for (int i = 0; i < 16; i++) {
-//        uint32_t val = REL_OUT_ORDER_vect[i] & 0x1F;  // 5-bit
-//
-//        if (i < 4) { // her döngüde val değerlerini yan yana koyuyor
-//            REL_OUT_order_part1 |= (val << (i * 5)); // 4 tane 5 bit sayıyı yan yana koyarak bir tane 20 bitlik eeprom kayıt dosyası oluşturuluyor
-//        } else if (i < 8) {
-//            REL_OUT_order_part2 |= (val << ((i - 4) * 5)); //
-//        } else if (i < 12) {
-//            REL_OUT_order_part3 |= (val << ((i - 8) * 5));
-//        } else {
-//            REL_OUT_order_part4 |= (val << ((i - 12) * 5));
-//        }
-//    }
-//
-//    EpD[REL_OUT_1][0].V1 = REL_OUT_order_part1; EpD[REL_OUT_1][1].V1 = REL_OUT_order_part1;
-//    EpD[REL_OUT_2][0].V1 = REL_OUT_order_part2; EpD[REL_OUT_2][1].V1 = REL_OUT_order_part2;
-//    EpD[REL_OUT_3][0].V1 = REL_OUT_order_part3; EpD[REL_OUT_3][1].V1 = REL_OUT_order_part3;
-//    EpD[REL_OUT_4][0].V1 = REL_OUT_order_part4; EpD[REL_OUT_4][1].V1 = REL_OUT_order_part4;
-//
-//    Rec_Dat_to_EEp_f(REL_OUT_1);
-//    Rec_Dat_to_EEp_f(REL_OUT_2);
-//    Rec_Dat_to_EEp_f(REL_OUT_3);
-//    Rec_Dat_to_EEp_f(REL_OUT_4);
-//}
-
-
-//void REL_OUT_ORDER_vect_to_REL_OUT_TB(void) {
-//    for (int i = 0; i < 16; i++) {
-//    	SIRALI_TABLO_RELOUT[i].tbl_code=REL_OUT_ORDER_vect[i];
-//    	SIRALI_TABLO_RELOUT[i].rel_out_tb_desc=REL_DAT_TB[REL_OUT_ORDER_vect[i]].rel_dat_desc;
-//    }
-//}
-
-void generate_REL_OUT_order_vect_from_ord_table_fc(void) {
-    for (int i = 0; i < 16; ++i) {
-//        REL_OUT_ORDER_vect[i] = SIRALI_TABLO_RELOUT[i].tbl_code;
-    }
-}
-
-
 
 ////// OUT RELAY OPERATION //////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

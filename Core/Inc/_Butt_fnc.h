@@ -310,7 +310,7 @@ void bright_fnc(void) {
     	}
     }
     else if (currentPage == RELAY_ORDER_pg) { // RIGHT
-    	generate_REL_OUT_ORDER_vect_from_eeprom_parts_fc();
+    	gen_SIRALI_TABLO_RELOUT_from_eep();
     }
     else if (currentPage == TEST_pg) { 		// RIGHT
     	if (!test_edit_mode) {

@@ -1181,12 +1181,12 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 //	print_active_states();
 
-	if (dbg_disp==1) {
-		dbg_disp=0;
+	if (dbg_disp_action==1) {
+		dbg_disp_action=0;
 		print_REL_OUT_Table();
 	}
-	if (dbg_disp==2) {
-		dbg_disp=0;
+	if (dbg_disp_action==2) {
+		dbg_disp_action=0;
 		print_active_states();
 	}
 }
