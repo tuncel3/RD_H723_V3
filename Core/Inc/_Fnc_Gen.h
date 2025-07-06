@@ -904,10 +904,10 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
 
 	}
 
-    uint8_t thystop_thystop_faults_bit_all_=0;    // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
+    uint8_t thystop_faults_bit_all_=0;    // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
     for (uint8_t i = 0; i < NUM_STATE_NAMES; i++) {
         if (is_state_require_stop(i)) {
-        	thystop_thystop_faults_bit_all_++;
+        	thystop_faults_bit_all_++;
         }
     } 	thystop_faults_bit_all=thystop_faults_bit_all_;
 
@@ -917,16 +917,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         	general_thystop_faults_bit_all_++;
         }
     } 	general_thystop_faults_bit_all=general_thystop_faults_bit_all_;
-
-
-
-
-    if (set) {
-    } else {
-        if (!!(state_list[state_code].action & (1 << GEN_F_LED_enum))) { // deactivate general fault LED if associated
-        	LED_16_Data &= ~(1U << GENERAL_FAULT_FC);
-        }
-    }
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
