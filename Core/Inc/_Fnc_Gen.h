@@ -898,7 +898,7 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     // tristörlerin kapatılmasını gerektirecek hiçbir arıza yok.
     faults_bit_all=0;
     for (uint8_t i = 0; i < NUM_STATE_NAMES / NUM_STATE_NAMES; i++) {
-        if (state_list[i].action & (1 << 2)) {
+        if (state_list[i].action & (1 << THYSTOP_enum)) {
         	faults_bit_all++;
         }
     }
