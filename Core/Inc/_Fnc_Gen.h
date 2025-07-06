@@ -886,6 +886,17 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 }
 
 void apply_state_changes_f(State_Codes state_code, uint8_t set) {
+    if (set) {
+		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
+
+    }
+	else if (!set) {
+		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
+
+	}
+
+
+
 	uint32_t fault_bit = (1U << state_code);
 //	uint32_t REL8_bit = (1U << (state_code-29));
     if (set) {
@@ -905,7 +916,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (state_code == STOP_FC) {
 //        	set_REL_OUT_vals_in_tables(START_STOP_REL, 0);
         }
-		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
 
 		if (!!(state_list[state_code].action & (1 << SAVE_enum)) == 1 ) { // eğer save biti 1 ise hafızaya kaydet
 			Record_Fault_Code(state_code); }
@@ -916,7 +926,6 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
         if (!!(state_list[state_code].action & (1 << THYSTOP_enum))) { // thy stop gerektiren bir arıza reset ediliyor
             thy_stop_fault_hold_bits &= ~fault_bit; // bu variable'ı güncelle. deactive edilen fault'un bit'inin resetlenmesi gerekiyor.
         }
-		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
     }
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
