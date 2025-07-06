@@ -288,16 +288,12 @@ if (temp_sens_count==3) {
 }
 ///////////////////////////////////////////////////////////////
 // STATE AÇIKLAMALRINI DOLANDIRARAK GÖSTER
-static uint8_t tabl_dolas=0, tabl_dolas_delay=4;
-static uint8_t son_kal=0;
-static uint8_t tabl_dolas_delay_cnt=0;
-static char RollBuf[32];
 if (tabl_dolas_delay_cnt==0) {
 		if (tabl_dolas == NUM_STATE_NAMES) {
 			tabl_dolas=0;
 			son_kal=0;
 		}
-	for (tabl_dolas = son_kal; tabl_dolas <= NUM_STATE_NAMES; tabl_dolas++) {
+	for (tabl_dolas = son_kal; tabl_dolas < NUM_STATE_NAMES; tabl_dolas++) {
 		if (state_list[tabl_dolas].action & (1 << LCD_roll_enum) && state_list[tabl_dolas].action & (1 << ACTIVE_enum)) {
 			if ((state_list[tabl_dolas].tbl_code==ST_FLOAT_CHARGE || state_list[tabl_dolas].tbl_code==BOOST_CHARGE_FC) && EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
 				sprintf(RollBuf, "%s%s", state_list[tabl_dolas].name, "(Oto)");

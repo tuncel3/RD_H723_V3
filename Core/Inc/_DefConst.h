@@ -1022,7 +1022,6 @@ typedef enum {
 	VAC_R_RMS_0_FAULT_FC,
 	VAC_S_RMS_0_FAULT_FC,
 	VAC_T_RMS_0_FAULT_FC,
-	NM_STATE_CODES
 } State_Codes;
 
 typedef enum {
@@ -1163,11 +1162,15 @@ rel_ord_st SIRALI_TABLO_RELOUT[] = {
 };
 
 
+#define NUM_STATE_NAMES sizeof(state_list) / sizeof(state_list[0])
 #define SIRALI_TABLO_SIZE   (sizeof(SIRALI_TABLO_RELOUT) / sizeof(SIRALI_TABLO_RELOUT[0]))
 #define TAM_TABLO_RELOUT_SIZE   (sizeof(TAM_TABLO_RELOUT) / sizeof(TAM_TABLO_RELOUT[0]))
 
 
-#define NUM_STATE_NAMES sizeof(state_list) / sizeof(state_list[0])
+uint8_t tabl_dolas=0, tabl_dolas_delay=4;
+uint8_t son_kal=0;
+uint8_t tabl_dolas_delay_cnt=0;
+char RollBuf[32];
 
 uint32_t REL_OUT_order_part1 = 0;  // 20 bit. float olarak kaydedildiği için 24 bit max
 uint32_t REL_OUT_order_part2 = 0;  // 20 bit
