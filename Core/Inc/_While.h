@@ -1070,8 +1070,6 @@ if (currentPage == DATE_TIME_pg) {
 	while_RTC_delay_per=while_RTC_delay_normal_per;
 }
 
-
-
 // state tablosundaki state durumundan SIRALI_TABLO_RELOUT
 for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
 	SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
