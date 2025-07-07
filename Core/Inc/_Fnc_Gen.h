@@ -906,13 +906,10 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
         	state_set(STOP_FC, 0);
         }
 
-
     }
 	else if (!set) {
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
 	}
-
-
 
 
 //// toplu state inceleme
@@ -932,14 +929,14 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
-		}
+		SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
+}
 
 
 	// OUT REL
 	// SIRALI_TABLO_RELOUT daki state lerin durumunu o taboya gir
-	if (is_state_a_relout(state_code)) { // sirali tablonun oluşturulma amacı eeproma kaydedilecek 4 parçanın bu tablodan kolayca oluşturulması.
-		for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
+	if (is_state_a_relout(state_code)) { // sirali tablonun oluşturulma amacı eeproma kaydedilecek 4 parçanın bu tablonun birinci sütunundan direk oluşturulması.
+		for (int i = 0; i < SIRALI_TABLO_SIZE; i++) { // sirali tablonun birinci sütunu ön panelden kullanıcı tarafından belirleniyor.
 			SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
 		// sıralı tablodan rel_out_16Bit_Data
 			if (SIRALI_TABLO_RELOUT[i].tbl_val) {
