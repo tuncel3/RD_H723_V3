@@ -892,22 +892,18 @@ void apply_state_changes_f(State_Codes state_code, uint8_t set) {
     if (set) {
 		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
         if (is_state_require_stop(state_code)) {  // bu state durma gerektiriyor diye istenmiş mi
-        	thy_drv_en=0;
+        	thy_drv_en=0;						  // stop isteyen state
         	sfsta_op_phase = S_SFSTA_NONE;
         	blm_op_phase = B_RESTRT_AFTR_DELAY;
         	state_set(START_FC, 0);
         	state_set(STOP_FC, 1);
         }
-		if (is_state_require_save(state_code)) { // eğer save biti 1 ise hafızaya kaydet
+		if (is_state_require_save(state_code)) { // eğer save biti 1 ise hafızaya kaydet. save isteyen state.
 			Record_Fault_Code(state_code);
 		}
         if (state_code == SOFT_START_ST) { // start isteyen state
         	state_set(START_FC, 1);
         	state_set(STOP_FC, 0);
-        }
-        if (state_code == USER_STOP_FC) {
-        	state_set(START_FC, 0);
-        	state_set(STOP_FC, 1);
         }
     }
 	else if (!set) {
