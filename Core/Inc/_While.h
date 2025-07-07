@@ -1185,9 +1185,6 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 }
 
 
-
-
-
 if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 	UART_Debg_t_h=ms_tick_cnt;
 
