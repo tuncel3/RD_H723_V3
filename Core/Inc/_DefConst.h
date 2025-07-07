@@ -1144,12 +1144,12 @@ typedef struct {
 } rel_ord_st;
 
 rel_ord_st SIRALI_TABLO_RELOUT[] = {
-    { START_FC,            1,  0 },
+    { START_FC,            0,  0 },
     { VAC_HG_FC,           0,  1 },
-    { VAC_LO_FC,           1,  2 },
+    { VAC_LO_FC,           0,  2 },
     { LOAD_DC_HG_FC,       0,  3 },
     { LOAD_DC_LW_FC,       0,  4 },
-    { DC_LEAK_POS_FC,      1,  5 },
+    { DC_LEAK_POS_FC,      0,  5 },
     { DC_LEAK_NEG_FC,      0,  6 },
     { ST_LINE_MCCB_OFF,    0,  7 },
     { ST_BATT_MCCB_OFF,    0,  8 },
