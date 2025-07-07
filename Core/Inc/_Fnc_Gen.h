@@ -937,11 +937,11 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 	// SIRALI_TABLO_RELOUT daki state lerin durumunu o taboya gir
 void SIRALI_TABLO_RELOUT_update(void) { // sirali tablonun oluşturulma amacı eeproma kaydedilecek 4 parçanın bu tablonun birinci sütunundan direk oluşturulması.
 	for (int i = 0; i < SIRALI_TABLO_SIZE; i++) { // sirali tablonun birinci sütunu ön panelden kullanıcı tarafından belirleniyor.
+//		SIRALI_TABLO_RELOUT[i].tbl_code = ön panelden kullanıcı değiştiriyor;
 		SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
-	// sıralı tablodan rel_out_16Bit_Data
-		// ayrıca röleleri devreye alan 16 bitlik shift register değeri de SIRALI_TABLO_RELOUT tablosundan direk oluşturulabiliyor.
-			rel_out_16Bit_Data |= (SIRALI_TABLO_RELOUT[i].tbl_val << (15-i)); // ikinci sütundan. tbl_val sütunundan
-			rel_out_16Bit_Data &= ~(!SIRALI_TABLO_RELOUT[i].tbl_val << (15-i)); // 15-x yaparak variable ı ters oluşturuyor shif register için.
+		// ayrıca röleleri devreye alan 16 bitlik shift register değeri rel_out_16Bit_Data de SIRALI_TABLO_RELOUT tablosundan direk oluşturulabiliyor.
+		rel_out_16Bit_Data |= (SIRALI_TABLO_RELOUT[i].tbl_val << (15-i)); // ikinci sütundan. tbl_val sütunundan
+		rel_out_16Bit_Data &= ~(!SIRALI_TABLO_RELOUT[i].tbl_val << (15-i)); // 15-x yaparak variable ı ters oluşturuyor shif register için.
 	}
 	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 }
