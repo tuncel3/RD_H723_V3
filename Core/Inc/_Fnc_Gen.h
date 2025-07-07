@@ -934,6 +934,7 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 }
 
 
+
 void swap_scr_lines(SCR_Line *line1, SCR_Line *line2) {
     SCR_Line temp = *line1;
     *line1 = *line2;
