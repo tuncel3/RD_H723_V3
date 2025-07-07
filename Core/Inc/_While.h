@@ -1200,10 +1200,10 @@ if (ms_tick_cnt-UART_Debg_t_h >= 1000) {
 
 	if (dbg_disp_action==1) {
 		dbg_disp_action=0;
-		var1=Read_Register(0x00);
-		PRF_GEN("var1 %d", var1);
-		var1=Read_Register(0x03);
-		PRF_GEN("var1 %d", var1);
+//		var1=Read_Register(0x00);
+//		PRF_GEN("var1 %d", var1);
+//		var1=Read_Register(0x03);
+//		PRF_GEN("var1 %d", var1);
 	}
 	if (dbg_disp_action==2) {
 		dbg_disp_action=0;
