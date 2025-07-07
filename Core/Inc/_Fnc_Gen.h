@@ -910,7 +910,9 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
 	}
 
+    if (is_state_a_relout()) {
 
+    }
 
 
 
@@ -1297,6 +1299,9 @@ uint8_t is_state_a_general_fault(State_Codes state) {
 }
 uint8_t is_state_require_save(State_Codes state) {
     return ((state_list[state].action & (1 << SAVE_enum)) != 0) ? 1 : 0;
+}
+uint8_t is_state_a_relout(State_Codes state) {
+    return ((state_list[state].action & (1 << REL_OUT_enum)) != 0) ? 1 : 0;
 }
 
 
