@@ -13,6 +13,7 @@ uint8_t state_get(State_Codes state);
 uint8_t is_state_require_stop(State_Codes state);
 uint8_t is_state_a_general_fault(State_Codes state);
 uint8_t is_state_require_save(State_Codes state);
+uint8_t is_state_a_relout(State_Codes state);
 void state_set(State_Codes state, uint8_t set);
 void inline extern actions_after_charge_voltage_change();
 void inline extern DEV_NOM_VOUT_changed_fc(void);
@@ -928,9 +929,6 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
     } 	general_thystop_faults_bit_all=general_thystop_faults_bit_all_;
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
-}
 
 
 	// OUT REL
