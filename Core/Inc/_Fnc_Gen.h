@@ -939,7 +939,7 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 		for (int i = 0; i < SIRALI_TABLO_SIZE; i++) { // sirali tablonun birinci sütunu ön panelden kullanıcı tarafından belirleniyor.
 			SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
 		// sıralı tablodan rel_out_16Bit_Data
-			if (SIRALI_TABLO_RELOUT[i].tbl_val) { // ayrıca röleleri devreye alan 16 bitlik shift register
+			if (SIRALI_TABLO_RELOUT[i].tbl_val) { // ayrıca röleleri devreye alan 16 bitlik shift register değeri de SIRALI_TABLO_RELOUT tablosundan direk oluşturulabiliyor.
 				rel_out_16Bit_Data |= (1 << (15-i));
 			} else {					// 15-x yaparak variable ı ters oluşturuyor shif register için.
 				rel_out_16Bit_Data &= ~(1 << (15-i)); // Clear the corresponding bit
