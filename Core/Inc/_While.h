@@ -1073,10 +1073,7 @@ if (currentPage == DATE_TIME_pg) {
 // state tablosundaki state durumundan SIRALI_TABLO_RELOUT
 for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
 	SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
-}
-
 // sıralı tablodan rel_out_16Bit_Data
-for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
 	if (SIRALI_TABLO_RELOUT[i].tbl_val) {
 		rel_out_16Bit_Data |= (1 << (15-i));
 	} else {					// 15-x yaparak variable ı ters oluşturuyor shif register için.
