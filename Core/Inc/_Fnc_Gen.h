@@ -930,7 +930,6 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 	// OUT REL
 	// SIRALI_TABLO_RELOUT daki state lerin durumunu o taboya gir
 	if (is_state_a_relout(state_code)) { // sirali tablonun oluşturulma amacı eeproma kaydedilecek 4 parçanın bu tablonun birinci sütunundan direk oluşturulması.
@@ -939,9 +938,7 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 		// sıralı tablodan rel_out_16Bit_Data
 			// ayrıca röleleri devreye alan 16 bitlik shift register değeri de SIRALI_TABLO_RELOUT tablosundan direk oluşturulabiliyor.
 				rel_out_16Bit_Data |= (SIRALI_TABLO_RELOUT[i].tbl_val << (15-i)); // ikinci sütundan. tbl_val sütunundan
-			// 15-x yaparak variable ı ters oluşturuyor shif register için.
-				rel_out_16Bit_Data &= ~(!SIRALI_TABLO_RELOUT[i].tbl_val << (15-i));
-
+				rel_out_16Bit_Data &= ~(!SIRALI_TABLO_RELOUT[i].tbl_val << (15-i)); // 15-x yaparak variable ı ters oluşturuyor shif register için.
 		}
 		REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
 	}
