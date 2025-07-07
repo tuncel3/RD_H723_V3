@@ -942,7 +942,7 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 			if (SIRALI_TABLO_RELOUT[i].tbl_val) { // ayrıca röleleri devreye alan 16 bitlik shift register değeri de SIRALI_TABLO_RELOUT tablosundan direk oluşturulabiliyor.
 				rel_out_16Bit_Data |= (1 << (15-i)); // ikinci sütundan. tbl_val sütunundan
 			} else {					// 15-x yaparak variable ı ters oluşturuyor shif register için.
-				rel_out_16Bit_Data &= ~(1 << (15-i)); // Clear the corresponding bit
+				rel_out_16Bit_Data &= ~(1 << (15-i));
 			}
 		}
 		REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
