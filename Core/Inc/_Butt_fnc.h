@@ -5,7 +5,7 @@ void bleft_fnc(void) {
     if (currentPage == HOME_PAGE_pg) {
     	if (thy_drv_en==0) {
     		thy_drv_en_req=1;
-    		apply_state_changes_f(USER_STOP_FC, 0);
+    		after_a_state_changes_f(USER_STOP_FC, 0);
     		PRF_GEN("User req START rectf");
     	}
     }
@@ -202,7 +202,7 @@ void bright_fnc(void) {
 	management_menu_dis_cnt=0;
     if (currentPage == HOME_PAGE_pg) {
     	if (thy_drv_en == 1) {								// RIGHT
-    		apply_state_changes_f(USER_STOP_FC, 1);
+    		after_a_state_changes_f(USER_STOP_FC, 1);
     		PRF_GEN("User req STOP rectf");
     	}
     }

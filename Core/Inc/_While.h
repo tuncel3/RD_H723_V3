@@ -9,7 +9,7 @@ if (ms_tick_cnt-sfst_1_t_hold >= 5) { // soft start step. 5ms
 		else if (targ_DC_voltage > temp_targ_DC_voltage) {
 			set_targ_DC_voltage(temp_targ_DC_voltage);
 			sfsta_op_phase=S_SFSTA_REQ_OK;
-			apply_state_changes_f(SOFT_START_ST, 0);
+			after_a_state_changes_f(SOFT_START_ST, 0);
 //			actions_after_charge_mode_change(6);
 			PRF_GEN("Soft start request ok");
 		}
@@ -36,7 +36,7 @@ if (sta_op_phase==S_STARTUP_DELAY_OK) {		// tristör sürme başlatma
 		sf_sta_req_cnt++;
 		if (sf_sta_req_cnt >= 20) {		// delayed soft start trigger
 			set_targ_DC_voltage(5);
-			apply_state_changes_f(SOFT_START_ST, 1);
+			after_a_state_changes_f(SOFT_START_ST, 1);
 			thy_drv_en=1; // interruptlar tristör sürebilir.
 			sfsta_op_phase=S_SFSTA_REQ;
 			thy_drv_en_req=0;
@@ -68,8 +68,8 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		apply_state_changes_f(ST_FLOAT_CHARGE, 0);
-		apply_state_changes_f(BOOST_CHARGE_FC, 1);
+		after_a_state_changes_f(ST_FLOAT_CHARGE, 0);
+		after_a_state_changes_f(BOOST_CHARGE_FC, 1);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
 //		switch_to_auto_mode_completed=0;
@@ -86,8 +86,8 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		apply_state_changes_f(ST_FLOAT_CHARGE, 1);
-		apply_state_changes_f(BOOST_CHARGE_FC, 0);
+		after_a_state_changes_f(ST_FLOAT_CHARGE, 1);
+		after_a_state_changes_f(BOOST_CHARGE_FC, 0);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
 		LED_7_Data |= FLOAT_CHARGE_LED;
 //		switch_to_auto_mode_completed=0;
@@ -119,8 +119,8 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 //		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
-//		apply_state_changes_f(ST_FLOAT_CHARGE, 1);
-//		apply_state_changes_f(BOOST_CHARGE_FC, 0);
+//		after_a_state_changes_f(ST_FLOAT_CHARGE, 1);
+//		after_a_state_changes_f(BOOST_CHARGE_FC, 0);
 //		LED_7_Data &= ~BOOST_CHARGE_LED;
 //		LED_7_Data |= FLOAT_CHARGE_LED;
 //
@@ -168,13 +168,13 @@ if (VBAT_pas.a1 < -10 && EpD[SET_BATT_REV_DET][0].V1==1 && !state_get(BATT_REVER
 	batt_reverse_Acc_cnt++;
 	if (batt_reverse_Acc_cnt >= batt_reverse_Acc_per) {
 		batt_reverse_Acc_cnt=0;
-		apply_state_changes_f(BATT_REVERSE_FC, 1);
+		after_a_state_changes_f(BATT_REVERSE_FC, 1);
 	}
 } else if (VBAT_pas.a1 >= -0.5 && state_get(BATT_REVERSE_FC)) {
 	batt_reverse_return_Acc_cnt++;
 	if (batt_reverse_return_Acc_cnt >= batt_reverse_return_Acc_per) {
 		batt_reverse_return_Acc_cnt=0;
-		apply_state_changes_f(BATT_REVERSE_FC, 0);
+		after_a_state_changes_f(BATT_REVERSE_FC, 0);
 	}
 }
 ////// BATT REVERSE MONITORING //////////////////////////////////////////////////////////////////////////////////////
@@ -193,28 +193,28 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 		VDCK_accept_cnt++;
 		if (VDCK_accept_cnt >= VDCK_accept_per) {
 			VDCK_accept_cnt=0;
-			apply_state_changes_f(DC_LEAK_POS_FC, 1);
+			after_a_state_changes_f(DC_LEAK_POS_FC, 1);
 			PRF_GEN("DC leak above pos lim");
 		 }
 	} else if (VDCKP_perc < EpD[DC_KAC_POS][0].V1 && state_get(DC_LEAK_POS_FC)) {
 		VDCK_return_cnt++;
 		if (VDCK_return_cnt >= VDCK_return_per) {
 			VDCK_return_cnt=0;
-			apply_state_changes_f(DC_LEAK_POS_FC, 0);
+			after_a_state_changes_f(DC_LEAK_POS_FC, 0);
 			PRF_GEN("DC leak above pos lim removed");
 		}
 	} else if (VDCKN_perc >= EpD[DC_KAC_NEG][0].V1 && !state_get(DC_LEAK_NEG_FC)) {
 		VDCK_accept_cnt++;
 		if (VDCK_accept_cnt >= VDCK_accept_per) {
 			VDCK_accept_cnt=0;
-			apply_state_changes_f(DC_LEAK_NEG_FC, 1);
+			after_a_state_changes_f(DC_LEAK_NEG_FC, 1);
 			PRF_GEN("DC leak below neg lim");
 		}
 	} else if (VDCKN_perc < EpD[DC_KAC_NEG][0].V1 && state_get(DC_LEAK_NEG_FC)) {
 		VDCK_return_cnt++;
 		if (VDCK_return_cnt >= VDCK_return_per) {
 			VDCK_return_cnt=0;
-			apply_state_changes_f(DC_LEAK_NEG_FC, 0);
+			after_a_state_changes_f(DC_LEAK_NEG_FC, 0);
 			PRF_GEN("DC leak below neg lim removed");
 		}
 	} else {
@@ -235,7 +235,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K1][0].V1=1; EpD[SET_DROPPER_K1][1].V1=1; // kullanıcı harici değişim olduğu için bu değişiklik yapılmalı.
 				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1); // dropper ı kayıtlı değere göre değiştir.
-				apply_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1); // burası ledleri değiştiriyor.
+				after_a_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1); // burası ledleri değiştiriyor.
 			}
 		} else if (VLOAD_pas.a1+dropper_test_var_1 > set_dropper_l_hg_V && state_get(ST_DROPPER_K2) && !state_get(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
@@ -243,7 +243,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K2][0].V1=1; EpD[SET_DROPPER_K2][1].V1=1;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
+				after_a_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
 			}
 		} else if (VLOAD_pas.a1+dropper_test_var_1 > set_dropper_l_hg_V && !state_get(ST_DROPPER_K2) && state_get(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
@@ -251,7 +251,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K1][0].V1=1; EpD[SET_DROPPER_K1][1].V1=1;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K1][0].V1);
-				apply_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1);
+				after_a_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1);
 			}
 		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && state_get(ST_DROPPER_K2) && state_get(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
@@ -259,7 +259,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
+				after_a_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
 			}
 		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && state_get(ST_DROPPER_K2) && !state_get(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
@@ -267,7 +267,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K1][0].V1=0; EpD[SET_DROPPER_K1][1].V1=0;
 				DROPP_BATT_CTRL(EpD[SET_DROPPER_K1][0].V1);
-				apply_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1);
+				after_a_state_changes_f(ST_DROPPER_K2, EpD[SET_DROPPER_K1][0].V1);
 			}
 		} else if (VLOAD_pas.a1+dropper_test_var_1 < set_dropper_l_lw_V && !state_get(ST_DROPPER_K2) && state_get(ST_DROPPER_K1)) {
 			actvate_drop_cnt++;
@@ -275,7 +275,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 				actvate_drop_cnt=0;
 				EpD[SET_DROPPER_K2][0].V1=0; EpD[SET_DROPPER_K2][1].V1=0;
 				DROPP_LOAD_CTRL(EpD[SET_DROPPER_K2][0].V1);
-				apply_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
+				after_a_state_changes_f(ST_DROPPER_K1, EpD[SET_DROPPER_K2][0].V1);
 			}
 		}
 	}
@@ -289,7 +289,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			vload_dc_high_lim_ret_Acc_cnt=0;
 			if (vload_dc_high_lim_Acc_cnt >= vload_dc_high_lim_Acc_per) {
 				vload_dc_high_lim_Acc_cnt=0;
-				apply_state_changes_f(LOAD_DC_HG_FC, 1);
+				after_a_state_changes_f(LOAD_DC_HG_FC, 1);
 				PRF_GEN("LOAD DC High");
 			}
 		} else { vload_dc_high_lim_Acc_cnt=0; }
@@ -299,7 +299,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			vload_dc_high_lim_Acc_cnt=0;
 			if (vload_dc_high_lim_ret_Acc_cnt >= vload_dc_high_lim_ret_Acc_per) {
 				vload_dc_high_lim_ret_Acc_cnt=0;
-				apply_state_changes_f(LOAD_DC_HG_FC, 0);
+				after_a_state_changes_f(LOAD_DC_HG_FC, 0);
 				PRF_GEN("LOAD DC High Return");
 			}
 		} else { vload_dc_high_lim_ret_Acc_cnt=0; }
@@ -310,7 +310,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			vload_dc_low_lim_ret_Acc_cnt=0;
 			if (vload_dc_low_lim_Acc_cnt >= VLOAD_DC_LOW_LIM_Acc_per) {
 				vload_dc_low_lim_Acc_cnt=0;
-				apply_state_changes_f(LOAD_DC_LW_FC, 1);
+				after_a_state_changes_f(LOAD_DC_LW_FC, 1);
 				PRF_GEN("LOAD DC Low");
 			}
 		} else { vload_dc_low_lim_Acc_cnt=0; }
@@ -320,7 +320,7 @@ if (DCK_mon_start_cnt >= DCK_mon_start_per) {
 			vload_dc_low_lim_Acc_cnt=0;
 			if (vload_dc_low_lim_ret_Acc_cnt >= vload_dc_low_lim_ret_Acc_per) {
 				vload_dc_low_lim_ret_Acc_cnt=0;
-				apply_state_changes_f(LOAD_DC_LW_FC, 0);
+				after_a_state_changes_f(LOAD_DC_LW_FC, 0);
 				PRF_GEN("LOAD DC Low Return");
 			}
 		} else { vload_dc_low_lim_ret_Acc_cnt=0; }
@@ -339,7 +339,7 @@ if (VRECT_pas.a1 > vrect_dc_high_lim && !state_get(RECT_DC_HG_FC) && sfsta_op_ph
 	vrect_dc_high_lim_ret_Acc_cnt=0;
 	if (vrect_dc_high_lim_Acc_cnt >= vrect_dc_high_lim_Acc_per) {
 		vrect_dc_high_lim_Acc_cnt=0;
-		apply_state_changes_f(RECT_DC_HG_FC, 1);
+		after_a_state_changes_f(RECT_DC_HG_FC, 1);
 		PRF_GEN("RECT DC High");
 	}
 } else {
@@ -350,7 +350,7 @@ if (VRECT_pas.a1 <= vrect_dc_high_lim_ret && state_get(RECT_DC_HG_FC)) {
 	vrect_dc_high_lim_Acc_cnt=0;
 	if (vrect_dc_high_lim_ret_Acc_cnt >= vrect_dc_high_lim_ret_Acc_per) {
 		vrect_dc_high_lim_ret_Acc_cnt=0;
-		apply_state_changes_f(RECT_DC_HG_FC, 0);
+		after_a_state_changes_f(RECT_DC_HG_FC, 0);
 		PRF_GEN("RECT DC High Return");
 	}
 } else {
@@ -361,7 +361,7 @@ if (VRECT_pas.a1 < vrect_dc_low_lim && !state_get(RECT_DC_LW_FC) && sfsta_op_pha
 	vrect_dc_low_lim_ret_Acc_cnt=0;
 	if (vrect_dc_low_lim_Acc_cnt >= vrect_dc_low_lim_Acc_per) {
 		vrect_dc_low_lim_Acc_cnt=0;
-		apply_state_changes_f(RECT_DC_LW_FC, 1);
+		after_a_state_changes_f(RECT_DC_LW_FC, 1);
 		PRF_GEN("RECT DC Low");
 	}
 } else {
@@ -372,7 +372,7 @@ if (VRECT_pas.a1 >= vrect_dc_low_lim_ret && state_get(RECT_DC_LW_FC)) {
 	vrect_dc_low_lim_Acc_cnt=0;
 	if (vrect_dc_low_lim_ret_Acc_cnt >= vrect_dc_low_lim_ret_Acc_per) {
 		vrect_dc_low_lim_ret_Acc_cnt=0;
-		apply_state_changes_f(RECT_DC_LW_FC, 0);
+		after_a_state_changes_f(RECT_DC_LW_FC, 0);
 		PRF_GEN("RECT DC Low Return");
 	}
 } else {
@@ -532,37 +532,37 @@ if (VAC_T_rms_sc.a1 >= VAC_LW_RET_LIM && VAC_T_Lo_fc == 1) {
 // TTTTTTTTTTTTTTTTTTT
 // RST RST RST RST RST RST RST
 if ((VAC_R_Off_fc == 0 && VAC_S_Off_fc == 0 && VAC_T_Off_fc == 0) && !state_get(VAC_ON_FC)) {
-	apply_state_changes_f(VAC_ON_FC, 1);
+	after_a_state_changes_f(VAC_ON_FC, 1);
 	PRF_GEN("VAC_ON_FC 1");
 }
 if ((VAC_R_Off_fc == 1 && VAC_S_Off_fc == 1 && VAC_T_Off_fc == 1) && state_get(VAC_ON_FC)) {
-	apply_state_changes_f(VAC_ON_FC, 0);
+	after_a_state_changes_f(VAC_ON_FC, 0);
 	PRF_GEN("VAC_ON_FC 0");
 }
 if ((VAC_R_Off_fc == 1 || VAC_S_Off_fc == 1 || VAC_T_Off_fc == 1) && !state_get(VAC_OFF_FC)) {
-	apply_state_changes_f(VAC_OFF_FC, 1);
+	after_a_state_changes_f(VAC_OFF_FC, 1);
 	PRF_GEN("VAC_OFF_FC 1");
 }
 if ((VAC_R_Off_fc == 0 && VAC_S_Off_fc == 0 && VAC_T_Off_fc == 0) && state_get(VAC_OFF_FC)) {
-	apply_state_changes_f(VAC_OFF_FC, 0);
+	after_a_state_changes_f(VAC_OFF_FC, 0);
 	PRF_GEN("VAC_OFF_FC 0");
 }
 if ((VAC_R_Hg_fc == 1 || VAC_S_Hg_fc == 1 || VAC_T_Hg_fc == 1) && !state_get(VAC_HG_FC)) {
-	apply_state_changes_f(VAC_HG_FC, 1);	// VAC Hg
+	after_a_state_changes_f(VAC_HG_FC, 1);	// VAC Hg
 	PRF_GEN("VAC HG");
 }
 if ((VAC_R_Hg_fc == 0 && VAC_S_Hg_fc == 0 && VAC_T_Hg_fc == 0) && state_get(VAC_HG_FC)) {
-	apply_state_changes_f(VAC_HG_FC, 0);	// VAC Hg RET
+	after_a_state_changes_f(VAC_HG_FC, 0);	// VAC Hg RET
 	PRF_GEN("VAC HG RETURNED");
 }
 if ((VAC_R_Lo_fc == 1 || VAC_S_Lo_fc == 1 || VAC_T_Lo_fc == 1) && !state_get(VAC_LO_FC)) {
-	apply_state_changes_f(VAC_LO_FC, 1);	// VAC Lo
-	apply_state_changes_f(VAC_ON_FC, 0);
+	after_a_state_changes_f(VAC_LO_FC, 1);	// VAC Lo
+	after_a_state_changes_f(VAC_ON_FC, 0);
 	PRF_GEN("VAC LO");
 }
 if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && state_get(VAC_LO_FC)) {
-	apply_state_changes_f(VAC_LO_FC, 0);	// VAC Lo RET
-	apply_state_changes_f(VAC_ON_FC, 1);
+	after_a_state_changes_f(VAC_LO_FC, 0);	// VAC Lo RET
+	after_a_state_changes_f(VAC_ON_FC, 1);
 	PRF_GEN("VAC LO RETURNED");
 }
 // RST RST RST RST RST RST RST
@@ -572,7 +572,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && state_get(VAC_
 		rectifier_current_limit_Acc_cnt++;
 		rectifier_current_limit_return_Acc_cnt=0;
 		if (rectifier_current_limit_Acc_cnt >= rectifier_current_limit_Acc_per) {
-			apply_state_changes_f(RECTIFIER_CURRENT_LIMIT_FC, 1);
+			after_a_state_changes_f(RECTIFIER_CURRENT_LIMIT_FC, 1);
 			rectifier_current_limit_Acc_cnt=0;
 			rectifier_current_limit_accepted=1;
 		}
@@ -580,7 +580,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && state_get(VAC_
 		rectifier_current_limit_return_Acc_cnt++;
 		rectifier_current_limit_Acc_cnt=0;
 		if (rectifier_current_limit_return_Acc_cnt >= rectifier_current_limit_return_Acc_per) {
-			apply_state_changes_f(RECTIFIER_CURRENT_LIMIT_FC, 0);
+			after_a_state_changes_f(RECTIFIER_CURRENT_LIMIT_FC, 0);
 			rectifier_current_limit_return_Acc_cnt=0;
 			rectifier_current_limit_accepted=0;
 		}
@@ -592,7 +592,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && state_get(VAC_
 		battery_current_limit_Acc_cnt++;
 		battery_current_limit_return_Acc_cnt=0;
 		if (battery_current_limit_Acc_cnt >= battery_current_limit_Acc_per) {
-			apply_state_changes_f(BATTERY_CURRENT_LIMIT_FC, 1);
+			after_a_state_changes_f(BATTERY_CURRENT_LIMIT_FC, 1);
 			battery_current_limit_Acc_cnt=0;
 			battery_current_limit_accepted=1;
 		}
@@ -600,7 +600,7 @@ if ((VAC_R_Lo_fc == 0 && VAC_S_Lo_fc == 0 && VAC_T_Lo_fc == 0) && state_get(VAC_
 		battery_current_limit_return_Acc_cnt++;
 		battery_current_limit_Acc_cnt=0;
 		if (battery_current_limit_return_Acc_cnt >= battery_current_limit_return_Acc_per) {
-			apply_state_changes_f(BATTERY_CURRENT_LIMIT_FC, 0);
+			after_a_state_changes_f(BATTERY_CURRENT_LIMIT_FC, 0);
 			battery_current_limit_return_Acc_cnt=0;
 			battery_current_limit_accepted=0;
 		}
@@ -699,48 +699,48 @@ if (line_sgn_stable) {
 //// SOĞUTUCU ///////////////////////////////////////////////////////////////////////////////////////////////////////
 	if (sogut_sensor_exists) {
 		if (tmp_dat_C[0]+temp_test_thy_1 > EpD[SET_OVERTEMP_ALARM][0].V1 && !state_get(OVERTEMP_ALARM_FC)) { // overtemp alarm enable
-			apply_state_changes_f(OVERTEMP_ALARM_FC, 1);
+			after_a_state_changes_f(OVERTEMP_ALARM_FC, 1);
 		} else if (tmp_dat_C[0]+temp_test_thy_1 < EpD[SET_OVERTEMP_ALARM][0].V1-5 && state_get(OVERTEMP_ALARM_FC)) { // overtemp alarm disable
-			apply_state_changes_f(OVERTEMP_ALARM_FC, 0);
+			after_a_state_changes_f(OVERTEMP_ALARM_FC, 0);
 		}
 
 		if (tmp_dat_C[0]+temp_test_thy_1 > EpD[SET_OVERTEMP_OPEN][0].V1 && !state_get(OVERTEMP_OPEN_FC)) { // overtemp open count
 			ovtmp_open_cnt++;
 		} else if (tmp_dat_C[0]+temp_test_thy_1 < EpD[SET_OVERTEMP_OPEN][0].V1-5 && state_get(OVERTEMP_OPEN_FC)) { // overtemp open cancel
-			apply_state_changes_f(OVERTEMP_OPEN_FC, 0);
-			PRF_GEN("apply_state_changes_f(OVERTEMP_OPEN_FC, 0);");
+			after_a_state_changes_f(OVERTEMP_OPEN_FC, 0);
+			PRF_GEN("after_a_state_changes_f(OVERTEMP_OPEN_FC, 0);");
 			ovtmp_open_cnt=0;
 		} else if (ovtmp_open_cnt >= ovtmp_open_per && !state_get(OVERTEMP_OPEN_FC)) { // overtemp alarm enable
 			ovtmp_open_cnt=0;
-			apply_state_changes_f(OVERTEMP_OPEN_FC, 1);
-			PRF_GEN("apply_state_changes_f(OVERTEMP_OPEN_FC, 1);");
+			after_a_state_changes_f(OVERTEMP_OPEN_FC, 1);
+			PRF_GEN("after_a_state_changes_f(OVERTEMP_OPEN_FC, 1);");
 		} else {
 			ovtmp_open_cnt=0;
 		}
 
 		if (tmp_dat_C[0]+temp_test_thy_1 > EpD[SET_COOL_FAN_TEMP][0].V1 && !state_get(THY_FAN1_REL)) { // fan enable
-			apply_state_changes_f(THY_FAN1_REL, 1);
+			after_a_state_changes_f(THY_FAN1_REL, 1);
 		} else if (tmp_dat_C[0]+temp_test_thy_1 < EpD[SET_COOL_FAN_TEMP][0].V1-10 && state_get(THY_FAN1_REL)) { // fan disable
-			apply_state_changes_f(THY_FAN1_REL, 0);
+			after_a_state_changes_f(THY_FAN1_REL, 0);
 		}
 
 		if (tmp_dat_C[1]+temp_test_trf_2 > EpD[SET_TRANSF_FAN_TEMP][0].V1 && !state_get(TRF_FAN2_REL)) { // fan enable
-			apply_state_changes_f(TRF_FAN2_REL, 1);
+			after_a_state_changes_f(TRF_FAN2_REL, 1);
 		} else if (tmp_dat_C[0]+temp_test_trf_2 < EpD[SET_TRANSF_FAN_TEMP][0].V1-10 && state_get(TRF_FAN2_REL)) { // fan disable
-			apply_state_changes_f(TRF_FAN2_REL, 0);
+			after_a_state_changes_f(TRF_FAN2_REL, 0);
 		}
 	}
 
 //// AKÜ ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	if (batt_sensor_exists) {
 		if (tmp_dat_C[2]+temp_test_trf_2 <= 0 && !state_get(BAT_TEMP_ZERO_FC)) { // BATT TEMP ZERO disable
-			apply_state_changes_f(BAT_TEMP_ZERO_FC, 1);
+			after_a_state_changes_f(BAT_TEMP_ZERO_FC, 1);
 		} else if (tmp_dat_C[2]+temp_test_trf_2 >= 50 && !state_get(BAT_TEMP_50_FC)) { // BATT TEMP 50 disable
-			apply_state_changes_f(BAT_TEMP_50_FC, 1);
+			after_a_state_changes_f(BAT_TEMP_50_FC, 1);
 		} else if (tmp_dat_C[2]+temp_test_trf_2 > 5 && state_get(BAT_TEMP_ZERO_FC)) { // BATT TEMP ZERO enable
-			apply_state_changes_f(BAT_TEMP_ZERO_FC, 0);
+			after_a_state_changes_f(BAT_TEMP_ZERO_FC, 0);
 		} else if (tmp_dat_C[2]+temp_test_trf_2 < 45 && state_get(BAT_TEMP_50_FC)) { // BATT TEMP 50 enable
-			apply_state_changes_f(BAT_TEMP_50_FC, 0);
+			after_a_state_changes_f(BAT_TEMP_50_FC, 0);
 		}
 	}
 
@@ -781,7 +781,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// WHAT STOPS AND RESETS BATT LINE MONITORING
 	if (state_get(ST_BATT_MCCB_OFF) && !state_get(ST_BATT_LINE_BROKEN) && EpD[SET_BATT_DISC_CHK_EN][0].V1==1 && blm_pause==0) {
-		apply_state_changes_f(ST_BATT_LINE_BROKEN, 1);										// BATT SWITCH OFF
+		after_a_state_changes_f(ST_BATT_LINE_BROKEN, 1);										// BATT SWITCH OFF
 			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			fast_restart_blm_after_bat_switch_on = 1;
 			blm_corr_op_start_delay_cnt = 0;
@@ -799,7 +799,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 		PRF_BLM("blm SW on. start inspection now");
 	}
 	if (VBAT_pas.a16 <= Vbat_flt && !batt_current_detected && !state_get(ST_BATT_LINE_BROKEN) && EpD[SET_BATT_DISC_CHK_EN][0].V1==1 && blm_pause==0) {
-		apply_state_changes_f(ST_BATT_LINE_BROKEN, 1);										// VBAT LOW
+		after_a_state_changes_f(ST_BATT_LINE_BROKEN, 1);										// VBAT LOW
 			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
@@ -807,7 +807,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			PRF_BLM("blm Vbat too low. batt broken set");
 	}
 	if (batt_current_detected && state_get(ST_BATT_LINE_BROKEN)) {
-		apply_state_changes_f(ST_BATT_LINE_BROKEN, 0);									// CURRENT DETECTED
+		after_a_state_changes_f(ST_BATT_LINE_BROKEN, 0);									// CURRENT DETECTED
 			blm_op_phase = B_RESTRT_AFTR_DELAY;									// bring_vtarg_back_goto_delay
 			blm_corr_op_start_delay_cnt = 0;
 			blm_enable_collect_samples = 0;
@@ -815,7 +815,7 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 			PRF_BLM("current detected. batt line connected");
 	}
 	if ((EpD[SET_BATT_DISC_CHK_EN][0].V1==0 || blm_pause==1) && state_get(ST_BATT_LINE_BROKEN)) {	// batt line broken fault durumu var. kullanıcı batt kontrlü devreden çıkarıyor.
-		apply_state_changes_f(ST_BATT_LINE_BROKEN, 0);
+		after_a_state_changes_f(ST_BATT_LINE_BROKEN, 0);
 		blm_op_phase = B_RESTRT_AFTR_DELAY;										// bring_vtarg_back_goto_delay
 		blm_corr_op_start_delay_cnt = 0;
 		blm_enable_collect_samples = 0;
@@ -973,10 +973,10 @@ if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 	}
 	if (blm_req_corr_batt_connected == 1) { // corr sonucuna göre batt line broken state uygulaması buraya koyuldu, çünkü başka durumlar da izlenerek sonuç çıkarılmaya çalışılacak. örneğin vtarg düşürüldü ama vrect düşmedi.
 		blm_req_corr_batt_connected=99;
-		apply_state_changes_f(ST_BATT_LINE_BROKEN, 0);
+		after_a_state_changes_f(ST_BATT_LINE_BROKEN, 0);
 	} else if (blm_req_corr_batt_connected == 0) {
 		blm_req_corr_batt_connected=99;
-		apply_state_changes_f(ST_BATT_LINE_BROKEN, 1);
+		after_a_state_changes_f(ST_BATT_LINE_BROKEN, 1);
 	}
 } // if (sfsta_op_phase == S_SFSTA_REQ_OK) {
 //baslangic_v_stbl						|
