@@ -296,6 +296,7 @@ else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==VRECT_DC_LOW_LIM_add) {
 
         if (rel_disp_mode == 1) { // ekranda order değiştirildi. tabloda değiş
         	SIRALI_TABLO_RELOUT[sirali_tablo_sel].tbl_code=TAM_TABLO_RELOUT[tam_tablo_sel].tbl_code;
+        	SIRALI_TABLO_RELOUT_update();
         	save_REL_OUT_order_to_EEP(); //sıkıştırılmış orderı 20 bitlik parçalara ayır ve eeproma kaydet
         } else if (rel_edit_mode == 1) {
         }
