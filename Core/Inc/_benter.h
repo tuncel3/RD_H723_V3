@@ -125,9 +125,6 @@ else if (CHARGE_SETT_Items[selected_CHARGE_SETT].V1==SET_VBAT_CAL) {
 
 		if (dev_setting_edit_mode) {
 if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==255) {
-	currentPage = DATE_TIME_pg;
-	while_LCD_delay_per=while_LCD_delay_clock_page_per;
-	while_RTC_delay_per=while_RTC_delay_clock_page_per;
 	dev_setting_edit_mode=0;
 }
 else if (DEVICE_SETT_Items[selected_DEVICE_SETT].V1==SET_BATT_REV_DET) {
