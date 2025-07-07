@@ -1052,10 +1052,10 @@ State_Info state_list[] = {
     {  7, DC_LEAK_POS_FC,             0b010010, "DC Kaçak Poztf",  },
     {  8, RECT_DC_LW_FC,              0b010011, "Doğr VDC Düşük",  },
     {  9, RECT_DC_HG_FC,              0b010111, "Doğr VDC Yüksk",  },
-    { 10, VAC_LO_FC,                  0b010110, "Şebeke Düşük",    },
-    { 11, VAC_HG_FC,                  0b010110, "Şebeke Yüksek",   },
+    { 10, VAC_LO_FC,                  0b110110, "Şebeke Düşük",    },
+    { 11, VAC_HG_FC,                  0b110110, "Şebeke Yüksek",   },
     { 12, STOP_FC,                    0b000010, "Stop",            },
-    { 13, START_FC,                   0b000000, "Start",           },
+    { 13, START_FC,                   0b100000, "Start",           },
     { 14, VAC_OFF_FC,                 0b010110, "VAC OFF",         },
     { 15, VAC_ON_FC,                  0b000000, "VAC ON",          },
 		// LED 16 BIT15 enum 15
