@@ -1251,8 +1251,6 @@ void besc_fnc(void) {
     }
     else if (currentPage == DATE_TIME_pg && DATE_TIME_edit_mode == 0) {			// ESC
 		currentPage = DEVICE_SETT_pg;
-		while_LCD_delay_per=while_LCD_delay_normal_per;
-		while_RTC_delay_per=while_RTC_delay_normal_per;
 	}
     else if (currentPage == FAULT_CODES_RESET_pg) {								// ESC
         if (fault_codes_reset_completed) {
