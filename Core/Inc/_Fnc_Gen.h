@@ -931,6 +931,21 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+	// OUT REL
+	// state tablosundaki state durumundan SIRALI_TABLO_RELOUT
+	for (int i = 0; i < SIRALI_TABLO_SIZE; i++) {
+		SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code);
+	// sıralı tablodan rel_out_16Bit_Data
+		if (SIRALI_TABLO_RELOUT[i].tbl_val) {
+			rel_out_16Bit_Data |= (1 << (15-i));
+		} else {					// 15-x yaparak variable ı ters oluşturuyor shif register için.
+			rel_out_16Bit_Data &= ~(1 << (15-i)); // Clear the corresponding bit
+		}
+	}
+	REL_24Bit_Data=(uint32_t)(REL_MB_8Bit_Data << 16) | (rel_out_16Bit_Data);
+
+
 }
 
 
