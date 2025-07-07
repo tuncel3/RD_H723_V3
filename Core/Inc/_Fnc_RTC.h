@@ -105,25 +105,20 @@ uint8_t Write_RTC_Time_Data_With_Oscillator(void)
     uint8_t register_address = 0x00;  // Register 0x00 (RTCSEC)
     uint32_t timeout = 5500000;      // Timeout duration (adjust as needed)
 
-    PRF_GEN("s1");
     // Step 1: Stop oscillator by sending 0 to register 0x00
     while (LL_I2C_IsActiveFlag_BUSY(I2C2));
     LL_I2C_HandleTransfer(I2C2, MCP7940N_I2C_ADDRESS, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_SOFTEND, LL_I2C_GENERATE_START_WRITE);
 
-    PRF_GEN("s2");
     // Send the register address and data (0)
     while (!LL_I2C_IsActiveFlag_TXE(I2C2));
     LL_I2C_TransmitData8(I2C2, register_address);
 
-    PRF_GEN("s3");
     while (!LL_I2C_IsActiveFlag_TXE(I2C2));
     LL_I2C_TransmitData8(I2C2, 0x00);  // Write 0 to stop the oscillator
 
-    PRF_GEN("s4");
     while (!LL_I2C_IsActiveFlag_TC(I2C2));
     LL_I2C_GenerateStopCondition(I2C2);
 
-    PRF_GEN("s5");
     timeout = 5500000;  // Reset timeout
     while (!LL_I2C_IsActiveFlag_STOP(I2C2) && timeout--);
     if (timeout == 0)
@@ -132,18 +127,14 @@ uint8_t Write_RTC_Time_Data_With_Oscillator(void)
     }
     LL_I2C_ClearFlag_STOP(I2C2);
 
-
-    PRF_GEN("s6");
     // Step 2: Write 7 elements (minute to year) with special handling for weekday/config
     while (LL_I2C_IsActiveFlag_BUSY(I2C2));
     LL_I2C_HandleTransfer(I2C2, MCP7940N_I2C_ADDRESS, LL_I2C_ADDRSLAVE_7BIT, 7, LL_I2C_MODE_SOFTEND, LL_I2C_GENERATE_START_WRITE);
 
-    PRF_GEN("s7");
     // Send the starting register address (0x01)
     while (!LL_I2C_IsActiveFlag_TXE(I2C2));
     LL_I2C_TransmitData8(I2C2, register_address + 1);  // Start from register 0x01
 
-    PRF_GEN("s8");
     for (uint8_t i = 1; i <= 6; i++)
     {
         while (!LL_I2C_IsActiveFlag_TXE(I2C2));
@@ -168,11 +159,9 @@ uint8_t Write_RTC_Time_Data_With_Oscillator(void)
         }
     }
 
-    PRF_GEN("s9");
     while (!LL_I2C_IsActiveFlag_TC(I2C2));
     LL_I2C_GenerateStopCondition(I2C2);
 
-    PRF_GEN("s10");
     timeout = 5500000;  // Reset timeout
     while (!LL_I2C_IsActiveFlag_STOP(I2C2) && timeout--);
     if (timeout == 0)
@@ -181,27 +170,21 @@ uint8_t Write_RTC_Time_Data_With_Oscillator(void)
     }
     LL_I2C_ClearFlag_STOP(I2C2);
 
-
-    PRF_GEN("s11");
     // Step 3: Re-enable oscillator and set the seconds value
     while (LL_I2C_IsActiveFlag_BUSY(I2C2));
     LL_I2C_HandleTransfer(I2C2, MCP7940N_I2C_ADDRESS, LL_I2C_ADDRSLAVE_7BIT, 2, LL_I2C_MODE_SOFTEND, LL_I2C_GENERATE_START_WRITE);
 
-    PRF_GEN("s12");
     // Send the register address (0x00)
     while (!LL_I2C_IsActiveFlag_TXE(I2C2));
     LL_I2C_TransmitData8(I2C2, register_address);
 
-    PRF_GEN("s13");
     // Send the seconds value with the oscillator bit set (bit 7)
     while (!LL_I2C_IsActiveFlag_TXE(I2C2));
     LL_I2C_TransmitData8(I2C2, Dec2BCD(rtc_sec_edit) | 0b10000000);
 
-    PRF_GEN("s14");
     while (!LL_I2C_IsActiveFlag_TC(I2C2));
     LL_I2C_GenerateStopCondition(I2C2);
 
-    PRF_GEN("s15");
     timeout = 5500000;  // Reset timeout
     while (!LL_I2C_IsActiveFlag_STOP(I2C2) && timeout--);
     if (timeout == 0)
