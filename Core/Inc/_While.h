@@ -1063,8 +1063,8 @@ REL_MB_8Bit_Data &= ~(!state_get(DROP_CON2_REL) << (DROP_CON2_REL-29));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (currentPage == DATE_TIME_pg) {
-	while_LCD_delay_per=while_LCD_delay_clock_page_per;
-	while_RTC_delay_per=while_RTC_delay_clock_page_per;
+	while_LCD_delay_per=while_LCD_delay_clock_page_per; // lcd update hızını artır
+	while_RTC_delay_per=while_RTC_delay_clock_page_per;	// rtc update hızını artır
 } else {
 	while_LCD_delay_per=while_LCD_delay_normal_per;
 	while_RTC_delay_per=while_RTC_delay_normal_per;
