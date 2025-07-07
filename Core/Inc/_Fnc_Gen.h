@@ -9,6 +9,7 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set);
 void inline extern set_targ_DC_voltage(float set_val);
 //void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
+void SIRALI_TABLO_RELOUT_process(void);
 uint8_t state_get(State_Codes state);
 uint8_t is_state_require_stop(State_Codes state);
 uint8_t is_state_a_general_fault(State_Codes state);
