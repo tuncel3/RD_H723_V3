@@ -470,7 +470,7 @@ inline extern void CHARGE_SETT_pg_disp(void) {
 		sprintf(M, "%s", CH_CONT_SEL_Items[(uint32_t)EpD[SET_CH_CONT_MODE][chg_setting_edit_mode].V1]);
 		GLCD_PrintString(80, (i + 1) * 9, M);
 	}
-	else if (CHARGE_SETT_Items[chg_set_disp_index_].V1 == SET_BOOST_TIME) {
+	else if (CHARGE_SETT_Items[chg_set_disp_index_].V1 == SET_BOOST_TIME && EpD[SET_CH_CONT_MODE][0].V1 == TIMED) {
 	sprintf(M, "%02lu dk", (uint32_t) EpD[SET_BOOST_TIME][chg_setting_edit_mode].V1);
 	GLCD_PrintString(96, (i + 1) * 9, M);
 	}
@@ -481,7 +481,7 @@ inline extern void CHARGE_SETT_pg_disp(void) {
 chg_set_disp_index_=(chg_set_disp_index_+1+NUM_CHARGE_SETT_ITEMS) % NUM_CHARGE_SETT_ITEMS;
     }
 	GLCD_PrintString(0, (chg_set_arrow_loc+1) * 9, ">");
-	if (selected_CHARGE_SETT==(SET_CHARGE_MODE-1)) {
+	if (selected_CHARGE_SETT==(SET_CHARGE_MODE-1) || selected_CHARGE_SETT==(SET_CH_CONT_MODE-1)) {
 		GLCD_PrintString(78, (chg_set_arrow_loc+1) * 9, ">");
 	} else {
 		GLCD_PrintString(90, (chg_set_arrow_loc+1) * 9, ">");
