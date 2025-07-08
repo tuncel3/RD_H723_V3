@@ -5,7 +5,7 @@ inline void delayA_1us(uint32_t us);
 inline void delayA_100ns(uint32_t us);
 void printFaultCodes(void);
 //void inline extern startup_get_vars_from_EEP(void);
-void after_a_state_changes_f(State_Codes state_code, uint8_t set);
+void change_state_f(State_Codes state_code, uint8_t set);
 void inline extern set_targ_DC_voltage(float set_val);
 //void inline extern update_VDC_high_low_lim_fc(void);
 void inline extern actions_after_charge_mode_change(uint8_t num);
@@ -359,7 +359,7 @@ inline extern void short_circ_monitor_f(void) {
 		IRECT_Short_Ret_Acc_cnt=0;
 		if (IRECT_Short_Acc_cnt >= IRECT_Short_Acc_per) {
 			IRECT_Short_Acc_cnt=0;
-			after_a_state_changes_f(RECT_SHORT_FC, 1);
+			change_state_f(RECT_SHORT_FC, 1);
 			PRF_GEN("DC SH %f", IRECT_smp_sc);
 		}
 	} else { IRECT_Short_Acc_per=0; }
@@ -368,7 +368,7 @@ inline extern void short_circ_monitor_f(void) {
 		IRECT_Short_Acc_cnt=0;
 		if (IRECT_Short_Ret_Acc_cnt >= IRECT_Short_Ret_Acc_per) {
 			IRECT_Short_Ret_Acc_cnt=0;
-			after_a_state_changes_f(RECT_SHORT_FC, 0);
+			change_state_f(RECT_SHORT_FC, 0);
 		}
 	} else { IRECT_Short_Ret_Acc_cnt=0; }
 	if (thy_drv_en==1 && IBAT_smp_sc > EpD[BATT_SHORT][0].V1 && !state_get(BATT_SHORT_FC)) {
@@ -376,7 +376,7 @@ inline extern void short_circ_monitor_f(void) {
 		IBAT_Short_Ret_Acc_cnt=0;
 		if (IBAT_Short_Acc_cnt >= IBAT_Short_Acc_per) {
 			IBAT_Short_Acc_cnt=0;
-			after_a_state_changes_f(BATT_SHORT_FC, 1);
+			change_state_f(BATT_SHORT_FC, 1);
 			PRF_GEN("BT SH %f", IBAT_smp_sc);
 		}
 	} else { IBAT_Short_Acc_cnt=0; }
@@ -385,7 +385,7 @@ inline extern void short_circ_monitor_f(void) {
 		IBAT_Short_Acc_cnt=0;
 		if (IBAT_Short_Ret_Acc_cnt >= IBAT_Short_Ret_Acc_per) {
 			IBAT_Short_Ret_Acc_cnt=0;
-			after_a_state_changes_f(BATT_SHORT_FC, 0);
+			change_state_f(BATT_SHORT_FC, 0);
 		}
 	} else { IBAT_Short_Ret_Acc_cnt=0; }
 }
@@ -819,7 +819,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		state_set(ST_FLOAT_CHARGE, 1);
+		change_state_f(ST_FLOAT_CHARGE, 1);
 		state_set(BOOST_CHARGE_FC, 0);
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
@@ -840,14 +840,14 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
-//		after_a_state_changes_f(ST_FLOAT_CHARGE, 1);
-//		after_a_state_changes_f(BOOST_CHARGE_FC, 0);
-//		after_a_state_changes_f(TIMED_FLOAT_CHARGE_FC, 1);
-//		after_a_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
-//		after_a_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
-//		after_a_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
-//		after_a_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
-//		after_a_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
+//		change_state_f(ST_FLOAT_CHARGE, 1);
+//		change_state_f(BOOST_CHARGE_FC, 0);
+//		change_state_f(TIMED_FLOAT_CHARGE_FC, 1);
+//		change_state_f(TIMED_BOOST_CHARGE_FC, 0);
+//		change_state_f(MANUAL_FLOAT_CHARGE_FC, 0);
+//		change_state_f(MANUAL_BOOST_CHARGE_FC, 0);
+//		change_state_f(AUTO_FLOAT_CHARGE_FC, 0);
+//		change_state_f(AUTO_BOOST_CHARGE_FC, 0);
 //		LED_7_Data |= FLOAT_CHARGE_LED;
 //		LED_7_Data &= ~BOOST_CHARGE_LED;
 //		PRF_GEN("timed mode selected, boost charge values loaded");
@@ -862,14 +862,14 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
-//		after_a_state_changes_f(ST_FLOAT_CHARGE, 0);
-//		after_a_state_changes_f(BOOST_CHARGE_FC, 1);
-//		after_a_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
-//		after_a_state_changes_f(TIMED_BOOST_CHARGE_FC, 1);
-//		after_a_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
-//		after_a_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
-//		after_a_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
-//		after_a_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
+//		change_state_f(ST_FLOAT_CHARGE, 0);
+//		change_state_f(BOOST_CHARGE_FC, 1);
+//		change_state_f(TIMED_FLOAT_CHARGE_FC, 0);
+//		change_state_f(TIMED_BOOST_CHARGE_FC, 1);
+//		change_state_f(MANUAL_FLOAT_CHARGE_FC, 0);
+//		change_state_f(MANUAL_BOOST_CHARGE_FC, 0);
+//		change_state_f(AUTO_FLOAT_CHARGE_FC, 0);
+//		change_state_f(AUTO_BOOST_CHARGE_FC, 0);
 //		LED_7_Data &= ~FLOAT_CHARGE_LED;
 //		LED_7_Data |= BOOST_CHARGE_LED;
 //		PRF_GEN("timed mode selected, boost charge values loaded");
@@ -881,16 +881,16 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //		}
 //	}
 //else if (EpD[SET_CHARGE_MODE][0].V1 == AUTO) {
-//		after_a_state_changes_f(TIMED_FLOAT_CHARGE_FC, 0);
-//		after_a_state_changes_f(TIMED_BOOST_CHARGE_FC, 0);
-//		after_a_state_changes_f(MANUAL_FLOAT_CHARGE_FC, 0);
-//		after_a_state_changes_f(MANUAL_BOOST_CHARGE_FC, 0);
-//		after_a_state_changes_f(AUTO_FLOAT_CHARGE_FC, 0);
-//		after_a_state_changes_f(AUTO_BOOST_CHARGE_FC, 0);
+//		change_state_f(TIMED_FLOAT_CHARGE_FC, 0);
+//		change_state_f(TIMED_BOOST_CHARGE_FC, 0);
+//		change_state_f(MANUAL_FLOAT_CHARGE_FC, 0);
+//		change_state_f(MANUAL_BOOST_CHARGE_FC, 0);
+//		change_state_f(AUTO_FLOAT_CHARGE_FC, 0);
+//		change_state_f(AUTO_BOOST_CHARGE_FC, 0);
 //	}
 }
 
-void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
+void change_state_f(State_Codes state_code, uint8_t set) {
     if (set) {
 		state_list[state_code].action |= (1 << ACTIVE_enum); // set active flag in fault action bits
         if (is_state_require_stop(state_code)) {  // bu state durma gerektiriyor diye istenmiş mi
