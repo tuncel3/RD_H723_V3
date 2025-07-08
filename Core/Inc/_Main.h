@@ -162,6 +162,8 @@ if (EpD[RECT_ACTV_AT_STARTUP][0].V1==1) {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+actions_after_charge_mode_change(100);
+
 //en_uart_msg_group(blm_u);  // Enable uart messages for batt line inspection
 //disb_uart_msg_group(pr_btln);
 
