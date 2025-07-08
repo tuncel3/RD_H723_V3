@@ -843,6 +843,11 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		set_targ_DC_voltage(temp_targ_DC_voltage);
 		change_state_f(FLOAT_CHARGE_FC, 0);
 		change_state_f(BOOST_CHARGE_FC, 1);
+		if (timed_mode_actions_do_once==0) {
+			timed_mode_actions_do_once=1; // timed a geçiş yapıldığında bir kez uygulanacak. tekrar uygulanabilmesi için başka moda geçilmesi lazım.
+			timed_mode_time_ended=0; // timed mod sayacı sıfırla. sayaç sonunda float a geçilecek
+			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
+		}
 
 	}
 	if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
