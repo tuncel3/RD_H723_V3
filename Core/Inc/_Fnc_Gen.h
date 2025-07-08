@@ -1166,8 +1166,8 @@ void stability_ibat_fc(void) { // ibat_stable variable ı burda belirleniyor.
 }
 
 
-void blm_move_up_down_vtarg_limits(void) {
-	baslangic_v_stbl=VRECT_pas.a16;	// vrect stabil iken bu fonksiyon çağırılıyor ve istenen değerler belirleniyor.
+void blm_move_up_down_vtarg_limits(void) { // akü hattı kontrol sisteminin gideceği üst ve alt hedefler ve sınırlamalar
+	baslangic_v_stbl=VRECT_pas.a16;	// vrect stabil iken kontrole başlangıç voltajı da kaydediliyor.
 	blm_vtarg_move_up_targ=baslangic_v_stbl+blm_V_move_up_set;
 	blm_vtarg_move_dn_targ=baslangic_v_stbl-blm_V_move_dn_set;
 	blm_vtarg_move_up_max=targ_DC_voltage*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01); // ayarlanan vdc rect max değerinden yüzde 1 aşağısı hesaplanıyor burada
