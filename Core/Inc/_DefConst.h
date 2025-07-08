@@ -987,7 +987,7 @@ typedef enum {
 	ST_DROPPER_K2,
 	ST_BATT_MCCB_OFF,
 	BOOST_CHARGE_FC,
-	ST_FLOAT_CHARGE,
+	FLOAT_CHARGE_FC,
 	ST_LINE_MCCB_OFF, // led 7
 	RECT_SHORT_FC,
 	BATT_SHORT_FC,
@@ -1065,7 +1065,7 @@ State_Info state_list[] = {
     { 18, ST_DROPPER_K2,              0b000000, "Dropper 1 Bypass",},
     { 19, ST_BATT_MCCB_OFF,           0b110010, "Akü Sigrta Atık", },
     { 20, BOOST_CHARGE_FC,            0b110000, "Hızl Şarj",       },
-    { 21, ST_FLOAT_CHARGE,            0b110000, "Norm Şarj",       },
+    { 21, FLOAT_CHARGE_FC,            0b110000, "Norm Şarj",       },
     { 22, ST_LINE_MCCB_OFF,           0b110110, "Girş Sigrt Atık", },
     	// LED 7 BIT6 enum 22
     { 23, RECT_SHORT_FC,              0b000110, "DC Kısa Devre",   },
@@ -1130,7 +1130,7 @@ rel_out_all TAM_TABLO_RELOUT[] = {
 	{ VAC_OFF_FC,            0},
 	{ VAC_ON_FC,             0},
 	{ BOOST_CHARGE_FC,       0},
-	{ ST_FLOAT_CHARGE,       0},
+	{ FLOAT_CHARGE_FC,       0},
 	{ RECT_DC_HG_FC,         0},
 	{ RECT_DC_LW_FC,         0},
 	{ OVERTEMP_OPEN_FC,      0},

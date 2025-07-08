@@ -68,7 +68,7 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		change_state_f(ST_FLOAT_CHARGE, 0);
+		change_state_f(FLOAT_CHARGE_FC, 0);
 		change_state_f(BOOST_CHARGE_FC, 1);
 		LED_7_Data &= ~FLOAT_CHARGE_LED;
 		LED_7_Data |= BOOST_CHARGE_LED;
@@ -86,7 +86,7 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		change_state_f(ST_FLOAT_CHARGE, 1);
+		change_state_f(FLOAT_CHARGE_FC, 1);
 		change_state_f(BOOST_CHARGE_FC, 0);
 		LED_7_Data &= ~BOOST_CHARGE_LED;
 		LED_7_Data |= FLOAT_CHARGE_LED;
@@ -119,7 +119,7 @@ if (EpD[SET_CH_CONT_MODE][0].V1 == AUTO) {
 //		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
-//		change_state_f(ST_FLOAT_CHARGE, 1);
+//		change_state_f(FLOAT_CHARGE_FC, 1);
 //		change_state_f(BOOST_CHARGE_FC, 0);
 //		LED_7_Data &= ~BOOST_CHARGE_LED;
 //		LED_7_Data |= FLOAT_CHARGE_LED;
@@ -993,7 +993,7 @@ LED_7_Data |= (state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
 LED_7_Data |= (state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
 LED_7_Data |= (state_get(ST_BATT_MCCB_OFF) << (ST_BATT_MCCB_OFF-16));
 LED_7_Data |= (state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
-LED_7_Data |= (state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
+LED_7_Data |= (state_get(FLOAT_CHARGE_FC) << (FLOAT_CHARGE_FC-16));
 LED_7_Data |= (state_get(ST_LINE_MCCB_OFF) << (ST_LINE_MCCB_OFF-16));
 
 LED_7_Data &= ~(!state_get(ST_LOAD_MCCB_OFF) << (ST_LOAD_MCCB_OFF-16));
@@ -1001,7 +1001,7 @@ LED_7_Data &= ~(!state_get(ST_DROPPER_K1) << (ST_DROPPER_K1-16));
 LED_7_Data &= ~(!state_get(ST_DROPPER_K2) << (ST_DROPPER_K2-16));
 LED_7_Data &= ~(!state_get(ST_BATT_MCCB_OFF) << (ST_BATT_MCCB_OFF-16));
 LED_7_Data &= ~(!state_get(BOOST_CHARGE_FC) << (BOOST_CHARGE_FC-16));
-LED_7_Data &= ~(!state_get(ST_FLOAT_CHARGE) << (ST_FLOAT_CHARGE-16));
+LED_7_Data &= ~(!state_get(FLOAT_CHARGE_FC) << (FLOAT_CHARGE_FC-16));
 LED_7_Data &= ~(!state_get(ST_LINE_MCCB_OFF) << (ST_LINE_MCCB_OFF-16));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// LED_16_Data SET CLEAR

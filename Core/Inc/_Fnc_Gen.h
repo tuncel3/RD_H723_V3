@@ -817,8 +817,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 	if (EpD[SET_CHARGE_MODE][0].V1 == FLOAT) {
 		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;	// şarj modu hedef voltajını geçici olarak tutan variable
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
-		set_targ_DC_voltage(temp_targ_DC_voltage);
-		change_state_f(ST_FLOAT_CHARGE, 1);
+		set_targ_DC_voltage(temp_targ_DC_voltage); // kontrol sistemi hedef voltajı. üst alt dc voltaj koruma seviyeleri ayarlanıyor.
+		change_state_f(FLOAT_CHARGE_FC, 1); // state_list te state i aktif et. led durumu belirle. kontak çkış relout durum belirle.
 		change_state_f(BOOST_CHARGE_FC, 0);
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
@@ -828,7 +828,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		change_state_f(ST_FLOAT_CHARGE, 0);
+		change_state_f(FLOAT_CHARGE_FC, 0);
 		change_state_f(BOOST_CHARGE_FC, 1);
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
@@ -839,7 +839,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
-//		change_state_f(ST_FLOAT_CHARGE, 1);
+//		change_state_f(FLOAT_CHARGE_FC, 1);
 //		change_state_f(BOOST_CHARGE_FC, 0);
 //		change_state_f(TIMED_FLOAT_CHARGE_FC, 1);
 //		change_state_f(TIMED_BOOST_CHARGE_FC, 0);
@@ -861,7 +861,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
-//		change_state_f(ST_FLOAT_CHARGE, 0);
+//		change_state_f(FLOAT_CHARGE_FC, 0);
 //		change_state_f(BOOST_CHARGE_FC, 1);
 //		change_state_f(TIMED_FLOAT_CHARGE_FC, 0);
 //		change_state_f(TIMED_BOOST_CHARGE_FC, 1);
