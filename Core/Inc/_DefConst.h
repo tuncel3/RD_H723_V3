@@ -424,7 +424,10 @@ typedef enum {
 
 const char* CH_MOD_SEL_Items[] = {
     "  Normal",
-    "   Tam  ",
+    "   Tam  "
+};
+const char* CH_CONT_SEL_Items[] = {
+    "  Manuel ",
     "   Oto  ",
     " Zamanlı"
 };
@@ -626,6 +629,7 @@ typedef struct {
 
 SETT_type CHARGE_SETT_Items[] = {
 {"Sarj Modu", SET_CHARGE_MODE, 99},
+{"Sarj Kontr", SET_CH_CONT_MODE, 99},
 {"Süre Tam", SET_BOOST_TIME, 99},
 {"V Şarj Normal", VBAT_FLOAT, 0}, // type grouping floats to use one else if in lcd display
 {"V Şarj Tam", VBAT_BOOST, 0},
