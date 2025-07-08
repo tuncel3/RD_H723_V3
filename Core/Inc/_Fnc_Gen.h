@@ -20,7 +20,7 @@ void inline extern actions_after_charge_voltage_change();
 void inline extern DEV_NOM_VOUT_changed_fc(void);
 void print_active_states();
 
-void save_REL_OUT_order_to_EEP(void);
+void save_SIRALI_TABLO_RELOUT_to_eep(void);
 void gen_SIRALI_TABLO_RELOUT_from_eep(void);
 void REL_OUT_ORDER_vect_to_REL_OUT_TB(void);
 void generate_REL_OUT_order_vect_from_ord_table_fc(void);
@@ -1074,7 +1074,7 @@ void gen_SIRALI_TABLO_RELOUT_from_eep(void) {
 	}
 }
 
-void save_REL_OUT_order_to_EEP(void) {
+void save_SIRALI_TABLO_RELOUT_to_eep(void) {
     REL_OUT_order_part1 = 0; // sıralama bu 4 parça değişkene kaydediliyor.
     REL_OUT_order_part2 = 0;
     REL_OUT_order_part3 = 0;

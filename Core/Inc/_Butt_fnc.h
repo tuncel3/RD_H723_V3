@@ -122,7 +122,7 @@ void bleft_fnc(void) {
     	}
     }
     else if (currentPage == RELAY_ORDER_pg) { // LEFT
-    	save_REL_OUT_order_to_EEP();
+    	save_SIRALI_TABLO_RELOUT_to_eep();
     }
     else if (currentPage == TEST_pg) { 		// LEFT
     	if (!test_edit_mode) {
