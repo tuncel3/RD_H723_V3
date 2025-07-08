@@ -835,7 +835,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
 		PRF_GEN("BOOST charge mode %d", num);
 	}
-//	else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_FLOAT_CHARGE_FC) {
+	else if (EpD[SET_CH_CONT_MODE][0].V1 == TIMED) {
 //		temp_targ_DC_voltage=EpD[VBAT_FLOAT][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 //		set_targ_DC_voltage(temp_targ_DC_voltage);
@@ -856,7 +856,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 //			timed_mode_time_ended=0; // timed mod sayacı sıfırla. sayaç sonunda float a geçilecek
 //			charge_mode_timed_time_cnt=(uint32_t) (EpD[SET_BOOST_TIME][0].V1*60*1000/50);
 //		}
-//	}
+	}
 //	else if (EpD[SET_CHARGE_MODE][0].V1 == TIMED_BOOST_CHARGE_FC) {
 //		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 //		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
