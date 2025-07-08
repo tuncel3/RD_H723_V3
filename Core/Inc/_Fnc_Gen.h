@@ -934,7 +934,8 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 		SIRALI_TABLO_RELOUT_process();
 	}
 }
-// sirali
+
+// sirali tablo çıkış kontakları sistemi ile ilgili
 // sirali tablonun oluşturulma amacı eeproma kaydedilecek 4 parçanın bu tablonun birinci sütunundan direk oluşturulması.
 void SIRALI_TABLO_RELOUT_process(void) {
 	for (int i = 0; i < SIRALI_TABLO_SIZE; i++) { // sirali tablonun birinci sütunu ön panelden kullanıcı tarafından belirleniyor.
