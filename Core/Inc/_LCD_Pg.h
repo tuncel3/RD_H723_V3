@@ -459,8 +459,10 @@ inline extern void CHARGE_SETT_pg_disp(void) {
 	uint8_t chg_set_disp_index_=chg_set_disp_index;
     for (uint8_t i = 0; i < 6; i++) {
 
-	sprintf(L, " %s ", CHARGE_SETT_Items[chg_set_disp_index_].setting_id);
-	GLCD_PrintString(0, (i + 1) * 9, L);
+	if (!EpD[SET_CH_CONT_MODE][0].V1 == TIMED) {
+		sprintf(L, " %s ", CHARGE_SETT_Items[chg_set_disp_index_].setting_id);
+		GLCD_PrintString(0, (i + 1) * 9, L);
+	}
 
 	if (CHARGE_SETT_Items[chg_set_disp_index_].V1 == SET_CHARGE_MODE) {
 		sprintf(M, "%s", CH_MOD_SEL_Items[(uint32_t)EpD[SET_CHARGE_MODE][chg_setting_edit_mode].V1]);
