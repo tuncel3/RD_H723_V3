@@ -934,8 +934,9 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
 		SIRALI_TABLO_RELOUT_process();
 	}
 }
-
-void SIRALI_TABLO_RELOUT_process(void) {// sirali tablonun oluşturulma amacı eeproma kaydedilecek 4 parçanın bu tablonun birinci sütunundan direk oluşturulması.
+// sirali
+// sirali tablonun oluşturulma amacı eeproma kaydedilecek 4 parçanın bu tablonun birinci sütunundan direk oluşturulması.
+void SIRALI_TABLO_RELOUT_process(void) {
 	for (int i = 0; i < SIRALI_TABLO_SIZE; i++) { // sirali tablonun birinci sütunu ön panelden kullanıcı tarafından belirleniyor.
 //		SIRALI_TABLO_RELOUT[i].tbl_code = ön panelden kullanıcı değiştiriyor;
 		SIRALI_TABLO_RELOUT[i].tbl_val = state_get(SIRALI_TABLO_RELOUT[i].tbl_code); // state_list tablosundan state durumunu al
