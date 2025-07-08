@@ -907,13 +907,10 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
         	state_set(START_FC, 1);
         	state_set(STOP_FC, 0);
         }
-
     }
 	else if (!set) {
 		state_list[state_code].action &= ~(1U << ACTIVE_enum); // reset active flag in fault action bits
 	}
-
-
 //// toplu state inceleme
     uint8_t thystop_faults_bit_all_=0;    // tristörlerin kapatılmasını gerektirecek durumlardan aktif olanlar varsa üst üste toplanıyor
     for (uint8_t i = 0; i < NUM_STATE_NAMES; i++) {
