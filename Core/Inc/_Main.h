@@ -38,7 +38,8 @@ PRF_GEN("RTC INIT");
 if (Read_RTC_Osc_Status() == 0) {
     Write_To_Register(0, 0b10000000); // osc en
     Write_To_Register(2, 0b00000000); // 12/24_n set
-    Write_To_Register(RTC_OSCTRIM_REG, 0b00000000 | 0); // write cal val
+    Write_To_Register(3, 0b00001000); // bat en
+    Write_To_Register(RTC_OSCTRIM_REG, 0b00000000 | 5); // write cal val
     Write_To_Register(RTC_RTCC_CONTROL_REG, 0b01000010); // enable square wave output
     PRF_GEN("RTC first time started");
 } else {
