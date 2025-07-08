@@ -792,8 +792,8 @@ void inline extern DEV_NOM_VOUT_changed_fc(void) {
 
 void inline extern set_targ_DC_voltage(float set_val) {
 	targ_DC_voltage=set_val;
-	vrect_dc_high_lim=targ_DC_voltage*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100));
-	vrect_dc_high_lim_ret=targ_DC_voltage*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01);
+	vrect_dc_high_lim=targ_DC_voltage*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)); // soft start veya başka bir şekilde target voltaj değişirse
+	vrect_dc_high_lim_ret=targ_DC_voltage*(1+(EpD[VRECT_DC_HIGH_LIM_add][0].V1/100)-0.01); //  koruma limitlerini de buna uygun olarak düzenle
 	vrect_dc_low_lim=targ_DC_voltage/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100));
 	vrect_dc_low_lim_ret=targ_DC_voltage/(1+(EpD[VRECT_DC_LOW_LIM_add][0].V1/100)-0.01);
 }
