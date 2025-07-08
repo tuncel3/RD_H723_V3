@@ -101,13 +101,13 @@ float VLOAD_smp_offst = 0.0f;
 float VRECT_smp_offst = 0.0f;
 
 
-float vrect_dc_high_lim = 0.0f;
+float vrect_dc_high_lim = 0.0f; // RECT_DC_HG_FC arızası oluşturacak limit
 float vrect_dc_high_lim_ret = 0.0f;
 uint32_t vrect_dc_high_lim_Acc_cnt = 0;
 uint32_t vrect_dc_high_lim_Acc_per = 200;
 uint32_t vrect_dc_high_lim_ret_Acc_cnt = 0;
 uint32_t vrect_dc_high_lim_ret_Acc_per = 20;
-float vrect_dc_low_lim = 0.0f;
+float vrect_dc_low_lim = 0.0f; // RECT_DC_LW_FC arızası oluşturacak limit
 float vrect_dc_low_lim_ret = 0.0f;
 uint32_t vrect_dc_low_lim_Acc_cnt = 0;
 uint32_t vrect_dc_low_lim_Acc_per = 200;
