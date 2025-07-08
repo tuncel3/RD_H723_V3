@@ -432,6 +432,7 @@ const char* CH_CONT_SEL_Items[] = {
     " Zamanlı"
 };
 #define NUM_CH_MOD_SEL_ITEMS (sizeof(CH_MOD_SEL_Items) / sizeof(CH_MOD_SEL_Items[0]))
+#define NUM_CH_CONT_SEL_ITEMS (sizeof(CH_CONT_SEL_Items) / sizeof(CH_CONT_SEL_Items[0]))
 uint8_t selected_CH_MOD_SEL=0;
 
 typedef struct {
