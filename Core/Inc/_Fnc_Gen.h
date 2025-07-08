@@ -820,7 +820,7 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		targ_DC_current=EpD[SET_IBAT_FLOAT][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
 		change_state_f(ST_FLOAT_CHARGE, 1);
-		state_set(BOOST_CHARGE_FC, 0);
+		change_state_f(BOOST_CHARGE_FC, 0);
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
@@ -829,8 +829,8 @@ void inline extern actions_after_charge_mode_change(uint8_t num) {
 		temp_targ_DC_voltage=EpD[VBAT_BOOST][0].V1;
 		targ_DC_current=EpD[SET_IBAT_BOOST][0].V1;
 		set_targ_DC_voltage(temp_targ_DC_voltage);
-		state_set(ST_FLOAT_CHARGE, 0);
-		state_set(BOOST_CHARGE_FC, 1);
+		change_state_f(ST_FLOAT_CHARGE, 0);
+		change_state_f(BOOST_CHARGE_FC, 1);
 		switch_to_auto_mode_completed=0;
 		timed_mode_actions_do_once=0;
 		charge_mode_timed_time_sec=0; // ekrandaki timed mode kalan saniye değerini kaldır
