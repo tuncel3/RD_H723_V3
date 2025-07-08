@@ -930,7 +930,7 @@ void after_a_state_changes_f(State_Codes state_code, uint8_t set) {
     } 	general_thystop_faults_bit_all=general_thystop_faults_bit_all_;
 		PRF_GEN("     state_code %d %s set %d", state_code, state_list[state_code].name, set);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	if (is_state_a_relout(state_code)) {	// OUT REL
+	if (is_state_a_relout(state_code)) {	// rel out / kontak çıkış
 		SIRALI_TABLO_RELOUT_process();
 	}
 }
