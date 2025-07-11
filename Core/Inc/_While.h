@@ -1068,25 +1068,17 @@ if (currentPage == DATE_TIME_pg) {
 }
 
 
-
-
-
-
-
-
 } // if (ms_tick_cnt-while_delay50_h >= 50) {
 
 
 
-if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
-	while_RTC_delay_h=ms_tick_cnt;
-    Read_Register_0x00_to_0x06();
-    rtc_timestamp_fnc();
-}
+//if (ms_tick_cnt-while_RTC_delay_h >= while_RTC_delay_per) {
+//}
 
 if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	while_LCD_delay_h=ms_tick_cnt;
 
+//	while_RTC_delay_h=ms_tick_cnt;
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -1112,6 +1104,9 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 	}
 
 	GLCD_ClearScreen(0x00);
+
+    Read_Register_0x00_to_0x06();
+    rtc_timestamp_fnc();
 
     switch (currentPage) {
         case HOME_PAGE_pg:
