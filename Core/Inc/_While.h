@@ -1105,7 +1105,7 @@ if (ms_tick_cnt-while_LCD_delay_h >= while_LCD_delay_per) {
 
 	GLCD_ClearScreen(0x00);
 
-    Read_Register_0x00_to_0x06();
+    Read_Register_0x00_to_0x06(); // rtc data al. aşağıda pg disp fonksiyonlarına data hazır olacak.
     rtc_timestamp_fnc();
 
     switch (currentPage) {
