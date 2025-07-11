@@ -45,6 +45,7 @@ if (Read_RTC_Osc_Status() == 0) {
 } else {
 	PRF_GEN("RTC already started");
 }
+Write_To_Register(RTC_OSCTRIM_REG, 0b00000000 | 6); // write cal val
 
 delay_1ms(100);
 
